@@ -5,7 +5,7 @@
 
 <head>
 
-  <title><%= yield(:title) || "Mission of Mercy" %> </title>
+  <title><%= "Mission of Mercy | " + (yield(:title) || "Mission of Mercy") %> </title>
 
   <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
   <%= stylesheet_link_tag "html", "layout" %>
@@ -21,10 +21,7 @@
   <!-- <img src="images/logo.png"/> -->
   
     <ul>
-      <li><a href="index.html">Back to Main page</a></li>
-      <li><a href="">About us</a></li>
-      <li><a href="">Streaming Video</a></li>
-      <li><a href="" class="last">RSS Feeds</a></li>
+      <li><a href="" class="last">Login</a></li>
     </ul>
 
   </div>

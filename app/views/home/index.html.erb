@@ -1,2 +1,16 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<% title 'Home' %>
+
+<h1>CT Mission of Mercy 2010</h1>
+
+<% if logged_in? %>
+  <%= if current_user.login == 'admin'
+        render :partial => 'admin_index'
+      elsif current_user.login == 'user'
+        render :partial => 'user_index'
+      elsif current_user.login.include? 'xray'
+        render :partial => 'xray_index'
+      end
+  %>
+<% else %>
+  <h3><%= link_to 'Click here to log in', login_path, :class => 'general' %></h3>
+<% end %>
