@@ -1,4 +1,8 @@
-<h1>Log In</h1>
+<% title 'Log in' %>
+
+<% header do %>
+<h1><%= image_tag "logo_small.png" %> Log In</h1>
+<% end %>
 
 <% form_tag session_path do -%>
 <p><%= label_tag 'login' %><br />
@@ -7,10 +11,5 @@
 <p><%= label_tag 'password' %><br/>
 <%= password_field_tag 'password', nil %></p>
 
-<!-- Uncomment this if you want this functionality
-<p><%= label_tag 'remember_me', 'Remember me' %>
-<%= check_box_tag 'remember_me', '1', @remember_me %></p>
--->
-
-<p><%= submit_tag 'Log in' %></p>
+<p><%= submit_tag 'Log in' %> | <%= link_to "Cancel", root_path, :class => 'warning' %></p>
 <% end -%>

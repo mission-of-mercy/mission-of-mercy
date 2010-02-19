@@ -1,6 +1,8 @@
 <% title 'Home' %>
 
-<h1>CT Mission of Mercy 2010</h1>
+<% header do %>
+<h1><%= image_tag "logo_small.png" %> CT Mission of Mercy 2010</h1>
+<% end %>
 
 <% if logged_in? %>
   <%= if current_user.login == 'admin'
@@ -12,5 +14,5 @@
       end
   %>
 <% else %>
-  <h3><%= link_to 'Click here to log in', login_path, :class => 'general' %></h3>
+  <h3><%= link_to 'Click here to log in', login_path, :class => 'back' %></h3>
 <% end %>

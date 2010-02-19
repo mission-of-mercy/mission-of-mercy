@@ -62,30 +62,14 @@ min-height: 100%
 	margin-top: 10px;
 	border: 1px solid #000;
 	padding: 20px;
-		margin-right: 20px;
+	margin-right: 20px;
 	margin-left: 20px;
 }
 
 #contents.login{
 	width: 300px;
-	margin: 0 auto;
 	border: 5px solid #788694;
-}
-
-div.gift{
-	background-color: #eee;
-	border: 1px solid silver;
-	width: 100%;
-	padding-left: 2px;
-}
-
-div.gift_details{
-	background-color: #262626;
-	color: white;
-	border: 1px solid black;
-	margin-left: 5px;
-	margin-right: 5px;
-	padding-top: 5px;
+	margin: 50px auto 0;
 }
 
 div.header{
@@ -95,16 +79,72 @@ div.header{
 	padding: 8px 17px 10px 20px;
 }
 
-div.gift_select_confirm{
-	margin-left: 10px;
-	padding-left: 5px;
-	padding-bottom: 2px;
+#footer{
+	color: #e6e6e6;
+	font-size: 10px;
+	float: right;
+	text-align: right;
+	margin-right: 20px;
+	margin-left: 20px;
+	margin-top: 5px;
+}
+
+#controls form{
+	display: inline-block;
+}
+
+#report_date{
+	display: none;
+}
+
+#footer a, a:visited, a:hover{
+	color: #e6e6e6;
+}
+
+#footer-version{
+	margin-right: 20px;
+	margin-left: 20px;
+	color: #e6e6e6;
+	font-size: 10px;
+	width: 600px;
+	margin-top: 5px;
+}
+
+a.general, a.warning, a.back{
+	padding: 5px;
+}
+
+a.general:hover{
+	background-color: #588f00;
+	text-decoration: none;
+	color: white;
+}
+
+a.warning:hover{
+	background-color: red;
+	text-decoration: none;
+	color: white;
+}
+
+a.back:hover{
+	text-decoration: none;
+	color: white;
+	background-color: #4b7399;
 }
 
 pre {
   background-color: #eee;
   padding: 10px;
   font-size: 11px;
+}
+
+table, tr, th, td{
+	border: 1px solid gray;
+	border-collapse: collapse;
+}
+
+#contents td, th {
+  padding: 2px 6px;
 }
 
 table.hidden{
@@ -118,7 +158,8 @@ a:hover { color: #000; }
 .fieldWithErrors {
   padding: 2px;
   background-color: red;
-  display: table;
+  display: inline-block;
+	color: white;
 }
 
 #errorExplanation {
@@ -151,23 +192,8 @@ a:hover { color: #000; }
   list-style: square;
 }
 
-#contents table, tr, th, td{
-	text-align: left;
-	border-collapse: collapse;
-}
-#contents table{
-	margin-bottom: 10px;
-	margin-left: 10px;
-}
-#contents td {
-	padding-left: 10px;
-}
-
-#contents th {
-  color: #000;
-	font-size: 16px;
-	padding-bottom: 5px;
-	padding-right: 5px;
+th,td{
+	padding: 5px;
 }
 
 th a, th a:visited{
@@ -182,10 +208,12 @@ th a:hover{
 
 tr.even{
 	background-color: #fff;
+	border: 1px solid black;
 }
 
 tr.odd{
 	background-color: #f1f5fa;
+	border: 1px solid black;
 }
 
 img.table_image{
@@ -194,3 +222,118 @@ img.table_image{
     margin-right: auto
 }
 
+form.new_patient  label, form.new_patient_procedure label{
+	width: 250px;
+	white-space: pre;
+} 	
+
+div.input-left{
+	float: left;
+	border-right: 1px solid gray;
+	padding-right: 15px;
+}
+
+div.input-right{
+	display: inline-block;
+	margin-left: 15px;
+}
+
+div.input{
+	/*margin-left: 25px;*/
+}
+
+div.input-bottom{
+	clear: left;
+	padding-top: 10px;
+}
+
+div.row {
+  clear: both;
+  padding-top: 10px;
+  }
+
+form.new_patient div.row span.label{
+	  float: left;
+  width: 100px;
+  text-align: right;
+}
+
+form.new_patient div.input-right div.row span.label{
+	  float: left;
+  width: 150px;
+  text-align: right;
+}
+
+div.row span.label {
+  float: left;
+  width: 100px;
+  text-align: right;
+  }
+
+div.row span.formw {
+  /*float: right;*/
+  text-align: left;
+	margin-left: 20px;
+} 
+
+div.row span.formexample{
+	font-size: x-small;
+	font-style: italic;
+	margin-left: 10px;
+}
+
+span.procedure{
+	width: 250px;
+	display: inline-block;
+}
+
+form.button-to{
+	display: inline-block;
+}
+/* the overlayed element */ 
+.simple_overlay { 
+     
+    /* must be initially hidden */ 
+    display:none; 
+     
+    /* place overlay on top of other elements */ 
+    z-index:10000; 
+     
+    /* styling */ 
+    background-color:#333; 
+     
+    width:675px;     
+    min-height:200px; 
+    /*border:3px solid #666;*/ 
+    
+     
+    /* CSS3 styling for latest browsers */ 
+    -moz-box-shadow:0 0 90px 5px #000; 
+    -webkit-box-shadow: 0 0 90px #000;
+
+	color: #dcdbdd;
+	padding: 10px 20px 20px;
+} 
+
+.simple_overlay img{
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-right: 20px;
+	float: left;
+}
+
+.simple_overlay h1{
+	color: #fff;
+	clear: both;
+}
+ 
+/* close button positioned on upper right corner */ 
+.simple_overlay .close { 
+    background-image:url(../images/overlay/apple-close.png); 
+    position:absolute; 
+    right:-10px; 
+    top:-10px; 
+    cursor:pointer; 
+    height:28px; 
+    width:28px; 
+}

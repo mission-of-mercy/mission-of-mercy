@@ -5,8 +5,15 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title>Mission of Mercy - <%= yield(:title) || controller.action.name.humanize %></title>
+  
   <%= stylesheet_link_tag('default', :media => :screen) %>
-  <%= javascript_include_tag :defaults %>
+  <%= javascript_include_tag "jquery.tools.min.js" %>
+  
+  <script>
+    $(document).ready(function() {
+      $("#footer a[rel]").overlay({effect:'apple'});
+    });
+  </script>
 </head>
 <body>
   <div id='outer_container'>
@@ -15,7 +22,35 @@
       <div id="contents">
         <%= yield  %>
       </div>
+      <div id="footer">
+         Copyright &copy; 2009 <a href="#" rel="#integrity">Integrity Systems & Solutions</a> and <a href="#" rel="#dss">Duck Soup Software</a><% if !production? %><br />(Work in progress.)<% end %>
+      </div>
+      <div id="footer-version">
+        <% if !production? %>
+          THIS IS AN UNPUBLISHED WORK CONTAINING DUCK SOUP SOFTWARE CONFIDENTIAL AND PROPRIETARY INFORMATION. DISCLOSURE, USE, OR REPRODUCTION WITHOUT AUTHORIZATION OF DUCK SOUP SOFTWARE IS PROHIBITED.
+        <% else %>
+          Version <%= version %>
+        <% end %>
+      </div>
     </div>
+  </div>
+  
+  <div id="integrity" class="simple_overlay">
+    <h1>Integrity Systems & Solutions</h1>
+    <%= image_tag "Integrity.png "%>
+    <h3>Integrity makes the difference</h3>
+    Integrity Systems & Solutions, LLC is a New England-based technology support company that specializes in integrating and supporting technology built around your needs. With over twelve years experience in technology support and guidance, we've earned a reputation for honesty, commitment, reliability, and creativity.
+    <p>
+      Whether you're a dentist  looking to implement practice management or digital x-ray technology, a doctor  looking to utilize electronic medical records, or a small business owner  who needs to increase operational efficiency, Integrity specializes in supporting you.
+  </div>
+
+  <div id="dss" class="simple_overlay">
+    <h1>Duck Soup Software</h1>
+    <%= image_tag "DSS.png "%>
+    <h3>Simple software solving complex problems</h3>
+    Software based solutions have come far from their humble roots. Unfortunately as they have evolved they have also become increasingly difficult to use. Duck Soup Software believes that software can solve complex problems while remaining human-friendly.
+    <p>
+      Duck Soup Software uses the latest technologies to solve your problems. Most DSS projects leverage the powerful Ruby on Rails framework to deliver on time, robust solutions that just work.
   </div>
 </body>
 </html>

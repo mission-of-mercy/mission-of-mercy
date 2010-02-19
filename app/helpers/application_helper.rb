@@ -3,6 +3,13 @@ module ApplicationHelper
   def title(page_title)
     content_for(:title) { page_title }
   end
+  
+  def header(&block)
+    concat(content_tag(:div, :class => "header") do
+        capture(&block)
+        
+    end + content_tag(:p, :class => "notify") do flash[:notice] end)
+  end
 
   def production?
     @is_production ||=(ENV['RAILS_ENV']=='production')
