@@ -5,6 +5,21 @@ class Patient < ActiveRecord::Base
    false
   end
   
+  # Old Pagination Method ...
+  def self.search(chart_number,name,page)
+    conditions = ['id = ?', "#{chart_number}"]
+  
+    if (chart_number == nil || chart_number == "") && (name != nil && name != "")
+      conditions = ['first_name like ? or last_name like ?', "%#{name}%","%#{name}%"]
+    end
+  
+		paginate  :per_page => 30, :page => page,
+              :conditions => conditions,
+              :order => 'id'
+              
+    # or last_name like ? or first_name like ?,"%#{name}%","%#{name}%"
+	end
+  
   def chart_number
     id
   end

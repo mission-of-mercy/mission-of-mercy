@@ -1,0 +1,44 @@
+<h1>Editing procedure</h1>
+
+<% form_for(@procedure) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :code %><br />
+    <%= f.text_field :code %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :auto_add , 'Automatically add to each new patient' %><br />
+    <%= f.check_box :auto_add %>
+  </p>
+  <p>
+    <%= f.label :requires_tooth_number %><br />
+    <%= f.check_box :requires_tooth_number %>
+  </p>
+  <p>
+    <%= f.label :requires_surface_code %><br />
+    <%= f.check_box :requires_surface_code %>
+  </p>
+  <p>
+    <%= f.label :type %><br />
+    <%= f.text_field :procedure_type %>
+  </p>
+  <p>
+    <%= f.label :number_of_surfaces %><br />
+    <%= f.text_field :number_of_surfaces %>
+  </p>
+  <p>
+    <%= f.label :cost %><br />
+    <%= f.text_field :cost %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @procedure %> |
+<%= link_to 'Back', procedures_path %>

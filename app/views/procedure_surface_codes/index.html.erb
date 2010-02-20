@@ -1,0 +1,22 @@
+<h1>Listing procedure_surface_codes</h1>
+
+<table>
+  <tr>
+    <th>Procedure</th>
+    <th>Surface code</th>
+  </tr>
+
+<% for procedure_surface_code in @procedure_surface_codes %>
+  <tr>
+    <td><%=h procedure_surface_code.procedure_id %></td>
+    <td><%=h procedure_surface_code.surface_code %></td>
+    <td><%= link_to 'Show', procedure_surface_code %></td>
+    <td><%= link_to 'Edit', edit_procedure_surface_code_path(procedure_surface_code) %></td>
+    <td><%= link_to 'Destroy', procedure_surface_code, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New procedure_surface_code', new_procedure_surface_code_path %>

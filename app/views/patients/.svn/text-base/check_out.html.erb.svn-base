@@ -1,0 +1,44 @@
+<% title [@patient.full_name, 'Check out'].join(' - ') %>
+
+<h1><%= image_tag("CTMomLogo.png", :align => "absmiddle" )%> Patient Check Out</h1>
+<%= @patient.full_name %> | 
+Chart # <%= @patient.id %>
+<hr>
+
+<% form_for(@patient) do |f| %>
+  <%= f.error_messages %>
+
+<%= f.hidden_field :check_out %>
+  
+<h4>4: Prescriptions To Be Filled</h4>
+  
+  <div class='input'>
+  
+  <% for prescription in @patient.patient_prescriptions %>
+    <% new_or_existing = prescription.new_record? ? 'new' : 'existing' %> 
+    <% prefix = "patient[#{new_or_existing}_prescription_attributes][]" %>
+    <% fields_for prefix, prescription do |prescription_form| %>
+
+      <%= prescription_form.hidden_field :prescription_id, :value => prescription.prescription_id %>
+     <%= prescription_form.check_box :prescribed %> <%= prescription_form.label :prescribed, prescription.full_description %><br/>
+    <% end %>
+  <% end %>
+  
+  </div>
+  <p>
+  <input <%= if @patient.incomplete
+            "checked='checked'"
+          end %> id="incomplete" name="incomplete" type="checkbox" value="1" />
+<input name="incomplete" type="hidden" value="0" /> <%= label_tag 'incomplete', 'Incomplete Record' %><p>
+
+        <%= observe_field :incomplete,
+            :on => :changed,
+            :url => {:controller => 'patients', :action => 'update', :id => nil, :patient_id => @patient.id},
+            :with => 'patient[incomplete]'
+            %>
+  
+    <%= f.submit "Next" %> <%= link_to 'Back', check_out_procedures_path(@patient), :class => 'back' %>
+  </p>
+<% end %>
+
+

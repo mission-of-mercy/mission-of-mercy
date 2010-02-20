@@ -1,0 +1,18 @@
+<% title 'Reports - Movement Summary' %>
+
+<h1><%= image_tag("CTMomLogo.png", :align => "absmiddle" )%> Movement Summary Report</h1>
+
+<hr>
+
+<h2><u>Current Approximate Count In Each Area</u></h2>
+<h3>Check In: <%= @check_in_count %></h3>
+<h3>X-Ray: <%= @xray_count %></h3>
+<h3>Check Out: <%= @check_out_count %></h3>
+
+<h2><u>Average Wait Time For Each Area</u> (In Minutes)</h2>
+
+<h3>Check in to X-Ray: <%= @check_in_to_xray_average %></h3>
+<h3>Check in to Check out: <%= @check_in_to_check_out_average %></h3>
+<h3>X-Ray to Check out: <%= @xray_to_check_out_average %></h3>
+
+<%= link_to 'Back', reports_path %>

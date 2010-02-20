@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/mom/!svn/ver/21/app/views/providers
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/mom/!svn/ver/18/app/views/providers/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/mom/!svn/ver/21/app/views/providers/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/mom/!svn/ver/18/app/views/providers/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/mom/!svn/ver/18/app/views/providers/show.html.erb
+END

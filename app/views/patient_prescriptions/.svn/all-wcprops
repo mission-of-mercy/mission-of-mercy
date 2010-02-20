@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/mom/!svn/ver/14/app/views/patient_prescriptions
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/mom/!svn/ver/12/app/views/patient_prescriptions/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/mom/!svn/ver/14/app/views/patient_prescriptions/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/mom/!svn/ver/12/app/views/patient_prescriptions/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/mom/!svn/ver/12/app/views/patient_prescriptions/show.html.erb
+END

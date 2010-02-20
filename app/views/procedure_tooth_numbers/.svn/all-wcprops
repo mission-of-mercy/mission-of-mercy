@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/mom/!svn/ver/12/app/views/procedure_tooth_numbers
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/mom/!svn/ver/12/app/views/procedure_tooth_numbers/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/mom/!svn/ver/12/app/views/procedure_tooth_numbers/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/mom/!svn/ver/12/app/views/procedure_tooth_numbers/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/mom/!svn/ver/12/app/views/procedure_tooth_numbers/show.html.erb
+END

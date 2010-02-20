@@ -22,4 +22,12 @@ module ApplicationHelper
   def real_currency(number)
     number_to_currency(number,:delimiter => ",", :unit => "$ ",:separator => ".")
   end
+  
+  def body_css
+    if current_user.nil?
+      "class='logged_out'" 
+    elsif current_user.user_type == UserType::ADMIN
+      "class='admin'"
+    end
+  end
 end

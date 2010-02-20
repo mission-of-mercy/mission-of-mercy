@@ -1,0 +1,24 @@
+<h1>Listing patient_prescriptions</h1>
+
+<table>
+  <tr>
+    <th>Patient</th>
+    <th>Prescription</th>
+    <th>Prescribed</th>
+  </tr>
+
+<% for patient_prescription in @patient_prescriptions %>
+  <tr>
+    <td><%=h patient_prescription.patient.full_name %></td>
+    <td><%=h patient_prescription.full_description %></td>
+    <td><%=h patient_prescription.prescribed %></td>
+    <td><% # link_to 'Show', patient_prescription %></td>
+    <td><% # link_to 'Edit', edit_patient_prescription_path(patient_prescription) %></td>
+    <td><% # link_to 'Destroy', patient_prescription, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New patient_prescription', new_patient_patient_prescription_path(@patient) %>

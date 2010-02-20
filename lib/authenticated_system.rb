@@ -35,6 +35,13 @@ module AuthenticatedSystem
       logged_in?
     end
 
+    # Filter method to enforce admin access rights
+    def admin_required
+      if logged_in?
+        current_user.user_type == UserType::ADMIN || access_denied
+      end
+    end
+
     # Filter method to enforce a login requirement.
     #
     # To require logins for all actions, use this in your controllers:

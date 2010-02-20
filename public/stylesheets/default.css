@@ -2,6 +2,15 @@ body { background-color: #788694; color: #333;
 padding: 0px;
 	margin: 0;
 }
+
+body.admin{
+	background-color: #c12317; color: black; 
+}
+
+body.logged_out{
+		background-color: #588f00; color: black; 
+}
+
 html, body {
 height: 100%;
 }

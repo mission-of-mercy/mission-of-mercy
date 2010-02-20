@@ -1,0 +1,20 @@
+<h1>Editing procedure_surface_code</h1>
+
+<% form_for(@procedure_surface_code) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :procedure_id %><br />
+    <%= f.text_field :procedure_id %>
+  </p>
+  <p>
+    <%= f.label :surface_code %><br />
+    <%= f.text_field :surface_code %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @procedure_surface_code %> |
+<%= link_to 'Back', procedure_surface_codes_path %>

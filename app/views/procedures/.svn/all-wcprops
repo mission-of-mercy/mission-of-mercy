@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/mom/!svn/ver/22/app/views/procedures
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/mom/!svn/ver/20/app/views/procedures/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/mom/!svn/ver/20/app/views/procedures/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/mom/!svn/ver/22/app/views/procedures/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/mom/!svn/ver/20/app/views/procedures/show.html.erb
+END

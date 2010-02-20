@@ -1,0 +1,93 @@
+<% title [@patient.full_name, 'Check out'].join(' - ') %>
+
+<script type="text/javascript">
+//<![CDATA[
+	onload = function()
+	{
+		document.getElementById('patient_procedure_code').focus();
+	}
+//]]>
+</script>
+
+<h1><%= image_tag("CTMomLogo.png", :align => "absmiddle" )%> Patient Check Out</h1>
+<%= @patient.full_name %> | 
+Chart # <%= @patient.id %>
+<hr>
+
+<div class='input-left'>
+
+<h4>3: Procedures Completed</h4>
+  
+<div class='input'>
+
+<% form_for [@patient, @procedure] do |f| -%>
+
+  <%= f.error_messages %>
+  <%= f.hidden_field :patient_id %>
+  
+  <div class="row">
+        <span class="label"><%= label_tag 'patient_procedure_code', 'Procedure Code' %>:</span>
+        <span class="formw"><%= text_field_tag 'patient_procedure_code', nil, :size => 30 %></span>
+  </div>
+  <div class="row">
+        <span class="label">or</span>
+  </div>
+  <div class="row">
+        <span class="label"><%= label_tag 'patient_procedure_type', 'Procedure Type' %>:</span>
+        <span class="formw"><%= select( 'patient_procedure_type',nil, ['Amalgam','Composite'], {:include_blank => true}) %></span>
+  </div>
+  <div class="row"><hr></div>
+  <div class="row">
+        <span class="label"><%= f.label :tooth_number %>:</span>
+        <span class="formw"><%= f.text_field :tooth_number %></span>
+  </div>
+  <div class="row">
+        <span class="label"><%= f.label :surface_code, 'Surface code(s)' %>:</span>
+        <span class="formw"><%= f.text_field :surface_code %></span>
+  </div>
+  <div class="row">
+        <span class="label"><%= f.label :provider %>:</span>
+        <span class="formw"><%= f.text_field :provider %></span>
+  </div>
+  <p>
+  <%= f.submit 'Add procedure' %>
+  </p>
+<% end -%>
+
+</div>
+
+</div>
+
+<div class='input-right'>
+
+<h4>Entered Procedures</h4>
+
+<% for patient_procedure in @patient_procedures %>
+    <span class='procedure'><%= patient_procedure.full_description %></span>
+    <%= link_to image_tag("remove.png",
+                :align => "absmiddle",
+                :border => 0),
+                patient_patient_procedure_path(@patient,patient_procedure), 
+                :confirm => ['Are you sure you wish to remove',patient_procedure.procedure.description,'?'].join(' '), 
+                :method => :delete %></span>
+  <br/>
+<% end %>
+
+</div>
+
+<div class='input-bottom'>
+
+<input <%= if @patient.incomplete
+            "checked='checked'"
+          end %> id="incomplete" name="incomplete" type="checkbox" value="1" />
+<input name="incomplete" type="hidden" value="0" /> <%= label_tag 'incomplete', 'Incomplete Record' %><p>
+
+        <%= observe_field :incomplete,
+            :on => :changed,
+            :url => {:controller => 'patients', :action => 'update', :patient_id => @patient.id},
+            :with => 'patient[incomplete]'
+            %>
+
+<%= button_to 'Next', check_out_prescriptions_path(@patient) %>  <%= link_to 'Back', check_out_radiology_path(@patient), :class => 'back' %>
+</p>
+</div>

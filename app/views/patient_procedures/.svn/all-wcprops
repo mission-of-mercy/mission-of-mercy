@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/mom/!svn/ver/28/app/views/patient_procedures
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/mom/!svn/ver/12/app/views/patient_procedures/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/mom/!svn/ver/28/app/views/patient_procedures/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/mom/!svn/ver/12/app/views/patient_procedures/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/mom/!svn/ver/12/app/views/patient_procedures/show.html.erb
+END

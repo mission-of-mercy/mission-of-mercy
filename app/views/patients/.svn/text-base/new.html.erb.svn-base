@@ -1,0 +1,138 @@
+<% title 'Patient Check In' %>
+
+<script type="text/javascript">
+//<![CDATA[
+	onload = function()
+	{
+		document.getElementById('patient_first_name').focus();
+    
+    <% if @last_patient != nil %>
+    openInBackground('/patients/<%= @last_patient.id %>/print');
+    <% end %>
+	}
+//]]>
+</script>
+
+<h1><%= image_tag("CTMomLogo.png", :align => "absmiddle" )%> Patient Check In</h1>
+
+<p style="font-style: italic"><%= flash[:notice] %></p>
+
+<hr>
+
+<% form_for(@patient) do |f| %>
+  <%= f.error_messages %>
+
+  <div class='input-left'>
+    
+    <h4>1: Demographics</h4>
+    
+    <div class='input'>
+      <div class="row">
+        <span class="label"><%= f.label :first_name %>:</span>
+        <span class="formw"><%= f.text_field :first_name %></span>
+      </div>
+      <div class="row">
+        <span class="label"><%= f.label :last_name %>:</span>
+        <span class="formw"><%= f.text_field :last_name %></span>
+      </div>
+      <div class="row">
+        <span class="label"><%= f.label :date_of_birth %>:</span>
+        <span class="formw"><%= f.date_select :date_of_birth, :order => [:month, :day, :year], :start_year => (Date.today.year), :end_year => 1900, :include_blank => true %></span>
+      </div>
+      <div class="row">
+        <span class="label"><%= f.label :sex %>:</span>
+        <span class="formw"><%= select("patient", "sex", {"M", "M", "F","F"}, {:include_blank => true}) %></span>
+      </div>
+      <div class="row">
+        <span class="label"><%= f.label :street %>:</span>
+        <span class="formw"><%= f.text_field :street %></span>
+      </div>
+      <div class="row">
+        <span class="label"><%= f.label :city %>:</span>
+        <span class="formw"><%= f.text_field :city %></span>
+      </div>
+      <div class="row">
+        <span class="label"><%= f.label :state %>:</span>
+        <span class="formw"><%= f.text_field :state %></span>
+      </div>
+      <div class="row">
+        <span class="label"><%= f.label :zip %>:</span>
+        <span class="formw"><%= f.text_field :zip %></span>
+      </div>
+      <div class="row">
+        <span class="label"><%= f.label :race %>:</span>
+        <span class="formw"><%= select("patient","race", ["African American/Black","American Indian/Alaska Native","Asian/Pacific Islander","Caucasian/White","Hispanic","Indian","Other"], {:include_blank => true})%></span>
+        
+        <%= observe_field :patient_race,
+            :on => :changed,
+            :function => "showOtherRace()"
+            %>
+
+        
+      </div>
+      <div class="row" style="display:none;" id='race_other_div'>
+        <span class="label"><%= label_tag 'race_other','Specify race' %>:</span>
+        <span class="formw"><%= text_field_tag 'race_other', nil, :size => 30  %></span>
+      </div>
+    </div>
+  </div>
+
+  <div class='input-right'>
+
+    <h4>2: Visit Details</h4>
+      
+    <div class='input'>
+      <div class="row">
+        <span class="label"><%= f.label :chief_complaint, 'Reason for today’s visit' %>:</span>
+        <span class="formw"><%= select("patient", "chief_complaint", {"Filling", "Filling", "Cleaning","Cleaning", "Extraction","Extraction"}, {:include_blank => true}) %></span>
+      </div>
+      <div class="row">
+        <span class="label"><%= f.label :last_dental_visit %>:</span>
+        <span class="formw"><%= select("patient", "last_dental_visit", ["First Time","Less Than 30 Days","Less Than 6 Months","Greater Than 6 Months","Between  1 and 2 Years", "2+ Years"], {:include_blank => true}) %></span>
+      </div>
+      <div class="row">
+        <span class="label"><%= f.label :pain, 'Is the patient in pain?' %>:</span>
+        <span class="formw"><%= f.check_box :pain %></span>
+
+      <%= observe_field :patient_pain,
+            :on => :changed,
+            :function => "showPainLength()"
+            %>
+
+      </div>
+      <div class="row" style="display:none;" id='pain_length_div'>
+        <span class="label"><%= f.label :pain_length_in_days %>:</span>
+        <span class="formw"><%= f.text_field :pain_length_in_days %></span>
+      </div>
+    </div>
+
+      
+    <h4>3: Additional Information</h4>
+
+    <div class='input'>
+      <div class="row">
+        <span class="label"><%= f.label :travel_time %>:</span>
+        <span class="formw">Hours: <%= text_field_tag 'patient_travel_time_hours', flash[:patient_travel_time_hours], :size => 2 %> Minutes: <%= text_field_tag 'patient_travel_time_minutes', flash[:patient_travel_time_minutes], :size => 2 %></span>
+      </div>
+      <div class="row">
+        <span class="label"><%= f.label :attended_previous_mom_event, 'Attended previous MoM?' %>:</span>
+        <span class="formw"><%= f.check_box :attended_previous_mom_event %></span>
+        
+        <%= observe_field :patient_attended_previous_mom_event,
+            :on => :changed,
+            :function => "showPreviousMomLocation()"
+            %>
+        
+      </div>
+      <div class="row" style="display:none;" id='previous_mom_location_div'>
+        <span class="label"><%= f.label :previous_mom_event_location, 'Previous MoM location' %>:</span>
+        <span class="formw"><%= f.text_field :previous_mom_event_location %></span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class='input-bottom'>
+    <%= f.submit "Check In" %> | <%= link_to 'Cancel', home_path, :class => 'warning' %>
+  </div>
+<% end %>

@@ -1,0 +1,24 @@
+<h1>Listing providers</h1>
+
+<table>
+  <tr>
+    <th>Number</th>
+    <th>First name</th>
+    <th>Last name</th>
+  </tr>
+
+<% for provider in @providers %>
+  <tr>
+    <td><%=h provider.number %></td>
+    <td><%=h provider.first_name %></td>
+    <td><%=h provider.last_name %></td>
+    <td><%= link_to 'Show', provider %></td>
+    <td><%= link_to 'Edit', edit_provider_path(provider) %></td>
+    <td><%= link_to 'Destroy', provider, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New provider', new_provider_path %> | <%= link_to 'Back', home_path %>

@@ -1,0 +1,43 @@
+<p>
+  <b>Code:</b>
+  <%=h @procedure.code %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @procedure.description %>
+</p>
+
+<p>
+  <b>Automatically add to new patients:</b>
+  <%=h @procedure.auto_add %>
+</p>
+
+<p>
+  <b>Requires tooth number:</b>
+  <%=h @procedure.requires_tooth_number %>
+</p>
+
+<p>
+  <b>Requires surface code:</b>
+  <%=h @procedure.requires_surface_code %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%=h @procedure.procedure_type %>
+</p>
+
+<p>
+  <b>Cost:</b>
+  <%=h @procedure.cost %>
+</p>
+
+<p>
+  <b>Number of surfaces:</b>
+  <%=h @procedure.number_of_surfaces %>
+</p>
+
+
+<%= link_to 'Edit', edit_procedure_path(@procedure) %> |
+<%= link_to 'Back', procedures_path %>

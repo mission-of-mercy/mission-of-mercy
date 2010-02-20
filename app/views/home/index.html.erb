@@ -5,11 +5,13 @@
 <% end %>
 
 <% if logged_in? %>
-  <%= if current_user.login == 'admin'
+  <%= if current_user.user_type == UserType::ADMIN
         render :partial => 'admin_index'
-      elsif current_user.login == 'user'
+      elsif current_user.user_type == UserType::CHECKIN
         render :partial => 'user_index'
-      elsif current_user.login.include? 'xray'
+      elsif current_user.user_type == UserType::CHECKOUT
+        # Do Shit
+      elsif current_user.user_type == UserType::XRAY
         render :partial => 'xray_index'
       end
   %>

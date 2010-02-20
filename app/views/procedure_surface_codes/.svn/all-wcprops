@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/mom/!svn/ver/12/app/views/procedure_surface_codes
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/mom/!svn/ver/12/app/views/procedure_surface_codes/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/mom/!svn/ver/12/app/views/procedure_surface_codes/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/mom/!svn/ver/12/app/views/procedure_surface_codes/new.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/mom/!svn/ver/12/app/views/procedure_surface_codes/show.html.erb
+END

@@ -1,0 +1,26 @@
+<h1>Listing prescriptions</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Strength</th>
+    <th>Quantity</th>
+    <th>Dosage</th>
+  </tr>
+
+<% for prescription in @prescriptions %>
+  <tr>
+    <td><%=h prescription.name %></td>
+    <td><%=h prescription.strength %></td>
+    <td><%=h prescription.quantity %></td>
+    <td><%=h prescription.dosage %></td>
+    <td><%= link_to 'Show', prescription %></td>
+    <td><%= link_to 'Edit', edit_prescription_path(prescription) %></td>
+    <td><%= link_to 'Destroy', prescription, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New prescription', new_prescription_path %> | <%= link_to 'Back', home_path %>

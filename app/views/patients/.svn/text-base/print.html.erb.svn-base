@@ -1,0 +1,27 @@
+<% title 'Print' %>
+
+<div id='header'><%= @patient.id %></div>
+
+<table>
+<tr>
+<td rowspan=2 class='column1'><span class='label'><b>Last</b> Name:</span><br/><span class='information'><%= @patient.last_name %></span></td>
+<td rowspan=2 class='column2'><span class='label'><b>First</b> Name:</span><br/><span class='information'><%= @patient.first_name %></span></td>
+<td class='small'><span class='label'>Date of Birth: </span><b><%= @patient.dob %></b></td>
+<td rowspan=2 class='tiny'><span class='label'>Gender:</span><br/><span class='information'><%= @patient.sex %></span></td>
+</tr>
+<tr>
+<td><span class='label'>Age: </span><b><%= @patient.age %></b></td>
+</tr>
+<tr>
+<td><span class='label'>Address:</span><br/><span class='information'><%= @patient.street %></span></td>
+<td><span class='label'>City:</span><br/><span class='information'><%= @patient.city %></span></td>
+<td><span class='label'>State:</span><br/><span class='information'><%= @patient.state %></span></td>
+<td><span class='label'>Zip:</span><br/><span class='information'><%= @patient.zip %></span></td>
+</tr>
+<tr>
+<td><span class='label'>Reason for visit:</span><br/><span class='information'><%= @patient.chief_complaint %></span></td>
+<td><span class='label'>Last dental visit:</span><br/><span class='information'><%= @patient.last_dental_visit %></span></td>
+<td><span class='label'>In pain?:</span><br/><span class='information'><%= @patient.pain? ? 'Yes' : 'No' %></span></td>
+<td><span class='label'>Days in pain:</span><br/><span class='information'><%= @patient.pain_length_in_days %></span></td>
+</tr>
+</table>
