@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
     if user_type == UserType::ADMIN
       root_path
     elsif user_type == UserType::CHECKIN
-      new_patients_path
+      new_patient_path
     elsif user_type == UserType::XRAY
       patients_path
     end

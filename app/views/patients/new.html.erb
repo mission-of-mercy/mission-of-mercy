@@ -4,10 +4,11 @@
 //<![CDATA[
 	onload = function()
 	{
-		document.getElementById('patient_first_name').focus();
+		$('patient_first_name').focus();
     
     <% if @last_patient != nil %>
     openInBackground('/patients/<%= @last_patient.id %>/print');
+    Modalbox.show($('last_patient'), {title: this.title, width: 300});
     <% end %>
 	}
 //]]>
@@ -136,3 +137,11 @@
     <%= f.submit "Check In" %> | <%= link_to_function 'Reset Form', "if (confirm('Are you sure you wish to reset this form?')) $('new_patient').reset();", :class => 'warning' %>
   </div>
 <% end %>
+
+<div id="last_patient" style="display:none;">
+  <h3>Patient was successfully created.</h3>
+  <h1>Chart # <%= @last_patient.id if @last_patient %></h1>
+  <h3>
+    <%= link_to_function "Continue", "Modalbox.hide(); $('patient_first_name').focus(); return false;" %>
+  </h3>
+</div>

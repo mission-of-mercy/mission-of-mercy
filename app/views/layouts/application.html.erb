@@ -6,8 +6,9 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title>Mission of Mercy - <%= yield(:title) || controller_name.humanize %></title>
   
-  <%= stylesheet_link_tag('default', :media => :screen) %>
-  <%= javascript_include_tag :defaults %>
+  <%= javascript_include_tag :defaults, 'modalbox.js' %>
+  <%= stylesheet_link_tag 'default' %>
+  <%= stylesheet_link_tag 'modalbox' %>
   
 </head>
 <body <%= body_css %>>

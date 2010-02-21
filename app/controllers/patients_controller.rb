@@ -99,7 +99,7 @@ class PatientsController < ApplicationController
     respond_to do |format|
       if @patient.save
         
-        flash[:notice] = 'Patient was successfully created. (Chart # ' + @patient.id.to_s + ')'
+        #flash[:notice] = 'Patient was successfully created. (Chart # ' + @patient.id.to_s + ')'
         flash[:last_patient_id] = @patient.id
         
         format.html { redirect_to(new_patient_path) }
@@ -136,7 +136,7 @@ class PatientsController < ApplicationController
     
     # Save Exported Time
     #@patient.exported_to_dexis = DateTime.now
-    #@patient.save
+    #w@patient.save
     
     respond_to do |format|
       format.js
