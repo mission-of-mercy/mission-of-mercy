@@ -10,7 +10,7 @@
       elsif current_user.user_type == UserType::CHECKIN
         render :partial => 'user_index'
       elsif current_user.user_type == UserType::CHECKOUT
-        # Do Shit
+        render :partial => 'checkout_index'
       elsif current_user.user_type == UserType::XRAY
         render :partial => 'xray_index'
       end

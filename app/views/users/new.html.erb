@@ -6,14 +6,19 @@
 <p><%= label_tag 'login' %><br/>
 <%= f.text_field :login %></p>
 
-<p><%= label_tag 'name' %><br/>
-<%= f.text_field :name %></p>
+<p><%= label_tag :user_type, "Type" %><br/>
+<%= f.select :user_type, UserType.each  {|k,v| [k,v] } %></p>
 
 <p><%= label_tag 'password' %><br/>
 <%= f.password_field :password %></p>
 
 <p><%= label_tag 'password_confirmation', 'Confirm Password' %><br/>
 <%= f.password_field :password_confirmation %></p>
+
+<p>
+  <%= f.label :x_ray_station_id %><br/>
+  <%= f.select :x_ray_station_id, (1..6).map {|v| [v,v] }%>
+</p>
 
 <p><%= submit_tag 'Create' %></p>
 <% end -%>
