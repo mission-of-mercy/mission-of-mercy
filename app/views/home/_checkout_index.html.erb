@@ -1,5 +1,7 @@
-<p>
-  <span style="padding-left: 17px;"><%= link_to image_tag("CheckOut.png",
-                :align => "absmiddle",
-                :border => 0) , patients_path %></span><%= link_to 'Check Out', patients_path, :class => 'main' %>
-</p>
+<h3>Please select your treatment area:</h3>
+
+<% TreatementArea.all.each do |area| %>
+  <p>
+    <%= link_to area.name, patients_path(:treatement_area_id => area.id) %>
+  </p>
+<% end %>

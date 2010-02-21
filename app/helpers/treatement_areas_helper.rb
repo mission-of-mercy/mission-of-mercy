@@ -1,0 +1,2 @@
+module TreatementAreasHelper
+end

@@ -19,6 +19,10 @@ ActionController::Routing::Routes.draw do |map|
   #map.resources :procedure_surface_codes
 
   #map.resources :procedure_tooth_numbers
+  
+  map.treatement_area_checkout '/treatement_areas/:id/checkout/:patient_id', :controller => "treatement_areas", :action => "check_out"
+  
+  map.resources :treatement_areas
 
   map.resources :procedures
 

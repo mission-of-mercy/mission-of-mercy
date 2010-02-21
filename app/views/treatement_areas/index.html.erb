@@ -1,0 +1,25 @@
+<% title 'Treatment Areas' %>
+
+<h1>Treatment Areas</h1>
+
+<hr>
+
+<table>
+<tr>
+  <th>Name</th>
+  <th>Controls</th>
+</tr>
+
+<% @areas.each do |area| %>
+<tr class='<%= cycle('even', 'odd') %>'>
+  <td><%= area.name %></td>
+  <td><%= link_to 'Edit', edit_treatement_area_path(area) %></td>
+</tr>
+
+<% end %>
+
+</table>
+
+<p>
+<%= link_to 'New', new_treatement_area_path %> | <%= link_to 'Back', home_path %>
+</p>

@@ -1,0 +1,6 @@
+<% title "#{@treatement_area.name} - Check out" %>
+
+<% header do %>
+  <h1><%= image_tag "logo_small.png" %> <%= "#{@treatement_area.name} Check out" %></h1>
+  <%= @patient.full_name %> | Chart # <%= @patient.id %>
+<% end %>

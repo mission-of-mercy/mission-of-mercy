@@ -17,6 +17,7 @@
 <hr>
 
 <% form_tag patients_path, :method => 'get' do %>
+	<%= hidden_field_tag :treatement_area_id, @area %>
 	<p>
     <%= label_tag :chart_number %>: 
 		<%= text_field_tag :chart_number, params[:chart_number] %>
@@ -68,7 +69,7 @@
     </td>
     <% end %>
     <% if current_user.user_type == UserType::CHECKOUT %>
-    <td><%= link_to 'Check Out', check_out_radiology_path(patient) %></td>
+    <td><%= link_to 'Check Out', treatement_area_checkout_path(:id => @area, :patient_id => patient.id) %></td>
     <% end %>
     <% if current_user.user_type == UserType::ADMIN %>
     <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
