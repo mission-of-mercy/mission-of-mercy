@@ -10,11 +10,9 @@
 //]]>
 </script>
 
+<% header do %>
 <h1><%= image_tag "logo_small.png" %> Patients</h1>
-
-<p style="font-style: italic"><%= flash[:notice] %></p>
-
-<hr>
+<% end %>
 
 <% form_tag patients_path, :method => 'get' do %>
 	<%= hidden_field_tag :treatement_area_id, @area %>
@@ -31,7 +29,7 @@
 	</p>
 <% end %>
 
-
+<% if @patients.length > 0 %>
 <table id='patient_table'>
   <tr>
     <th>Chart #</th>
@@ -82,8 +80,7 @@
 
 <%= will_paginate @patients %>
 
-<br />
-<% if current_user.login == 'user' %>
-<%= link_to 'Check In', new_patient_path %> | 
+<br/>
 <% end %>
+
 <%= link_to 'Back', home_path %>

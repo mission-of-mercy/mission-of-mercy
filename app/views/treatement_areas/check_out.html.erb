@@ -1,6 +1,8 @@
 <% title "#{@treatement_area.name} - Check out" %>
 
 <% header do %>
-  <h1><%= image_tag "logo_small.png" %> <%= "#{@treatement_area.name} Check out" %></h1>
+  <h1><%= image_tag "logo_small.png" %> <%= @treatement_area.name %> Check out</h1>
   <%= @patient.full_name %> | Chart # <%= @patient.id %>
 <% end %>
+
+  <%= button_to 'Next', "#"%> <%= link_to 'Cancel', patients_path(:treatement_area_id => @treatement_area.id), :class => 'warning' %>

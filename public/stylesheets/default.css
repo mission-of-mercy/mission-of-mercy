@@ -152,6 +152,11 @@ table, tr, th, td{
 	border-collapse: collapse;
 }
 
+th{
+	color: white;
+	background-color: #4b7399;
+}
+
 #contents td, th {
   padding: 2px 6px;
 }

@@ -14,11 +14,9 @@
 //]]>
 </script>
 
+<% header do %>
 <h1><%= image_tag "logo_small.png" %> Patient Check In</h1>
-
-<p style="font-style: italic"><%= flash[:notice] %></p>
-
-<hr>
+<% end %>
 
 <% form_for(@patient) do |f| %>
   <%= f.error_messages %>
