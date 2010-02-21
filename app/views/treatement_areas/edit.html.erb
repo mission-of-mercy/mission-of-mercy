@@ -1,2 +1,11 @@
-<h1>TreatementAreas#edit</h1>
-<p>Find me in app/views/treatement_areas/edit.html.erb</p>
+<% title "Edit Treatment Area" %>
+
+<% header do %>
+<h1>Edit Treatment Area</h1>
+<% end %>
+
+<% form_for @treatement_area, :method => :put do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+<% end %>
+
+<%= link_to 'Cancel', treatement_areas_path %>

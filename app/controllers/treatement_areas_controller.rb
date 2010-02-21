@@ -23,6 +23,17 @@ class TreatementAreasController < ApplicationController
   def edit
     @treatement_area = TreatementArea.find(params[:id])
   end
+  
+  def update
+    @treatement_area = TreatementArea.find(params[:id])
+
+    if @treatement_area.update_attributes(params[:treatement_area])
+      flash[:notice] = 'Treatment Area was successfully updated.'
+      redirect_to treatement_areas_path
+    else
+      render :action => "edit" 
+    end
+  end
 
   def show
     @treatement_area = TreatementArea.find(params[:id])
