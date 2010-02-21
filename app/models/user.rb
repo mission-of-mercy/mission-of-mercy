@@ -51,7 +51,11 @@ class User < ActiveRecord::Base
   end
   
   def name
-    login.humanize
+    if user_type == UserType::XRAY
+      "#{login.humanize} Station # #{x_ray_station_id}"
+    else
+      login.humanize
+    end
   end
   
   def start_path
@@ -59,6 +63,8 @@ class User < ActiveRecord::Base
       root_path
     elsif user_type == UserType::CHECKIN
       new_patients_path
+    elsif user_type == UserType::XRAY
+      patients_path
     end
   end
 

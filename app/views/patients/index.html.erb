@@ -50,16 +50,16 @@
     <td><%=h patient.dob %></td>
     <td><%=h patient.age %></td>
     <td><%=h patient.sex %></td>
-    <% if current_user.login.include? 'xray' %>
+    <% if current_user.user_type == UserType::XRAY %>
     <td>
     <%= link_to_remote ["<span id='export_",patient.id,"'>Export Dexis File</span>"].join(), 
                         :url  => { :controller => 'patients',
                                   :action => 'export_to_dexis_file', 
                                   :patient_id => patient.id },
                         :before => "Element.show('" + ['export_spinner_',patient.id].join() + 
-                        "'); Element.hide('" + ['export_',patient.id].join() + "')" %>
+                        "'); $('" + ['export_',patient.id].join() + "').hide();" %>
 
-      <%= image_tag("spinner.gif",
+      <%= image_tag("loading.gif",
               :align => "absmiddle",
               :border => 0,
               :id => ['export_spinner_',patient.id].join(),
@@ -67,10 +67,10 @@
               
     </td>
     <% end %>
-    <% if current_user.login == 'user' %>
+    <% if current_user.user_type == UserType::CHECKOUT %>
     <td><%= link_to 'Check Out', check_out_radiology_path(patient) %></td>
     <% end %>
-    <% if current_user.login == 'admin' %>
+    <% if current_user.user_type == UserType::ADMIN %>
     <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
     <td><%= link_to 'Print', {:controller => 'patients', :action => 'print', :id => patient.id}, :popup => true %>
     <td><%= link_to 'Destroy', patient, :confirm => 'Are you sure?', :method => :delete %></td>

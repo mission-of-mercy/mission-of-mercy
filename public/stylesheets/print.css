@@ -1,0 +1,48 @@
+body{
+	font: 9pt verdana, arial, helvetica, sans-serif;
+}
+
+#header{
+	width: 100%;
+	text-align: right;
+	color: black;
+	font-size: 45px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+table
+{
+	width: 100%;
+}
+
+table, tr, th, td
+{
+	border: 1px solid black;
+	border-collapse: collapse;
+	vertical-align: top
+}
+	
+span.information{
+	font-size: 12pt;
+	font-weight: bold;
+}
+
+span.label{
+	color: gray;
+}
+
+td.small{
+	width: 175px;
+}
+
+td.tiny{
+	width: 100px;
+}
+
+/*td.column1{
+	width: 50%;
+}
+td.column2{
+	width: 50%;
+}*/

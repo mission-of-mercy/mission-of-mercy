@@ -72,11 +72,11 @@ class PatientsController < ApplicationController
   def create
     @patient = Patient.new(params[:patient])
     
-    @patient.check_in = DateTime.now
+    #@patient.check_in = DateTime.now
     
-    add_prescriptions_to_patient(@patient)
+    #add_prescriptions_to_patient(@patient)
     
-    add_procedures_to_patient(@patient)
+    #add_procedures_to_patient(@patient)
     
     if params[:race_other] != nil && @patient.race == "Other"
       @patient.race = params[:race_other]
@@ -121,11 +121,11 @@ class PatientsController < ApplicationController
     testPath = "/Users/byron/Desktop/"
     livePath = "/srv/samba/share/"
     
-    if !production?
+    unless production?
       livePath = testPath
     end
     
-    @path = [livePath,"passtodex",current_user.station.to_s,".dat"].join()
+    @path = [livePath,"passtodex",current_user.x_ray_station_id.to_s,".dat"].join()
     f = File.new(@path, "w")
     f.write(["PN=", @patient.id.to_s, "\r\n"].join())
     f.write(["LN=", @patient.last_name, "\r\n"].join())
@@ -135,8 +135,8 @@ class PatientsController < ApplicationController
     f.close
     
     # Save Exported Time
-    @patient.exported_to_dexis = DateTime.now
-    @patient.save
+    #@patient.exported_to_dexis = DateTime.now
+    #@patient.save
     
     respond_to do |format|
       format.js
