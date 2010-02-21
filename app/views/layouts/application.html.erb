@@ -19,7 +19,7 @@
         <%= yield  %>
       </div>
       <div id="footer">
-         Copyright &copy; 2010 Integrity Systems & Solutions and Duck Soup Software<% if !production? %><br />(Work in progress.)<% end %>
+         Copyright &copy; 2010 <%= integrity_about %> and <%= dss_about %><% if !production? %><br />(Work in progress.)<% end %>
       </div>
       <div id="footer-version">
         <% if !production? %>
@@ -31,8 +31,8 @@
     </div>
   </div>
   
-  <div id="integrity" class="simple_overlay">
-    <h1>Integrity Systems & Solutions</h1>
+  <div id="integrity" class="about" style="display:none;">
+    <!-- <h1>Integrity Systems & Solutions</h1> -->
     <%= image_tag "Integrity.png "%>
     <h3>Integrity makes the difference</h3>
     Integrity Systems & Solutions, LLC is a New England-based technology support company that specializes in integrating and supporting technology built around your needs. With over twelve years experience in technology support and guidance, we've earned a reputation for honesty, commitment, reliability, and creativity.
@@ -40,8 +40,8 @@
       Whether you're a dentist  looking to implement practice management or digital x-ray technology, a doctor  looking to utilize electronic medical records, or a small business owner  who needs to increase operational efficiency, Integrity specializes in supporting you.
   </div>
 
-  <div id="dss" class="simple_overlay">
-    <h1>Duck Soup Software</h1>
+  <div id="dss" class="about" style="display:none;">
+    <!-- <h1>Duck Soup Software</h1> -->
     <%= image_tag "DSS.png "%>
     <h3>Simple software solving complex problems</h3>
     Software based solutions have come far from their humble roots. Unfortunately as they have evolved they have also become increasingly difficult to use. Duck Soup Software believes that software can solve complex problems while remaining human-friendly.

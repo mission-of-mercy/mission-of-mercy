@@ -299,50 +299,12 @@ span.procedure{
 form.button-to{
 	display: inline-block;
 }
-/* the overlayed element */ 
-.simple_overlay { 
-     
-    /* must be initially hidden */ 
-    display:none; 
-     
-    /* place overlay on top of other elements */ 
-    z-index:10000; 
-     
-    /* styling */ 
-    background-color:#333; 
-     
-    width:675px;     
-    min-height:200px; 
-    /*border:3px solid #666;*/ 
-    
-     
-    /* CSS3 styling for latest browsers */ 
-    -moz-box-shadow:0 0 90px 5px #000; 
-    -webkit-box-shadow: 0 0 90px #000;
 
-	color: #dcdbdd;
-	padding: 10px 20px 20px;
-} 
-
-.simple_overlay img{
+div.about img{
 	padding-top: 20px;
 	padding-bottom: 20px;
 	padding-right: 20px;
+	padding-left: 20px;
 	float: left;
 }
 
-.simple_overlay h1{
-	color: #fff;
-	clear: both;
-}
- 
-/* close button positioned on upper right corner */ 
-.simple_overlay .close { 
-    background-image:url(../images/overlay/apple-close.png); 
-    position:absolute; 
-    right:-10px; 
-    top:-10px; 
-    cursor:pointer; 
-    height:28px; 
-    width:28px; 
-}

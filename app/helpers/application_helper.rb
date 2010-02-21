@@ -30,4 +30,22 @@ module ApplicationHelper
       "class='admin'"
     end
   end
+  
+  def integrity_about
+    title = "Integrity Systems & Solutions"
+    
+    link_to_function title, 
+                     about(title, "integrity")
+  end
+  
+  def dss_about
+    title = "Duck Soup Software"
+    
+    link_to_function title, 
+                     about(title, "dss")
+  end
+  
+  def about(title, div_id)
+    "Modalbox.show($('#{div_id}'), {title: 'About #{title}', width: 650}); return false;"
+  end
 end

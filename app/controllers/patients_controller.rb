@@ -99,7 +99,6 @@ class PatientsController < ApplicationController
     respond_to do |format|
       if @patient.save
         
-        #flash[:notice] = 'Patient was successfully created. (Chart # ' + @patient.id.to_s + ')'
         flash[:last_patient_id] = @patient.id
         
         format.html { redirect_to(new_patient_path) }
