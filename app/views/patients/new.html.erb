@@ -8,7 +8,7 @@
     
     <% if @last_patient != nil %>
     openInBackground('/patients/<%= @last_patient.id %>/print');
-    Modalbox.show($('last_patient'), {title: this.title, width: 300});
+    Modalbox.show($('last_patient'), {title: 'Patient\'s Chart Number', width: 300});
     <% end %>
 	}
 //]]>
@@ -127,7 +127,7 @@
       </div>
       <div class="row" style="display:none;" id='previous_mom_location_div'>
         <span class="label"><%= f.label :previous_mom_event_location, 'Previous MoM location' %>:</span>
-        <span class="formw"><%= f.text_field :previous_mom_event_location %></span>
+        <span class="formw"><%= f.select :previous_mom_event_location, ["Tolland, CT", "New Haven, CT"] %></span>
       </div>
     </div>
 
@@ -139,9 +139,8 @@
 <% end %>
 
 <div id="last_patient" style="display:none;">
-  <h3>Patient was successfully created.</h3>
-  <h1>Chart # <%= @last_patient.id if @last_patient %></h1>
-  <h3>
-    <%= link_to_function "Continue", "Modalbox.hide(); $('patient_first_name').focus(); return false;" %>
-  </h3>
+  <h1 style="text-align:center;"><%= @last_patient.chart_number if @last_patient %></h1>
+
+    <%= link_to_function "Check In Next Patient ", "Modalbox.hide(); $('patient_first_name').focus(); return false;", :class => "back" %>
+
 </div>
