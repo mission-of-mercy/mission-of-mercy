@@ -4,6 +4,10 @@
   <%= f.error_messages %>
 
   <p>
+    <%= f.label :treatement_area_id, "Treatment Area" %><br />
+    <%= f.select :treatement_area_id, TreatementArea.all.map {|a| [a.name, a.id]} %>
+  </p>
+  <p>
     <%= f.label :code %><br />
     <%= f.text_field :code %>
   </p>

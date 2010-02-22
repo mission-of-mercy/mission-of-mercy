@@ -1,5 +1,5 @@
 class TreatementAreasController < ApplicationController
-  before_filter :admin_required, :except => [:check_out]
+  before_filter :admin_required, :except => [:check_out, :check_out_post]
   before_filter :login_required
   
   def index
@@ -42,6 +42,16 @@ class TreatementAreasController < ApplicationController
   def check_out
     @treatement_area = TreatementArea.find(params[:id])
     @patient         = Patient.find(params[:patient_id])
+    
+    @treatement_area.procedures.each do |p|
+      @patient.patient_procedures.build(:procedure_id => p.id)
+    end
   end
 
+  def check_out_post
+    
+    
+    flash[:notify] = "Patient Successfully Checked Out"
+    redirect_to patients_path(:treatement_area_id => @treatement_area.id)
+  end
 end

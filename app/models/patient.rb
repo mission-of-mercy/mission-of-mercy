@@ -1,4 +1,11 @@
 class Patient < ActiveRecord::Base
+  has_many :patient_prescriptions
+  has_many :patient_procedures 
+  has_many :procedures, :through => :patient_procedures
+  has_many :prescriptions, :through => :patient_prescriptions
+  
+  accepts_nested_attributes_for :patient_procedures
+  
   validates_presence_of :first_name, :last_name, :date_of_birth, :sex, :race, :chief_complaint, :last_dental_visit, :travel_time, :city, :state
 
   def self.time_zone_aware_attributes
