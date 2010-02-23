@@ -28,7 +28,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/treatement_areas/:id/checkout/:patient_id', 
               :controller => "treatement_areas", 
               :action => "check_out_post",
-              :conditions => { :method => :post }
+              :conditions => { :method => :put }
   
   map.resources :treatement_areas
 

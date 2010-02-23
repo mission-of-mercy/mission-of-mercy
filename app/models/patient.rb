@@ -48,4 +48,8 @@ class Patient < ActiveRecord::Base
   def date_of_birth_dexis
     date_of_birth.strftime("%d.%m.%Y")
   end
+  
+  def procedures_grouped
+    patient_procedures.group_by(&:procedure)
+  end
 end

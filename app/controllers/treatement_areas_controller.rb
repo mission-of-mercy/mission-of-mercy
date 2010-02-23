@@ -43,15 +43,20 @@ class TreatementAreasController < ApplicationController
     @treatement_area = TreatementArea.find(params[:id])
     @patient         = Patient.find(params[:patient_id])
     
-    @treatement_area.procedures.each do |p|
-      @patient.patient_procedures.build(:procedure_id => p.id)
-    end
+    #@treatement_area.procedures.each do |p|
+    #  @patient.patient_procedures.build(:procedure_id => p.id)
+    #end
   end
 
   def check_out_post
+    @treatement_area = TreatementArea.find(params[:id])
+    @patient         = Patient.find(params[:patient_id])
     
-    
-    flash[:notify] = "Patient Successfully Checked Out"
-    redirect_to patients_path(:treatement_area_id => @treatement_area.id)
+    if @patient.update_attributes(params[:patient])
+      flash[:notice] = "Patient Successfully Checked Out"
+      redirect_to patients_path(:treatement_area_id => @treatement_area.id)
+    else
+      render :action => :check_out
+    end
   end
 end

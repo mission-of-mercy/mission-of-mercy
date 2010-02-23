@@ -1,0 +1,11 @@
+%div.procedure
+  = p.hidden_field :procedure_id
+  = p.object.procedure.full_description
+  - if p.object.procedure.requires_tooth_number
+    = p.label :tooth_number
+    = p.text_field :tooth_number
+  
+  = p.label :provider_id
+  = p.text_field :provider_id
+  
+  = remove_procedure_link(image_tag("delete.png", :class => "side_image"), p)
