@@ -55,3 +55,21 @@ function showPreviousMomLocation()
 function openInBackground(url){
    window.open(url); self.focus();
 }
+
+function showCheckoutFields(tooth, surface){
+  if(tooth){
+    $('tooth_dt').show(); 
+    $('tooth_dd').show();
+  }else{
+    $('tooth_dt').hide(); 
+    $('tooth_dd').hide();
+  }
+  
+  if(surface){
+    $('surface_dt').show(); 
+    $('surface_dd').show();
+  }else{
+    $('surface_dt').hide(); 
+    $('surface_dd').hide();
+  }
+}

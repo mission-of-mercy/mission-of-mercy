@@ -7,6 +7,8 @@ class PatientProcedure < ActiveRecord::Base
   validates_format_of :surface_code, :with => /\A[F,L,O,M,D,I,B]+\Z/, :message => "must be valid (Only F,L,O,M,D,I,B)", :allow_blank => true
   validate :procedure_requirements
   
+  attr_accessor :code
+  
   def self.time_zone_aware_attributes
    false
   end

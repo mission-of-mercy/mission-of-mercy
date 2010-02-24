@@ -122,14 +122,7 @@ class PatientProceduresController < ApplicationController
     @patient_procedure.destroy
 
     respond_to do |format|
-    	
-      if params[:return] == "radiology"
-        format.html { redirect_to(check_out_radiology_path(@patient_procedure.patient)) }
-      elsif params[:return] == "amalgam_composite"
-        format.html { redirect_to(check_out_amalgam_composite_path(@patient_procedure.patient)) }
-      elsif params[:return] == "procedure"
-        format.html { redirect_to(check_out_procedures_path(@patient_procedure.patient)) }
-      end
+    	format.js
     end
   end
 end

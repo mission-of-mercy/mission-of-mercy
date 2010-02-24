@@ -132,7 +132,7 @@
   </div>
 
   <div class='input-bottom'>
-    <%= f.submit "Check In" %> | <%= link_to_function 'Reset Form', "if (confirm('Are you sure you wish to reset this form?')) $('new_patient').reset();", :class => 'warning' %>
+    <%= f.submit "Check In" %> | <%= link_to_reset 'patient_form' %>
   </div>
 <% end %>
 

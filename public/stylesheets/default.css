@@ -235,6 +235,10 @@ img.side_image{
 	vertical-align: middle;
 }
 
+img.right{
+	float: right;
+}
+
 img.table_image{
 	display: block;
     margin-left: auto;
@@ -259,6 +263,11 @@ div.input-right{
 
 div.input{
 	/*margin-left: 25px;*/
+}
+
+div.input-top{
+	margin-top: -10px;
+	margin-bottom: 20px;
 }
 
 div.input-bottom{
@@ -340,4 +349,26 @@ padding: 10px;
 a.add:hover{
 	color: #fffefe;
 	background-color: #0033CC;
+}
+
+div.procedure{	font-size:14px;	margin-bottom:6px;	margin-top:6px;	padding:4px;	width:375px;
+	color: #535353;
+}
+
+div.procedure.odd{
+	background-color: #f1f5fa;
+}
+
+div.procedure:hover{
+	color: #fffefe;
+	background-color: #0033CC;
+}
+
+form dt {   clear:both;   width:33%;   float:left;   text-align: left;}form dd {   float:left;   width:66%;   margin:0 0 0.5em 0.25em;}
+
+div .check_out{
+	text-align:right; 
+	padding-bottom: 6px; 
+	padding-right: 6px; 
+	border-top: 1px solid gray;
 }

@@ -28,11 +28,13 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/treatement_areas/:id/checkout/:patient_id', 
               :controller => "treatement_areas", 
               :action => "check_out_post",
-              :conditions => { :method => :put }
+              :conditions => { :method => :post }
   
   map.resources :treatement_areas
 
   map.resources :procedures
+  
+  map.resources :patient_procedures
 
   map.resources :patients, :has_many => [:patient_prescriptions,:patient_procedures]
   

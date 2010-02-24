@@ -4,18 +4,45 @@
   %h1= image_tag("logo_small.png") + " #{@treatement_area.name} Check out"
   = "#{@patient.full_name} | Chart # #{@patient.id}"
 
-- form_for @patient, :url => treatement_area_checkout_path(:id => @treatement_area, :patient_id => @patient) do |f|
-  = f.hidden_field :id
-  = f.error_messages
-  
-  - @treatement_area.procedures.each do |procedure|
-    %div{:id => procedure.id}
-      - @patient.patient_procedures.find(:all, :conditions => {:procedure_id => procedure.id}).each do |pp|
-        - f.fields_for :patient_procedures, pp do |p|
-          = render :partial => "procedure", :locals => {:procedure => pp, :p => p }
-    %p
-      = add_procedure_link image_tag("add.png", :class => "side_image") + " Add #{procedure.full_description}", procedure, f
+%div.input-left{:style => "width: 450px;"}
+  %h4 New Procedure
 
-  %p
-    = f.submit "Check out" 
-    = link_to 'Cancel', patients_path(:treatement_area_id => @treatement_area.id), :class => 'warning'
+  - form_for @patient_procedure, :url => treatement_area_checkout_path(:id => @treatement_area, :patient_id => @patient) do |f|
+    = f.error_messages
+    = f.hidden_field :patient_id
+  
+    %dl
+      %dt Procedure:
+      %dd
+        - @treatement_area.procedures.each do |procedure|
+          = procedure_radio procedure, f
+          = f.label :procedure_id, procedure.full_description, :value => procedure.id
+          %br
+      %dt= f.label :provider_id, "Provider:"
+      %dd= f.text_field :provider_id, :value => flash[:last_provider_id]
+      %dt{:id => "tooth_dt", :style => tooth_visible(@patient_procedure)}
+        = f.label :tooth_number, "Tooth Number:"
+      %dd{:id => "tooth_dd", :style => tooth_visible(@patient_procedure)}
+        = f.text_field :tooth_number
+      %dt{:id => "surface_dt", :style => surface_visible(@patient_procedure)}
+        = f.label :surface_code, "Surface Code:"
+      %dd{:id => "surface_dd", :style => surface_visible(@patient_procedure)}
+        = f.text_field :surface_code
+  
+    %p
+      = f.submit "Add Procedure" 
+      = link_to_reset "new_patient_procedure"
+    
+%div.input-right
+  %h4 Entered Procedures
+  
+  - @patient.patient_procedures.each do |p|
+    - unless p.new_record?
+      %div{:id => "procedure_#{p.id}", :class => "procedure #{cycle('','odd')}"}
+        = p.full_description
+        = remove_procedure(p)
+        = image_tag "spinner.gif", :class => "side_image right", :style => "display:none;", :id => "loading_#{p.id}"
+  
+%div.input-bottom{:class => "check_out"}
+  = button_to "Finish", patients_path(:treatement_area_id => @treatement_area.id)
+  = link_to 'Cancel', patients_path(:treatement_area_id => @treatement_area.id), :class => 'warning'

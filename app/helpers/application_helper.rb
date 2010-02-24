@@ -48,4 +48,10 @@ module ApplicationHelper
   def about(title, div_id)
     "Modalbox.show($('#{div_id}'), {title: 'About #{title}', width: 650}); return false;"
   end
+  
+  def link_to_reset(form_id)
+    link_to_function 'Reset Form', 
+                     "if (confirm('Are you sure you wish to reset this form?')) $('#{form_id}').reset();", 
+                     :class => 'warning'
+  end
 end
