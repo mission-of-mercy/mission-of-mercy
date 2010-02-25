@@ -18,6 +18,12 @@
           = procedure_radio procedure, f
           = f.label :procedure_id, procedure.full_description, :value => procedure.id
           %br
+        = procedure_other_radio f
+        = f.label :procedure_id, "Other Procedure", :value => "other"
+      %dt{:id => "other_dt", :style => "display:none;"}
+        = f.label :code, "Procedure Code:"
+      %dd{:id => "other_dd", :style => "display:none;"}
+        = f.text_field :code
       %dt= f.label :provider_id, "Provider:"
       %dd= f.text_field :provider_id, :value => flash[:last_provider_id]
       %dt{:id => "tooth_dt", :style => tooth_visible(@patient_procedure)}
@@ -25,7 +31,7 @@
       %dd{:id => "tooth_dd", :style => tooth_visible(@patient_procedure)}
         = f.text_field :tooth_number
       %dt{:id => "surface_dt", :style => surface_visible(@patient_procedure)}
-        = f.label :surface_code, "Surface Code:"
+        = f.label :surface_code, "Surface Code(s):"
       %dd{:id => "surface_dd", :style => surface_visible(@patient_procedure)}
         = f.text_field :surface_code
   

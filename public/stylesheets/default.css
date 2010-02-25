@@ -364,7 +364,7 @@ div.procedure:hover{
 	background-color: #0033CC;
 }
 
-form dt {   clear:both;   width:33%;   float:left;   text-align: left;}form dd {   float:left;   width:66%;   margin:0 0 0.5em 0.25em;}
+form dt {   clear:both;   width:33%;   float:left;   text-align: left;}form dd {   float:left;   width:66%;   margin: 0 0 1em 0.25em;}
 
 div .check_out{
 	text-align:right; 

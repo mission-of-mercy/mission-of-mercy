@@ -56,10 +56,12 @@ function openInBackground(url){
    window.open(url); self.focus();
 }
 
-function showCheckoutFields(tooth, surface){
+function showCheckoutFields(tooth, surface, code){
   if(tooth){
     $('tooth_dt').show(); 
     $('tooth_dd').show();
+
+    new Effect.Highlight("tooth_dt");
   }else{
     $('tooth_dt').hide(); 
     $('tooth_dd').hide();
@@ -68,8 +70,20 @@ function showCheckoutFields(tooth, surface){
   if(surface){
     $('surface_dt').show(); 
     $('surface_dd').show();
+    
+    new Effect.Highlight("surface_dt");
   }else{
     $('surface_dt').hide(); 
     $('surface_dd').hide();
+  }
+  
+  if(code){
+    $('other_dt').show(); 
+    $('other_dd').show();
+    
+    new Effect.Highlight("other_dt");
+  }else{
+    $('other_dt').hide(); 
+    $('other_dd').hide();
   }
 }

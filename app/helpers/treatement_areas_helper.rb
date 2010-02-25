@@ -6,7 +6,11 @@ module TreatementAreasHelper
   def procedure_radio(procedure, form_builder)
     form_builder.radio_button :procedure_id, 
                                procedure.id,
-                              :onchange => "showCheckoutFields(#{procedure.requires_tooth_number},#{procedure.requires_surface_code});"
+                              :onchange => "showCheckoutFields(#{procedure.requires_tooth_number},#{procedure.requires_surface_code}, false);"
+  end
+  
+  def procedure_other_radio(form_builder)
+    form_builder.radio_button :procedure_id, "other", :onchange => "showCheckoutFields(true,true, true);"
   end
   
   def tooth_visible(patient_procedure)

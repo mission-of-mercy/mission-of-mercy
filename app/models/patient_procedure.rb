@@ -1,6 +1,7 @@
 class PatientProcedure < ActiveRecord::Base
   belongs_to :patient
   belongs_to :procedure
+  before_validation_on_create :load_procedure_from_code
   
   validates_presence_of :provider_id, :procedure_id, :message => "invalid"
   validates_format_of :tooth_number, :with => /\A[A-T]\Z|\A[1-9]\Z|\A[1-2][0-9]\Z|\A3[0-2]\Z/, :message => "must be valid (A-T or 1-32)", :allow_blank => true
@@ -34,6 +35,14 @@ class PatientProcedure < ActiveRecord::Base
       if procedure.requires_surface_code && (surface_code == nil || surface_code.blank?)
         errors.add_to_base("Surface code can't be blank") # unless commenter.friend_of?(commentee)
       end
+    end
+  end
+  
+  private 
+  
+  def load_procedure_from_code
+    if !self.code.nil? and self.procedure_id == 0
+      self.procedure = Procedure.find_by_code(self.code)
     end
   end
 end
