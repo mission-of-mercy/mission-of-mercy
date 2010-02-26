@@ -1,4 +1,6 @@
 class Patient < ActiveRecord::Base
+  before_save :update_survey
+  
   has_many :patient_prescriptions
   has_many :patient_procedures 
   has_many :procedures, :through => :patient_procedures
@@ -53,5 +55,20 @@ class Patient < ActiveRecord::Base
   
   def procedures_grouped
     patient_procedures.group_by(&:procedure)
+  end
+  
+  private
+  
+  def update_survey
+    if self.survey
+      self.survey.city                = city
+      self.survey.state               = state
+      self.survey.zip                 = zip
+      self.survey.age                 = age
+      self.survey.sex                 = sex
+      self.survey.race                = race
+      self.survey.pain                = pain
+      self.survey.pain_length_in_days = pain_length_in_days 
+    end
   end
 end

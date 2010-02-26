@@ -15,6 +15,15 @@
   %p
     = f.check_box :tobacco_use
     = f.label :tobacco_use
+  
+  %h4 Were you told today that you needed more dental treatment? (another cavity filled, a root canal etc.)
+  
+  %p
+    = f.radio_button :told_needed_more_dental_treatment, true
+    = f.label :told_needed_more_dental_treatment, "Yes", :value => true
+    = f.radio_button :told_needed_more_dental_treatment, false
+    = f.label :told_needed_more_dental_treatment, "No", :value => false
+    
     
   %h4 Rating of services received today
   

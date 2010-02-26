@@ -256,9 +256,21 @@ div.input-left{
 	padding-right: 15px;
 }
 
+div.input-left.no_border{
+	padding-right: 0px;
+	margin-right: 15px;
+	border-right-style: none;
+}
+
 div.input-right{
 	display: inline-block;
 	margin-left: 15px;
+}
+
+div.input-right.border{
+	border-left: 1px solid gray;
+	margin-left: 0px;
+	padding-left: 15px;
 }
 
 div.input{

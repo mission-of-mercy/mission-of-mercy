@@ -143,7 +143,8 @@
     <h4>4: Survey Questions</h4>
     
     <div style="padding-left: 20px; padding-bottom: 20px;">
-    <% f.fields_for :survey do |s| %>
+    <% f.fields_for :survey do |s| %>      
+    
      <p>
        <%= s.label :heard_about_clinic, 'How did you hear about the clinic?', :class => 'question' %><br/>
        <div class='input'>

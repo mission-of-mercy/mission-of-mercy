@@ -4,7 +4,7 @@
   %h1= image_tag("logo_small.png") + " #{@treatement_area.name} Checkout"
   = "#{@patient.full_name} | Chart # #{@patient.id}"
 
-%div.input-left{:style => "width: 450px;"}
+%div.input-left.no_border{:style => "width: 450px;"}
   %h4 New Procedure
 
   - form_for @patient_procedure, :url => treatement_area_checkout_path(:id => @treatement_area, :patient_id => @patient) do |f|
@@ -38,8 +38,8 @@
     %p
       = f.submit "Add Procedure" 
       = link_to_reset "new_patient_procedure"
-    
-%div.input-right
+
+%div.input-right.border
   %h4 Entered Procedures
   
   - @patient.patient_procedures.each do |p|
@@ -48,6 +48,16 @@
         = p.full_description
         = remove_procedure(p)
         = image_tag "spinner.gif", :class => "side_image right", :style => "display:none;", :id => "loading_#{p.id}"
+  - if @patient.patient_procedures.length == 1
+    %div{:style => "width:375px; padding-left:4px;"}
+      %p
+        There are currently no procedures entered for this patient.
+      %p
+        To enter a procedure fill out the form to the right and click
+        %b Add Procedure
+      %p
+        Once all procedures have been entered click
+        %b Finish
   
 %div.input-bottom{:class => "check_out"}
   = link_to "Finish", patients_path(:treatement_area_id => @treatement_area.id, :message => "Patient successfully checked out"), :class => "general"
