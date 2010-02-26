@@ -91,3 +91,22 @@ function showCheckoutFields(tooth, surface, code){
     $('patient_procedure_provider_id').focus();
   }
 }
+
+function showPatientDemographics()
+{
+  $('demographics').show();
+  $('bottom_demographics').show();
+  $('survey').hide();
+  $('bottom_survey').hide();
+  
+  return false;
+}
+
+function showPatientSurvey(){
+  $('demographics').hide();
+  $('bottom_demographics').hide();
+  $('survey').show();
+  $('bottom_survey').show();
+  
+  return false;
+}

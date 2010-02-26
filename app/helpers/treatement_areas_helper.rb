@@ -30,4 +30,18 @@ module TreatementAreasHelper
                    :confirm => "Are you sure you wish to remove this procedure?",
                    :before => "$(this).hide(); $('loading_#{patient_procedure.id}').show();"
   end
+  
+  def link_to_previous(area, patient)
+    if patient.survey
+      path = treatement_area_pre_checkout_path(:id => area, :patient_id => patient.id)
+      text = "Back"
+      css  = "back"
+    else
+      path = patients_path(:treatement_area_id => area.id)
+      text = "Cancel"
+      css  = "warning"
+    end
+    
+    link_to text, path, :class => css
+  end
 end

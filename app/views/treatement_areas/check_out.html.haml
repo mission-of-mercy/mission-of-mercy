@@ -1,7 +1,7 @@
-- title "#{@treatement_area.name} - Check out"
+- title "#{@treatement_area.name} - Checkout"
 
 - header do
-  %h1= image_tag("logo_small.png") + " #{@treatement_area.name} Check out"
+  %h1= image_tag("logo_small.png") + " #{@treatement_area.name} Checkout"
   = "#{@patient.full_name} | Chart # #{@patient.id}"
 
 %div.input-left{:style => "width: 450px;"}
@@ -50,5 +50,5 @@
         = image_tag "spinner.gif", :class => "side_image right", :style => "display:none;", :id => "loading_#{p.id}"
   
 %div.input-bottom{:class => "check_out"}
-  = button_to "Finish", patients_path(:treatement_area_id => @treatement_area.id)
-  = link_to 'Cancel', patients_path(:treatement_area_id => @treatement_area.id), :class => 'warning'
+  = link_to "Finish", patients_path(:treatement_area_id => @treatement_area.id, :message => "Patient successfully checked out"), :class => "general"
+  = link_to_previous(@treatement_area, @patient)

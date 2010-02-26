@@ -1,0 +1,47 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  time_spent_at_clinic_in_minutes: 
+  city: 
+  state: 
+  zip: 
+  age: 
+  sex: 
+  race: 
+  pain: 
+  pain_length_in_days: 
+  heard_about_clinic: 
+  told_needed_more_dental_treatment: 
+  has_place_to_be_seen_for_dental_care: 
+  no_insurance: 
+  insurance_from_job: 
+  medicaid_or_chp_plus: 
+  self_purchase_insurance: 
+  husky_insurance: 
+  saga_insurance: 
+  other_insurance: 
+  tobacco_use: 
+  rating_of_services: 1
+
+two:
+  time_spent_at_clinic_in_minutes: 
+  city: 
+  state: 
+  zip: 
+  age: 
+  sex: 
+  race: 
+  pain: 
+  pain_length_in_days: 
+  heard_about_clinic: 
+  told_needed_more_dental_treatment: 
+  has_place_to_be_seen_for_dental_care: 
+  no_insurance: 
+  insurance_from_job: 
+  medicaid_or_chp_plus: 
+  self_purchase_insurance: 
+  husky_insurance: 
+  saga_insurance: 
+  other_insurance: 
+  tobacco_use: 
+  rating_of_services: 1

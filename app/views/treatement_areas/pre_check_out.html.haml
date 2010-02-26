@@ -1,0 +1,30 @@
+- title 'Pre-Checkout'
+
+- header do
+  %h1= image_tag("logo_small.png") + " Pre-Checkout"
+  = "#{@patient.full_name} | Chart # #{@patient.id}"
+  
+- form_for @survey, :url => treatement_area_pre_checkout_path(:id => @treatement_area, :patient_id => @patient) do |f|
+  = f.error_messages
+  
+  %h4 
+    Medical Information (From 
+    %u Health History
+    on Patient's Chart)
+  
+  %p
+    = f.check_box :tobacco_use
+    = f.label :tobacco_use
+    
+  %h4 Rating of services received today
+  
+  = slider_field :survey, :rating_of_services, :range => 1..10 
+  %br
+  %div.slider_desc Not Satisfied
+  %div.slider_desc Satisfied
+  %div.slider_desc Very Satisfied
+    
+  #input-bottom{:class => "check_out"}
+    %br
+    = f.submit "Next"
+    = link_to "Cancel", patients_path(:treatement_area_id => @treatement_area.id), :class => 'warning'

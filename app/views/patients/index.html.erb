@@ -67,7 +67,7 @@
     </td>
     <% end %>
     <% if current_user.user_type == UserType::CHECKOUT %>
-    <td><%= link_to 'Check Out', treatement_area_checkout_path(:id => @area, :patient_id => patient.id) %></td>
+    <td><%= link_to_checkout(@area, patient) %></td>
     <% end %>
     <% if current_user.user_type == UserType::ADMIN %>
     <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
@@ -83,4 +83,8 @@
 <br/>
 <% end %>
 
-<%= link_to 'Back', home_path %>
+<% if @area %>
+  <%= link_to "Change Treatment Area", home_path %>
+<% else %>
+  <%= link_to 'Back', home_path %>
+<% end %>

@@ -3,7 +3,7 @@ class PatientProcedure < ActiveRecord::Base
   belongs_to :procedure
   before_validation_on_create :load_procedure_from_code
   
-  validates_presence_of :provider_id, :procedure_id, :message => "invalid"
+  validates_presence_of :procedure_id, :message => "invalid"
   validates_format_of :tooth_number, :with => /\A[A-T]\Z|\A[1-9]\Z|\A[1-2][0-9]\Z|\A3[0-2]\Z/, :message => "must be valid (A-T or 1-32)", :allow_blank => true
   validates_format_of :surface_code, :with => /\A[F,L,O,M,D,I,B]+\Z/, :message => "must be valid (Only F,L,O,M,D,I,B)", :allow_blank => true
   validate :procedure_requirements

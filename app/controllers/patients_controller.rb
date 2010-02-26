@@ -13,6 +13,13 @@ class PatientsController < ApplicationController
     @patients = Patient.search(params[:chart_number],params[:name],params[:page])
 
     @area = params[:treatement_area_id]
+    
+    if params[:message]
+      flash[:notice] = params[:message]
+      params[:message] = nil
+    else
+      flash[:notice] = nil
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -35,6 +42,7 @@ class PatientsController < ApplicationController
   # GET /patients/new.xml
   def new
     @patient = Patient.new
+    @patient.survey = Survey.new
 
     @patient.state = "CT"
     

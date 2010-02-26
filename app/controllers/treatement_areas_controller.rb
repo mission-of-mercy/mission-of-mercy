@@ -1,5 +1,5 @@
 class TreatementAreasController < ApplicationController
-  before_filter :admin_required, :except => [:check_out, :check_out_post]
+  before_filter :admin_required, :except => [:check_out, :check_out_post, :pre_check_out, :pre_check_out_post]
   before_filter :login_required
   
   def index
@@ -56,9 +56,26 @@ class TreatementAreasController < ApplicationController
       
       @patient_procedure = @patient.patient_procedures.build
       
-      render :action => :check_out
+      redirect_to treatement_area_checkout_path(:id => @treatement_area, :patient_id => @patient)
     else
       render :action => :check_out
+    end
+  end
+  
+  def pre_check_out
+    @treatement_area = TreatementArea.find(params[:id])
+    @patient         = Patient.find(params[:patient_id])
+    @survey          = @patient.survey
+  end
+  
+  def pre_check_out_post
+    @treatement_area = TreatementArea.find(params[:id])
+    @patient         = Patient.find(params[:patient_id])
+    
+    if @patient.survey.update_attributes(params[:survey])
+      redirect_to treatement_area_checkout_path(:id => @treatement_area, :patient_id => @patient)
+    else
+      render :action => pre_check_out
     end
   end
 end

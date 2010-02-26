@@ -29,6 +29,16 @@ ActionController::Routing::Routes.draw do |map|
               :controller => "treatement_areas", 
               :action => "check_out_post",
               :conditions => { :method => :post }
+              
+  map.treatement_area_pre_checkout '/treatement_areas/:id/pre_checkout/:patient_id',
+                               :controller => "treatement_areas", 
+                               :action => "pre_check_out", 
+                               :conditions => { :method => :get }
+
+  map.connect '/treatement_areas/:id/pre_checkout/:patient_id', 
+              :controller => "treatement_areas", 
+              :action => "pre_check_out_post",
+              :conditions => { :method => :put }
   
   map.resources :treatement_areas
 

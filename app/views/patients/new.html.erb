@@ -11,6 +11,11 @@
     Modalbox.show($('last_patient'), {title: 'Patient\'s Chart Number', width: 300});
     <% end %>
 	}
+	
+	document.onkeypress=function(e){
+                          e=e?e:window.event;
+                          if (e.keyCode==13)return false;
+                      };
 //]]>
 </script>
 
@@ -21,62 +26,63 @@
 <% form_for(@patient) do |f| %>
   <%= f.error_messages %>
 
-  <div class='input-left'>
+  <div id="demographics" style="height: 350px;">
+    <div class='input-left'>
     
-    <h4>1: Demographics</h4>
+      <h4>1: Demographics</h4>
     
-    <div class='input'>
-      <div class="row">
-        <span class="label"><%= f.label :first_name %>:</span>
-        <span class="formw"><%= f.text_field :first_name %></span>
-      </div>
-      <div class="row">
-        <span class="label"><%= f.label :last_name %>:</span>
-        <span class="formw"><%= f.text_field :last_name %></span>
-      </div>
-      <div class="row">
-        <span class="label"><%= f.label :date_of_birth %>:</span>
-        <span class="formw"><%= f.date_select :date_of_birth, :order => [:month, :day, :year], :start_year => (Date.today.year), :end_year => 1900, :include_blank => true %></span>
-      </div>
-      <div class="row">
-        <span class="label"><%= f.label :sex %>:</span>
-        <span class="formw"><%= select("patient", "sex", {"M", "M", "F","F"}, {:include_blank => true}) %></span>
-      </div>
-      <div class="row">
-        <span class="label"><%= f.label :street %>:</span>
-        <span class="formw"><%= f.text_field :street %></span>
-      </div>
-      <div class="row">
-        <span class="label"><%= f.label :city %>:</span>
-        <span class="formw"><%= f.text_field :city %></span>
-      </div>
-      <div class="row">
-        <span class="label"><%= f.label :state %>:</span>
-        <span class="formw"><%= f.text_field :state %></span>
-      </div>
-      <div class="row">
-        <span class="label"><%= f.label :zip %>:</span>
-        <span class="formw"><%= f.text_field :zip %></span>
-      </div>
-      <div class="row">
-        <span class="label"><%= f.label :race %>:</span>
-        <span class="formw"><%= select("patient","race", ["African American/Black","American Indian/Alaska Native","Asian/Pacific Islander","Caucasian/White","Hispanic","Indian","Other"], {:include_blank => true})%></span>
+      <div class='input'>
+        <div class="row">
+          <span class="label"><%= f.label :first_name %>:</span>
+          <span class="formw"><%= f.text_field :first_name %></span>
+        </div>
+        <div class="row">
+          <span class="label"><%= f.label :last_name %>:</span>
+          <span class="formw"><%= f.text_field :last_name %></span>
+        </div>
+        <div class="row">
+          <span class="label"><%= f.label :date_of_birth %>:</span>
+          <span class="formw"><%= f.date_select :date_of_birth, :order => [:month, :day, :year], :start_year => (Date.today.year), :end_year => 1900, :include_blank => true %></span>
+        </div>
+        <div class="row">
+          <span class="label"><%= f.label :sex %>:</span>
+          <span class="formw"><%= select("patient", "sex", {"M", "M", "F","F"}, {:include_blank => true}) %></span>
+        </div>
+        <div class="row">
+          <span class="label"><%= f.label :street %>:</span>
+          <span class="formw"><%= f.text_field :street %></span>
+        </div>
+        <div class="row">
+          <span class="label"><%= f.label :city %>:</span>
+          <span class="formw"><%= f.text_field :city %></span>
+        </div>
+        <div class="row">
+          <span class="label"><%= f.label :state %>:</span>
+          <span class="formw"><%= f.text_field :state %></span>
+        </div>
+        <div class="row">
+          <span class="label"><%= f.label :zip %>:</span>
+          <span class="formw"><%= f.text_field :zip %></span>
+        </div>
+        <div class="row">
+          <span class="label"><%= f.label :race %>:</span>
+          <span class="formw"><%= select("patient","race", ["African American/Black","American Indian/Alaska Native","Asian/Pacific Islander","Caucasian/White","Hispanic","Indian","Other"], {:include_blank => true})%></span>
         
-        <%= observe_field :patient_race,
-            :on => :changed,
-            :function => "showOtherRace()"
-            %>
+          <%= observe_field :patient_race,
+              :on => :changed,
+              :function => "showOtherRace()"
+              %>
 
         
-      </div>
-      <div class="row" style="display:none;" id='race_other_div'>
-        <span class="label"><%= label_tag 'race_other','Specify race' %>:</span>
-        <span class="formw"><%= text_field_tag 'race_other', nil, :size => 30  %></span>
+        </div>
+        <div class="row" style="display:none;" id='race_other_div'>
+          <span class="label"><%= label_tag 'race_other','Specify race' %>:</span>
+          <span class="formw"><%= text_field_tag 'race_other', nil, :size => 30  %></span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class='input-right'>
+    <div class='input-right'>
 
     <h4>2: Visit Details</h4>
       
@@ -130,9 +136,66 @@
     </div>
 
   </div>
+  </div>
+  
+  <div id="survey" style ="display:none; clear:both; ">
+    
+    <h4>4: Survey Questions</h4>
+    
+    <div style="padding-left: 20px; padding-bottom: 20px;">
+    <% f.fields_for :survey do |s| %>
+     <p>
+       <%= s.label :heard_about_clinic, 'How did you hear about the clinic?', :class => 'question' %><br/>
+       <div class='input'>
+          <%= s.select :heard_about_clinic,  ['Friend or family told me','Media: newspaper/TV/radio','Flyer/poster/information. Where did you see it?','Other'], {:include_blank => true} %>
+     
+     
+         <%= observe_field :patient_survey_attributes_heard_about_clinic,
+                 :on => :changed,
+                 :function => "$('heard_about_other_div').show();"
+                 %>
+       </p>
+       <div style='display:none;' id='heard_about_other_div'>
+         <p>
+         <%= label_tag :heard_about_other, "Please describe" %>: <%= text_field_tag :heard_about_other,  nil, :size => 30 %>
+       </div>
+       </div>
+      </p>
+      <p>
+        Do you have a place to go for dental care after today?<br />
+        <div class='input'>
+        <%= s.radio_button :has_place_to_be_seen_for_dental_care, true %>
+        <%= s.label :has_place_to_be_seen_for_dental_care, "Yes", :value => true %>
+        <%= s.radio_button :has_place_to_be_seen_for_dental_care, false %>
+        <%= s.label :has_place_to_be_seen_for_dental_care, "No", :value => false %>
+        </div>
+      </p>
+      <p>
+        What, if any, insurance do you have to pay for dental care? (Check all that apply)<br/>
+        <div class='input'>
+          <%= s.check_box :no_insurance %>
+          <%= s.label :no_insurance %><br/>
+          <%= s.check_box :insurance_from_job %>
+          <%= s.label :insurance_from_job %><br/>
+          <%= s.check_box :medicaid_or_chp_plus %>
+          <%= s.label :medicaid_or_chp_plus, "Medicaid or CHP+" %><br/>
+          <%= s.check_box :self_purchase_insurance %>
+          <%= s.label :self_purchase_insurance, "Insurance purchased by myself" %><br/>
+          <%= s.check_box :husky_insurance %>
+          <%= s.label :husky_insurance, "Husky" %><br/>
+          <%= s.check_box :saga_insurance %>
+          <%= s.label :saga_insurance, "SAGA" %><br/>
+        </div>    
+      </p>
+     <% end %>
+    </div>
+  </div>
 
-  <div class='input-bottom'>
-    <%= f.submit "Check In" %> | <%= link_to_reset 'patient_form' %>
+  <div class='input-bottom check_out'>
+    <span style="float:left"><%= link_to_reset 'new_patient' %></span>
+    <div id="bottom_demographics"> <%= button_to_function "Next", "return showPatientSurvey()" %> </div>
+    <div id="bottom_survey" style="display:none;"> <%= f.submit "Check In" %>
+    <%= link_to_function "Back", "return showPatientDemographics()", :class => 'back' %> </div>
   </div>
 <% end %>
 
