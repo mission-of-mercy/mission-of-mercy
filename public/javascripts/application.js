@@ -62,6 +62,8 @@ function showCheckoutFields(tooth, surface, code){
     $('tooth_dd').show();
 
     new Effect.Highlight("tooth_dt");
+    
+    $('patient_procedure_tooth_number').focus();
   }else{
     $('tooth_dt').hide(); 
     $('tooth_dd').hide();
@@ -88,7 +90,7 @@ function showCheckoutFields(tooth, surface, code){
     $('other_dt').hide(); 
     $('other_dd').hide();
     
-    $('patient_procedure_provider_id').focus();
+    //$('patient_procedure_provider_id').focus();
   }
 }
 

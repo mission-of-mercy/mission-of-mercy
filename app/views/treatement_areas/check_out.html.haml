@@ -24,8 +24,8 @@
         = f.label :code, "Procedure Code:"
       %dd{:id => "other_dd", :style => "display:none;"}
         = f.text_field :code
-      %dt= f.label :provider_id, "Provider:"
-      %dd= f.text_field :provider_id, :value => flash[:last_provider_id]
+      - #%dt= f.label :provider_id, "Provider:"
+      - #%dd= f.text_field :provider_id, :value => flash[:last_provider_id]
       %dt{:id => "tooth_dt", :style => tooth_visible(@patient_procedure)}
         = f.label :tooth_number, "Tooth Number:"
       %dd{:id => "tooth_dd", :style => tooth_visible(@patient_procedure)}
