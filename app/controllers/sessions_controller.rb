@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
       self.current_user = user
 
       redirect_to user.start_path
-      flash[:notice] = "Logged in successfully"
+      #flash[:notice] = "Logged in successfully"
     else
       note_failed_signin
       @login       = params[:login]

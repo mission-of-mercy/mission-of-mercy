@@ -112,3 +112,19 @@ function showPatientSurvey(){
   
   return false;
 }
+
+function showOtherHeardAbout()
+{  
+  var heardAbout = $('patient_survey_attributes_heard_about_clinic');
+  
+  if(heardAbout.selectedIndex == 4)
+  {
+    $('heard_about_other_div').show();
+    $('patient_survey_attributes_heard_about_other').focus();
+  }
+  else
+  {
+    $('heard_about_other_div').hide();
+    $('patient_survey_attributes_heard_about_other').value = "";
+  }
+}
