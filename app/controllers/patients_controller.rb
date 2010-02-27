@@ -148,6 +148,7 @@ class PatientsController < ApplicationController
     #w@patient.save
     
     respond_to do |format|
+      format.html { redirect_to treatement_area_checkout_path(:id => 1, :patient_id => @patient.id) }
       format.js
     end
   end

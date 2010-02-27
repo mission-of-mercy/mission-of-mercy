@@ -5,6 +5,7 @@
   = "#{@patient.full_name} | Chart # #{@patient.id}"
 
 %div.input-left.no_border{:style => "width: 450px;"}
+
   %h4 New Procedure
 
   - form_for @patient_procedure, :url => treatement_area_checkout_path(:id => @treatement_area, :patient_id => @patient) do |f|
@@ -68,5 +69,10 @@
         %b Finish
   
 %div.input-bottom{:class => "check_out"}
-  = link_to "Finish", patients_path(:treatement_area_id => @treatement_area.id, :message => "Patient successfully checked out"), :class => "general"
+  - if current_user.user_type == UserType::XRAY
+    %span{:style => "float:left;"}
+      = link_to_export_to_dexis @patient
+      = image_tag "loading.gif", :id => "exporting", :style => "display:none;"
+
+  = link_to_finish @treatement_area
   = link_to_previous(@treatement_area, @patient)

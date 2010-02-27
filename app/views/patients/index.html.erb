@@ -51,19 +51,7 @@
     <td><%=h patient.sex %></td>
     <% if current_user.user_type == UserType::XRAY %>
     <td>
-    <%= link_to_remote ["<span id='export_",patient.id,"'>Export Dexis File</span>"].join(), 
-                        :url  => { :controller => 'patients',
-                                  :action => 'export_to_dexis_file', 
-                                  :patient_id => patient.id },
-                        :before => "Element.show('" + ['export_spinner_',patient.id].join() + 
-                        "'); $('" + ['export_',patient.id].join() + "').hide();" %>
-
-      <%= image_tag("loading.gif",
-              :align => "absmiddle",
-              :border => 0,
-              :id => ['export_spinner_',patient.id].join(),
-              :style =>"display: none;" ) %>
-              
+    <%= link_to "Export to Dexis", export_to_dexis_file_path(:patient_id => patient.id) %>
     </td>
     <% end %>
     <% if current_user.user_type == UserType::CHECKOUT %>
@@ -83,7 +71,7 @@
 <br/>
 <% end %>
 
-<% if @area %>
+<% if @area and current_user.user_type != UserType::XRAY %>
   <%= link_to "Change Treatment Area", home_path %>
 <% else %>
   <%= link_to 'Back', home_path %>

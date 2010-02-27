@@ -35,8 +35,15 @@ module TreatementAreasHelper
                    :before => "$(this).hide(); $('loading_#{patient_procedure.id}').show();"
   end
   
+  def link_to_finish(area)
+    link_to "Finish",
+            patients_path(:treatement_area_id => area.id,
+                          :message => "Patient successfully checked out"),
+            :class => "general"
+  end
+  
   def link_to_previous(area, patient)
-    if patient.survey
+    if patient.survey and current_user.user_type != UserType::XRAY
       path = treatement_area_pre_checkout_path(:id => area, :patient_id => patient.id)
       text = "Back"
       css  = "back"
@@ -47,5 +54,11 @@ module TreatementAreasHelper
     end
     
     link_to text, path, :class => css
+  end
+  
+  def link_to_export_to_dexis(patient)
+    link_to_remote "Export to Dexis", 
+                   :url  => export_to_dexis_file_path(:patient_id => patient.id),
+                   :before => "$('exporting').show()"
   end
 end
