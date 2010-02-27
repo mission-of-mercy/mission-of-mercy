@@ -6,7 +6,7 @@ class Patient < ActiveRecord::Base
   has_many :procedures, :through => :patient_procedures
   has_many :prescriptions, :through => :patient_prescriptions
   
-  belongs_to :survey
+  belongs_to :survey, :dependent => :delete
   
   accepts_nested_attributes_for :survey
   
