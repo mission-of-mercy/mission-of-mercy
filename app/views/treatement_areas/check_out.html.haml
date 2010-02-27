@@ -18,12 +18,20 @@
           = procedure_radio procedure, f
           = f.label :procedure_id, procedure.full_description, :value => procedure.id
           %br
+        - if @treatement_area.amalgam_composite_procedures
+          = procedure_amalgam_composite_radio f
+          = f.label :procedure_id,  "Amalgam / Composite", :value => "amalgam_composite"
+          %br
         = procedure_other_radio f
         = f.label :procedure_id, "Other Procedure", :value => "other"
       %dt{:id => "other_dt", :style => "display:none;"}
         = f.label :code, "Procedure Code:"
       %dd{:id => "other_dd", :style => "display:none;"}
         = f.text_field :code
+      %dt{:id => "amcomp_dt", :style => "display:none;"}
+        = f.label :procedure_type, "Procedure Type:"
+      %dd{:id => "amcomp_dd", :style => "display:none;"}
+        = f.select :procedure_type, ['Amalgam','Composite'], :include_blank => true
       - #%dt= f.label :provider_id, "Provider:"
       - #%dd= f.text_field :provider_id, :value => flash[:last_provider_id]
       %dt{:id => "tooth_dt", :style => tooth_visible(@patient_procedure)}
@@ -48,7 +56,7 @@
         = p.full_description
         = remove_procedure(p)
         = image_tag "spinner.gif", :class => "side_image right", :style => "display:none;", :id => "loading_#{p.id}"
-  - if @patient.patient_procedures.length == 1
+  - if @patient.patient_procedures.length <= 1
     %div{:style => "width:375px; padding-left:4px;"}
       %p
         There are currently no procedures entered for this patient.

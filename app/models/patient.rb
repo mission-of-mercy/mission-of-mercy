@@ -1,8 +1,8 @@
 class Patient < ActiveRecord::Base
   before_save :update_survey
   
-  has_many :patient_prescriptions
-  has_many :patient_procedures 
+  has_many :patient_prescriptions, :dependent => :delete_all
+  has_many :patient_procedures, :dependent => :delete_all
   has_many :procedures, :through => :patient_procedures
   has_many :prescriptions, :through => :patient_prescriptions
   

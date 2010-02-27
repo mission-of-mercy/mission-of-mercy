@@ -1,14 +1,14 @@
 class PatientProcedure < ActiveRecord::Base
   belongs_to :patient
   belongs_to :procedure
-  before_validation_on_create :load_procedure_from_code
+  before_validation_on_create :normalize_data, :load_procedure_from_code, :load_procedure_from_type
   
   validates_presence_of :procedure_id, :message => "invalid"
   validates_format_of :tooth_number, :with => /\A[A-T]\Z|\A[1-9]\Z|\A[1-2][0-9]\Z|\A3[0-2]\Z/, :message => "must be valid (A-T or 1-32)", :allow_blank => true
   validates_format_of :surface_code, :with => /\A[F,L,O,M,D,I,B]+\Z/, :message => "must be valid (Only F,L,O,M,D,I,B)", :allow_blank => true
   validate :procedure_requirements
   
-  attr_accessor :code
+  attr_accessor :code, :procedure_type
   
   def self.time_zone_aware_attributes
    false
@@ -40,9 +40,36 @@ class PatientProcedure < ActiveRecord::Base
   
   private 
   
+  def normalize_data    
+    self.tooth_number = self.tooth_number.upcase if self.tooth_number.to_i == 0
+
+    self.surface_code = self.surface_code.upcase unless self.surface_code.blank?
+  end
+  
   def load_procedure_from_code
     if !self.code.nil? and self.procedure_id == 0
       self.procedure = Procedure.find_by_code(self.code)
+    end
+  end
+  
+  def load_procedure_from_type
+    unless self.procedure_type.blank?
+      surface_count = self.surface_code.gsub(" ", "").gsub(",", "").length
+      
+      # HACK HACK this is nasty but it works!!!
+      # Amalgams will be ok with just one return
+      if self.procedure_type == "Amalgam"
+        self.procedure = Procedure.find(:first, :conditions => {:procedure_type => procedure_type, :number_of_surfaces => surface_count})
+      else
+        # Find out if Post or Ant ...
+        tooth_numb = self.tooth_number.to_i
+        
+        if tooth_numb.between?(1,5) || tooth_numb.between?(12,16) || tooth_numb.between?(17,21) || tooth_numb.between?(28,32) || tooth_number.between?("A","B") || tooth_number.between?("I","J") || tooth_number.between?("K","L") || tooth_number.between?("S","T")
+          self.procedure = Procedure.find(:first, :conditions => {:procedure_type => "Post Composite", :number_of_surfaces => surface_count})
+        elsif  tooth_numb.between?(6,11) || tooth_numb.between?(22,27) || tooth_number.between?("C","H") || tooth_number.between?("M","R") 
+          self.procedure = Procedure.find(:first, :conditions => {:procedure_type => "Ant Composite", :number_of_surfaces => surface_count})
+        end
+      end
     end
   end
 end

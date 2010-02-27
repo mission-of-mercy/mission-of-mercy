@@ -56,7 +56,7 @@ function openInBackground(url){
    window.open(url); self.focus();
 }
 
-function showCheckoutFields(tooth, surface, code){
+function showCheckoutFields(tooth, surface, code, type){
   if(tooth){
     $('tooth_dt').show(); 
     $('tooth_dd').show();
@@ -89,8 +89,18 @@ function showCheckoutFields(tooth, surface, code){
   }else{
     $('other_dt').hide(); 
     $('other_dd').hide();
+  }
+  
+  if(type){
+    $('amcomp_dt').show();
+    $('amcomp_dd').show();
     
-    //$('patient_procedure_provider_id').focus();
+    new Effect.Highlight("amcomp_dt");
+    
+    $('patient_procedure_procedure_type').focus();
+  }else{
+    $('amcomp_dt').hide();
+    $('amcomp_dd').hide();
   }
 }
 
