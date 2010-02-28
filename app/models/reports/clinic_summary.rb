@@ -33,7 +33,8 @@ class Reports::ClinicSummary
     
     @grand_total = @procedure_value + @prescription_value
     
-    @next_chart_number = Patient.maximum(:id) + 1
+    @next_chart_number = Patient.maximum(:id) || 0
+    @next_chart_number += 1
   end
   
   def date_sql
