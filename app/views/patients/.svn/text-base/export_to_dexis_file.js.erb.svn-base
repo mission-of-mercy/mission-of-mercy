@@ -1,8 +1,0 @@
-$("<%= ['export_',@patient.id].join() %>").show();
-$("<%= ['export_spinner_',@patient.id].join() %>").hide();
-$("<%= ['export_',@patient.id].join() %>").innerHTML = "File Exported";
-
-new Effect.Highlight("<%= ['export_',@patient.id].join() %>");
-
-$("chart_number").select();
-$("chart_number").focus();
