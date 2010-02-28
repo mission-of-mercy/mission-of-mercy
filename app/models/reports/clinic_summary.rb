@@ -2,7 +2,7 @@ class Reports::ClinicSummary
   attr_accessor :day, :span
   attr_reader   :patients, :procedures, :procedure_count, :procedure_value, 
                 :prescriptions, :prescription_count, :prescription_value, 
-                :grand_total, :next_chart_number
+                :grand_total, :next_chart_number, :xrays, :checkouts
   
   def initialize(day=Date.today, span="All")
     reload(day,span)
@@ -30,6 +30,12 @@ class Reports::ClinicSummary
     
     collect_procedures
     collect_prescriptions
+    
+    @xrays = @patients.reject {|p| p.flows.find(:first, :conditions => {:area_id => ClinicArea::XRAY}).nil? }.length
+    @xrays ||= 0
+    
+    @checkouts = @patients.reject {|p| p.flows.find(:first, :conditions => {:area_id => ClinicArea::CHECKOUT}).nil? }.length
+    @checkouts ||= 0
     
     @grand_total = @procedure_value + @prescription_value
     
