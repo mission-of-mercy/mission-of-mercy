@@ -10,10 +10,6 @@ class PatientProcedure < ActiveRecord::Base
   
   attr_accessor :code, :procedure_type
   
-  def self.time_zone_aware_attributes
-   false
-  end
-  
   def full_description
     if procedure != nil
       desc = ["%04d" % procedure.code.to_s,": ",procedure.description].join()

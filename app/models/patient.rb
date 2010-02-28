@@ -16,10 +16,6 @@ class Patient < ActiveRecord::Base
                                   
   
   validates_presence_of :first_name, :last_name, :date_of_birth, :sex, :race, :chief_complaint, :last_dental_visit, :travel_time, :city, :state
-
-  def self.time_zone_aware_attributes
-   false
-  end
   
   # Old Pagination Method ...
   def self.search(chart_number,name,page)

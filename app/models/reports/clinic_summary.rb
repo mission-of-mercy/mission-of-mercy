@@ -17,7 +17,7 @@ class Reports::ClinicSummary
     else
       @day = Date.parse(day) if day.kind_of? String
       
-      @patients = Patient.all(:conditions => ["date(created_at) = ?", @day])
+      @patients = Patient.all(:conditions => ["date(created_at, '#{Time.zone.utc_offset} seconds') = ?", @day])
     end
     
     unless span == "All"
