@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  treatement_area_id: 1
+  patient_id: 1
+  area_id: 1
+
+two:
+  treatement_area_id: 1
+  patient_id: 1
+  area_id: 1

@@ -1,5 +1,5 @@
 class TreatementAreasController < ApplicationController
-  before_filter :admin_required, :except => [:check_out, :check_out_post, :pre_check_out, :pre_check_out_post]
+  before_filter :admin_required, :except => [:check_out, :check_out_post, :pre_check_out, :pre_check_out_post, :check_out_completed]
   before_filter :login_required
   
   def index
@@ -77,5 +77,16 @@ class TreatementAreasController < ApplicationController
     else
       render :action => pre_check_out
     end
+  end
+  
+  def check_out_completed
+    area    = TreatementArea.find(params[:id])
+    patient = Patient.find(params[:patient_id])
+    
+    patient.flows.create(:area_id => ClinicArea::CHECKOUT,
+                         :treatement_area_id => area.id)
+                          
+    redirect_to patients_path(:treatement_area_id => area.id,
+                              :message => "Patient successfully checked out")
   end
 end

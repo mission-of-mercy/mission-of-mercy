@@ -35,11 +35,8 @@ module TreatementAreasHelper
                    :before => "$(this).hide(); $('loading_#{patient_procedure.id}').show();"
   end
   
-  def link_to_finish(area)
-    link_to "Finish",
-            patients_path(:treatement_area_id => area.id,
-                          :message => "Patient successfully checked out"),
-            :class => "general"
+  def link_to_finish(area, patient)
+    button_to "Finish", check_out_completed_path(area, patient)
   end
   
   def link_to_previous(area, patient)

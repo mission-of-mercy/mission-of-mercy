@@ -1,10 +1,12 @@
 class Patient < ActiveRecord::Base
   before_save :update_survey
+  after_create :check_in_flow
   
   has_many :patient_prescriptions, :dependent => :delete_all
   has_many :patient_procedures, :dependent => :delete_all
   has_many :procedures, :through => :patient_procedures
   has_many :prescriptions, :through => :patient_prescriptions
+  has_many :flows, :class_name => "PatientFlow"
   
   belongs_to :survey, :dependent => :delete
   
@@ -70,5 +72,9 @@ class Patient < ActiveRecord::Base
       self.survey.pain                = pain
       self.survey.pain_length_in_days = pain_length_in_days 
     end
+  end
+  
+  def check_in_flow
+    self.flows.create(:area_id => ClinicArea::CHECKIN)
   end
 end
