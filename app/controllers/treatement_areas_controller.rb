@@ -1,5 +1,5 @@
 class TreatementAreasController < ApplicationController
-  before_filter :admin_required, :except => [:check_out, :check_out_post, :pre_check_out, :pre_check_out_post, :check_out_completed]
+  before_filter :admin_required, :except => [:assign, :assign_complete, :check_out, :check_out_post, :pre_check_out, :pre_check_out_post, :check_out_completed]
   before_filter :login_required
   
   def index
@@ -37,6 +37,20 @@ class TreatementAreasController < ApplicationController
 
   def show
     @treatement_area = TreatementArea.find(params[:id])
+  end
+  
+  def assign
+    @patient = Patient.find(params[:patient_id])
+    @areas   = TreatementArea.all
+  end
+  
+  def assign_complete
+    patient = Patient.find(params[:patient_id])
+    
+    patient.update_attributes(params[:patient])
+    
+    flash[:notice] = 'Patient was successfully assigned.'
+    redirect_to patients_path
   end
   
   def check_out

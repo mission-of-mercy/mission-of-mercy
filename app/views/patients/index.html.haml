@@ -52,6 +52,9 @@
         - if current_user.user_type == UserType::PHARMACY
           %td= link_to "Check out", pharmacy_check_out_path(patient)
           
+        - if current_user.user_type == UserType::ASSIGNMENT
+          %td= link_to "Assign", treatment_area_assign_path(patient)
+          
         - if current_user.user_type == UserType::ADMIN
           %td= link_to 'Edit', edit_patient_path(patient)
           %td= link_to 'Print', {:controller => 'patients', :action => 'print', :id => patient.id}, :popup => true

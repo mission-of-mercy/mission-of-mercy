@@ -21,6 +21,16 @@ ActionController::Routing::Routes.draw do |map|
 
   #map.resources :procedure_tooth_numbers
   
+  map.treatment_area_assign '/treatement_areas/assign/:patient_id',
+                            :controller => "treatement_areas",
+                            :action => "assign", 
+                            :conditions => { :method => :get }
+                            
+  map.connect '/treatement_areas/assign/:patient_id',
+              :controller => "treatement_areas",
+              :action => "assign_complete", 
+              :conditions => { :method => :put }
+  
   map.treatement_area_checkout '/treatement_areas/:id/checkout/:patient_id',
                                :controller => "treatement_areas", 
                                :action => "check_out", 

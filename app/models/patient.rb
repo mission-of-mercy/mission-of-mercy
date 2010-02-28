@@ -9,6 +9,7 @@ class Patient < ActiveRecord::Base
   has_many :flows, :class_name => "PatientFlow"
   
   belongs_to :survey, :dependent => :delete
+  belongs_to :assigned_treatment_area, :class_name => "TreatementArea"
   
   accepts_nested_attributes_for :survey
   accepts_nested_attributes_for :patient_prescriptions, :allow_destroy => true,
