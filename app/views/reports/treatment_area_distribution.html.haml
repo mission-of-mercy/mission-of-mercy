@@ -1,0 +1,21 @@
+- title 'Reports - Treatment Area Distribution'
+
+- content_for :header do
+  :javascript
+    document.observe('dom:loaded', function(){
+      #{over_capacity(@areas)}
+    });
+  
+- header do
+  %h1
+    = image_tag "logo_small.png"
+    Treatment Area Distribution
+  #controls
+    - form_tag treatment_area_distribution_report_path do
+      = submit_tag "Refresh"
+    
+
+= bar_graph @current_capacity, :width => 845
+
+%p
+  = link_to "Back", reports_path, :class => "back"

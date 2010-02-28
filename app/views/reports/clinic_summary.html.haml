@@ -3,12 +3,6 @@
 - content_for :header do
   = stylesheet_link_tag('report_print', :media => :print)
   
-  - content_for :header do
-    :javascript
-      document.observe('dom:loaded', function(){
-        #{over_capacity(@areas)}
-      });
-  
 - header do
   %h1
     = image_tag "logo_small.png"
@@ -56,11 +50,6 @@
 %p
   Next Chart Number:
   = @report.next_chart_number
-  
-%h2
-  %u Treatment Area Distribution
-
-= bar_graph @current_capacity, :width => 825
   
 %h2
   %u Detail

@@ -11,8 +11,9 @@ class ReportsController < ApplicationController
     else
       @report = Reports::ClinicSummary.new
     end
-    
-    ## Graph
+  end
+  
+  def treatment_area_distribution
     @areas   = TreatementArea.all(:order => "name")
     @current_capacity = @areas.map {|a| [a.name, a.patients.count] }
   end
