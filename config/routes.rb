@@ -46,6 +46,16 @@ ActionController::Routing::Routes.draw do |map|
                           :action => "check_out_completed",
                           :conditions => { :method => :post }
   
+  map.pharmacy_check_out '/pharmacy/:patient_id/checkout',
+                         :controller => "pharmacy",
+                         :action     => "check_out",
+                         :conditions => { :method => :get }
+                         
+  map.connect '/pharmacy/:patient_id/checkout',
+              :controller => "pharmacy",
+              :action     => "check_out_complete",
+              :conditions => { :method => :put }
+  
   map.resources :treatement_areas
 
   map.resources :procedures

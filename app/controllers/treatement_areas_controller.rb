@@ -85,8 +85,9 @@ class TreatementAreasController < ApplicationController
     
     patient.flows.create(:area_id => ClinicArea::CHECKOUT,
                          :treatement_area_id => area.id)
+    
+    flash[:notice] = "Patient successfully checked out"
                           
-    redirect_to patients_path(:treatement_area_id => area.id,
-                              :message => "Patient successfully checked out")
+    redirect_to patients_path(:treatement_area_id => area.id)
   end
 end

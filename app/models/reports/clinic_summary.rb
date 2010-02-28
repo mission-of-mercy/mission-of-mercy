@@ -53,7 +53,7 @@ class Reports::ClinicSummary
   end
   
   def collect_prescriptions
-    @patients.map {|p| @prescriptions += p.prescriptions }
+    @patients.map {|p| @prescriptions += p.patient_prescriptions }
     
     @prescriptions = @prescriptions.group_by(&:prescription).map do |prescription, count|
       [prescription, count.length, prescription.cost * count.length]

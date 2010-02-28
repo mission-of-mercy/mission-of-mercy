@@ -11,6 +11,9 @@ class Patient < ActiveRecord::Base
   belongs_to :survey, :dependent => :delete
   
   accepts_nested_attributes_for :survey
+  accepts_nested_attributes_for :patient_prescriptions, :allow_destroy => true,
+                                :reject_if => proc { |attributes| attributes['prescribed'] == "0" }
+                                  
   
   validates_presence_of :first_name, :last_name, :date_of_birth, :sex, :race, :chief_complaint, :last_dental_visit, :travel_time, :city, :state
 

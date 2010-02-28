@@ -17,5 +17,6 @@ class UserType
   self.add_enum :CHECKIN, 2
   self.add_enum :CHECKOUT, 3
   self.add_enum :XRAY, 4
+  self.add_enum :PHARMACY, 5
   
 end

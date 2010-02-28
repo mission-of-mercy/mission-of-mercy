@@ -2,6 +2,8 @@ class PatientPrescription < ActiveRecord::Base
   belongs_to :patient
   belongs_to :prescription
   
+  attr_accessor :prescribed
+  
   def self.time_zone_aware_attributes
    false
   end

@@ -13,13 +13,6 @@ class PatientsController < ApplicationController
     @patients = Patient.search(params[:chart_number],params[:name],params[:page])
 
     @area = params[:treatement_area_id]
-    
-    if params[:message]
-      flash[:notice] = params[:message]
-      params[:message] = nil
-    else
-      flash[:notice] = nil
-    end
 
     respond_to do |format|
       format.html # index.html.erb

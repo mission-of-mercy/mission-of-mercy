@@ -17,5 +17,6 @@ class ClinicArea
   self.add_enum :XRAY, 2
   self.add_enum :ASSIGNMENT, 3
   self.add_enum :CHECKOUT, 4
+  self.add_enum :PHARMACY, 5
   
 end

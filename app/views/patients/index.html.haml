@@ -1,0 +1,65 @@
+- title 'Patients'
+
+:javascript
+  document.observe('dom:loaded', function(){
+    $('chart_number').select();
+    $('chart_number').focus();
+  });
+
+- header do
+  %h1
+    = image_tag "logo_small.png"
+    Patients
+
+- form_tag patients_path, :method => 'get' do
+  = hidden_field_tag :treatement_area_id, @area
+  %p
+    = label_tag :chart_number, "Chart number:" 
+    = text_field_tag :chart_number, params[:chart_number]
+    - if current_user.user_type == UserType::ADMIN
+      %b OR
+      = label_tag :name, "Name:"
+      = text_field_tag :name, params[:name]
+
+    = submit_tag "Search"
+    = submit_tag "Clear"
+
+- if @patients.length > 0
+  %table
+    %tr
+      %th Chart #
+      %th Last name
+      %th First name
+      %th Date of birth
+      %th Age
+      %th Sex
+      %th{:colspan => 4}
+
+    - @patients.each do |patient|
+      %tr{:class=> cycle('even', 'odd')}
+        %td= patient.id
+        %td= patient.last_name
+        %td= patient.first_name
+        %td= patient.dob
+        %td= patient.age
+        %td= patient.sex
+        - if current_user.user_type == UserType::XRAY
+          %td= link_to "Export to Dexis", export_to_dexis_file_path(:patient_id => patient.id)
+        
+        - if current_user.user_type == UserType::CHECKOUT
+          %td= link_to_checkout(@area, patient)
+          
+        - if current_user.user_type == UserType::PHARMACY
+          %td= link_to "Check out", pharmacy_check_out_path(patient)
+          
+        - if current_user.user_type == UserType::ADMIN
+          %td= link_to 'Edit', edit_patient_path(patient)
+          %td= link_to 'Print', {:controller => 'patients', :action => 'print', :id => patient.id}, :popup => true
+          %td= link_to 'Destroy', patient, :confirm => 'Are you sure?', :method => :delete
+
+  = will_paginate @patients
+
+%br
+
+- if @area and current_user.user_type != UserType::XRAY
+  = link_to "Change Treatment Area", home_path
