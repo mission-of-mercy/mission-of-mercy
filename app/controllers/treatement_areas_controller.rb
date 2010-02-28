@@ -104,6 +104,8 @@ class TreatementAreasController < ApplicationController
       patient.update_attribute(:assigned_treatment_area_id, nil)
     end
     
+    patient.update_attribute(:survey_id, nil)
+    
     flash[:notice] = "Patient successfully checked out"
                           
     redirect_to patients_path(:treatement_area_id => area.id)
