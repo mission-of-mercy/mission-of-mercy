@@ -69,6 +69,8 @@ class User < ActiveRecord::Base
       root_path
     elsif user_type == UserType::PHARMACY
       patients_path
+    elsif user_type == UserType::ASSIGNMENT
+      patients_path
     else
       root_path
     end

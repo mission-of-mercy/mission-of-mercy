@@ -99,6 +99,10 @@ class TreatementAreasController < ApplicationController
     
     patient.flows.create(:area_id => ClinicArea::CHECKOUT,
                          :treatement_area_id => area.id)
+                         
+    if patient.assigned_treatment_area_id == area.id
+      patient.update_attribute(:assigned_treatment_area_id, nil)
+    end
     
     flash[:notice] = "Patient successfully checked out"
                           
