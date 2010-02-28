@@ -384,7 +384,11 @@ module CssGraphs
   # Scale values within a +max+. The +max+ will usually be the height of the graph.
   
   def scale_graph_value(data_value, data_max, max)
-    ((data_value.to_f / data_max.to_f) * max).round
+    if data_max > 0
+      ((data_value.to_f / data_max.to_f) * max).round
+    else
+      0
+    end
   end
   
 end
