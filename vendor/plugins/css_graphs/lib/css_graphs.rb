@@ -9,9 +9,13 @@ module CssGraphs
   # NOTE: Updated to take an array instead of forcing you to use *array.
   # NOTE: Normalizes data to fit in the viewable area instead of being fixed to 100.
   
-  def bar_graph(data=[])
-    width = 600
-    height = 200
+  def bar_graph(data=[], options={})
+    width  = options[:width]
+    height = options[:height]
+    
+    width ||= 600
+    height ||= 200
+    
     colors = %w(#efba29 #efe708 #5a7dd6 #73a25a)
     floor_cutoff = 24 # Pixels beneath which values will not be drawn in graph
     data_max = data.inject(0) { |memo, array| array.last > memo ? array.last : memo }
