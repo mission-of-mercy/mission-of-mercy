@@ -210,6 +210,10 @@ th,td{
 	padding: 5px;
 }
 
+td.integer{
+	text-align: center;
+}
+
 th a, th a:visited{
 	color: #000;
 	text-decoration: underline;

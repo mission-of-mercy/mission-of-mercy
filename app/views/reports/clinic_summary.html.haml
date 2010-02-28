@@ -63,8 +63,8 @@
     - @report.procedures.each do |procedure, qty, value|
       %tr{:class => cycle('even', 'odd')}
         %td= procedure.full_description
-        %td= qty
-        %td= real_currency value
+        %td.integer= qty
+        %td.integer= real_currency value
     %tr
       %th Total
       %th= @report.procedure_count
@@ -80,8 +80,8 @@
     - @report.prescriptions.each do |prescription, qty, value|
       %tr{:class => cycle('even', 'odd')}
         %td= prescription.full_description
-        %td= qty
-        %td= real_currency value
+        %td.integer= qty
+        %td.integer= real_currency value
     %tr
       %th Total
       %th= @report.prescription_count

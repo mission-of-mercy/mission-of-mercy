@@ -14,3 +14,4 @@ border-collapse: collapse;
 
 td { border: 1px solid #666666;}
 th { border: 1px solid #666666;	padding: 5px; }
+td.integer{ text-align: center;}
