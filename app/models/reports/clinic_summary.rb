@@ -17,7 +17,7 @@ class Reports::ClinicSummary
     else
       @day = Date.parse(day) if day.kind_of? String
       
-      @patients = Patient.all(:conditions => ["date(created_at, '#{Time.zone.utc_offset} seconds') = ?", @day])
+      @patients = Patient.all(:conditions => [patients_conditions, @day])
     end
     
     unless span == "All"
@@ -34,6 +34,15 @@ class Reports::ClinicSummary
     @grand_total = @procedure_value + @prescription_value
     
     @next_chart_number = Patient.maximum(:id) + 1
+  end
+  
+  def date_sql
+    if ENV['RAILS_ENV']=='production'
+      # Use MySQL Style Conditions
+      "Date(CONVERT_TZ(status_changes.created_at,'UTC','EST'))"
+    else
+      "date(created_at, '#{Time.zone.utc_offset} seconds')"
+    end
   end
   
   private
@@ -64,5 +73,9 @@ class Reports::ClinicSummary
     
     @prescription_value = @prescriptions.sum {|p| p.last }
     @prescription_value ||= 0
+  end
+  
+  def patients_conditions
+    date_sql + " = ?"
   end
 end
