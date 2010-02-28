@@ -58,4 +58,31 @@ module TreatementAreasHelper
                    :url  => export_to_dexis_file_path(:patient_id => patient.id),
                    :before => "$('exporting').show()"
   end
+  
+  def radio_treatment_area(form, area)
+    form.radio_button :assigned_treatment_area_id, 
+                      area.id, 
+                      :onmouseover => "graph_highlight('#{area.name.to_s.downcase.gsub(' ', '_')}');",
+                      :onmouseout => "graph_reset();"
+  end
+
+  def graph_label(form,area)
+    form.label :assigned_treatment_area_id, area.name, :value => area.id,
+    :onmouseover => "graph_highlight('#{area.name.to_s.downcase.gsub(' ', '_')}');",
+    :onmouseout => "graph_reset();"
+  end
+  
+  def over_capacity(areas)
+    js = ""
+    
+    areas.each do |a|
+      if a.patients.length >= a.capacity
+        id = a.name.to_s.downcase.gsub(' ', '_')
+        js += "$($$('dd.#{id}').first()).addClassName('over');"
+      end
+    end
+    
+    js
+  end
+  
 end

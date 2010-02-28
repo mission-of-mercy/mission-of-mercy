@@ -138,3 +138,27 @@ function showOtherHeardAbout()
     $('patient_survey_attributes_heard_about_other').value = "";
   }
 }
+
+function graph_highlight(id){
+  highlight_bar = $$('#vertgraph dl dd.' + id).first();
+  bars = $$('#vertgraph dl dd');
+  
+  for(var i = 0; i < bars.length; i++)
+    if(bars[i] != highlight_bar) bars[i].hide();
+  
+  $($$('dt.' + id).first()).addClassName("highlight");
+  $('vertgraph').addClassName("highlight");
+}
+
+function graph_reset(){
+  bars   = $$('#vertgraph dl dd');
+  labels = $$('#vertgraph dl dt.highlight');
+  
+  for(var i = 0; i < bars.length; i++)
+    bars[i].show();
+    
+  for(var i = 0; i < labels.length; i++)
+    labels[i].removeClassName("highlight");
+  
+  $('vertgraph').removeClassName("highlight");
+}

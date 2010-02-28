@@ -1,5 +1,11 @@
 - title 'Assignment Desk'
 
+- content_for :header do
+  :javascript
+    document.observe('dom:loaded', function(){
+      #{over_capacity(@areas)}
+    });
+
 - header do
   %h1
     = image_tag "logo_small.png"
@@ -7,15 +13,20 @@
   = "#{@patient.full_name} | Chart # #{@patient.id}"
   
 - form_for @patient, :url => treatment_area_assign_path(@patient) do |f|
-  %div.input
+  %div.input-left.no_border{:style => "width: 200px;"}
   
     %h4 Treatment Areas
   
     %p
       - @areas.each do |area|
-        = f.radio_button :assigned_treatment_area_id, area.id
-        = f.label :assigned_treatment_area_id, area.name, :value => area.id
+        = radio_treatment_area f, area
+        = graph_label f, area
         %br
+  
+  %div.input-right.border
+    = bar_graph @current_capacity
+  
+    %br
 
   %div.input-bottom{:class => "check_out"}
     = f.submit "Assign"

@@ -41,7 +41,9 @@ class TreatementAreasController < ApplicationController
   
   def assign
     @patient = Patient.find(params[:patient_id])
-    @areas   = TreatementArea.all
+    @areas   = TreatementArea.all(:order => "name")
+    
+    @current_capacity = @areas.map {|a| [a.name, a.patients.count] }
   end
   
   def assign_complete
