@@ -39,7 +39,7 @@ class Reports::ClinicSummary
   def date_sql
     if ENV['RAILS_ENV']=='production'
       # Use MySQL Style Conditions
-      "Date(CONVERT_TZ(status_changes.created_at,'UTC','EST'))"
+      "Date(CONVERT_TZ(created_at,'UTC','EST'))"
     else
       "date(created_at, '#{Time.zone.utc_offset} seconds')"
     end
