@@ -15,7 +15,7 @@ class ReportsController < ApplicationController
   
   def treatment_area_distribution
     @areas   = TreatementArea.all(:order => "name")
-    @current_capacity = @areas.map {|a| [a.name, a.patients.count] }
+    @current_capacity = @areas.map {|a| [a.name, a.patients.count || 0] }
   end
 
   def movement_summary  
