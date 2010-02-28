@@ -1,0 +1,95 @@
+- title 'Reports - Clinic Summary'
+
+- content_for :header do
+  = stylesheet_link_tag('report_print', :media => :print)
+  
+- header do
+  %h1
+    = image_tag "logo_small.png"
+    Clinic Summary Report
+  #controls
+    - form_tag '/reports/day_summary', :method => 'get' do
+      = select_tag "day", options_for_select(days, @report.day)
+      = select_tag "span", options_for_select(time_spans, @report.span)
+      = submit_tag "Refresh"
+    |
+    = button_to 'Print', 'javascript:window.print();'
+  #report_date
+    %h3
+      = @report.day
+      at
+      = @report.span
+    
+%h2
+  %u Summary
+  
+%p
+  Total Patients Checked In: 
+  = @report.patients.length
+  %br
+  Total Patients Given X-Rays:
+  %br
+  Total Patients Checked Out:
+
+%p
+  Total Procedures:
+  = @report.procedure_count
+  %br
+  Total Procedures Value:
+  = real_currency @report.procedure_value
+  %br
+  Total Prescriptions:
+  = @report.prescription_count
+  %br
+  Total Prescriptions Value:
+  = real_currency @report.prescription_value
+  %br
+  Grand Total Value:
+  = real_currency @report.grand_total
+  
+%p
+  Next Chart Number:
+  = @report.next_chart_number
+  
+%h2
+  %u Detail
+  
+- if @report.procedure_count > 0
+  %table
+    %tr
+      %th Procedure
+      %th Quantity
+      %th Dollar Value
+    - @report.procedures.each do |procedure, qty, value|
+      %tr{:class => cycle('even', 'odd')}
+        %td= procedure.full_description
+        %td= qty
+        %td= real_currency value
+    %tr
+      %th Total
+      %th= @report.procedure_count
+      %th= real_currency @report.procedure_value
+
+- if @report.prescription_count > 0
+  %br
+  %table
+    %tr
+      %th Prescription
+      %th Quantity
+      %th Dollar Value
+    - @report.prescriptions.each do |prescription, qty, value|
+      %tr{:class => cycle('even', 'odd')}
+        %td= prescription.full_description
+        %td= qty
+        %td= real_currency value
+    %tr
+      %th Total
+      %th= @report.prescription_count
+      %th= real_currency @report.prescription_value
+      
+%h2
+  Grand Total Value:
+  = real_currency @report.grand_total
+  
+%p
+  = link_to "Back", reports_path, :class => "back"

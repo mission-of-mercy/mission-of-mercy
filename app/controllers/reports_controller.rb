@@ -5,18 +5,12 @@ class ReportsController < ApplicationController
   
   end
   
-  def day_summary
-    @endTime = Time.today + 1.day
-    
-    if params[:day]  && params[:day].length > 0
-      @endTime = Time.parse(params[:day])
+  def clinic_summary
+    if params[:day] && params[:span]
+      @report = Reports::ClinicSummary.new(params[:day], params[:span])
+    else
+      @report = Reports::ClinicSummary.new
     end
-    
-    #flash[:time] = @endTime
-    
-    @patients = Patient.find(:all, :conditions => ["check_in > ? and check_in < ?",Time.today, @endTime])
-  
-    render :action => "day_summary", :layout => "report"
   end
 
   def movement_summary  

@@ -11,6 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :session
   
   map.reports '/reports', :controller => 'reports', :action => 'index'
+  map.clinic_summary_report '/reports/clinic_summary/', :controller => 'reports', :action => 'clinic_summary'
   
   map.resources :providers
 
