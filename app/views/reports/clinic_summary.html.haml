@@ -56,36 +56,42 @@
   
 - if @report.procedure_count > 0
   %table
-    %tr
-      %th Procedure
-      %th Quantity
-      %th Dollar Value
-    - @report.procedures.each do |procedure, qty, value|
-      %tr{:class => cycle('even', 'odd')}
-        %td= procedure.full_description
-        %td.integer= qty
-        %td.integer= real_currency value
-    %tr
-      %th Total
-      %th= @report.procedure_count
-      %th= real_currency @report.procedure_value
+    %thead
+      %tr
+        %th Procedure
+        %th Quantity
+        %th Dollar Value
+    %tbody
+      - @report.procedures.each do |procedure, qty, value|
+        %tr{:class => cycle('even', 'odd')}
+          %td= procedure.full_description
+          %td.integer= qty
+          %td.integer= real_currency value
+    %tfoot
+      %tr
+        %th Total
+        %th= @report.procedure_count
+        %th= real_currency @report.procedure_value
 
 - if @report.prescription_count > 0
   %br
   %table
-    %tr
-      %th Prescription
-      %th Quantity
-      %th Dollar Value
-    - @report.prescriptions.each do |prescription, qty, value|
-      %tr{:class => cycle('even', 'odd')}
-        %td= prescription.full_description
-        %td.integer= qty
-        %td.integer= real_currency value
-    %tr
-      %th Total
-      %th= @report.prescription_count
-      %th= real_currency @report.prescription_value
+    %thead
+      %tr
+        %th Prescription
+        %th Quantity
+        %th Dollar Value
+    %tbody
+      - @report.prescriptions.each do |prescription, qty, value|
+        %tr{:class => cycle('even', 'odd')}
+          %td= prescription.full_description
+          %td.integer= qty
+          %td.integer= real_currency value
+    %tfoot
+      %tr
+        %th Total
+        %th= @report.prescription_count
+        %th= real_currency @report.prescription_value
       
 %h2
   Grand Total Value:
