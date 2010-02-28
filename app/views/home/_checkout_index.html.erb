@@ -1,6 +1,6 @@
 <h3>Please select your treatment area:</h3>
 
-<% TreatementArea.all.each do |area| %>
+<% TreatementArea.all(:order => "name").each do |area| %>
   <p>
     <%= link_to area.name, patients_path(:treatement_area_id => area.id) %>
   </p>
