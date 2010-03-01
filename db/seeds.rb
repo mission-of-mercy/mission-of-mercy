@@ -24,13 +24,15 @@ users.each do |user|
 end
 
 ## Treatment Area
+#
+# NOTE: Radiology needs to have an ID == 1
 
-areas = [ {:name => "Radiology", :capacity => 50, :amalgam_composite_procedures => false},
-          {:name => "Hygiene", :capacity => 50, :amalgam_composite_procedures => false},
-          {:name => "Restoration", :capacity => 50, :amalgam_composite_procedures => false},
-          {:name => "Pediatrics", :capacity => 50, :amalgam_composite_procedures => false},
-          {:name => "Endodontics", :capacity => 50, :amalgam_composite_procedures => false},
-          {:name => "Surgery", :capacity => 50, :amalgam_composite_procedures => false}]
+areas = [ {:name => "Radiology", :capacity => 50},
+          {:name => "Hygiene", :capacity => 50},
+          {:name => "Restoration", :capacity => 50, :amalgam_composite_procedures => true},
+          {:name => "Pediatrics", :capacity => 50},
+          {:name => "Endodontics", :capacity => 50},
+          {:name => "Surgery", :capacity => 50}]
 
 areas.each do |area|
   TreatementArea.create(area)
