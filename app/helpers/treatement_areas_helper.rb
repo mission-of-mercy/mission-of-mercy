@@ -76,7 +76,7 @@ module TreatementAreasHelper
     js = ""
     
     areas.each do |a|
-      if a.patients.length >= a.capacity
+      if a.patients.length >= (a.capacity || 0)
         id = a.name.to_s.downcase.gsub(' ', '_')
         js += "$($$('dd.#{id}').first()).addClassName('over');"
       end
