@@ -46,7 +46,7 @@
         </div>
         <div class="row">
           <span class="label"><%= f.label :sex %>:</span>
-          <span class="formw"><%= select("patient", "sex", {"M", "M", "F","F"}, {:include_blank => true}) %></span>
+          <span class="formw"><%= select("patient", "sex",[["M", "M"], ["F","F"]], {:include_blank => true}) %></span>
         </div>
         <div class="row">
           <span class="label"><%= f.label :street %>:</span>
