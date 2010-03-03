@@ -1,13 +1,14 @@
 class TreatementAreasController < ApplicationController
   before_filter :admin_required, :except => [:assign, :assign_complete, :check_out, :check_out_post, :pre_check_out, :pre_check_out_post, :check_out_completed]
   before_filter :login_required
+  before_filter :setup_procedures, :only => [:new, :edit]
   
   def index
     @areas = TreatementArea.all
   end
 
   def new
-    @treatement_area = TreatementArea.new
+
   end
   
   def create
@@ -21,13 +22,19 @@ class TreatementAreasController < ApplicationController
   end
 
   def edit
-    @treatement_area = TreatementArea.find(params[:id])
+
   end
   
   def update
     @treatement_area = TreatementArea.find(params[:id])
+    
+    @treatement_area.attributes = params[:treatement_area]
+    
+    @treatement_area.procedure_treatment_area_mappings.each do |p|
+      p.destroy if !p.new_record? && p.assigned == "0"
+    end
 
-    if @treatement_area.update_attributes(params[:treatement_area])
+    if @treatement_area.save
       flash[:notice] = 'Treatment Area was successfully updated.'
       redirect_to treatement_areas_path
     else
@@ -111,5 +118,25 @@ class TreatementAreasController < ApplicationController
     flash[:notice] = "Patient successfully checked out"
                           
     redirect_to patients_path(:treatement_area_id => area.id)
+  end
+  
+  private
+  
+  def setup_procedures
+    if params[:id]
+      @treatement_area = TreatementArea.find(params[:id])
+    else
+      @treatement_area = TreatementArea.new
+    end
+    
+    @treatement_area.procedure_treatment_area_mappings.each do |p| 
+      p.assigned = true
+    end
+    
+    Procedure.all.each do |pro|
+      unless @treatement_area.procedures.exists? pro
+        @treatement_area.procedure_treatment_area_mappings.build(:procedure_id => pro.id)
+      end
+    end
   end
 end
