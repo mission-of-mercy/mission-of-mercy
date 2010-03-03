@@ -73,7 +73,7 @@
     :javascript
       var checkoutMenuItems_#{patient.id} = [];
 
-    - TreatementArea.all.each do |area|
+    - TreatementArea.all(:order => "name").each do |area|
       :javascript
         checkoutMenuItems_#{patient.id}.push({ name : '#{area.name}',
                                  callback: function(){
