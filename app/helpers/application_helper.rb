@@ -16,7 +16,7 @@ module ApplicationHelper
   end
 
   def version
-    '1.8'
+    '1.9'
   end
   
   def real_currency(number)
