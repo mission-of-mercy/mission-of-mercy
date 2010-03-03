@@ -89,7 +89,7 @@
     <div class='input'>
       <div class="row">
         <span class="label"><%= f.label :chief_complaint, "Reason for today's visit" %>:</span>
-        <span class="formw"><%= select("patient", "chief_complaint", {"Filling", "Filling", "Cleaning","Cleaning", "Extraction","Extraction"}, {:include_blank => true}) %></span>
+        <span class="formw"><%= select("patient", "chief_complaint", ["Filling", "Filling", "Cleaning","Cleaning", "Extraction","Extraction"], {:include_blank => true}) %></span>
       </div>
       <div class="row">
         <span class="label"><%= f.label :last_dental_visit %>:</span>
