@@ -1,0 +1,10 @@
+var checkoutMenuItems = [];
+
+<% TreatementArea.all.each do |area| %>
+checkoutMenuItems.push({ name : '<%= area.name%>',
+                         callback: function(){
+                           link = $('checkout').children[0];
+                           link.update("<%= area.name%> Checkout");
+                           link.writeAttribute("href", "<%= checkout_path(area.id, 1) %>")
+                         }});
+<% end %>

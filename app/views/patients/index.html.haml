@@ -1,11 +1,15 @@
 - title 'Patients'
 
+- content_for :header do
+  = javascript_include_tag 'proto.menu.0.6'
+  = stylesheet_link_tag 'proto.menu.0.6', :media => :screen
+
 :javascript
   document.observe('dom:loaded', function(){
     $('chart_number').select();
     $('chart_number').focus();
-  });
-
+  });      
+      
 - header do
   %h1
     = image_tag "logo_small.png"
@@ -47,8 +51,8 @@
           - if current_user.user_type == UserType::XRAY
             %th{:scope => "row"}= link_to "Export to Dexis", export_to_dexis_file_path(:patient_id => patient.id)
         
-          - if current_user.user_type == UserType::CHECKOUT
-            %th{:scope => "row"}= link_to_checkout(@area, patient)
+          - if current_user.user_type == UserType::CHECKOUT          
+            %th{:id => "checkout_#{patient.id}", :scope => "row"}= link_to_checkout(@area, patient)
           
           - if current_user.user_type == UserType::PHARMACY
             %th{:scope => "row"}= link_to "Check out", pharmacy_check_out_path(patient)
@@ -62,3 +66,25 @@
             %td= link_to 'Destroy', patient, :confirm => 'Are you sure?', :method => :delete
 
   = will_paginate @patients
+  
+  
+- if current_user.user_type == UserType::CHECKOUT 
+  - @patients.each do |patient|
+    :javascript
+      var checkoutMenuItems_#{patient.id} = [];
+
+    - TreatementArea.all.each do |area|
+      :javascript
+        checkoutMenuItems_#{patient.id}.push({ name : '#{area.name}',
+                                 callback: function(){
+                                   link = $('checkout_#{patient.id}').children[0];
+                                   link.update("#{area.name} Checkout");
+                                   link.writeAttribute("href", "#{checkout_path(area.id, patient)}");
+                                 }});
+
+    :javascript
+      new Proto.Menu({
+        selector: '#checkout_#{patient.id}',
+        className: 'menu desktop',
+        menuItems: checkoutMenuItems_#{patient.id}
+      });
