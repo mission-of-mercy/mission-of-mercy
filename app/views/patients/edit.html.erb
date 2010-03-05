@@ -30,6 +30,10 @@
         <span class="formw"><%= select("patient", "sex", [["M", "M"], ["F","F"]], {:include_blank => true}) %></span>
       </div>
       <div class="row">
+        <span class="label"><%= f.label :phone %>:</span>
+        <span class="formw"><%= f.text_field :phone %></span>
+      </div>
+      <div class="row">
         <span class="label"><%= f.label :street %>:</span>
         <span class="formw"><%= f.text_field :street %></span>
       </div>
