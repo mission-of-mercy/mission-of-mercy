@@ -153,7 +153,7 @@
      <p>
        <%= s.label :heard_about_clinic, 'How did you hear about the clinic?', :class => 'question' %><br/>
        <div class='input'>
-          <%= s.select :heard_about_clinic,  ['Friend or family told me','Media: newspaper/TV/radio','Flyer/poster/information. Where did you see it?','Other'], {:include_blank => true} %>
+          <%= s.select :heard_about_clinic,  ['Friend or Family','Media: Newspaper/TV/Radio','Flyer or Poster','Other'], {:include_blank => true} %>
      
      
          <%= observe_field :patient_survey_attributes_heard_about_clinic,
