@@ -1,5 +1,13 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  def current_area_id
+    controller.current_area_id
+  end
+  
+  def current_treatement_area_id
+    controller.current_treatement_area_id
+  end
+  
   def title(page_title)
     content_for(:title) { page_title }
   end

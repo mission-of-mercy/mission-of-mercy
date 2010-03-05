@@ -1,5 +1,11 @@
 <div id="top_navigation">
   <% if logged_in? %>
+    <span style="float:left;">
+      <%= link_to_help %>
+      <span id="help_loading" style="display:none;">
+        <%= image_tag "help_loading.gif", :style => "padding-right: 5px;" %> Requesting Help ...
+      </span>
+    </span>
       <%= link_to current_user.name, current_user.start_path, :style => "text-decoration:none;" %> | 
       <%= link_to 'Log out', logout_path %>
     <% else %>
@@ -7,3 +13,7 @@
       <%= link_to 'Log in', login_path %>
     <% end %>
 </div>
+
+<% javascript_tag do %>
+  startPolling();
+<% end %>

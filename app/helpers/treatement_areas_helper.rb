@@ -41,7 +41,7 @@ module TreatementAreasHelper
   
   def link_to_previous(area, patient)
     if patient.survey and current_user.user_type != UserType::XRAY
-      path = treatement_area_pre_checkout_path(:id => area, :patient_id => patient.id)
+      path = treatement_area_pre_checkout_path(:treatement_area_id => area, :patient_id => patient.id)
       text = "Back"
       css  = "back"
     else

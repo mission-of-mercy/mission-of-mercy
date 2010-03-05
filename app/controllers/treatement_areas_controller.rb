@@ -63,13 +63,13 @@ class TreatementAreasController < ApplicationController
   end
   
   def check_out
-    @treatement_area = TreatementArea.find(params[:id])
+    @treatement_area = TreatementArea.find(params[:treatement_area_id])
     @patient         = Patient.find(params[:patient_id])
     @patient_procedure = @patient.patient_procedures.build
   end
 
   def check_out_post
-    @treatement_area   = TreatementArea.find(params[:id])
+    @treatement_area   = TreatementArea.find(params[:treatement_area_id])
     @patient           = Patient.find(params[:patient_id])
     
     @patient_procedure = PatientProcedure.new(params[:patient_procedure])
@@ -86,13 +86,13 @@ class TreatementAreasController < ApplicationController
   end
   
   def pre_check_out
-    @treatement_area = TreatementArea.find(params[:id])
+    @treatement_area = TreatementArea.find(params[:treatement_area_id])
     @patient         = Patient.find(params[:patient_id])
     @survey          = @patient.survey
   end
   
   def pre_check_out_post
-    @treatement_area = TreatementArea.find(params[:id])
+    @treatement_area = TreatementArea.find(params[:treatement_area_id])
     @patient         = Patient.find(params[:patient_id])
     
     if @patient.survey.update_attributes(params[:survey])
@@ -103,7 +103,7 @@ class TreatementAreasController < ApplicationController
   end
   
   def check_out_completed
-    area    = TreatementArea.find(params[:id])
+    area    = TreatementArea.find(params[:treatement_area_id])
     patient = Patient.find(params[:patient_id])
     
     patient.flows.create(:area_id => ClinicArea::CHECKOUT,
@@ -124,7 +124,7 @@ class TreatementAreasController < ApplicationController
   
   def setup_procedures
     if params[:id]
-      @treatement_area = TreatementArea.find(params[:id])
+      @treatement_area = TreatementArea.find(params[:treatement_area_id])
     else
       @treatement_area = TreatementArea.new
     end

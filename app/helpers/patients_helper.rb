@@ -7,9 +7,9 @@ module PatientsHelper
   
   def checkout_path(area,patient)
     if patient.survey
-      return treatement_area_pre_checkout_path(:id => area, :patient_id => patient.id)
+      return treatement_area_pre_checkout_path(:treatement_area_id => area, :patient_id => patient.id)
     else
-      return treatement_area_checkout_path(:id => area, :patient_id => patient.id)
+      return treatement_area_checkout_path(:treatement_area_id => area, :patient_id => patient.id)
     end
   end
 end

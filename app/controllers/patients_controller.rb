@@ -144,7 +144,7 @@ class PatientsController < ApplicationController
       format.html do 
         @patient.flows.create(:area_id => ClinicArea::XRAY)
         
-        redirect_to treatement_area_checkout_path(:id => 1, :patient_id => @patient.id)
+        redirect_to treatement_area_checkout_path(:treatement_area_id => 1, :patient_id => @patient.id)
       end
       format.js
     end

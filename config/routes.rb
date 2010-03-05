@@ -17,9 +17,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :prescriptions
 
-  #map.resources :procedure_surface_codes
-
-  #map.resources :procedure_tooth_numbers
+  map.resources :support_requests
+  map.connect '/active_support_requests.:format', :controller => "support_requests", :action => "active_requests"
   
   map.treatment_area_assign '/treatement_areas/assign/:patient_id',
                             :controller => "treatement_areas",
@@ -31,27 +30,27 @@ ActionController::Routing::Routes.draw do |map|
               :action => "assign_complete", 
               :conditions => { :method => :put }
   
-  map.treatement_area_checkout '/treatement_areas/:id/checkout/:patient_id',
+  map.treatement_area_checkout '/treatement_areas/:treatement_area_id/checkout/:patient_id',
                                :controller => "treatement_areas", 
                                :action => "check_out", 
                                :conditions => { :method => :get }
   
-  map.connect '/treatement_areas/:id/checkout/:patient_id', 
+  map.connect '/treatement_areas/:treatement_area_id/checkout/:patient_id', 
               :controller => "treatement_areas", 
               :action => "check_out_post",
               :conditions => { :method => :post }
               
-  map.treatement_area_pre_checkout '/treatement_areas/:id/pre_checkout/:patient_id',
+  map.treatement_area_pre_checkout '/treatement_areas/:treatement_area_id/pre_checkout/:patient_id',
                                :controller => "treatement_areas", 
                                :action => "pre_check_out", 
                                :conditions => { :method => :get }
 
-  map.connect '/treatement_areas/:id/pre_checkout/:patient_id', 
+  map.connect '/treatement_areas/:treatement_area_id/pre_checkout/:patient_id', 
               :controller => "treatement_areas", 
               :action => "pre_check_out_post",
               :conditions => { :method => :put }
               
-  map.check_out_completed '/treatement_areas/:id/checkout/:patient_id/finish',
+  map.check_out_completed '/treatement_areas/:treatement_area_id/checkout/:patient_id/finish',
                           :controller => "treatement_areas", 
                           :action => "check_out_completed",
                           :conditions => { :method => :post }

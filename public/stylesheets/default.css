@@ -37,6 +37,8 @@ min-height: 100%
 #top_navigation{
 	color: white;
 	margin-right: 20px;
+	margin-left: 20px;
+	padding-bottom: 3px;
 	text-align: right;
 }
 
@@ -236,6 +238,10 @@ th{
 
 */
 
+a img.no_border{
+  border-style: none;
+}
+
 img.side_image{
 	border-style: none;
 	vertical-align: middle;
@@ -356,7 +362,12 @@ a.add:hover{
 	background-color: #0033CC;
 }
 
-div.procedure{	font-size:14px;	margin-bottom:6px;	margin-top:6px;	padding:4px;	width:375px;
+div.procedure{
+	font-size:14px;
+	margin-bottom:6px;
+	margin-top:6px;
+	padding:4px;
+	width:375px;
 	color: #535353;
 }
 
@@ -369,7 +380,18 @@ div.procedure:hover{
 	background-color: #0033CC;
 }
 
-form dt {   clear:both;   width:33%;   float:left;   text-align: left;}form dd {   float:left;   width:66%;   margin: 0 0 1em 0.25em;}
+form dt {
+   clear:both;
+   width:33%;
+   float:left;
+   text-align: left;
+}
+
+form dd {
+   float:left;
+   width:66%;
+   margin: 0 0 1em 0.25em;
+}
 
 div.check_out{
 	text-align:right; 
@@ -378,7 +400,22 @@ div.check_out{
 	border-top: 1px solid gray;
 }
 
-div.slider {	width: 275px;	height: 5px;	margin-top:5px;	margin-bottom:5px;	background: #ddd;	position: relative;}div.slider div {	position:absolute;	width:8px;	height:15px;	margin-top:-5px;	background: #4b7399;	border:1px outset white;}
+div.slider {
+	width: 275px;
+	height: 5px;
+	margin-top:5px;
+	margin-bottom:5px;
+	background: #ddd;
+	position: relative;
+}
+div.slider div {
+	position:absolute;
+	width:8px;
+	height:15px;
+	margin-top:-5px;
+	background: #4b7399;
+	border:1px outset white;
+}
 
 div.slider_desc{
 	width: 91px;
@@ -389,8 +426,134 @@ div.slider_desc{
 	margin-bottom: 20px;
 }
 
-/* New Table Stuff */table		{		margin: 0;		padding: 0;		font: normal 0.9em tahoma, arial, sans-serif;		line-height: 1.4em;		border-collapse: collapse;		border: 4px solid #ADBBCA;		color: #4F6480;		background: #F0F0F0;
-				}				thead		{		color: #fff;		background: #5E7796;		}		thead tr th	{		padding: 4px 8px 4px 8px;		}		thead th	{		border: 4px solid #ADBBCA;		}tfoot		{		background: #fff;		}		tfoot tr td, tfoot tr th, tbody tr td	{		padding: 4px;		}		tbody tr:hover	{		background: #fff;		}		tbody tr	{		border: 4px solid #ADBBCA;		}		tbody th	{		padding: 8px;		border: 4px solid #ADBBCA;		}		tbody td	{		background: #E9ECEE;
-		font-size: 1.2em;		}tbody tr.odd		{		background: #C4CFDB;		}		tbody tr.odd td		{		background: #F0F0F0;		color: #4F6480;		}				tbody tr.odd:hover		{		background: #fff;		}				tbody tr th a:link		{		font: bold 1.2em tahoma, arial, sans-serif;		color: #5E7796;		text-decoration: underline;				}		tbody tr th a:visited		{		font: bold 1.2em tahoma, arial, sans-serif;		color: #5E7796;		text-decoration: none;				}		tbody tr th a:hover		{		font: bold 1.2em tahoma, arial, sans-serif;		color: #5E7796;		text-decoration: none;				}		tbody tr th a:active		{		font: bold 1.2em tahoma, arial, sans-serif;		color: #5E7796;		/*text-decoration: line-through;*/				}		tbody tr th a:visited:after {		content: "\00A0\221A";		}		tbody td a:link		{		font: normal 0.9em tahoma, arial, sans-serif;		color: #808000;		text-decoration: underline;		}		tbody td a:visited		{		font: normal 0.9em tahoma, arial, sans-serif;		color: #808000;		text-decoration: none;		}		tbody td a:hover		{		font: normal 0.9em tahoma, arial, sans-serif;		color: #808000;		text-decoration: none;		}		tbody td a:active		{		font: normal 0.9em tahoma, arial, sans-serif;		color: #808000;		text-decoration: underline;		}			tbody td.integer{
+/* New Table Stuff */
+
+table		{
+		margin: 0;
+		padding: 0;
+		font: normal 0.9em tahoma, arial, sans-serif;
+		line-height: 1.4em;
+		border-collapse: collapse;
+		border: 4px solid #ADBBCA;
+		color: #4F6480;
+		background: #F0F0F0;
+		
+		}
+		
+		
+thead		{
+		color: #fff;
+		background: #5E7796;
+		}
+		
+thead tr th	{
+		padding: 4px 8px 4px 8px;
+		}
+
+		
+thead th	{
+		border: 4px solid #ADBBCA;
+		}
+
+tfoot		{
+		background: #fff;
+		}
+		
+tfoot tr td, tfoot tr th, tbody tr td	{
+		padding: 4px;
+		}
+		
+tbody tr:hover	{
+		background: #fff;
+		}
+		
+tbody tr	{
+		border: 4px solid #ADBBCA;
+		}
+		
+tbody th	{
+		padding: 8px;
+		border: 4px solid #ADBBCA;
+		}
+		
+tbody td	{
+		background: #E9ECEE;
+		font-size: 1.2em;
+		}
+
+tbody tr.odd		{
+		background: #C4CFDB;
+		}
+		
+tbody tr.odd td		{
+		background: #F0F0F0;
+		color: #4F6480;
+		}
+		
+
+		
+tbody tr.odd:hover		{
+		background: #fff;
+		}
+		
+
+		
+tbody tr th a:link		{
+		font: bold 1.2em tahoma, arial, sans-serif;
+		color: #5E7796;
+		text-decoration: underline;
+		
+		}
+		
+tbody tr th a:visited		{
+		font: bold 1.2em tahoma, arial, sans-serif;
+		color: #5E7796;
+		text-decoration: none;
+		
+		}
+		
+tbody tr th a:hover		{
+		font: bold 1.2em tahoma, arial, sans-serif;
+		color: #5E7796;
+		text-decoration: none;
+		
+		}
+		
+tbody tr th a:active		{
+		font: bold 1.2em tahoma, arial, sans-serif;
+		color: #5E7796;
+		/*text-decoration: line-through;*/
+		
+		}
+		
+tbody tr th a:visited:after {
+		content: "\00A0\221A";
+		}
+		
+tbody td a:link		{
+		font: normal 0.9em tahoma, arial, sans-serif;
+		color: #808000;
+		text-decoration: underline;
+		}
+		
+tbody td a:visited		{
+		font: normal 0.9em tahoma, arial, sans-serif;
+		color: #808000;
+		text-decoration: none;
+		}
+		
+tbody td a:hover		{
+		font: normal 0.9em tahoma, arial, sans-serif;
+		color: #808000;
+		text-decoration: none;
+		}
+		
+tbody td a:active		{
+		font: normal 0.9em tahoma, arial, sans-serif;
+		color: #808000;
+		text-decoration: underline;
+		}
+			
+tbody td.integer{
 	text-align: center;
-}
+}

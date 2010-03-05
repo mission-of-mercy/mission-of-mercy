@@ -89,5 +89,18 @@ module UsersHelper
       link_to_login_with_IP content_text, options
     end
   end
+  
+  def link_to_help
+    request = { :user_id            => current_user.id,
+                :area_id            => current_area_id,
+                :treatement_area_id => current_treatement_area_id }
+                
+    link_to_remote image_tag("need_help.png", :class => "no_border"), 
+                   {:url => {:controller => "support_requests", 
+                            :action => "create", 
+                            :support_request => request },
+                   :before => "$('help_loading').show(); $(this).hide()"},
+                   {:id => "help_link"}
+  end
 
 end

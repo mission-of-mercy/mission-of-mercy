@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  user_id: 1
+  area_id: 1
+  treatement_area_id: 1
+  resolved: false
+  resolved_at: 2010-03-04 15:54:57
+
+two:
+  user_id: 1
+  area_id: 1
+  treatement_area_id: 1
+  resolved: false
+  resolved_at: 2010-03-04 15:54:57
