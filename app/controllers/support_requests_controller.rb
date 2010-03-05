@@ -15,9 +15,18 @@ class SupportRequestsController < ApplicationController
         
         @requests.map! {|request| request.station_description }
         
-        @requests = [] if SupportRequest.count(:conditions => {:resolved => false, :ip_address => request.remote_ip}) > 0
+        requested = SupportRequest.first(:conditions => {:resolved => false, :ip_address => request.remote_ip})
         
-        render :json => @requests.join(" and ").to_json
+        if requested
+          request_id = requested.id 
+          @requests    = []
+        end
+        
+        render :json => {
+                          :requests       => @requests.join(" and "),
+                          :help_requested => !!requested,
+                          :request_id     => request_id
+                        }.to_json
       end
     end
   end

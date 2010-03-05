@@ -1,39 +1,6 @@
 <% if @request %>
-requestPollEnabled = false;
 
-var text = "Help is on the way. <span style='float:right;'> Click here to cancel your request:</span>";
-
-var closeCallback = function(){
-  jQuery.ajax({
-    type: "PUT",
-    url: '/support_requests/<%= @request.id %>',
-    dataType: "script",
-    data: {authenticity_token: encodeURIComponent(AUTH_TOKEN)}
-  });
-};
-
-									
-var options = {
-  'icon': '/images/activebar/icon.png',
-  'button': '/images/activebar/close.png',
-  'highlight': 'none repeat scroll 0 0 #d23234',
-  'background': 'none repeat scroll 0 0 #d23234',
-  'border': '#d23234',
-  'fontColor': 'white',
-  onClose: closeCallback
-}
-
-if(jQuery.fn.activebar.container != null){
-  jQuery('.content',jQuery.fn.activebar.container).html(text);
-  jQuery.fn.activebar.updateBar(options);
-
-  if(!jQuery.fn.activebar.container.is(':visible'))
-    jQuery.fn.activebar.show();
-}
-else
-{    
-  jQuery('<div></div>').html(text).activebar(options);
-}									
+showSupportRequested(<%= @request.id %>);				
 
 <% else %>
 $('help_link').show();

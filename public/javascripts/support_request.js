@@ -14,10 +14,10 @@ function checkForRequests(executer){
    executer.stop();
 }
 
-function processRequests(requests){
-  if(requests.length > 0){
+function processRequests(data){
+  if(data.requests.length > 0){
     
-    var text    = "Help needed at " + requests;
+    var text    = "Help needed at " + data.requests;
     var options = {
 			'icon': '/images/activebar/icon.png',
 			'button': '/images/activebar/close.png',
@@ -37,9 +37,51 @@ function processRequests(requests){
       jQuery('<div></div>').html(text).activebar(options);
   	}
   }
+  else if(data.help_requested){
+    showSupportRequested(data.request_id);
+  }
   else
   {
     if(jQuery.fn.activebar && ($('help_link') && $('help_link').visible()) || $('help_link') == null)
       jQuery.fn.activebar.hide();
+  }
+}
+
+function showSupportRequested(id){
+  requestPollEnabled = false;
+  $('help_link').hide();
+
+  var text = "Help is on the way. <span style='float:right;'> Click here to cancel your request:</span>";
+
+  var closeCallback = function(){
+    jQuery.ajax({
+      type: "PUT",
+      url: '/support_requests/' + id,
+      dataType: "script",
+      data: {authenticity_token: encodeURIComponent(AUTH_TOKEN)}
+    });
+  };
+
+
+  var options = {
+    'icon': '/images/activebar/icon.png',
+    'button': '/images/activebar/close.png',
+    'highlight': 'none repeat scroll 0 0 #d23234',
+    'background': 'none repeat scroll 0 0 #d23234',
+    'border': '#d23234',
+    'fontColor': 'white',
+    onClose: closeCallback
+  }
+
+  if(jQuery.fn.activebar.container != null){
+    jQuery('.content',jQuery.fn.activebar.container).html(text);
+    jQuery.fn.activebar.updateBar(options);
+
+    if(!jQuery.fn.activebar.container.is(':visible'))
+      jQuery.fn.activebar.show();
+  }
+  else
+  {    
+    jQuery('<div></div>').html(text).activebar(options);
   }
 }
