@@ -27,7 +27,7 @@
       </div>
       <div class="row">
         <span class="label"><%= f.label :sex %>:</span>
-        <span class="formw"><%= select("patient", "sex", {"M", "M", "F","F"}, {:include_blank => true}) %></span>
+        <span class="formw"><%= select("patient", "sex", [["M", "M"], ["F","F"]], {:include_blank => true}) %></span>
       </div>
       <div class="row">
         <span class="label"><%= f.label :street %>:</span>
@@ -59,11 +59,11 @@
     <div class='input'>
       <div class="row">
         <span class="label"><%= f.label :chief_complaint %>:</span>
-        <span class="formw"><%= select("patient", "chief_complaint", {"Filling", "Filling", "Cleaning","Cleaning", "Extraction","Extraction"}, {:include_blank => true}) %></span>
+        <span class="formw"><%= select("patient", "chief_complaint", ["Filling", "Cleaning", "Extraction"], {:include_blank => true}) %></span>
       </div>
       <div class="row">
         <span class="label"><%= f.label :last_dental_visit %>:</span>
-        <span class="formw"><%= select("patient", "last_dental_visit", {"First Time","First Time", "Less Than 30 Days","Less Than 30 Days", "Less Than 6 Months", "Less Than 6 Months","Greater Than 6 Months","Greater Than 6 Months","Between  1 and 2 Years", "Between  1 and 2 Years", "2+ Years", "2+ Years"}, {:include_blank => true}) %></span>
+        <span class="formw"><%= select("patient", "last_dental_visit", ["First Time","First Time", "Less Than 30 Days","Less Than 30 Days", "Less Than 6 Months", "Less Than 6 Months","Greater Than 6 Months","Greater Than 6 Months","Between  1 and 2 Years", "Between  1 and 2 Years", "2+ Years", "2+ Years"], {:include_blank => true}) %></span>
       </div>
       <div class="row">
         <span class="label"><%= f.label :pain, 'Is the patient in pain?' %>:</span>
