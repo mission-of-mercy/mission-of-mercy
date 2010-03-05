@@ -4,7 +4,7 @@ class SupportRequestsController < ApplicationController
   
   def index
     respond_to do |format|
-      format.html { @requests = SupportRequest.all }
+      format.html { @requests = SupportRequest.all(:order => ["resolved"]) }
     end
   end
   
@@ -42,11 +42,16 @@ class SupportRequestsController < ApplicationController
   def update
     @request = SupportRequest.find(params[:id])
     
-    @request.resolved = true
+    if params[:support_request]
+      @request.update_attributes(params[:support_request])
+    else
+      @request.resolved = true
     
-    @request.save
+      @request.save
+    end
     
     respond_to do |format|
+      format.html { redirect_to support_requests_path }
       format.js
     end
   end
