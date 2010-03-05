@@ -4,7 +4,7 @@ class SupportRequestsController < ApplicationController
   
   def index
     respond_to do |format|
-      format.html { @requests = SupportRequest.all(:order => ["resolved"]) }
+      format.html { @requests = SupportRequest.all(:order => :resolved) }
     end
   end
   
