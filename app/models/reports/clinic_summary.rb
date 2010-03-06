@@ -2,7 +2,8 @@ class Reports::ClinicSummary
   attr_accessor :day, :span
   attr_reader   :patients, :procedures, :procedure_count, :procedure_value, 
                 :prescriptions, :prescription_count, :prescription_value, 
-                :grand_total, :next_chart_number, :xrays, :checkouts
+                :grand_total, :next_chart_number, :xrays, :checkouts,
+                :pre_med_count, :pre_meds, :pre_med_value
   
   def initialize(day=Date.today, span="All")
     reload(day,span)
@@ -10,7 +11,7 @@ class Reports::ClinicSummary
   
   def reload(day, span)
     @day, @span = day, span
-    @procedures, @prescriptions = [], []
+    @procedures, @prescriptions, @pre_meds = [], [], []
     
     if day == "All"
       @patients = Patient.all
@@ -30,6 +31,7 @@ class Reports::ClinicSummary
     
     collect_procedures
     collect_prescriptions
+    collect_pre_meds
     
     @xrays = @patients.reject {|p| p.flows.find(:first, :conditions => {:area_id => ClinicArea::XRAY}).nil? }.length
     @xrays ||= 0
@@ -37,7 +39,7 @@ class Reports::ClinicSummary
     @checkouts = @patients.reject {|p| p.flows.find(:first, :conditions => {:area_id => ClinicArea::CHECKOUT}).nil? }.length
     @checkouts ||= 0
     
-    @grand_total = @procedure_value + @prescription_value
+    @grand_total = @procedure_value + @prescription_value + @pre_med_value
     
     @next_chart_number = Patient.maximum(:id) || 0
     @next_chart_number += 1
@@ -80,6 +82,20 @@ class Reports::ClinicSummary
     
     @prescription_value = @prescriptions.sum {|p| p.last }
     @prescription_value ||= 0
+  end
+  
+  def collect_pre_meds
+    @patients.map {|p| @pre_meds += p.patient_pre_meds }
+    
+    @pre_meds = @pre_meds.group_by(&:pre_med).map do |pre_med, count|
+      [pre_med, count.length, pre_med.cost * count.length]
+    end
+    
+    @pre_med_count = @pre_meds.sum {|p| p[1] }
+    @pre_med_count ||= 0
+    
+    @pre_med_value = @pre_meds.sum {|p| p.last }
+    @pre_med_value ||= 0
   end
   
   def patients_conditions

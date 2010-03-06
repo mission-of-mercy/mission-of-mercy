@@ -46,6 +46,12 @@
   Total Prescriptions Value:
   = real_currency @report.prescription_value
   %br
+  Total Pre-Medications:
+  = @report.pre_med_count
+  %br
+  Total Pre-Medications Value:
+  = real_currency @report.pre_med_value
+  %br
   Grand Total Value:
   = real_currency @report.grand_total
   
@@ -94,7 +100,27 @@
         %th Total
         %th= @report.prescription_count
         %th= real_currency @report.prescription_value
-      
+
+- if @report.pre_med_count > 0
+  %br
+  %table
+    %thead
+      %tr
+        %th Medication
+        %th Quantity
+        %th Dollar Value
+    %tbody
+      - @report.pre_meds.each do |pre_med, qty, value|
+        %tr{:class => cycle('even', 'odd')}
+          %td= pre_med.description
+          %td.integer= qty
+          %td.integer= real_currency value
+    %tfoot
+      %tr
+        %th Total
+        %th= @report.pre_med_count
+        %th= real_currency @report.pre_med_value
+
 %h2
   Grand Total Value:
   = real_currency @report.grand_total
