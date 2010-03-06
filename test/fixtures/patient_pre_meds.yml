@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  patient_id: 1
+  pre_med_id: 1
+
+two:
+  patient_id: 1
+  pre_med_id: 1

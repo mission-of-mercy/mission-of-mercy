@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  description: MyString
+  cost: 
+  count: 1
+  prescription_id: 1
+
+two:
+  description: MyString
+  cost: 
+  count: 1
+  prescription_id: 1

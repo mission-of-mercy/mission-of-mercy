@@ -4,8 +4,10 @@ class Patient < ActiveRecord::Base
   
   has_many :patient_prescriptions, :dependent => :delete_all
   has_many :patient_procedures, :dependent => :delete_all
+  has_many :patient_pre_meds, :dependent => :delete_all
   has_many :procedures, :through => :patient_procedures
   has_many :prescriptions, :through => :patient_prescriptions
+  has_many :pre_meds, :through => :patient_pre_meds
   has_many :flows, :class_name => "PatientFlow"
   
   belongs_to :survey, :dependent => :delete
@@ -14,7 +16,10 @@ class Patient < ActiveRecord::Base
   accepts_nested_attributes_for :survey
   accepts_nested_attributes_for :patient_prescriptions, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['prescribed'] == "0" }
-                                  
+    
+  accepts_nested_attributes_for :patient_pre_meds, :allow_destroy => true,
+                                :reject_if => proc { |attributes| attributes['prescribed'] == "0" }
+                                
   
   validates_presence_of :first_name, :last_name, :date_of_birth, :sex, :race, :chief_complaint, :last_dental_visit, :travel_time, :city, :state
   

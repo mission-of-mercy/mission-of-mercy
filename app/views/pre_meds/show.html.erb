@@ -1,0 +1,23 @@
+<p>
+  <b>Description:</b>
+  <%=h @pre_med.description %>
+</p>
+
+<p>
+  <b>Cost:</b>
+  <%=h @pre_med.cost %>
+</p>
+
+<p>
+  <b>Count:</b>
+  <%=h @pre_med.count %>
+</p>
+
+<p>
+  <b>Prescription:</b>
+  <%=h @pre_med.prescription_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_pre_med_path(@pre_med) %> |
+<%= link_to 'Back', pre_meds_path %>

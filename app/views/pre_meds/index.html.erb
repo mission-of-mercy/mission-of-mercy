@@ -1,0 +1,29 @@
+<h1>Listing pre_meds</h1>
+
+<table>
+  <tr>
+    <th>Description</th>
+    <th>Cost</th>
+    <th>Count</th>
+    <th>Prescription</th>
+  </tr>
+
+<% @pre_meds.each do |pre_med| %>
+  <tr>
+    <td><%=h pre_med.description %></td>
+    <td><%=h pre_med.cost %></td>
+    <td><%=h pre_med.count %></td>
+    <td><%=h pre_med.prescription_id %></td>
+    <td><%= link_to 'Show', pre_med %></td>
+    <td><%= link_to 'Edit', edit_pre_med_path(pre_med) %></td>
+    <td><%= link_to 'Destroy', pre_med, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<p>
+  <%= link_to 'New pre_med', new_pre_med_path %>
+  <%= link_to "Back", root_path %>
+</p>

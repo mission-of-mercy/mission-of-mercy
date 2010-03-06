@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :pre_meds
+
   map.root :controller => :home, :action => :index
   
   map.home '/', :controller => :home, :action => :index

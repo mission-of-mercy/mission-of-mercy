@@ -89,11 +89,29 @@ class TreatementAreasController < ApplicationController
     @treatement_area = TreatementArea.find(params[:treatement_area_id])
     @patient         = Patient.find(params[:patient_id])
     @survey          = @patient.survey
+    
+    @patient.patient_pre_meds.each do |p| 
+      p.prescribed = true
+    end
+    
+    PreMed.all.each do |med|
+      unless @patient.pre_meds.exists? med
+        @patient.patient_pre_meds.build(:pre_med_id => med.id)
+      end
+    end
   end
   
   def pre_check_out_post
     @treatement_area = TreatementArea.find(params[:treatement_area_id])
     @patient         = Patient.find(params[:patient_id])
+    
+    @patient.attributes = params[:patient]
+    
+    @patient.patient_pre_meds.each do |p|
+      p.destroy if !p.new_record? && p.prescribed == "0"
+    end
+    
+    @patient.save
     
     if @patient.survey.update_attributes(params[:survey])
       redirect_to treatement_area_checkout_path(:id => @treatement_area, :patient_id => @patient)
