@@ -39,6 +39,8 @@ module AuthenticatedSystem
     def admin_required
       if logged_in?
         current_user.user_type == UserType::ADMIN || access_denied
+      else
+        access_denied
       end
     end
 
