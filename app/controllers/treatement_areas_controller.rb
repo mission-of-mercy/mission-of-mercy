@@ -114,7 +114,7 @@ class TreatementAreasController < ApplicationController
     @patient.save
     
     if @patient.survey.update_attributes(params[:survey])
-      redirect_to treatement_area_checkout_path(:id => @treatement_area, :patient_id => @patient)
+      redirect_to treatement_area_checkout_path(@treatement_area, @patient)
     else
       render :action => pre_check_out
     end

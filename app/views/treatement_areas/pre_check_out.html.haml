@@ -4,7 +4,7 @@
   %h1= image_tag("logo_small.png") + " Pre-Checkout"
   = "#{@patient.full_name} | Chart # #{@patient.id}"
   
-- form_for @patient, :url => treatement_area_pre_checkout_path(:treatement_area_id => @treatement_area, :patient_id => @patient) do |f|
+- form_for @patient, :url => treatement_area_pre_checkout_path(@treatement_area, @patient) do |f|
   = f.error_messages
   
   - f.fields_for :survey do |s|  
