@@ -79,7 +79,7 @@ class PatientsController < ApplicationController
     
     #add_prescriptions_to_patient(@patient)
     
-    #add_procedures_to_patient(@patient)
+    add_procedures_to_patient(@patient)
     
     if params[:race_other] != nil && @patient.race == "Other"
       @patient.race = params[:race_other]
