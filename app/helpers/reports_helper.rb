@@ -6,7 +6,7 @@ module ReportsHelper
   end
   
   def days(report)
-    (["All"] + Patient.all(:group => report.date_sql).map {|p| p.created_at.to_date } + [report.day]).uniq
+    (["All"] + Patient.all(:group => report.date_sql("patients")).map {|p| p.created_at.to_date } + [report.day]).uniq
   end
 
 end

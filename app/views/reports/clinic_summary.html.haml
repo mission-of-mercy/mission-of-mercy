@@ -25,7 +25,7 @@
   
 %p
   Total Patients Checked In: 
-  = @report.patients.length
+  = @report.patient_count
   %br
   Total Patients Given X-Rays:
   = @report.xrays
@@ -72,7 +72,7 @@
     %tbody
       - @report.procedures.each do |procedure, qty, value|
         %tr{:class => cycle('even', 'odd')}
-          %td= procedure.full_description
+          %td= procedure
           %td.integer= qty
           %td.integer= real_currency value
     %tfoot
@@ -92,7 +92,7 @@
     %tbody
       - @report.prescriptions.each do |prescription, qty, value|
         %tr{:class => cycle('even', 'odd')}
-          %td= prescription.full_description
+          %td= prescription
           %td.integer= qty
           %td.integer= real_currency value
     %tfoot
@@ -112,7 +112,7 @@
     %tbody
       - @report.pre_meds.each do |pre_med, qty, value|
         %tr{:class => cycle('even', 'odd')}
-          %td= pre_med.description
+          %td= pre_med
           %td.integer= qty
           %td.integer= real_currency value
     %tfoot
