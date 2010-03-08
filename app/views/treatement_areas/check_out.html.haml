@@ -8,7 +8,7 @@
 
   %h4 New Procedure
 
-  - form_for @patient_procedure, :url => treatement_area_checkout_path(:id => @treatement_area, :patient_id => @patient) do |f|
+  - form_for @patient_procedure, :url => treatement_area_checkout_path( @treatement_area, @patient) do |f|
     = f.error_messages
     = f.hidden_field :patient_id
   

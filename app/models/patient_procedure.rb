@@ -49,7 +49,7 @@ class PatientProcedure < ActiveRecord::Base
   end
   
   def load_procedure_from_type
-    if !self.procedure_type.blank? and self.procedure_id == 0
+    if !self.procedure_type.blank? and (self.procedure_id.nil? || self.procedure_id == 0)
       surface_count = self.surface_code.gsub(" ", "").gsub(",", "").length
       
       # HACK HACK this is nasty but it works!!!
