@@ -121,7 +121,7 @@ class PatientsController < ApplicationController
     @patient = Patient.find(params[:patient_id])
     
     testPath = "/Users/byron/Desktop/"
-    livePath = "/srv/samba/share/"
+    livePath = "/var/www/DataShare/"
     
     unless production?
       livePath = testPath
