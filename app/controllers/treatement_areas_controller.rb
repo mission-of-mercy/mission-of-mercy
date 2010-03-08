@@ -79,7 +79,7 @@ class TreatementAreasController < ApplicationController
       
       @patient_procedure = @patient.patient_procedures.build
       
-      redirect_to treatement_area_checkout_path(:id => @treatement_area, :patient_id => @patient)
+      redirect_to treatement_area_checkout_path(@treatement_area, @patient)
     else
       render :action => :check_out
     end

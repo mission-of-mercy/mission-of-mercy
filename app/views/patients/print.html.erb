@@ -4,19 +4,20 @@
 
 <table>
 <tr>
-<td rowspan=2 class='column1'><span class='label'><b>Last</b> Name:</span><br/><span class='information'><%= @patient.last_name %></span></td>
-<td rowspan=2 class='column2'><span class='label'><b>First</b> Name:</span><br/><span class='information'><%= @patient.first_name %></span></td>
-<td class='small'><span class='label'>Date of Birth: </span><b><%= @patient.dob %></b></td>
-<td rowspan=2 class='tiny'><span class='label'>Gender:</span><br/><span class='information'><%= @patient.sex %></span></td>
+  <td rowspan=2 class='column1'><span class='label'><b>Last</b> Name:</span><br/><span class='information'><%= @patient.last_name %></span></td>
+  <td rowspan=2 class='column2'><span class='label'><b>First</b> Name:</span><br/><span class='information'><%= @patient.first_name %></span></td>
+  <td class='small'><span class='label'>Date of Birth: </span><b><%= @patient.dob %></b></td>
+  <td><span class='label'>Age: </span><b><%= @patient.age %></b></td>
 </tr>
 <tr>
-<td><span class='label'>Age: </span><b><%= @patient.age %></b></td>
+  <td class='small'><span class='label'>Phone: </span><b><%= @patient.phone %></b></td>
+  <td class='small'><span class='label'>Gender: </span><b><%= @patient.sex %></b></td>
 </tr>
 <tr>
-<td><span class='label'>Address:</span><br/><span class='information'><%= @patient.street %></span></td>
-<td><span class='label'>City:</span><br/><span class='information'><%= @patient.city %></span></td>
-<td><span class='label'>State:</span><br/><span class='information'><%= @patient.state %></span></td>
-<td><span class='label'>Zip:</span><br/><span class='information'><%= @patient.zip %></span></td>
+  <td><span class='label'>Address:</span><br/><span class='information'><%= @patient.street %></span></td>
+  <td><span class='label'>City:</span><br/><span class='information'><%= @patient.city %></span></td>
+  <td><span class='label'>State:</span><br/><span class='information'><%= @patient.state %></span></td>
+  <td><span class='label'>Zip:</span><br/><span class='information'><%= @patient.zip %></span></td>
 </tr>
 <tr>
 <td><span class='label'>Reason for visit:</span><br/><span class='information'><%= @patient.chief_complaint %></span></td>
