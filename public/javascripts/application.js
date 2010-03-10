@@ -42,13 +42,10 @@ function showPreviousMomLocation()
   if(attended.checked == true)
   {
     document.getElementById('previous_mom_location_div').show();
-    document.getElementById('patient_previous_mom_event_location').value = "Tolland, CT";
-    document.getElementById('patient_previous_mom_event_location').focus();
   }
   else
   {
     document.getElementById('previous_mom_location_div').hide();
-    document.getElementById('patient_previous_mom_event_location').value = "";
   }
 }
 

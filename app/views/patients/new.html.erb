@@ -130,17 +130,16 @@
         
       </div>
       <div class="row" <%= show_previous_mom(@patient) %> id='previous_mom_location_div'>
-        <span class="label">Previous MoM location(s):<br/></span>
-        <span class="formw">
-          <div>
-          <% f.fields_for :previous_mom_clinics do |p| %>
-            <%= p.hidden_field :id %>
-            <%= p.hidden_field :location %>
-            <%= p.hidden_field :year %>
-            <%= p.check_box :attended %> <%= p.label :attended, p.object.description %><br/>
-          <% end %>
-          </div>
-        </span>
+        <span class="label" style="height: 200px;">Previous MoM location(s):<br/></span>
+        <% f.fields_for :previous_mom_clinics do |p| %>
+          <span class="formw">
+          <%= p.hidden_field :id %>
+          <%= p.hidden_field :location %>
+          <%= p.hidden_field :year %>
+          <%= p.check_box :attended %> <%= p.label :attended, p.object.description %>
+          </span><br/>
+        <% end %>
+ 
       </div>
     </div>
 
