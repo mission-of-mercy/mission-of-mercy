@@ -96,11 +96,11 @@ class Reports::ClinicSummary
     
     sql += %{ GROUP BY patient_flows.patient_id }
     
-    count = Patient.connection.select_value(
+    count = Patient.connection.select_all(
               Patient.send(:sanitize_sql_array, 
               [sql, {:report_date => @day.to_s,
                      :report_time => @span_time,
-                     :area_id     => area_id }]))
+                     :area_id     => area_id }])).length
     
     count ||= 0
     count.to_i
