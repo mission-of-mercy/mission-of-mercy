@@ -4,6 +4,20 @@
   %h1= image_tag("logo_small.png") + " #{@treatement_area.name} Checkout"
   = "#{@patient.full_name} | Chart # #{@patient.id}"
 
+#no_procedure{:style => "display:none;"}
+  %h2 Warning!
+  %p You have checked out a patient without adding any procedures.
+  %p 
+    If this is correct click
+    %b continue
+    otherwise click
+    %b cancel
+    and add the patients procedures.
+  %hr
+  %p
+    = button_to "Continue", check_out_completed_path(@treatement_area, @patient)
+    = button_to_function "Cancel", "Modalbox.hide();"
+
 %div.input-left.no_border{:style => "width: 450px;"}
 
   %h4 New Procedure
