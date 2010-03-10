@@ -170,8 +170,9 @@ function procedure_not_added(hasProcedures){
   	        function(re) {return re.checked;}
   	    );
 
-  if( checked != null)
-    return confirm('A procedure has been selected but not added. \n\nTo finish without adding the procedure click OK. \n\nTo add the procedure click Cancel and then Add Procedure.');
+  if( checked != null){
+    Modalbox.show($('incomplete_procedure'), {title: 'Incomplete Procedure Entered!', width: 650}); return false;
+  }
   else if(!hasProcedures){
     Modalbox.show($('no_procedure'), {title: 'No Procedures Added!', width: 650}); return false;
   }

@@ -17,6 +17,21 @@
   %p
     = button_to "Continue", check_out_completed_path(@treatement_area, @patient)
     = button_to_function "Cancel", "Modalbox.hide();"
+    
+#incomplete_procedure{:style => "display:none;"}
+  %h2 Warning!
+  %p A procedure has been selected but not added.
+  %p 
+    To finish without adding the procedure click
+    %b continue.
+  %p
+    To add the procedure click
+    %b cancel
+    and then Add Procedure.
+  %hr
+  %p
+    = button_to "Continue", check_out_completed_path(@treatement_area, @patient)
+    = button_to_function "Cancel", "Modalbox.hide();"
 
 %div.input-left.no_border{:style => "width: 450px;"}
 
