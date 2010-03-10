@@ -8,7 +8,7 @@ a, #controls, #top_navigation, #footer, #footer-version{
 
 table {
 border: 1px solid #666666;
-width:300px;
+width:100%;
 border-collapse: collapse;
 }
 
