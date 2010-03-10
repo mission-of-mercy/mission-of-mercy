@@ -37,7 +37,7 @@ module TreatementAreasHelper
   
   def link_to_finish(area, patient)
     button_to "Finish", check_out_completed_path(area, patient),
-                        {:onclick => "return procedure_not_added(#{patient.patient_procedures.count > 0});"}
+                        {:onclick => "return procedure_not_added(#{flash[:procedure_added] == true});"}
   end
   
   def link_to_previous(area, patient)

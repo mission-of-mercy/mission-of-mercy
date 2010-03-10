@@ -76,6 +76,7 @@ class TreatementAreasController < ApplicationController
     
     if @patient_procedure.save
       flash[:last_provider_id] = @patient_procedure.provider_id
+      flash[:procedure_added] = true
       
       @patient_procedure = @patient.patient_procedures.build
       
