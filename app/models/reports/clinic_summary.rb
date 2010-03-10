@@ -94,6 +94,8 @@ class Reports::ClinicSummary
     
     sql = date_time_where(sql, 'patient_flows')
     
+    sql += %{ GROUP BY patient_flows.patient_id }
+    
     count = Patient.connection.select_value(
               Patient.send(:sanitize_sql_array, 
               [sql, {:report_date => @day.to_s,
