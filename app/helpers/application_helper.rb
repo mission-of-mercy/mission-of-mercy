@@ -24,7 +24,7 @@ module ApplicationHelper
   end
 
   def version
-    '2.0 RC1'
+    '2.0 RC2'
   end
   
   def real_currency(number)
