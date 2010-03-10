@@ -120,6 +120,8 @@ function showPatientSurvey(){
   $('survey').show();
   $('bottom_survey').show();
   
+  $('patient_survey_attributes_heard_about_clinic').focus();
+  
   return false;
 }
 

@@ -12,4 +12,8 @@ module PatientsHelper
       return treatement_area_checkout_path(:treatement_area_id => area, :patient_id => patient.id)
     end
   end
+  
+  def show_previous_mom(patient)
+    "style='display:none;'" unless patient.attended_previous_mom_event
+  end
 end

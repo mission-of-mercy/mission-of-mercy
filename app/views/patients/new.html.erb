@@ -126,17 +126,21 @@
       </div>
       <div class="row">
         <span class="label"><%= f.label :attended_previous_mom_event, 'Attended previous MoM?' %>:</span>
-        <span class="formw"><%= f.check_box :attended_previous_mom_event %></span>
-        
-        <%= observe_field :patient_attended_previous_mom_event,
-            :on => :changed,
-            :function => "showPreviousMomLocation()"
-            %>
+        <span class="formw"><%= f.check_box :attended_previous_mom_event, :onchange => "showPreviousMomLocation();" %></span>
         
       </div>
-      <div class="row" style="display:none;" id='previous_mom_location_div'>
-        <span class="label"><%= f.label :previous_mom_event_location, 'Previous MoM location' %>:</span>
-        <span class="formw"><%= f.select :previous_mom_event_location, ["Tolland, CT", "New Haven, CT"] %></span>
+      <div class="row" <%= show_previous_mom(@patient) %> id='previous_mom_location_div'>
+        <span class="label">Previous MoM location(s):<br/></span>
+        <span class="formw">
+          <div>
+          <% f.fields_for :previous_mom_clinics do |p| %>
+            <%= p.hidden_field :id %>
+            <%= p.hidden_field :location %>
+            <%= p.hidden_field :year %>
+            <%= p.check_box :attended %> <%= p.label :attended, p.object.description %><br/>
+          <% end %>
+          </div>
+        </span>
       </div>
     </div>
 

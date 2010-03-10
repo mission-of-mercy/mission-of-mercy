@@ -39,6 +39,8 @@ class PatientsController < ApplicationController
 
     @patient.state = "CT"
     
+    create_previous_mom_clinics
+    
     if flash[:last_patient_id] != nil
       @last_patient = Patient.find(flash[:last_patient_id])
     end
@@ -75,10 +77,6 @@ class PatientsController < ApplicationController
   def create
     @patient = Patient.new(params[:patient])
     
-    #@patient.check_in = DateTime.now
-    
-    #add_prescriptions_to_patient(@patient)
-    
     add_procedures_to_patient(@patient)
     
     if params[:race_other] != nil && @patient.race == "Other"
@@ -110,6 +108,7 @@ class PatientsController < ApplicationController
         flash[:patient_travel_time_minutes] = params[:patient_travel_time_minutes]
         flash[:patient_travel_time_hours] = params[:patient_travel_time_hours]
       
+        create_previous_mom_clinics
       
         format.html { render :action => "new" }
         format.xml  { render :xml => @patient.errors, :status => :unprocessable_entity }
@@ -202,6 +201,19 @@ class PatientsController < ApplicationController
     
     procedures.each do |p|
       patient.patient_procedures.build(:procedure_id => p.id, :provider => 'AUTOADD')
+    end
+  end
+  
+  def create_previous_mom_clinics
+    @patient.previous_mom_clinics.map {|p| p.attended = true }
+    
+    [["Tolland, CT", 2008], ["New Haven, CT", 2009]].each do |c,y|
+      contains = false
+      @patient.previous_mom_clinics.each do |p| 
+        contains = (p.year == y) unless contains
+      end
+      
+      @patient.previous_mom_clinics.build(:year => y, :location => c) unless contains
     end
   end
 end

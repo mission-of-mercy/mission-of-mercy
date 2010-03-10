@@ -1,5 +1,6 @@
 class Patient < ActiveRecord::Base
   before_save :update_survey
+  before_create :previous_mom_legacy
   after_create :check_in_flow
   
   has_many :patient_prescriptions, :dependent => :delete_all
@@ -9,6 +10,7 @@ class Patient < ActiveRecord::Base
   has_many :prescriptions, :through => :patient_prescriptions
   has_many :pre_meds, :through => :patient_pre_meds
   has_many :flows, :class_name => "PatientFlow"
+  has_many :previous_mom_clinics, :class_name => "PatientPreviousMomClinic"
   
   belongs_to :survey, :dependent => :delete
   belongs_to :assigned_treatment_area, :class_name => "TreatementArea"
@@ -20,7 +22,9 @@ class Patient < ActiveRecord::Base
   accepts_nested_attributes_for :patient_pre_meds, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['prescribed'] == "0" }
                                 
-  
+  accepts_nested_attributes_for :previous_mom_clinics, :allow_destroy => true,
+                                :reject_if => proc { |attributes| attributes['attended'] == "0" }
+                                                              
   validates_presence_of :first_name, :last_name, :date_of_birth, :sex, :race, :chief_complaint, :last_dental_visit, :travel_time, :city, :state
   
   # Old Pagination Method ...
@@ -81,5 +85,9 @@ class Patient < ActiveRecord::Base
   
   def check_in_flow
     self.flows.create(:area_id => ClinicArea::CHECKIN)
+  end
+  
+  def previous_mom_legacy
+    self.previous_mom_event_location = self.previous_mom_clinics.map{|c| c.description }.join(" and ")
   end
 end
