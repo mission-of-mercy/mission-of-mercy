@@ -28,7 +28,9 @@ class PharmacyController < ApplicationController
     
     @patient.save
     
-    @patient.flows.create(:area_id => ClinicArea::PHARMACY)
+    if (@patient.patient_prescriptions.count > 0 and !session[:treatement_area_id].nil?) or session[:treatement_area_id].nil?
+      @patient.flows.create(:area_id => ClinicArea::PHARMACY) 
+    end
     
     flash[:notice] = "Patient successfully checked out"
     
