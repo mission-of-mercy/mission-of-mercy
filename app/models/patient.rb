@@ -68,6 +68,18 @@ class Patient < ActiveRecord::Base
     patient_procedures.group_by(&:procedure)
   end
   
+  def check_out(area_id)
+    if area_id != 1
+      self.flows.create(:area_id => ClinicArea::CHECKOUT,
+                        :treatement_area_id => area_id)
+      self.update_attribute(:survey_id, nil)
+    end
+                         
+    if self.assigned_treatment_area_id == area_id
+      self.update_attribute(:assigned_treatment_area_id, nil)
+    end
+  end
+  
   private
   
   def update_survey

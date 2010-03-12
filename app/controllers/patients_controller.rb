@@ -165,7 +165,7 @@ class PatientsController < ApplicationController
           format.html { redirect_to(:controller => 'exit_surveys', :action => 'new', :id => @patient.id) }
         else
           flash[:notice] = 'Patient was successfully updated.'
-          format.html { redirect_to(@patient) }
+          format.html { redirect_to patients_path }
           format.xml  { head :ok }
         end
       else

@@ -24,6 +24,8 @@ class PharmacyController < ApplicationController
       p.destroy if !p.new_record? && p.prescribed == "0"
     end
     
+    @patient.check_out(session[:treatement_area_id]) unless session[:treatement_area_id].nil?
+    
     @patient.save
     
     @patient.flows.create(:area_id => ClinicArea::PHARMACY)
