@@ -51,6 +51,7 @@ class PatientProcedure < ActiveRecord::Base
   def load_procedure_from_type
     if !self.procedure_type.blank? and (self.procedure_id.nil? || self.procedure_id == 0)
       surface_count = self.surface_code.gsub(" ", "").gsub(",", "").length
+      surface_count = 4 if surface_count > 4
       
       # HACK HACK this is nasty but it works!!!
       # Amalgams will be ok with just one return

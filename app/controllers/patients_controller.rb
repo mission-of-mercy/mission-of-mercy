@@ -201,7 +201,7 @@ class PatientsController < ApplicationController
     procedures = Procedure.find(:all, :conditions => {:auto_add => true})
     
     procedures.each do |p|
-      patient.patient_procedures.build(:procedure_id => p.id, :provider => 'AUTOADD')
+      patient.patient_procedures.build(:procedure_id => p.id)
     end
   end
   
