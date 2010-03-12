@@ -15,7 +15,7 @@
     and add the patients procedures.
   %hr
   %p
-    = button_to "Continue", check_out_completed_path(@treatement_area, @patient)
+    = continue_button @treatement_area, @patient
     = button_to_function "Cancel", "Modalbox.hide();"
     
 #incomplete_procedure{:style => "display:none;"}
@@ -30,7 +30,7 @@
     and then Add Procedure.
   %hr
   %p
-    = button_to "Continue", check_out_completed_path(@treatement_area, @patient)
+    = continue_button @treatement_area, @patient
     = button_to_function "Cancel", "Modalbox.hide();"
 
 %div.input-left.no_border{:style => "width: 450px;"}

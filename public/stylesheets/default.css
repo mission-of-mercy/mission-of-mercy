@@ -28,6 +28,11 @@ body, p, ol, ul, td {
 min-height: 100%
 }
 
+#outer_container.red{
+		background-image: none;
+		background-color: #D23234;
+}
+
 #container{
 	width: 950px;
 	margin: 0 auto;

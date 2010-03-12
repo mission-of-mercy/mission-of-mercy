@@ -143,7 +143,7 @@ class TreatementAreasController < ApplicationController
   
   def setup_procedures
     if params[:id]
-      @treatement_area = TreatementArea.find(params[:treatement_area_id])
+      @treatement_area = TreatementArea.find(params[:id])
     else
       @treatement_area = TreatementArea.new
     end

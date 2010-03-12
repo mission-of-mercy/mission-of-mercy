@@ -13,6 +13,7 @@ class PatientsController < ApplicationController
     @patients = Patient.search(params[:chart_number],params[:name],params[:page])
 
     @area = params[:treatement_area_id]
+    @area ||= session[:treatement_area_id] if session[:treatement_area_id]
 
     respond_to do |format|
       format.html # index.html.erb

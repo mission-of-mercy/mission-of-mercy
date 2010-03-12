@@ -49,7 +49,8 @@ function processRequests(data){
 
 function showSupportRequested(id){
   requestPollEnabled = false;
-  $('help_link').hide();
+  
+  if($('help_link') != null) $('help_link').hide();
 
   var text = "Help is on the way. <span style='float:right;'> Click here to cancel your request:</span>";
 
@@ -84,4 +85,12 @@ function showSupportRequested(id){
   {    
     jQuery('<div></div>').html(text).activebar(options);
   }
+}
+
+function startStatusPolling(){
+  new PeriodicalExecuter(checkForStatusRequests, 3);
+}
+
+function checkForStatusRequests(executer){ 
+  jQuery.get('/status',null,null,"script"); 
 }

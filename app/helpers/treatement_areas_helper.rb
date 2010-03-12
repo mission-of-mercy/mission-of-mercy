@@ -36,8 +36,26 @@ module TreatementAreasHelper
   end
   
   def link_to_finish(area, patient)
-    button_to "Finish", check_out_completed_path(area, patient),
-                        {:onclick => "return procedure_not_added(#{flash[:procedure_added] == true});"}
+    if area.pharmacy
+      session[:treatement_area_id] = area.id
+      
+      button_to "Next", pharmacy_check_out_path(patient),
+                        { :method => :get, 
+                          :onclick => "return procedure_not_added(#{flash[:procedure_added] == true});"}      
+    else
+      button_to "Finish", check_out_completed_path(area, patient),
+                          {:onclick => "return procedure_not_added(#{flash[:procedure_added] == true});"}
+    end
+  end
+  
+  def continue_button(area,patient)
+    path = pharmacy_check_out_path(patient) if area.pharmacy
+    path ||= check_out_completed_path(area, patient)
+    
+    method = :get if area.pharmacy
+    method ||= :post
+    
+    button_to "Continue", path, :method => method
   end
   
   def link_to_previous(area, patient)

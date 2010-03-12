@@ -30,7 +30,11 @@ class PharmacyController < ApplicationController
     
     flash[:notice] = "Patient successfully checked out"
     
-    redirect_to patients_path
+    if session[:treatement_area_id].nil?
+      redirect_to patients_path
+    else
+      redirect_to patients_path(:treatement_area_id => session[:treatement_area_id])
+    end
   end
 
 end

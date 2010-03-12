@@ -79,4 +79,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.export_to_dexis_file '/patients/:patient_id/export', :controller => 'patients', :action => 'export_to_dexis_file'
   
+  map.status '/status', :controller => 'status', :action => 'index'
+  
 end
