@@ -40,6 +40,9 @@ class PatientProcedure < ActiveRecord::Base
     self.tooth_number = self.tooth_number.upcase if self.tooth_number.to_i == 0
 
     self.surface_code = self.surface_code.upcase unless self.surface_code.blank?
+    
+  rescue
+    
   end
   
   def load_procedure_from_code
