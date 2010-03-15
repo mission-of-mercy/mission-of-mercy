@@ -1,7 +1,7 @@
 var requestPollEnabled = true;
 
 function startPolling(){
-  new PeriodicalExecuter(checkForRequests, 3);
+  new PeriodicalExecuter(checkForRequests, 30);
 }
 
 function checkForRequests(executer){
@@ -88,7 +88,7 @@ function showSupportRequested(id){
 }
 
 function startStatusPolling(){
-  new PeriodicalExecuter(checkForStatusRequests, 3);
+  new PeriodicalExecuter(checkForStatusRequests, 15);
 }
 
 function checkForStatusRequests(executer){ 
