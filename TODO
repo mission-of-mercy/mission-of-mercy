@@ -1,0 +1,36 @@
+== Feature Suggestions
+
+  - Allow procedures which require tooth # to be added with commas - Each # create a procedure.
+  - Clean up pharmacy checkout process (session vars?)
+
+== 2010 Post-Tasks
+
+Clean out x-ray checkouts
+Fix pedo / endo x-rays not added.
+Fix x-ray / pan counts
+
+== DETERMINE # of RAILS PROCESSES
+
+  ps auxw | grep Rails | wc -l
+  
+== Passenger Config
+
+  LoadModule passenger_module /usr/local/lib/ruby/gems/1.9.1/gems/passenger-2.2.10/ext/apache2/mod_passenger.so
+  PassengerRoot /usr/local/lib/ruby/gems/1.9.1/gems/passenger-2.2.10
+  PassengerRuby /usr/local/ruby_script.sh
+
+  PassengerMaxPoolSize 30
+
+  PassengerDefaultUser www-data
+  
+== ruby_script.sh
+
+  #!/bin/sh
+  export RUBY_HEAP_MIN_SLOTS=10000
+  export RUBY_HEAP_SLOTS_INCREMENT=10000
+  export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1.8
+  export RUBY_GC_MAILLOC_LIMIT=8000000
+  export RUBY_HEAP_FREE_MIN=4096
+  exec "/usr/local/bin/ruby" "$@"
+  
+chmod 777
