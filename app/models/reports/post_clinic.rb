@@ -35,7 +35,9 @@ class Reports::PostClinic
     @ethnicities = Patient.connection.select_all(sql)
   end
   
-  def load_ages
+  # TODO: Make this suck less
+  #
+  def load_ages    
     patients = Patient.all
     @ages = []
     
