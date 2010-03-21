@@ -17,6 +17,10 @@ class ReportsController < ApplicationController
     @areas   = TreatementArea.all(:order => "name")
     @current_capacity = @areas.map {|a| [a.name, a.patients.count || 0] }
   end
+  
+  def post_clinic
+    @report = Reports::PostClinic.new
+  end
 
   def movement_summary  
     @check_in_count = Patient.count('id',:conditions => ["exported_to_dexis is null AND check_out is null AND check_in > ? and check_in < ?",Time.today, Time.today + 1.day])

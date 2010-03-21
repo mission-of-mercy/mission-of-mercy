@@ -15,6 +15,8 @@ ActionController::Routing::Routes.draw do |map|
   map.reports '/reports', :controller => 'reports', :action => 'index'
   map.clinic_summary_report '/reports/clinic_summary/', :controller => 'reports', :action => 'clinic_summary'
   map.treatment_area_distribution_report '/reports/treatment_area_distribution', :controller => 'reports', :action => 'treatment_area_distribution'
+  map.post_clinic_report '/reports/post_clinic', :controller => 'reports', :action => 'post_clinic'
+  
   map.resources :providers
 
   map.resources :prescriptions

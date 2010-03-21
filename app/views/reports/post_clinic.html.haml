@@ -1,0 +1,157 @@
+- title 'Reports - Post Clinic'
+
+- content_for :header do
+  = stylesheet_link_tag('report_print', :media => :print)
+  
+- header do
+  %h1
+    = image_tag "logo_small.png"
+    Post Clinic Report
+  #controls
+    = button_to 'Print', 'javascript:window.print();'
+        
+%h2
+  %u Towns
+  
+%table
+  %thead
+    %tr
+      %th Town Name
+      %th Total Patients
+  %tbody
+    - @report.towns.each do |town|
+      %tr
+        %td= town["city"]
+        %td= town["patient_count"]
+  %tfoot
+    %tr
+      %td{:colspan => 2}= "Total towns represented: #{@report.town_count}"
+      
+%h2
+  %u Ethnicities
+
+%table
+  %thead
+    %tr
+      %th Ethnic Group
+      %th Total Patients
+  %tbody
+    - @report.ethnicities.each do |ethnic|
+      %tr
+        %td= ethnic["race"]
+        %td= ethnic["patient_count"]
+        
+%h2
+  %u Age Breakdown
+
+%table
+  %thead
+    %tr
+      %th Age Group
+      %th Total Patients
+      %th Percentage
+  %tbody
+    - @report.ages.each do |age|
+      %tr
+        %td= age["age"]
+        %td= age["patient_count"]
+        %td= age["percent"]
+        
+%h2
+  %u Travel Times
+
+%table
+  %thead
+    %tr
+      %th Total Travel Time (in minutes)
+      %th Total Patients
+  %tbody
+    - @report.travel_times.each do |time|
+      %tr
+        %td= time["travel_time"]
+        %td= time["patient_count"]
+  %tfoot
+    %tr
+      %td{:colspan => 2}= "Average travel time: #{@report.avg_travel_time}"
+  
+%h2
+  %u Genders
+
+%table
+  %thead
+    %tr
+      %th Gender
+      %th Total Patients
+      %th Percentage
+  %tbody
+    - @report.genders.each do |gend|
+      %tr
+        %td= gend["sex"]
+        %td= gend["patient_count"]
+        %td= gend["percent"]
+        
+%h2
+  %u Previous Mom Clinics
+
+%table
+  %thead
+    %tr
+      %th Clinic Location
+      %th Clinic Year
+      %th Total Patients
+      %th Percentage
+  %tbody
+    - @report.previous_moms.each do |mom|
+      %tr
+        %td= mom["location"]
+        %td= mom["year"]
+        %td= mom["patient_count"]
+        %td= mom["percent"]
+        
+%h2
+  %u Insurance
+
+%table
+  %thead
+    %tr
+      %th Insurance
+      %th Total Patients
+      %th Percentage
+  %tbody
+    - @report.insurances.each do |ins|
+      %tr
+        %td= ins["insurance"]
+        %td= ins["patient_count"]
+        %td= ins["percent"]
+        
+%h2
+  %u Tobacco Use
+
+%table
+  %thead
+    %tr
+      %th Use
+      %th Total Patients
+      %th Percentage
+  %tbody
+    - @report.tobacco_use.each do |use|
+      %tr
+        %td= use["tobacco_use"]
+        %td= use["patient_count"]
+        %td= use["percent"]
+        
+%h2
+  %u Rating of Services
+
+%table
+  %thead
+    %tr
+      %th Rating
+      %th Total Patients
+      %th Percentage
+  %tbody
+    - @report.ratings.each do |rate|
+      %tr
+        %td= rate["rating_of_services"]
+        %td= rate["patient_count"]
+        %td= rate["percent"]
