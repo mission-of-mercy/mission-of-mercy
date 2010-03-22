@@ -144,9 +144,10 @@ class Reports::PostClinic
   def add_insurance(insurance_name)
     sql = %{SELECT count(*) as `#{insurance_name}`
             FROM surveys
-            WHERE #{insurance_name} = 't'}
+            WHERE #{insurance_name} = ?}
           
-    count = Patient.connection.select_value(sql)
+    count = Patient.connection.select_value(Patient.send(:sanitize_sql_array, 
+            [sql, true]))
     
     @insurances << {"insurance" => insurance_name.humanize, 
                     "patient_count" => count}
