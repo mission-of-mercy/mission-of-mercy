@@ -9,7 +9,23 @@
     Post Clinic Report
   #controls
     = button_to 'Print', 'javascript:window.print();'
-        
+  
+%h2
+  %u Treatment Areas
+  
+%table
+  %thead
+    %tr
+      %th Area
+      %th Total Patients
+      %th Percent
+  %tbody
+    - @report.areas.each do |area|
+      %tr
+        %td= area["name"]
+        %td= area["patient_count"]
+        %td= area["percent"]
+    
 %h2
   %u Towns
   
@@ -18,14 +34,16 @@
     %tr
       %th Town Name
       %th Total Patients
+      %th Percent
   %tbody
     - @report.towns.each do |town|
       %tr
         %td= town["city"]
         %td= town["patient_count"]
+        %td= town["percent"]
   %tfoot
     %tr
-      %td{:colspan => 2}= "Total towns represented: #{@report.town_count}"
+      %td{:colspan => 3}= "Total towns represented: #{@report.town_count}"
       
 %h2
   %u Ethnicities
@@ -35,11 +53,13 @@
     %tr
       %th Ethnic Group
       %th Total Patients
+      %th Percent
   %tbody
     - @report.ethnicities.each do |ethnic|
       %tr
         %td= ethnic["race"]
         %td= ethnic["patient_count"]
+        %td= ethnic["percent"]
         
 %h2
   %u Age Breakdown

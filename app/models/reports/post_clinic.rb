@@ -1,7 +1,7 @@
 class Reports::PostClinic
   attr_reader :town_count, :towns, :ethnicities, :ages, :travel_times, 
               :avg_travel_time, :genders, :previous_moms, :insurances,
-              :tobacco_use, :ratings
+              :tobacco_use, :ratings, :areas
   
   def initialize
     @patient_count = Patient.count
@@ -15,6 +15,18 @@ class Reports::PostClinic
     load_insurance
     load_tobacco_use
     load_ratings
+    load_treatment_areas
+  end
+  
+  def load_treatment_areas
+    sql = %{SELECT `treatement_areas`.`name`, count(*) as `patient_count`
+            FROM treatement_areas LEFT JOIN patient_flows ON `treatement_areas`.`id` = `patient_flows`.`treatement_area_id`
+            WHERE `patient_flows`.`area_id` = 4 OR `patient_flows`.`area_id` = 2
+            GROUP BY `treatement_areas`.`name`}
+    
+    @areas = Patient.connection.select_all(sql)
+    
+    calculate_percentage @areas
   end
   
   def load_towns
@@ -23,6 +35,8 @@ class Reports::PostClinic
             GROUP BY patients.city}
     
     @towns = Patient.connection.select_all(sql)
+    
+    calculate_percentage @towns
     
     @town_count = @towns.length
   end
@@ -33,6 +47,9 @@ class Reports::PostClinic
             GROUP BY patients.race}
     
     @ethnicities = Patient.connection.select_all(sql)
+    
+    
+    calculate_percentage @ethnicities
   end
   
   # TODO: Make this suck less
