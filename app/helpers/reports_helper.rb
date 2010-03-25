@@ -17,7 +17,7 @@ module ReportsHelper
   def save_town(town)
     button_to_function "Save",
                        "#",
-                       :id => "save_#{town['city']}"
+                       :id => "save_#{town['city']}",
                        :style => "display:none;"
   end
 end
