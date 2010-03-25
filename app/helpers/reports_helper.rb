@@ -8,5 +8,16 @@ module ReportsHelper
   def days(report)
     (["All"] + Patient.all(:group => report.date_sql("patients")).map {|p| p.created_at.to_date } + [report.day]).uniq
   end
-
+  
+  def edit_town(town)
+    button_to_function "Edit", 
+                       "$('town_#{town['city']}').update('<input type=\"text\" value=\"#{town['city']}\"></input>'); $(this).hide(); $('save_#{town['city']}').show()"
+  end
+  
+  def save_town(town)
+    button_to_function "Save",
+                       "#",
+                       :id => "save_#{town['city']}"
+                       :style => "display:none;"
+  end
 end
