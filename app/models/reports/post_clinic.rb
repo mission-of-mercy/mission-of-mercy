@@ -155,6 +155,7 @@ class Reports::PostClinic
   def calculate_percentage(data)
     data.each do |d|
       d["percent"] = (d["patient_count"].to_f / @patient_count.to_f) * 100.0
+      d["percent"] = sprintf('%.2f', d["percent"])
     end
   end
   
