@@ -38,9 +38,10 @@
   %tbody
     - @report.towns.each do |town|
       %tr
-        %td= town["city"]
+        %td{:id => "town_#{town['city']}"}= town["city"]
         %td= town["patient_count"]
         %td= town["percent"]
+        %td= button_to_function "Edit", "$('town_#{town['city']}').update('<input type=\"text\" value=\"#{town['city']}\"></input>');"
   %tfoot
     %tr
       %td{:colspan => 3}= "Total towns represented: #{@report.town_count}"
