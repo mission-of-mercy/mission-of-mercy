@@ -37,9 +37,9 @@ module ApplicationHelper
   
   def body_css
     if current_user.nil?
-      "class='logged_out'" 
+      "logged_out" 
     elsif current_user.user_type == UserType::ADMIN
-      "class='admin'"
+      "admin"
     end
   end
   
