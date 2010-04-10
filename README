@@ -2,12 +2,9 @@
 
 Mission of Mercy software was first created to streamline patient intake, x-ray, and check-out processes for the 2009 Connecticut Mission of Mercy dental clinic.
 
-== Changes for the 2010 CT Clinic
+== Beyond Connecticut
 
- - Check-In will include several survey question which were previously in check-out
- - Creation of Assignment Desk. Assignment desk will better catalog where patients are flowing and assist in patient allocation
- - Distribution of check-out to treatment areas. This will reduce overall check-out time and increase check-out data integrity.
- - Creation of additional reports for day of and after event
+In 2010 Mission of Mercy software was released under the license of Ruby 1.8 which made it available to all Mission of Mercy clinics throughout the US.
 
 == About the CT Mission
 

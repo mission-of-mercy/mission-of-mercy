@@ -3,11 +3,15 @@
   - Allow procedures which require tooth # to be added with commas - Each # create a procedure.
   - Clean up pharmacy checkout process (session vars?)
 
-== 2010 Post-Tasks
+== The Great 2010 Cleanup
 
-Clean out x-ray checkouts
-Fix pedo / endo x-rays not added.
-Fix x-ray / pan counts
+  - ERB => HAML
+  - Treatment Area Controller Refactor
+  - Survey Generalize
+  - Check-in Generalize
+  - Adios Tables. Make'er CSS
+  - Headers should be consistent
+    - Move to layout and use content_for
 
 == DETERMINE # of RAILS PROCESSES
 
