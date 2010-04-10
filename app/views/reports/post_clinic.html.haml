@@ -38,9 +38,12 @@
   %tbody
     - @report.towns.each do |town|
       %tr
-        %td= town["city"]
+        %td{:id => "town_#{town['city']}"}= town["city"]
         %td= town["patient_count"]
         %td= town["percent"]
+        %td
+          = edit_town(town)
+          = save_town(town)
   %tfoot
     %tr
       %td{:colspan => 3}= "Total towns represented: #{@report.town_count}"
