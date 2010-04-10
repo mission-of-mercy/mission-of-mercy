@@ -1,11 +1,11 @@
 class SupportRequest < ActiveRecord::Base
   belongs_to :user
-  belongs_to :treatement_area
+  belongs_to :treatment_area
   
   def station_description
     des = "<b>"
     
-    des += treatement_area.name if treatement_area
+    des += treatment_area.name if treatment_area
     des += " #{user.name}" if user
     #des += " (#{ip_address})"
     

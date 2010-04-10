@@ -4,8 +4,8 @@ module ApplicationHelper
     controller.current_area_id
   end
   
-  def current_treatement_area_id
-    controller.current_treatement_area_id
+  def current_treatment_area_id
+    controller.current_treatment_area_id
   end
   
   def title(page_title)

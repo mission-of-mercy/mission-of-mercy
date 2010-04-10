@@ -1,6 +1,6 @@
-class CreateTreatementAreas < ActiveRecord::Migration
+class CreateTreatmentAreas < ActiveRecord::Migration
   def self.up
-    create_table :treatement_areas do |t|
+    create_table :treatment_areas do |t|
       t.string  :name
       t.integer :capacity 
       
@@ -9,6 +9,6 @@ class CreateTreatementAreas < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :treatement_areas
+    drop_table :treatment_areas
   end
 end

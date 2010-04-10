@@ -2,8 +2,8 @@
 
 one:
   prescription_id: 1
-  treatement_area_id: 1
+  treatment_area_id: 1
 
 two:
   prescription_id: 1
-  treatement_area_id: 1
+  treatment_area_id: 1

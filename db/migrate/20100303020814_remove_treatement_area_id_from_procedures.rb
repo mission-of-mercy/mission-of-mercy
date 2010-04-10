@@ -1,9 +1,9 @@
-class RemoveTreatementAreaIdFromProcedures < ActiveRecord::Migration
+class RemoveTreatmentAreaIdFromProcedures < ActiveRecord::Migration
   def self.up
-    remove_column :procedures, :treatement_area_id
+    remove_column :procedures, :treatment_area_id
   end
 
   def self.down
-    add_column :procedures, :treatement_area_id, :integer
+    add_column :procedures, :treatment_area_id, :integer
   end
 end

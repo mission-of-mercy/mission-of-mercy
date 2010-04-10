@@ -12,8 +12,8 @@ class PatientsController < ApplicationController
   
     @patients = Patient.search(params[:chart_number],params[:name],params[:page])
 
-    @area = params[:treatement_area_id]
-    @area ||= session[:treatement_area_id] if session[:treatement_area_id]
+    @area = params[:treatment_area_id]
+    @area ||= session[:treatment_area_id] if session[:treatment_area_id]
 
     respond_to do |format|
       format.html # index.html.erb
@@ -144,7 +144,7 @@ class PatientsController < ApplicationController
       format.html do 
         @patient.flows.create(:area_id => ClinicArea::XRAY)
         
-        redirect_to treatement_area_checkout_path(:treatement_area_id => 1, :patient_id => @patient.id)
+        redirect_to treatment_area_checkout_path(:treatment_area_id => 1, :patient_id => @patient.id)
       end
       format.js
     end

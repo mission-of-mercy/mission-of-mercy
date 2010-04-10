@@ -16,7 +16,7 @@
     Patients
 
 - form_tag patients_path, :method => 'get' do
-  = hidden_field_tag :treatement_area_id, @area
+  = hidden_field_tag :treatment_area_id, @area
   %p
     = label_tag :chart_number, "Chart number:" 
     = text_field_tag :chart_number, params[:chart_number]
@@ -73,7 +73,7 @@
     :javascript
       var checkoutMenuItems_#{patient.id} = [];
 
-    - TreatementArea.all(:order => "name").each do |area|
+    - TreatmentArea.all(:order => "name").each do |area|
       :javascript
         checkoutMenuItems_#{patient.id}.push({ name : '#{area.name}',
                                  callback: function(){

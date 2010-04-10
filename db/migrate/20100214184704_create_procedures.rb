@@ -9,7 +9,7 @@ class CreateProcedures < ActiveRecord::Migration
       t.boolean  "auto_add"
       t.float    "cost"
       t.integer  "number_of_surfaces"
-      t.integer  "treatement_area_id"
+      t.integer  "treatment_area_id"
       
       t.timestamps
     end

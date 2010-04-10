@@ -13,7 +13,7 @@
 <% @areas.each do |area| %>
 <tr class='<%= cycle('even', 'odd') %>'>
   <td><%= area.name %></td>
-  <td><%= link_to 'Edit', edit_treatement_area_path(area) %></td>
+  <td><%= link_to 'Edit', edit_treatment_area_path(area) %></td>
 </tr>
 
 <% end %>
@@ -21,5 +21,5 @@
 </table>
 
 <p>
-<%= link_to 'New', new_treatement_area_path %> | <%= link_to 'Back', home_path %>
+<%= link_to 'New', new_treatment_area_path %> | <%= link_to 'Back', home_path %>
 </p>

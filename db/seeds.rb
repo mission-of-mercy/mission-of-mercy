@@ -35,5 +35,5 @@ areas = [ {:name => "Radiology", :capacity => 50},
           {:name => "Surgery", :capacity => 50}]
 
 areas.each do |area|
-  TreatementArea.create(area)
+  TreatmentArea.create(area)
 end

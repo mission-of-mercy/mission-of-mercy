@@ -1,6 +1,6 @@
 class PatientFlow < ActiveRecord::Base
   belongs_to :patient
-  belongs_to :treatement_area
+  belongs_to :treatment_area
 
   
 end

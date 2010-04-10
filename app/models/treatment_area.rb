@@ -1,4 +1,4 @@
-class TreatementArea < ActiveRecord::Base
+class TreatmentArea < ActiveRecord::Base
   has_many :procedure_treatment_area_mappings
   has_many :procedures, :through => :procedure_treatment_area_mappings
   has_many :patients, :foreign_key => "assigned_treatment_area_id"

@@ -24,20 +24,20 @@ class PharmacyController < ApplicationController
       p.destroy if !p.new_record? && p.prescribed == "0"
     end
     
-    @patient.check_out(session[:treatement_area_id]) unless session[:treatement_area_id].nil?
+    @patient.check_out(session[:treatment_area_id]) unless session[:treatment_area_id].nil?
     
     @patient.save
     
-    if (@patient.patient_prescriptions.count > 0 and !session[:treatement_area_id].nil?) or session[:treatement_area_id].nil?
+    if (@patient.patient_prescriptions.count > 0 and !session[:treatment_area_id].nil?) or session[:treatment_area_id].nil?
       @patient.flows.create(:area_id => ClinicArea::PHARMACY) 
     end
     
     flash[:notice] = "Patient successfully checked out"
     
-    if session[:treatement_area_id].nil?
+    if session[:treatment_area_id].nil?
       redirect_to patients_path
     else
-      redirect_to patients_path(:treatement_area_id => session[:treatement_area_id])
+      redirect_to patients_path(:treatment_area_id => session[:treatment_area_id])
     end
   end
 

@@ -3,7 +3,7 @@ class CreateSupportRequests < ActiveRecord::Migration
     create_table :support_requests do |t|
       t.integer :user_id
       t.integer :area_id
-      t.integer :treatement_area_id
+      t.integer :treatment_area_id
       t.string  :ip_address
       t.boolean :resolved
       t.datetime :resolved_at

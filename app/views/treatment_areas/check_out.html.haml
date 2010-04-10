@@ -1,7 +1,7 @@
-- title "#{@treatement_area.name} - Checkout"
+- title "#{@treatment_area.name} - Checkout"
 
 - header do
-  %h1= image_tag("logo_small.png") + " #{@treatement_area.name} Checkout"
+  %h1= image_tag("logo_small.png") + " #{@treatment_area.name} Checkout"
   = "#{@patient.full_name} | Chart # #{@patient.id}"
 
 #no_procedure{:style => "display:none;"}
@@ -15,7 +15,7 @@
     and add the patients procedures.
   %hr
   %p
-    = continue_button @treatement_area, @patient
+    = continue_button @treatment_area, @patient
     = button_to_function "Cancel", "Modalbox.hide();"
     
 #incomplete_procedure{:style => "display:none;"}
@@ -30,25 +30,25 @@
     and then Add Procedure.
   %hr
   %p
-    = continue_button @treatement_area, @patient
+    = continue_button @treatment_area, @patient
     = button_to_function "Cancel", "Modalbox.hide();"
 
 %div.input-left.no_border{:style => "width: 450px;"}
 
   %h4 New Procedure
 
-  - form_for @patient_procedure, :url => treatement_area_checkout_path( @treatement_area, @patient) do |f|
+  - form_for @patient_procedure, :url => treatment_area_checkout_path( @treatment_area, @patient) do |f|
     = f.error_messages
     = f.hidden_field :patient_id
   
     %dl
       %dt Procedure:
       %dd
-        - @treatement_area.procedures.each do |procedure|
+        - @treatment_area.procedures.each do |procedure|
           = procedure_radio procedure, f
           = f.label :procedure_id, procedure.full_description, :value => procedure.id
           %br
-        - if @treatement_area.amalgam_composite_procedures
+        - if @treatment_area.amalgam_composite_procedures
           = procedure_amalgam_composite_radio f
           = f.label :procedure_id,  "Amalgam / Composite", :value => "amalgam_composite"
           %br
@@ -103,5 +103,5 @@
       = link_to_export_to_dexis @patient
       = image_tag "loading.gif", :id => "exporting", :style => "display:none;"
 
-  = link_to_finish @treatement_area, @patient
-  = link_to_previous(@treatement_area, @patient)
+  = link_to_finish @treatment_area, @patient
+  = link_to_previous(@treatment_area, @patient)

@@ -19,10 +19,10 @@ class Reports::PostClinic
   end
   
   def load_treatment_areas
-    sql = %{SELECT `treatement_areas`.`name`, count(*) as `patient_count`
-            FROM treatement_areas LEFT JOIN patient_flows ON `treatement_areas`.`id` = `patient_flows`.`treatement_area_id`
+    sql = %{SELECT `treatment_areas`.`name`, count(*) as `patient_count`
+            FROM treatment_areas LEFT JOIN patient_flows ON `treatment_areas`.`id` = `patient_flows`.`treatment_area_id`
             WHERE `patient_flows`.`area_id` = 4 OR `patient_flows`.`area_id` = 2
-            GROUP BY `treatement_areas`.`name`}
+            GROUP BY `treatment_areas`.`name`}
     
     @areas = Patient.connection.select_all(sql)
     

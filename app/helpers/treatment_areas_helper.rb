@@ -1,4 +1,4 @@
-module TreatementAreasHelper
+module TreatmentAreasHelper
   def has?(patient, procedure)
     patient.procedures.include?(procedure)
   end
@@ -37,7 +37,7 @@ module TreatementAreasHelper
   
   def link_to_finish(area, patient)
     if area.pharmacy
-      session[:treatement_area_id] = area.id
+      session[:treatment_area_id] = area.id
       
       button_to "Next", pharmacy_check_out_path(patient),
                         { :method => :get, 
@@ -60,11 +60,11 @@ module TreatementAreasHelper
   
   def link_to_previous(area, patient)
     if patient.survey and current_user.user_type != UserType::XRAY
-      path = treatement_area_pre_checkout_path(:treatement_area_id => area, :patient_id => patient.id)
+      path = treatment_area_pre_checkout_path(:treatment_area_id => area, :patient_id => patient.id)
       text = "Back"
       css  = "back"
     else
-      path = patients_path(:treatement_area_id => area.id)
+      path = patients_path(:treatment_area_id => area.id)
       text = "Cancel"
       css  = "warning"
     end

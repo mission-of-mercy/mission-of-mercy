@@ -4,7 +4,7 @@
   %h1= image_tag("logo_small.png") + " Pre-Checkout"
   = "#{@patient.full_name} | Chart # #{@patient.id}"
   
-- form_for @patient, :url => treatement_area_pre_checkout_path(@treatement_area, @patient) do |f|
+- form_for @patient, :url => treatment_area_pre_checkout_path(@treatment_area, @patient) do |f|
   = f.error_messages
   
   - f.fields_for :survey do |s|  
@@ -45,4 +45,4 @@
   #input-bottom{:class => "check_out"}
     %br
     = f.submit "Next"
-    = link_to "Cancel", patients_path(:treatement_area_id => @treatement_area.id), :class => 'warning'
+    = link_to "Cancel", patients_path(:treatment_area_id => @treatment_area.id), :class => 'warning'
