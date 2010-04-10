@@ -1,176 +1,118 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
+// Setup the MoM Namespace
+var MoM = MoM ? MoM : new Object();
 
-//
-//  New Patient Java!
-//
+MoM.setupNamespace = function(namespace){
+	if(MoM[namespace] == undefined)
+		MoM[namespace] = {}
+}
 
-function showOtherRace()
-{  
-  var race = document.getElementById('patient_race');
+MoM.init = function(auth_token){
+  MoM.AuthToken = auth_token;
   
-  if(race.selectedIndex == 7)
-  {
-    document.getElementById('race_other_div').show();
-    document.getElementById('race_other').focus();
+  MoM.Support.startPolling();
+}
+
+// Support
+MoM.setupNamespace("Support");
+
+// Toggle to disable support
+MoM.Support.Enabled  = true;
+MoM.Support.Interval = 30;
+
+MoM.Support.startPolling = function (){
+  new PeriodicalExecuter(MoM.Support.checkForRequests, MoM.Support.Interval);
+}
+
+MoM.Support.checkForRequests = function (executer){
+  if(MoM.Support.Enabled){
+    jQuery.getJSON('/active_support_requests.json', 
+      { authenticity_token: encodeURIComponent(MoM.AuthToken)}, 
+      function(data){
+        MoM.Support.processRequests(data);
+      }
+    ); 
+  }
+  else
+   executer.stop();
+}
+
+MoM.Support.processRequests = function(data){
+  if(data.requests.length > 0){
+    
+    var text    = "Help needed at " + data.requests;
+    var options = {
+			'icon': '/images/activebar/icon.png',
+			'button': '/images/activebar/close.png',
+			'highlight': 'InfoBackground',
+			'border': 'InfoBackground'
+		}
+    
+    if(jQuery.fn.activebar.container != null){
+      jQuery('.content',jQuery.fn.activebar.container).html(text);
+      jQuery.fn.activebar.updateBar(options);
+      
+      if(!jQuery.fn.activebar.container.is(':visible'))
+        jQuery.fn.activebar.show();
+    }
+    else
+    {    
+      jQuery('<div></div>').html(text).activebar(options);
+  	}
+  }
+  else if(data.help_requested){
+    MoM.Support.showSupportRequested(data.request_id);
   }
   else
   {
-    document.getElementById('race_other_div').hide();
+    if(jQuery.fn.activebar && ($('help_link') && $('help_link').visible()) || $('help_link') == null)
+      jQuery.fn.activebar.hide();
   }
 }
 
-function showPainLength()
-{  
-  var pain = document.getElementById('patient_pain');
+MoM.Support.showSupportRequested = function(id){
+  MoM.Support.Enabled = false;
   
-  if(pain.checked == true)
-  {
-    document.getElementById('pain_length_div').show();
-    document.getElementById('patient_pain_length_in_days').focus();
+  if($('help_link') != null) $('help_link').hide();
+
+  var text = "Help is on the way. <span style='float:right;'> Click here to cancel your request:</span>";
+
+  var closeCallback = function(){
+    jQuery.ajax({
+      type: "PUT",
+      url: '/support_requests/' + id,
+      dataType: "script",
+      data: {authenticity_token: encodeURIComponent(MoM.AuthToken)}
+    });
+  };
+
+
+  var options = {
+    'icon': '/images/activebar/icon.png',
+    'button': '/images/activebar/close.png',
+    'highlight': 'none repeat scroll 0 0 #d23234',
+    'background': 'none repeat scroll 0 0 #d23234',
+    'border': '#d23234',
+    'fontColor': 'white',
+    onClose: closeCallback
+  }
+
+  if(jQuery.fn.activebar.container != null){
+    jQuery('.content',jQuery.fn.activebar.container).html(text);
+    jQuery.fn.activebar.updateBar(options);
+
+    if(!jQuery.fn.activebar.container.is(':visible'))
+      jQuery.fn.activebar.show();
   }
   else
-  {
-    document.getElementById('pain_length_div').hide();
+  {    
+    jQuery('<div></div>').html(text).activebar(options);
   }
 }
 
-function showPreviousMomLocation()
-{
-  var attended = document.getElementById('patient_attended_previous_mom_event');
-  
-  if(attended.checked == true)
-  {
-    document.getElementById('previous_mom_location_div').show();
-  }
-  else
-  {
-    document.getElementById('previous_mom_location_div').hide();
-  }
+MoM.Support.startStatusPolling = function(){
+  new PeriodicalExecuter(MoM.Support.checkForStatusRequests, 15);
 }
 
-function openInBackground(url){
-   window.open(url); self.focus();
-}
-
-function showCheckoutFields(tooth, surface, code, type){
-  if(tooth){
-    $('tooth_dt').show(); 
-    $('tooth_dd').show();
-
-    new Effect.Highlight("tooth_dt");
-    
-    $('patient_procedure_tooth_number').focus();
-  }else{
-    $('tooth_dt').hide(); 
-    $('tooth_dd').hide();
-  }
-  
-  if(surface){
-    $('surface_dt').show(); 
-    $('surface_dd').show();
-    
-    new Effect.Highlight("surface_dt");
-  }else{
-    $('surface_dt').hide(); 
-    $('surface_dd').hide();
-  }
-  
-  if(code){
-    $('other_dt').show(); 
-    $('other_dd').show();
-    
-    new Effect.Highlight("other_dt");
-    
-    $('patient_procedure_code').focus();
-  }else{
-    $('other_dt').hide(); 
-    $('other_dd').hide();
-  }
-  
-  if(type){
-    $('amcomp_dt').show();
-    $('amcomp_dd').show();
-    
-    new Effect.Highlight("amcomp_dt");
-    
-    $('patient_procedure_procedure_type').focus();
-  }else{
-    $('amcomp_dt').hide();
-    $('amcomp_dd').hide();
-  }
-}
-
-function showPatientDemographics()
-{
-  $('demographics').show();
-  $('bottom_demographics').show();
-  $('survey').hide();
-  $('bottom_survey').hide();
-  
-  return false;
-}
-
-function showPatientSurvey(){
-  $('demographics').hide();
-  $('bottom_demographics').hide();
-  $('survey').show();
-  $('bottom_survey').show();
-  
-  $('patient_survey_attributes_heard_about_clinic').focus();
-  
-  return false;
-}
-
-function showOtherHeardAbout()
-{  
-  var heardAbout = $('patient_survey_attributes_heard_about_clinic');
-  
-  if(heardAbout.selectedIndex == 4)
-  {
-    $('heard_about_other_div').show();
-    $('patient_survey_attributes_heard_about_other').focus();
-  }
-  else
-  {
-    $('heard_about_other_div').hide();
-    $('patient_survey_attributes_heard_about_other').value = "";
-  }
-}
-
-function graph_highlight(id){
-  highlight_bar = $$('#vertgraph dl dd.' + id).first();
-  bars = $$('#vertgraph dl dd');
-  
-  for(var i = 0; i < bars.length; i++)
-    if(bars[i] != highlight_bar) bars[i].hide();
-  
-  $($$('dt.' + id).first()).addClassName("highlight");
-  $('vertgraph').addClassName("highlight");
-}
-
-function graph_reset(){
-  bars   = $$('#vertgraph dl dd');
-  labels = $$('#vertgraph dl dt.highlight');
-  
-  for(var i = 0; i < bars.length; i++)
-    bars[i].show();
-    
-  for(var i = 0; i < labels.length; i++)
-    labels[i].removeClassName("highlight");
-  
-  $('vertgraph').removeClassName("highlight");
-}
-
-function procedure_not_added(hasProcedures){
-  var checked = $('new_patient_procedure').getInputs('radio', 'patient_procedure[procedure_id]').find(
-  	        function(re) {return re.checked;}
-  	    );
-
-  if( checked != null){
-    Modalbox.show($('incomplete_procedure'), {title: 'Incomplete Procedure Entered!', width: 650}); return false;
-  }
-  else if(!hasProcedures){
-    Modalbox.show($('no_procedure'), {title: 'No Procedures Added!', width: 650}); return false;
-  }
+MoM.Support.checkForStatusRequests = function (executer){ 
+  jQuery.get('/status',null,null,"script"); 
 }
