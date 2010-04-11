@@ -142,10 +142,10 @@
   %div.input-bottom.check_out
     %span.left= link_to_reset 'new_patient'
     #bottom_demographics
-      = button_to_function "Next", "return showPatientSurvey()"
+      = button_to_function "Next", "return MoM.Helpers.showPatientSurvey()"
     #bottom_survey{:style=>"display:none;"}
       = f.submit "Check In"
-      = link_to_function "Back", "return showPatientDemographics()", :class => 'back'
+      = link_to_function "Back", "return MoM.Helpers.showPatientDemographics()", :class => 'back'
 
 #last_patient{:style=>"display:none;"}
   %h1{:style=>"text-align:center;"}= @last_patient.chart_number if @last_patient

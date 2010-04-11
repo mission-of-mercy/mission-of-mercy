@@ -101,27 +101,6 @@ function showCheckoutFields(tooth, surface, code, type){
   }
 }
 
-function showPatientDemographics()
-{
-  $('demographics').show();
-  $('bottom_demographics').show();
-  $('survey').hide();
-  $('bottom_survey').hide();
-  
-  return false;
-}
-
-function showPatientSurvey(){
-  $('demographics').hide();
-  $('bottom_demographics').hide();
-  $('survey').show();
-  $('bottom_survey').show();
-  
-  $('patient_survey_attributes_heard_about_clinic').focus();
-  
-  return false;
-}
-
 function showOtherHeardAbout()
 {  
   var heardAbout = $('patient_survey_attributes_heard_about_clinic');
