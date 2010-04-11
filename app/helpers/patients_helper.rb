@@ -17,6 +17,15 @@ module PatientsHelper
     "display:none;" unless patient.attended_previous_mom_event
   end
   
+  def yes_no_group(f, attribute, onchange)
+    [
+      f.radio_button(attribute, true, :onchange => onchange),
+      f.label(attribute, "Yes", :value => true),
+      f.radio_button(attribute, false, :onchange => onchange),
+      f.label(attribute, "No", :value => false)
+    ].join("\n")
+  end
+  
   def dob_select_options
     {
       :order         => [:month, :day, :year], 
@@ -40,7 +49,7 @@ module PatientsHelper
               "Indian",
               "Other"
             ]
-    [races, { :include_blank => true }]
+    [ races, { :include_blank => true}, {:onchange => "MoM.Helpers.toggleOtherRace();"}]
   end
   
   def chief_complaint_options

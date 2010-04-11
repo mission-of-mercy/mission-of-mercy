@@ -56,9 +56,6 @@
         %div.row
           %span.label= f.label :race
           %span.formw= f.select :race, *race_select_options
-        
-          = observe_field :patient_race, :on => :changed, :function => "showOtherRace()"
-
         #race_other_div.row{:style=>"display:none;"}
           %span.label= label_tag 'race_other', 'Specify race'
           %span.formw= text_field_tag 'race_other', nil, :size => 30 
@@ -81,14 +78,7 @@
           %span.label
             %label Is the patient in pain?
           %span.formw
-            = f.radio_button :pain, true
-            = f.label :pain, "Yes", :value => true
-            = f.radio_button :pain, false
-            = f.label :pain, "No", :value => false
-
-        -# This is broken. Make it work
-        /= observe_field :patient_pain_true, :on => :changed, :function => "showPainLength()"
-        
+            = yes_no_group f, :pain, "MoM.Helpers.togglePatientPain();"
         #pain_length_div.row{:style=>"display:none;"}
           %span.label= f.label :pain_length_in_days
           %span.formw= f.text_field :pain_length_in_days

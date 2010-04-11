@@ -5,36 +5,6 @@
 //  New Patient JS!
 //
 
-function showOtherRace()
-{  
-  var race = document.getElementById('patient_race');
-  
-  if(race.selectedIndex == 7)
-  {
-    document.getElementById('race_other_div').show();
-    document.getElementById('race_other').focus();
-  }
-  else
-  {
-    document.getElementById('race_other_div').hide();
-  }
-}
-
-function showPainLength()
-{  
-  var pain = document.getElementById('patient_pain');
-  
-  if(pain.checked == true)
-  {
-    document.getElementById('pain_length_div').show();
-    document.getElementById('patient_pain_length_in_days').focus();
-  }
-  else
-  {
-    document.getElementById('pain_length_div').hide();
-  }
-}
-
 function showPreviousMomLocation()
 {
   var attended = document.getElementById('patient_attended_previous_mom_event');
