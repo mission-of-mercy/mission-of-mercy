@@ -38,8 +38,6 @@ class Patient < ActiveRecord::Base
 		paginate  :per_page => 30, :page => page,
               :conditions => conditions,
               :order => 'id'
-              
-    # or last_name like ? or first_name like ?,"%#{name}%","%#{name}%"
 	end
   
   def chart_number
@@ -69,7 +67,7 @@ class Patient < ActiveRecord::Base
   end
   
   def check_out(area_id)
-    if area_id != 1
+    if area_id != 1 # Not Radiology
       self.flows.create(:area_id => ClinicArea::CHECKOUT,
                         :treatment_area_id => area_id)
       self.update_attribute(:survey_id, nil)

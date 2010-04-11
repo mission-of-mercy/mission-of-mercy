@@ -189,14 +189,6 @@ class PatientsController < ApplicationController
   
   protected
   
-  def add_prescriptions_to_patient(patient)
-    prescriptions = Prescription.find(:all)
-    
-    prescriptions.each do |p|
-      patient.patient_prescriptions.build(:prescription_id => p.id)
-    end
-  end
-  
   def add_procedures_to_patient(patient)
     procedures = Procedure.find(:all, :conditions => {:auto_add => true})
     
