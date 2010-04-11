@@ -13,10 +13,13 @@ MoM.init = function(auth_token){
 }
 
 MoM.disableEnterKey = function(){
-  Event.observe(document, 'onkeypress', function(e) {
-    e=e?e:window.event;
-    if (e.keyCode==13)return false;
+  $(document).observe('keypress', function(e) {
+    if(e.keyCode == 13) e.stop();
   });
+}
+
+MoM.openInBackground = function(url){
+   window.open(url); self.focus();
 }
 
 // Support

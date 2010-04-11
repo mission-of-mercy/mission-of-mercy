@@ -7,7 +7,7 @@
       MoM.disableEnterKey();
       
       if(#{@last_patient != nil}){
-        openInBackground('/patients/<%= @last_patient.id %>/print');
+        MoM.openInBackground('#{print_chart_path(@last_patient)}');
         Modalbox.show($('last_patient'), {title: 'Patient\'s Chart Number', width: 300});
       }
     });

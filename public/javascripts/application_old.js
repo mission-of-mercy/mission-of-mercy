@@ -49,10 +49,6 @@ function showPreviousMomLocation()
   }
 }
 
-function openInBackground(url){
-   window.open(url); self.focus();
-}
-
 function showCheckoutFields(tooth, surface, code, type){
   if(tooth){
     $('tooth_dt').show(); 
