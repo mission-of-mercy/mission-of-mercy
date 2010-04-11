@@ -1,24 +1,6 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
-//
-//  New Patient JS!
-//
-
-function showPreviousMomLocation()
-{
-  var attended = document.getElementById('patient_attended_previous_mom_event');
-  
-  if(attended.checked == true)
-  {
-    document.getElementById('previous_mom_location_div').show();
-  }
-  else
-  {
-    document.getElementById('previous_mom_location_div').hide();
-  }
-}
-
 function showCheckoutFields(tooth, surface, code, type){
   if(tooth){
     $('tooth_dt').show(); 
