@@ -14,6 +14,49 @@ module PatientsHelper
   end
   
   def show_previous_mom(patient)
-    "style='display:none;'" unless patient.attended_previous_mom_event
+    "display:none;" unless patient.attended_previous_mom_event
+  end
+  
+  def dob_select_options
+    {
+      :order         => [:month, :day, :year], 
+      :start_year    => (Date.today.year), 
+      :end_year      => 1900, 
+      :include_blank => true
+    }
+  end
+  
+  def sex_select_options
+    [[["M", "M"], ["F","F"]], {:include_blank => true}]
+  end
+  
+  def race_select_options
+    races = [
+              "African American/Black",
+              "American Indian/Alaska Native",
+              "Asian/Pacific Islander",
+              "Caucasian/White",
+              "Hispanic",
+              "Indian",
+              "Other"
+            ]
+    [races, { :include_blank => true }]
+  end
+  
+  def chief_complaint_options
+     [["Filling",  "Cleaning", "Extraction"], {:include_blank => true}]
+  end
+  
+  def last_dental_visit_options
+    visits = [
+                "First Time",
+                "Less Than 30 Days",
+                "Less Than 6 Months",
+                "Greater Than 6 Months",
+                "Between  1 and 2 Years", 
+                "2+ Years"
+             ]
+    
+    [visits, {:include_blank => true}]
   end
 end

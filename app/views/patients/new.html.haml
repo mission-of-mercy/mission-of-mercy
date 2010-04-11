@@ -1,0 +1,153 @@
+- title 'Patient Check In'
+
+- content_for :header do
+  :javascript
+    Event.observe(window, 'load', function() {
+      $('patient_first_name').focus();
+      MoM.disableEnterKey();
+      
+      if(#{@last_patient != nil}){
+        openInBackground('/patients/<%= @last_patient.id %>/print');
+        Modalbox.show($('last_patient'), {title: 'Patient\'s Chart Number', width: 300});
+      }
+    });
+
+- header do
+  %h1
+    = image_tag "logo_small.png"
+    Patient Check In
+
+- form_for(@patient) do |f|
+  = f.error_messages
+
+  #demographics{:style=>"height: 350px;"}
+    %div.input-left
+    
+      %h4 1: Demographics
+    
+      %div.input
+        %div.row
+          %span.label= f.label :first_name
+          %span.formw= f.text_field :first_name
+        %div.row
+          %span.label= f.label :last_name
+          %span.formw= f.text_field :last_name
+        %div.row
+          %span.label= f.label :date_of_birth
+          %span.formw= f.date_select :date_of_birth, dob_select_options
+        %div.row
+          %span.label= f.label :sex
+          %span.formw= f.select :sex, *sex_select_options
+        %div.row
+          %span.label= f.label :phone
+          %span.formw= f.text_field :phone
+        %div.row
+          %span.label= f.label :street
+          %span.formw= f.text_field :street
+        %div.row
+          %span.label= f.label :city
+          %span.formw= f.text_field :city
+        %div.row
+          %span.label= f.label :state
+          %span.formw= f.text_field :state
+        %div.row
+          %span.label= f.label :zip
+          %span.formw= f.text_field :zip
+        %div.row
+          %span.label= f.label :race
+          %span.formw= f.select :race, *race_select_options
+        
+          = observe_field :patient_race, :on => :changed, :function => "showOtherRace()"
+
+        #race_other_div.row{:style=>"display:none;"}
+          %span.label= label_tag 'race_other', 'Specify race'
+          %span.formw= text_field_tag 'race_other', nil, :size => 30 
+      %br
+      
+    / End Demographics & Left Column
+
+    %div.input-right
+
+      %h4 2: Visit Details
+      
+      %div.input
+        %div.row
+          %span.label= f.label :chief_complaint, "Reason for today's visit"
+          %span.formw= f.select :chief_complaint, *chief_complaint_options
+        %div.row
+          %span.label= f.label :last_dental_visit
+          %span.formw= f.select :last_dental_visit, *last_dental_visit_options
+        %div.row
+          %span.label
+            %label Is the patient in pain?
+          %span.formw
+            = f.radio_button :pain, true
+            = f.label :pain, "Yes", :value => true
+            = f.radio_button :pain, false
+            = f.label :pain, "No", :value => false
+
+        -# This is broken. Make it work
+        /= observe_field :patient_pain_true, :on => :changed, :function => "showPainLength()"
+        
+        #pain_length_div.row{:style=>"display:none;"}
+          %span.label= f.label :pain_length_in_days
+          %span.formw= f.text_field :pain_length_in_days
+    
+      / End Visit Details
+
+      %h4 3: Additional Information
+
+      %div.input
+        %div.row
+          %span.label= f.label :travel_time
+          %span.formw
+            Hours: 
+            = text_field_tag 'patient_travel_time_hours', flash[:patient_travel_time_hours], :size => 2
+            Minutes:
+            = text_field_tag 'patient_travel_time_minutes', flash[:patient_travel_time_minutes], :size => 2
+        %div.row
+          %span.label
+            %label Attended previous MoM?
+          %span.formw
+            = f.radio_button :attended_previous_mom_event, true
+            = f.label :attended_previous_mom_event, "Yes", :value => true
+            = f.radio_button :attended_previous_mom_event, false
+            = f.label :paattended_previous_mom_eventin, "No", :value => false
+           
+            -#TODO :onchange => "showPreviousMomLocation();"
+        
+        #previous_mom_location_div.row{:style=>show_previous_mom(@patient)}
+          %span.label{:style=>"height: 200px;"}
+            Previous MoM location(s):
+            %br
+          - f.fields_for :previous_mom_clinics do |p|
+            %span.formw
+              = p.hidden_field :id
+              = p.hidden_field :location
+              = p.hidden_field :year
+              = p.check_box :attended
+              = p.label :attended, p.object.description
+            %br
+  
+  / End First Page
+  
+  #survey{:style=>"display:none; clear:both;"}
+    
+    %h4 4: Survey Questions
+    
+    %div{:style=>"padding-left: 20px; padding-bottom: 20px;"}
+      - f.fields_for :survey do |s|    
+        = render :partial => 'surveys/check_in'
+
+  %div.input-bottom.check_out
+    %span.left= link_to_reset 'new_patient'
+    #bottom_demographics
+      = button_to_function "Next", "return showPatientSurvey()"
+    #bottom_survey{:style=>"display:none;"}
+      = f.submit "Check In"
+      = link_to_function "Back", "return showPatientDemographics()", :class => 'back'
+
+#last_patient{:style=>"display:none;"}
+  %h1{:style=>"text-align:center;"}= @last_patient.chart_number if @last_patient
+
+  = link_to_function "Check In Next Patient ", "Modalbox.hide(); $('patient_first_name').focus(); return false;", :class => "back"

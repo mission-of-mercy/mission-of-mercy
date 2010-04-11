@@ -12,6 +12,13 @@ MoM.init = function(auth_token){
   MoM.Support.startPolling();
 }
 
+MoM.disableEnterKey = function(){
+  Event.observe(document, 'onkeypress', function(e) {
+    e=e?e:window.event;
+    if (e.keyCode==13)return false;
+  });
+}
+
 // Support
 MoM.setupNamespace("Support");
 
