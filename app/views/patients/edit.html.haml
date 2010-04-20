@@ -1,0 +1,24 @@
+- title 'Patient Check In'
+
+- content_for :header do
+  :javascript
+    Event.observe(window, 'load', function() {
+      $('patient_first_name').focus();
+      MoM.disableEnterKey();
+    });
+
+- header do
+  %h1
+    = image_tag "logo_small.png"
+    Edit Patient
+
+- form_for(@patient) do |f|
+  = render :partial => 'form', :locals => {:f => f}
+
+  .input-bottom
+    = f.submit "Update"
+    |
+    = link_to 'Cancel', home_path, :class => 'warning'
+
+
+
