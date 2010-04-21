@@ -2,8 +2,6 @@ class PatientsController < ApplicationController
   before_filter :login_required
   before_filter :admin_required, :only => [ :edit, :destroy ]
   
-  # GET /patients
-  # GET /patients.xml
   def index
     if params[:commit] == "Clear"
       params[:chart_number] = ""
@@ -21,43 +19,21 @@ class PatientsController < ApplicationController
     end
   end
 
-  # GET /patients/1
-  # GET /patients/1.xml
-  def show
-    @patient = Patient.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @patient }
-    end
-  end
-
-  # GET /patients/new
-  # GET /patients/new.xml
   def new
     @patient = Patient.new
     @patient.survey = Survey.new
 
-    @patient.state = "CT"
-    
-    create_previous_mom_clinics
+    @patient.state = app_config["state"]
     
     if flash[:last_patient_id] != nil
       @last_patient = Patient.find(flash[:last_patient_id])
     end
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @patient }
-    end
   end
 
-  # GET /patients/1/edit
   def edit
     @patient = Patient.find(params[:id])
   end
   
-  # GET /patients/1/check_out
   def check_out
     @patient = Patient.find(params[:id])
 
@@ -66,15 +42,12 @@ class PatientsController < ApplicationController
     end
   end
   
-  # GET /patients/1/print
   def print
     @patient = Patient.find(params[:id])
 
     render :action => "print", :layout => "print"
   end
 
-  # POST /patients
-  # POST /patients.xml
   def create
     @patient = Patient.new(params[:patient])
     
@@ -103,16 +76,12 @@ class PatientsController < ApplicationController
         
         flash[:last_patient_id] = @patient.id
         
-        format.html { redirect_to(new_patient_path) }
-        format.xml  { render :xml => @patient, :status => :created, :location => @patient }
+        redirect_to new_patient_path
       else
         flash[:patient_travel_time_minutes] = params[:patient_travel_time_minutes]
         flash[:patient_travel_time_hours] = params[:patient_travel_time_hours]
       
-        create_previous_mom_clinics
-      
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @patient.errors, :status => :unprocessable_entity }
+        render :action => "new"
       end
     end
   end
@@ -131,10 +100,6 @@ class PatientsController < ApplicationController
     f.write(["SX=", @patient.sex].join())
     f.close
     
-    # Save Exported Time
-    #@patient.exported_to_dexis = DateTime.now
-    #w@patient.save
-    
     respond_to do |format|
       format.html do 
         @patient.flows.create(:area_id => ClinicArea::XRAY)
@@ -145,8 +110,6 @@ class PatientsController < ApplicationController
     end
   end
 
-  # PUT /patients/1
-  # PUT /patients/1.xml
   def update
     if params[:id] == nil
       params[:id] = params[:patient_id]
@@ -154,32 +117,24 @@ class PatientsController < ApplicationController
     
     @patient = Patient.find(params[:id])
     
-    respond_to do |format|
-      if @patient.update_attributes(params[:patient])
-        if params[:commit] == "Next"
-          format.html { redirect_to(:controller => 'exit_surveys', :action => 'new', :id => @patient.id) }
-        else
-          flash[:notice] = 'Patient was successfully updated.'
-          format.html { redirect_to patients_path }
-          format.xml  { head :ok }
-        end
+    if @patient.update_attributes(params[:patient])
+      if params[:commit] == "Next"
+        redirect_to(:controller => 'exit_surveys', :action => 'new', :id => @patient.id)
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @patient.errors, :status => :unprocessable_entity }
+        flash[:notice] = 'Patient was successfully updated.'
+        
+        redirect_to patients_path
       end
+    else
+      render :action => "edit"
     end
   end
 
-  # DELETE /patients/1
-  # DELETE /patients/1.xml
   def destroy
     @patient = Patient.find(params[:id])
     @patient.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(patients_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to(patients_url)
   end
   
   protected
@@ -189,19 +144,6 @@ class PatientsController < ApplicationController
     
     procedures.each do |p|
       patient.patient_procedures.build(:procedure_id => p.id)
-    end
-  end
-  
-  def create_previous_mom_clinics
-    @patient.previous_mom_clinics.map {|p| p.attended = true }
-    
-    [["Tolland, CT", 2008], ["New Haven, CT", 2009]].each do |c,y|
-      contains = false
-      @patient.previous_mom_clinics.each do |p| 
-        contains = (p.year == y) unless contains
-      end
-      
-      @patient.previous_mom_clinics.build(:year => y, :location => c) unless contains
     end
   end
 end
