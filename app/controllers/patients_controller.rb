@@ -53,10 +53,6 @@ class PatientsController < ApplicationController
     
     add_procedures_to_patient(@patient)
     
-    #Capitalize First and Last Names
-    @patient.first_name = @patient.first_name.capitalize
-    @patient.last_name = @patient.last_name.capitalize
-    
     # Calculate Travel Time
     if params[:patient_travel_time_minutes].length > 0 && params[:patient_travel_time_minutes].match(/^\d+$/) != nil
       @patient.travel_time = params[:patient_travel_time_minutes].to_i

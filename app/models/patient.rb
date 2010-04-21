@@ -108,6 +108,9 @@ class Patient < ActiveRecord::Base
   
   def normalize_data
     self.race = race_other if race_other != nil and race == "Other"
+    
+    self.first_name.capitalize!
+    self.last_name.capitalize!
   end
   
   def check_in_flow
