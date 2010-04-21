@@ -17,8 +17,6 @@ ActionController::Routing::Routes.draw do |map|
   map.treatment_area_distribution_report '/reports/treatment_area_distribution', :controller => 'reports', :action => 'treatment_area_distribution'
   map.post_clinic_report '/reports/post_clinic', :controller => 'reports', :action => 'post_clinic'
   
-  map.resources :providers
-
   map.resources :prescriptions
 
   map.resources :support_requests
