@@ -120,14 +120,9 @@ class PatientsController < ApplicationController
   def export_to_dexis_file
     @patient = Patient.find(params[:patient_id])
     
-    testPath = "/Users/byron/Desktop/"
-    livePath = "/var/www/DataShare/"
+    path = app_config["dexis_path"]
     
-    unless production?
-      livePath = testPath
-    end
-    
-    @path = [livePath,"passtodex",current_user.x_ray_station_id.to_s,".dat"].join()
+    @path = [path,"passtodex",current_user.x_ray_station_id.to_s,".dat"].join()
     f = File.new(@path, "w")
     f.write(["PN=", @patient.id.to_s, "\r\n"].join())
     f.write(["LN=", @patient.last_name, "\r\n"].join())

@@ -19,16 +19,12 @@ module ApplicationHelper
     end + content_tag(:p, :class => "notify") do flash[:notice] end)
   end
 
-  def production?
-    @is_production ||=(ENV['RAILS_ENV']=='production')
-  end
-
   def app_version
     '2.5 Alpha'
   end
   
   def clinic_state
-    "STATE"
+    app_config["state"]
   end
   
   def real_currency(number)

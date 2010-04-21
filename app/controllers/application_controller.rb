@@ -3,20 +3,18 @@
 
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
-  helper :all # include all helpers, all the time
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  helper :all
+  helper_method :app_config
+  protect_from_forgery
+  filter_parameter_logging :password
   before_filter :set_area_id
 
   attr_accessor :current_area_id, :current_treatment_area_id
 
   # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
+
   
-  def production?
-    @is_production ||=(ENV['RAILS_ENV']=='production')
-  end
-  
-  def set_area_id
+  def set_area_id    
     self.current_area_id = current_user.user_type if current_user
     
     if treatment_id = params[:treatment_area_id]
@@ -24,5 +22,11 @@ class ApplicationController < ActionController::Base
     else
       self.current_treatment_area_id = nil
     end
+  end
+  
+  protected
+    
+  def app_config
+    @app_config ||= YAML.load_file("#{Rails.root}/config/mom.yml")
   end
 end
