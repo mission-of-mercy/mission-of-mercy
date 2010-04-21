@@ -89,16 +89,9 @@ class PatientsController < ApplicationController
   def export_to_dexis_file
     @patient = Patient.find(params[:patient_id])
     
-    path = app_config["dexis_path"]
+    path = [app_config["dexis_path"],"passtodex",current_user.x_ray_station_id.to_s,".dat"].join()
     
-    @path = [path,"passtodex",current_user.x_ray_station_id.to_s,".dat"].join()
-    f = File.new(@path, "w")
-    f.write(["PN=", @patient.id.to_s, "\r\n"].join())
-    f.write(["LN=", @patient.last_name, "\r\n"].join())
-    f.write(["FN=", @patient.first_name, "\r\n"].join())
-    f.write(["BD=", @patient.date_of_birth_dexis, "\r\n"].join())
-    f.write(["SX=", @patient.sex].join())
-    f.close
+    @patient.export_to_dexis(path)
     
     respond_to do |format|
       format.html do 

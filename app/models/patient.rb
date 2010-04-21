@@ -78,6 +78,16 @@ class Patient < ActiveRecord::Base
     end
   end
   
+  def export_to_dexis(path)
+    f = File.new(path, "w")
+    f.write(["PN=", id.to_s, "\r\n"].join())
+    f.write(["LN=", last_name, "\r\n"].join())
+    f.write(["FN=", first_name, "\r\n"].join())
+    f.write(["BD=", date_of_birth_dexis, "\r\n"].join())
+    f.write(["SX=", sex].join())
+    f.close
+  end
+  
   private
   
   def update_survey
