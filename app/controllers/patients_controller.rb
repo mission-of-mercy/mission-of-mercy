@@ -53,10 +53,6 @@ class PatientsController < ApplicationController
     
     add_procedures_to_patient(@patient)
     
-    if params[:race_other] != nil && @patient.race == "Other"
-      @patient.race = params[:race_other]
-    end
-    
     #Capitalize First and Last Names
     @patient.first_name = @patient.first_name.capitalize
     @patient.last_name = @patient.last_name.capitalize
@@ -71,18 +67,15 @@ class PatientsController < ApplicationController
       @patient.travel_time += params[:patient_travel_time_hours].to_i * 60
     end
     
-    respond_to do |format|
-      if @patient.save
-        
-        flash[:last_patient_id] = @patient.id
-        
-        redirect_to new_patient_path
-      else
-        flash[:patient_travel_time_minutes] = params[:patient_travel_time_minutes]
-        flash[:patient_travel_time_hours] = params[:patient_travel_time_hours]
+    if @patient.save      
+      flash[:last_patient_id] = @patient.id
       
-        render :action => "new"
-      end
+      redirect_to new_patient_path
+    else
+      flash[:patient_travel_time_minutes] = params[:patient_travel_time_minutes]
+      flash[:patient_travel_time_hours] = params[:patient_travel_time_hours]
+    
+      render :action => "new"
     end
   end
   

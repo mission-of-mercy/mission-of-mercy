@@ -1,5 +1,6 @@
 class Patient < ActiveRecord::Base
   before_save :update_survey
+  before_save :normalize_data
   before_create :previous_mom_legacy
   after_create :check_in_flow
   
@@ -26,6 +27,8 @@ class Patient < ActiveRecord::Base
                                 :reject_if => proc { |attributes| attributes['attended'] == "0" }
                                                               
   validates_presence_of :first_name, :last_name, :date_of_birth, :sex, :race, :chief_complaint, :last_dental_visit, :travel_time, :city, :state
+  
+  attr_accessor :race_other
   
   # Old Pagination Method ...
   def self.search(chart_number,name,page)
@@ -101,6 +104,10 @@ class Patient < ActiveRecord::Base
       self.survey.pain                = pain
       self.survey.pain_length_in_days = pain_length_in_days 
     end
+  end
+  
+  def normalize_data
+    self.race = race_other if race_other != nil and race == "Other"
   end
   
   def check_in_flow

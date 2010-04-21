@@ -37,8 +37,8 @@
         %span.label= f.label :race
         %span.formw= f.select :race, *race_select_options
       #race_other_div.row{:style=>"display:none;"}
-        %span.label= label_tag 'race_other', 'Specify race'
-        %span.formw= text_field_tag 'race_other', nil, :size => 30 
+        %span.label= f.label :race_other, 'Specify race'
+        %span.formw= f.text_field :race_other
     %br
     
   / End Demographics & Left Column
