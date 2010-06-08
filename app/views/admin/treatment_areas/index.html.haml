@@ -1,0 +1,21 @@
+- title 'Treatment Areas'
+
+- header do
+  %h1 Treatment Areas
+
+%table
+  %tr
+    %th Name
+    %th{:colspan=>2} Controls
+    
+  - @treatment_areas.each do |area|
+    %tr{:class=>cycle('even', 'odd')}
+      %td= area.name
+      %td= link_to 'Edit', edit_admin_treatment_area_path(area)
+      %td= link_to 'Destroy', admin_treatment_area_path(area), :method=>:delete, :confirm=>"Are you sure?"
+
+
+%p
+  = link_to 'New', new_admin_treatment_area_path
+  |
+  = link_to 'Back', home_path

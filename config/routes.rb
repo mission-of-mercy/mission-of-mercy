@@ -81,4 +81,8 @@ ActionController::Routing::Routes.draw do |map|
   
   map.status '/status', :controller => 'status', :action => 'index'
   
+  map.namespace :admin do |admin|
+    admin.resources :treatment_areas
+  end
+  
 end
