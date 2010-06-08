@@ -68,8 +68,6 @@ ActionController::Routing::Routes.draw do |map|
               :conditions => { :method => :put }
   
   map.resources :treatment_areas
-
-  map.resources :procedures
   
   map.resources :patient_procedures
 
@@ -83,6 +81,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.namespace :admin do |admin|
     admin.resources :treatment_areas
+    admin.resources :procedures
   end
   
 end

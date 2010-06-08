@@ -1,0 +1,7 @@
+- title "New Procedure"
+
+- header do
+  %h1 New Procedure
+
+- form_for @procedure, :url => admin_procedures_path do |f|
+  = render :partial => "form", :locals => {:f => f}

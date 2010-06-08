@@ -1,0 +1,29 @@
+- title "Procedures"
+
+- header do
+  %h1 Procedures
+  
+
+%table
+  %tr
+    %th Code
+    %th Description
+    %th Requires tooth number
+    %th Requires surface code
+    %th Type
+    %th{:colspan=>2} Controls
+
+  - @procedures.each do |procedure|
+    %tr
+      %td= procedure.code
+      %td= procedure.description
+      %td= procedure.requires_tooth_number
+      %td= procedure.requires_surface_code
+      %td= procedure.procedure_type
+      %td= link_to 'Edit', edit_admin_procedure_path(procedure)
+      %td= link_to 'Destroy', admin_procedure_path(procedure), :confirm => 'Are you sure?', :method => :delete
+
+%p
+  = link_to 'New procedure', new_admin_procedure_path
+  |
+  = link_to 'Back', home_path
