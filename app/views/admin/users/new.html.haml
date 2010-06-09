@@ -1,0 +1,8 @@
+- title 'New User'
+
+- header do
+  %h1 New User
+
+
+- form_for @user, :url => admin_users_path do |f|
+  = render :partial => "form", :locals => {:f => f}
