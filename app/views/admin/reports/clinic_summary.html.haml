@@ -8,7 +8,7 @@
     = image_tag "logo_small.png"
     Clinic Summary Report
   #controls
-    - form_tag '/reports/clinic_summary', :method => 'get' do
+    - form_tag admin_clinic_summary_report_path, :method => 'get' do
       = select_tag "day", options_for_select(days(@report), @report.day)
       = select_tag "span", options_for_select(time_spans, @report.span)
       = submit_tag "Refresh"
@@ -126,4 +126,4 @@
   = real_currency @report.grand_total
   
 %p
-  = link_to "Back", reports_path, :class => "back"
+  = link_to "Back", admin_reports_path, :class => "back"

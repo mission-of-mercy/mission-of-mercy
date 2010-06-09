@@ -1,4 +1,4 @@
-class ReportsController < ApplicationController
+class Admin::ReportsController < ApplicationController
   before_filter :admin_required
   
   def index

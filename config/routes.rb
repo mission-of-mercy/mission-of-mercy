@@ -10,11 +10,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
 
   map.resource :session
-  
-  map.reports '/reports', :controller => 'reports', :action => 'index'
-  map.clinic_summary_report '/reports/clinic_summary/', :controller => 'reports', :action => 'clinic_summary'
-  map.treatment_area_distribution_report '/reports/treatment_area_distribution', :controller => 'reports', :action => 'treatment_area_distribution'
-  map.post_clinic_report '/reports/post_clinic', :controller => 'reports', :action => 'post_clinic'
 
   map.resources :support_requests
   map.connect '/active_support_requests.:format', :controller => "support_requests", :action => "active_requests"
@@ -81,6 +76,11 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :procedures
     admin.resources :pre_meds
     admin.resources :prescriptions
+    
+    admin.reports '/reports', :controller => 'reports', :action => 'index'
+    admin.clinic_summary_report '/reports/clinic_summary/', :controller => 'reports', :action => 'clinic_summary'
+    admin.treatment_area_distribution_report '/reports/treatment_area_distribution', :controller => 'reports', :action => 'treatment_area_distribution'
+    admin.post_clinic_report '/reports/post_clinic', :controller => 'reports', :action => 'post_clinic'
   end
   
 end

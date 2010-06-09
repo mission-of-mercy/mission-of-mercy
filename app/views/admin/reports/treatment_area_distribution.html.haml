@@ -11,11 +11,11 @@
     = image_tag "logo_small.png"
     Treatment Area Distribution
   #controls
-    - form_tag treatment_area_distribution_report_path do
+    - form_tag admin_treatment_area_distribution_report_path do
       = submit_tag "Refresh"
 
 
 = bar_graph @current_capacity, :width => 845
 
 %p
-  = link_to "Back", reports_path, :class => "back"
+  = link_to "Back", admin_reports_path, :class => "back"
