@@ -1,5 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :pre_meds
 
   map.root :controller => :home, :action => :index
   
@@ -82,6 +81,7 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
     admin.resources :treatment_areas
     admin.resources :procedures
+    admin.resources :pre_meds
   end
   
 end

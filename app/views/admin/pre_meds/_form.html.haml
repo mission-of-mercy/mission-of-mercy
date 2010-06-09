@@ -1,0 +1,25 @@
+= f.error_messages
+
+%p
+  = f.label :description
+  %br
+  = f.text_field :description
+
+%p
+  = f.label :cost
+  %br
+  = f.text_field :cost
+
+%p
+  = f.label :count
+  %br
+  = f.text_field :count
+
+%p
+  = f.label :prescription_id
+  %br
+  = f.text_field :prescription_id
+
+%p
+  = f.submit 'Save'
+  = link_to 'Cancel', admin_pre_meds_path
