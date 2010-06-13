@@ -1,9 +1,9 @@
-class PharmacyController < ApplicationController
+class TreatmentAreas::Patients::PrescriptionsController < ApplicationController
   before_filter :login_required
-    
-  def check_out
-    @patient = Patient.find(params[:patient_id])
-    
+  before_filter :find_treatment_area
+  before_filter :find_patient
+  
+  def index
     @patient.patient_prescriptions.each do |p| 
       p.prescribed = true
     end
@@ -14,31 +14,38 @@ class PharmacyController < ApplicationController
       end
     end
   end
-
-  def check_out_complete
-    @patient = Patient.find(params[:patient_id])
+  
+  def update
+    new_prescription = false
     
     @patient.attributes = params[:patient]
     
     @patient.patient_prescriptions.each do |p|
       p.destroy if !p.new_record? && p.prescribed == "0"
+      
+      new_prescription = true if p.new_record?
     end
-    
-    #TODO Make sure patient is "Checked out" if session[:treatment ...]
     
     @patient.save
     
-    if (@patient.patient_prescriptions.count > 0 and !session[:treatment_area_id].nil?) or session[:treatment_area_id].nil?
+    @patient.check_out(@treatment_area)
+    
+    if new_prescription
       @patient.flows.create(:area_id => ClinicArea::PHARMACY) 
     end
     
     flash[:notice] = "Patient successfully checked out"
     
-    if session[:treatment_area_id].nil?
-      redirect_to patients_path
-    else
-      redirect_to patients_path(:treatment_area_id => session[:treatment_area_id])
-    end
+    redirect_to treatment_area_patients_path(@treatment_area)
   end
-
+  
+  private
+  
+  def find_treatment_area
+    @treatment_area = TreatmentArea.find(params[:treatment_area_id])
+  end
+  
+  def find_patient
+    @patient = Patient.find(params[:patient_id])
+  end
 end

@@ -1,9 +1,7 @@
 - title 'Support Requests'
 
 - header do
-  %h1
-    = image_tag "logo_small.png"
-    Support Requests
+  %h1 Support Requests
 
 %table
   %tr
@@ -17,7 +15,7 @@
       %td= request.station_description
       %td= request.resolved
       %td= request.ip_address
-      %td= link_to "Destroy", request, :confirm => 'Are you sure?', :method => :delete
+      %td= link_to "Destroy", admin_support_request_path(request), :confirm => 'Are you sure?', :method => :delete
 
 %p
   = link_to "Back", root_path, :class => "back"

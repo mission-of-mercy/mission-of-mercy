@@ -1,7 +1,6 @@
 class Patient < ActiveRecord::Base
   before_save :update_survey
   before_save :normalize_data
-  before_create :previous_mom_legacy
   after_create :check_in_flow
   
   has_many :patient_prescriptions, :dependent => :delete_all
@@ -69,15 +68,13 @@ class Patient < ActiveRecord::Base
     patient_procedures.group_by(&:procedure)
   end
   
-  def check_out(area_id)
-    if area_id != 1 # Not Radiology
+  def check_out(area)
+    unless area == TreatmentArea.radiology
       self.flows.create(:area_id => ClinicArea::CHECKOUT,
-                        :treatment_area_id => area_id)
-      self.update_attribute(:survey_id, nil)
-    end
-                         
-    if self.assigned_treatment_area_id == area_id
-      self.update_attribute(:assigned_treatment_area_id, nil)
+                        :treatment_area_id => area.id)
+    
+      self.update_attributes(:assigned_treatment_area_id => nil,
+                             :survey_id => nil)
     end
   end
   
@@ -115,9 +112,5 @@ class Patient < ActiveRecord::Base
   
   def check_in_flow
     self.flows.create(:area_id => ClinicArea::CHECKIN)
-  end
-  
-  def previous_mom_legacy
-    self.previous_mom_event_location = self.previous_mom_clinics.map{|c| c.description }.join(" and ")
   end
 end

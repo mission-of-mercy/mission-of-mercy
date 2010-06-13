@@ -4,9 +4,7 @@
   = stylesheet_link_tag('report_print', :media => :print)
   
 - header do
-  %h1
-    = image_tag "logo_small.png"
-    Clinic Summary Report
+  %h1 Clinic Summary Report
   #controls
     - form_tag admin_clinic_summary_report_path, :method => 'get' do
       = select_tag "day", options_for_select(days(@report), @report.day)

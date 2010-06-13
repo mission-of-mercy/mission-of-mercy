@@ -35,41 +35,28 @@ module TreatmentAreasHelper
                    :before => "$(this).hide(); $('loading_#{patient_procedure.id}').show();"
   end
   
-  def link_to_finish(area, patient)
-    if area.pharmacy
-      session[:treatment_area_id] = area.id
-      
-      button_to "Next", pharmacy_check_out_path(patient),
-                        { :method => :get, 
-                          :onclick => "return procedure_not_added(#{flash[:procedure_added] == true});"}      
-    else
-      button_to "Finish", check_out_completed_path(area, patient),
-                          {:onclick => "return procedure_not_added(#{flash[:procedure_added] == true});"}
-    end
-  end
-  
-  def continue_button(area,patient)
-    path = pharmacy_check_out_path(patient) if area.pharmacy
-    path ||= check_out_completed_path(area, patient)
-    
-    method = :get if area.pharmacy
-    method ||= :post
-    
-    button_to "Continue", path, :method => method
-  end
-  
   def link_to_previous(area, patient)
     if patient.survey and current_user.user_type != UserType::XRAY
-      path = treatment_area_pre_checkout_path(:treatment_area_id => area, :patient_id => patient.id)
+      path = treatment_area_patient_survey_path(area, patient)
       text = "Back"
       css  = "back"
     else
-      path = patients_path(:treatment_area_id => area.id)
+      path = treatment_area_patients_path(area)
       text = "Cancel"
       css  = "warning"
     end
     
     link_to text, path, :class => css
+  end
+  
+  def continue_button(area,patient)
+    if area == TreatmentArea.radiology
+      path = treatment_area_patients_path(area)
+    else
+      path = treatment_area_patient_prescriptions_path(area, patient)
+    end
+    
+    button_to "Continue", path, :method => :get
   end
   
   def link_to_export_to_dexis(patient)
@@ -102,6 +89,28 @@ module TreatmentAreasHelper
     end
     
     js
+  end
+  
+  def checkout_path(area, patient)
+    if patient.survey
+      treatment_area_patient_survey_path(area, patient)
+    else
+      treatment_area_patient_procedures_path(area, patient)
+    end
+  end
+  
+  def button_to_next_checkout(area,patient)
+    if area == TreatmentArea.radiology
+      text = "Finish"
+      path = treatment_area_patients_path(area)
+    else
+      text = "Next"
+      path = treatment_area_patient_prescriptions_path(area, patient)
+    end
+    
+    button_to text, path, 
+              :method => :get, 
+              :onclick => "return procedure_not_added(#{flash[:procedure_added] == true});"
   end
 
 end

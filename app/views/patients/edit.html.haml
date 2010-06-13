@@ -8,9 +8,7 @@
     });
 
 - header do
-  %h1
-    = image_tag "logo_small.png"
-    Edit Patient
+  %h1 Edit Patient
 
 - form_for(@patient) do |f|
   = render :partial => 'form', :locals => {:f => f}

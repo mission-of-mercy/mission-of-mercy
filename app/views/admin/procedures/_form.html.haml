@@ -26,9 +26,9 @@
   = f.check_box :requires_surface_code
 
 %p
-  = f.label :type
+  = f.label :procedure_type
   %br
-  = f.text_field :procedure_type
+  = f.select :procedure_type, ['Amalgam','Composite'], :include_blank => "General "
 
 %p
   = f.label :number_of_surfaces

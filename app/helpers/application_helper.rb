@@ -14,8 +14,8 @@ module ApplicationHelper
   
   def header(&block)
     concat(content_tag(:div, :class => "header") do
-        capture(&block)
-        
+      image_tag("logo_small.png") + 
+      capture(&block)     
     end + content_tag(:p, :class => "notify") do flash[:notice] end)
   end
 

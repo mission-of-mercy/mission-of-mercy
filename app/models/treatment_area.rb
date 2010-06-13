@@ -5,4 +5,8 @@ class TreatmentArea < ActiveRecord::Base
   
   accepts_nested_attributes_for :procedure_treatment_area_mappings, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['assigned'] == "0" }
+
+  def self.radiology
+    TreatmentArea.find(:first, :conditions => {:name => "Radiology"})
+  end
 end

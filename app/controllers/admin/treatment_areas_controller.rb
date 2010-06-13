@@ -1,7 +1,7 @@
 class Admin::TreatmentAreasController < ApplicationController
   before_filter :admin_required
   before_filter :setup_procedures, :only => [:new, :edit]
-  before_filter :find_treatment_area, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_treatment_area, :only => [:show, :update, :destroy]
   
   def index
     @treatment_areas = TreatmentArea.all
@@ -12,7 +12,7 @@ class Admin::TreatmentAreasController < ApplicationController
   end
 
   def new
-    @treatment_area = TreatmentArea.new
+    
   end
   
   def create

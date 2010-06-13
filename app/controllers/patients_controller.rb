@@ -34,14 +34,6 @@ class PatientsController < ApplicationController
     @patient = Patient.find(params[:id])
   end
   
-  def check_out
-    @patient = Patient.find(params[:id])
-
-    if @patient.check_out == nil
-      @patient.check_out = DateTime.now
-    end
-  end
-  
   def print
     @patient = Patient.find(params[:id])
 
@@ -86,7 +78,7 @@ class PatientsController < ApplicationController
       format.html do 
         @patient.flows.create(:area_id => ClinicArea::XRAY)
         
-        redirect_to treatment_area_checkout_path(:treatment_area_id => 1, :patient_id => @patient.id)
+        redirect_to treatment_area_patient_procedures_path(TreatmentArea.radiology, @patient.id)
       end
       format.js
     end

@@ -95,6 +95,13 @@ div.header{
 	padding: 8px 17px 10px 20px;
 }
 
+.header img{
+  margin-right: 10px;
+}
+.header img, .header h1{
+  display:inline-block;
+}
+
 #footer{
 	color: #e6e6e6;
 	font-size: 10px;

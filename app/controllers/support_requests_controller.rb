@@ -1,12 +1,5 @@
 class SupportRequestsController < ApplicationController
-  before_filter :admin_required, :only => [:index, :edit, :destroy]
   before_filter :login_required, :except => [:active_requests]
-  
-  def index
-    respond_to do |format|
-      format.html { @requests = SupportRequest.all(:order => :resolved) }
-    end
-  end
   
   def active_requests
     respond_to do |format|

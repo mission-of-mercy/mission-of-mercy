@@ -1,7 +1,8 @@
-- title "#{@treatment_area.name} - Checkout"
+- title "Checkout - Procedures"
 
 - header do
-  %h1= image_tag("logo_small.png") + " #{@treatment_area.name} Checkout"
+  %h1 Checkout - Procedures
+  %br
   = "#{@patient.full_name} | Chart # #{@patient.id}"
 
 #no_procedure{:style => "display:none;"}
@@ -37,7 +38,7 @@
 
   %h4 New Procedure
 
-  - form_for @patient_procedure, :url => treatment_area_checkout_path( @treatment_area, @patient) do |f|
+  - form_for @patient_procedure, :url => treatment_area_patient_procedures_path(@treatment_area, @patient) do |f|
     = f.error_messages
     = f.hidden_field :patient_id
   
@@ -62,8 +63,6 @@
         = f.label :procedure_type, "Procedure Type:"
       %dd{:id => "amcomp_dd", :style => "display:none;"}
         = f.select :procedure_type, ['Amalgam','Composite'], :include_blank => true
-      - #%dt= f.label :provider_id, "Provider:"
-      - #%dd= f.text_field :provider_id, :value => flash[:last_provider_id]
       %dt{:id => "tooth_dt", :style => tooth_visible(@patient_procedure)}
         = f.label :tooth_number, "Tooth Number:"
       %dd{:id => "tooth_dd", :style => tooth_visible(@patient_procedure)}
@@ -103,5 +102,5 @@
       = link_to_export_to_dexis @patient
       = image_tag "loading.gif", :id => "exporting", :style => "display:none;"
 
-  = link_to_finish @treatment_area, @patient
+  = button_to_next_checkout(@treatment_area, @patient)
   = link_to_previous(@treatment_area, @patient)

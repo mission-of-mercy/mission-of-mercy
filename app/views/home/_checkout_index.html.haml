@@ -1,4 +1,4 @@
 %h3 Please select your treatment area:
 
 - TreatmentArea.all(:order => "name").each do |area|
-  %p= link_to area.name, patients_path(:treatment_area_id => area.id)
+  %p= link_to area.name, treatment_area_patients_path(area.id)

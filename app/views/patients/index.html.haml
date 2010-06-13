@@ -11,9 +11,7 @@
     });      
       
 - header do
-  %h1
-    = image_tag "logo_small.png"
-    Patients
+  %h1 Patients
 
 - form_tag patients_path, :method => 'get' do
   = hidden_field_tag :treatment_area_id, @area
@@ -66,25 +64,3 @@
             %td= link_to 'Destroy', patient, :confirm => 'Are you sure?', :method => :delete
 
   = will_paginate @patients
-  
-  
-- if current_user.user_type == UserType::CHECKOUT 
-  - @patients.each do |patient|
-    :javascript
-      var checkoutMenuItems_#{patient.id} = [];
-
-    - TreatmentArea.all(:order => "name").each do |area|
-      :javascript
-        checkoutMenuItems_#{patient.id}.push({ name : '#{area.name}',
-                                 callback: function(){
-                                   link = $('checkout_#{patient.id}').children[0];
-                                   link.update("#{area.name} Checkout");
-                                   link.writeAttribute("href", "#{checkout_path(area.id, patient)}");
-                                 }});
-
-    :javascript
-      new Proto.Menu({
-        selector: '#checkout_#{patient.id}',
-        className: 'menu desktop',
-        menuItems: checkoutMenuItems_#{patient.id}
-      });

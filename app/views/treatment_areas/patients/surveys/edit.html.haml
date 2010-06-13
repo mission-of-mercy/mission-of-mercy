@@ -1,0 +1,33 @@
+- title 'Pre-Checkout'
+
+- header do
+  %h1 Pre-Checkout
+  %br
+  = "#{@patient.full_name} | Chart # #{@patient.id}"
+  
+- form_for @patient, :url => treatment_area_patient_survey_path(@treatment_area, @patient) do |f|
+  = f.error_messages
+  
+  = render :partial => "surveys/check_out", :locals => {:f => f}
+  
+  %h4 Pre-Medication
+  
+  %p
+    - f.fields_for :patient_pre_meds do |p|
+      = p.hidden_field :pre_med_id
+      = p.check_box :prescribed
+      = p.label :prescribed, p.object.pre_med.description
+      %br
+  
+  %h4 Rating of services received today
+
+  = slider_field :survey, :rating_of_services, :range => 1..10 
+  %br
+  %div.slider_desc Not Satisfied
+  %div.slider_desc Satisfied
+  %div.slider_desc Very Satisfied
+    
+  #input-bottom{:class => "check_out"}
+    %br
+    = f.submit "Next"
+    = link_to "Cancel", treatment_area_patients_path(@treatment_area), :class => 'warning'

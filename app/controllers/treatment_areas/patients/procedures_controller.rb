@@ -1,0 +1,43 @@
+class TreatmentAreas::Patients::ProceduresController < ApplicationController
+  before_filter :login_required
+  before_filter :find_treatment_area
+  before_filter :find_patient
+  
+  def index
+    @patient_procedure = @patient.patient_procedures.build
+    
+    @patient.patient_prescriptions.each do |p| 
+      p.prescribed = true
+    end
+    
+    Prescription.all.each do |pres|
+      unless @patient.prescriptions.exists? pres
+        @patient.patient_prescriptions.build(:prescription_id => pres.id)
+      end
+    end
+  end
+  
+  def create
+    @patient_procedure = PatientProcedure.new(params[:patient_procedure])
+    
+    if @patient_procedure.save
+      flash[:procedure_added] = true
+      
+      @patient_procedure = @patient.patient_procedures.build
+      
+      redirect_to treatment_area_patient_procedures_path(@treatment_area, @patient)
+    else
+      render :action => :index
+    end
+  end
+  
+  private
+  
+  def find_treatment_area
+    @treatment_area = TreatmentArea.find(params[:treatment_area_id])
+  end
+  
+  def find_patient
+    @patient = Patient.find(params[:patient_id])
+  end
+end
