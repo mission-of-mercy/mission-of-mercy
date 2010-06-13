@@ -24,6 +24,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :patients
   map.resources :patient_procedures
   
+  map.resources :assignment_desk
+  
   map.print_chart '/patients/:id/print', :controller => 'patients', :action => 'print'
 
   map.export_to_dexis_file '/patients/:patient_id/export', :controller => 'patients', :action => 'export_to_dexis_file'

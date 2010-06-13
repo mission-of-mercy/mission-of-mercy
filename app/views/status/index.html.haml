@@ -2,9 +2,9 @@
   %h1= image_tag("logo_small.png") + " System Status"
   
 :javascript
-  requestPollEnabled = false;
+  MoM.Support.Enabled = false;
   
-  startStatusPolling();
+  MoM.Support.startStatusPolling();
   
 #requests
   = render :partial => "requests"
