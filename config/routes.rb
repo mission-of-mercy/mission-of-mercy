@@ -12,7 +12,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :support_requests
   map.connect '/active_support_requests.:format', :controller => "support_requests", :action => "active_requests"
   
-  map.resources :treatment_areas do |area|
+  map.resources :treatment_areas, :collection => {:change => :post} do |area|
     area.resources :patients, 
                    :controller => "treatment_areas/patients" do |patient|
       patient.resources :prescriptions, :controller => "treatment_areas/patients/prescriptions"

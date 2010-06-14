@@ -55,7 +55,11 @@ min-height: 100%
 #top_navigation a:hover{
 	color: silver;
 	text-decoration: underline;
-} 
+}
+
+#top_navigation form{
+  display:inline-block;
+}
 
 #top_left{
 	color: white;
@@ -444,6 +448,12 @@ div.slider_desc{
 	display: inline-block;
 	text-align: center;
 	margin-bottom: 20px;
+}
+
+select.change_treatment_area{
+  padding: 2px 5px;
+  display: inline-block;
+  margin-right: 20px;
 }
 
 /* New Table Stuff */
