@@ -1,7 +1,8 @@
 page["requests"].replace_html :partial => "requests"
 
 if @requests.length > 0
-  page << "$('outer_container').addClassName('red');" 
+  page << "$(document.body).addClassName('red')"
+  
 else
-  page << "$('outer_container').removeClassName('red');" 
+  page << "$(document.body).removeClassName('red');"
 end

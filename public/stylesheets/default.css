@@ -21,16 +21,24 @@ body, p, ol, ul, td {
 }
 
 #outer_container{
-		background-image: url(../images/background.png);
-			margin: 0 auto;
-			padding: 0 0px 0px;
-				width: 1000px;
-min-height: 100%
+	background-image: url(../images/background.png);
+	margin: 0 auto;
+	padding: 0 0px 0px;
+	width: 1000px;
+  min-height: 100%
 }
 
-#outer_container.red{
-		background-image: none;
-		background-color: #D23234;
+body.red{
+	background-color: #c12317;
+}
+
+#status_container {
+  background-color: white; 
+  min-height: 50%;
+  padding:20px;
+  -moz-border-radius: 10px; 
+  width: 75%; 
+  margin: 50px auto;
 }
 
 #container{

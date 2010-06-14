@@ -1,10 +1,8 @@
-- header do
-  %h1= image_tag("logo_small.png") + " System Status"
-  
-:javascript
-  MoM.Support.Enabled = false;
-  
-  MoM.Support.startStatusPolling();
-  
+%h1 
+  System Status
+  %span{:style=>"float:right;"}= link_to 'Home', root_path
+
+%hr
+
 #requests
   = render :partial => "requests"
