@@ -24,6 +24,12 @@ class Admin::SupportRequestsController < ApplicationController
     redirect_to admin_support_requests_path
   end
   
+  def destroy_all
+    SupportRequest.delete_all
+    
+    redirect_to admin_support_requests_path
+  end
+  
   private
   
   def find_support_request

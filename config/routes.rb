@@ -38,7 +38,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :pre_meds
     admin.resources :prescriptions
     admin.resources :users
-    admin.resources :support_requests
+    admin.resources :support_requests, :collection => {:destroy_all => :delete}
     
     admin.reports '/reports', :controller => 'reports', :action => 'index'
     admin.clinic_summary_report '/reports/clinic_summary/', :controller => 'reports', :action => 'clinic_summary'
