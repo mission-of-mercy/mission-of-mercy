@@ -8,3 +8,4 @@ db/schema.rb
 .svn
 vendor/plugins/haml/init.rb
 config/mom.yml
+.rvmrc
