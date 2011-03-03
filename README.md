@@ -28,5 +28,5 @@ In 2010 Mission of Mercy software was released under the license of Ruby 1.8 whi
 
 ## Contributors
 
-Jordan Byron <jordan@ducksoupsoftware.com>  
-Christopher Mitchell <cmitchell@integrityss.com>
+[Jordan Byron](http://jordanbyron.com)  
+[Christopher Mitchell](cmitchell@integrityss.com)
