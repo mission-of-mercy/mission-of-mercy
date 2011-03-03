@@ -4,11 +4,11 @@ class PatientsController < ApplicationController
   
   def index
     if params[:commit] == "Clear"
-      params[:chart_number] = ""
-      params[:name] = ""
+      params[:chart_number] = nil
+      params[:name] = nil
     end
   
-    @patients = Patient.search(params[:chart_number],params[:name],params[:page])
+    @patients = Patient.search(params[:chart_number], params[:name],params[:page])
 
     @area = params[:treatment_area_id]
     @area ||= session[:treatment_area_id] if session[:treatment_area_id]

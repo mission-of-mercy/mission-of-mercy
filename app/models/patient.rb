@@ -30,11 +30,13 @@ class Patient < ActiveRecord::Base
   attr_accessor :race_other
   
   # Old Pagination Method ...
-  def self.search(chart_number,name,page)
-    conditions = ['id = ?', "#{chart_number}"]
-  
-    if (chart_number == nil || chart_number == "") && (name != nil && name != "")
-      conditions = ['first_name like ? or last_name like ?', "%#{name}%","%#{name}%"]
+  def self.search(chart_number, name, page)
+    conditions = if chart_number.blank? && !name.blank?
+      ['first_name like ? or last_name like ?', "%#{name}%","%#{name}%"]
+    elsif !chart_number.blank?
+      ["id = ?", chart_number]
+    else
+      nil
     end
   
 		paginate  :per_page => 30, :page => page,
