@@ -1,0 +1,9 @@
+#! /bin/bash
+
+if [ "s" = $1 ]; then
+  script/server
+fi
+
+if [ "c" = $1 ]; then
+  script/console
+fi
