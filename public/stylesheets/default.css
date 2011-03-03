@@ -101,6 +101,11 @@ body.red{
 	margin: 50px auto 0;
 }
 
+#contents.login input[type=text], #contents.login input[type=password]{
+	width: 280px;
+	font-size: 1.5em;
+}
+
 div.header{
 	background-color: #edf3fe;
 	margin: -20px -20px 20px;
