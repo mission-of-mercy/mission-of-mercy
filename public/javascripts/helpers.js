@@ -19,7 +19,7 @@ MoM.Helpers.showPatientSurvey = function (){
 }
 
 MoM.Helpers.togglePatientPain = function(){
-  $ = jQuery;
+  var $ = jQuery;
   
   if($('#patient_pain_true').is(':checked') == true)
     $('#pain_length_div').slideDown();
@@ -28,7 +28,7 @@ MoM.Helpers.togglePatientPain = function(){
 }
 
 MoM.Helpers.toggleOtherRace = function(){
-  $ = jQuery;
+  var $ = jQuery;
   
   if($('#patient_race').val() == 'Other')
     $('#race_other_div').slideDown();
@@ -37,7 +37,7 @@ MoM.Helpers.toggleOtherRace = function(){
 }
 
 MoM.Helpers.togglePreviousMoM = function(){
-  $ = jQuery;
+  var $ = jQuery;
   
   if($('#patient_attended_previous_mom_event_true').is(':checked') == true)
     $('#previous_mom_location_div').slideDown();
@@ -46,7 +46,7 @@ MoM.Helpers.togglePreviousMoM = function(){
 }
 
 MoM.Helpers.checkIn = function(){
-  $ = jQuery;
+  var $ = jQuery;
   
   $('#patient_attended_previous_mom_event_true').change(function(e){
     MoM.Helpers.togglePreviousMoM();
