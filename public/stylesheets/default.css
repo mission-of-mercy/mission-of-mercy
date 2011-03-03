@@ -113,6 +113,7 @@ div.header{
 }
 .header img, .header h1{
   display:inline-block;
+  vertical-align: middle;
 }
 
 #footer{
