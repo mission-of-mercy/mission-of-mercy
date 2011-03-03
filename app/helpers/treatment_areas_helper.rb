@@ -49,14 +49,16 @@ module TreatmentAreasHelper
     link_to text, path, :class => css
   end
   
-  def continue_button(area,patient)
+  def continue_button(area,patient, options={})
     if area == TreatmentArea.radiology
       path = treatment_area_patients_path(area)
     else
       path = treatment_area_patient_prescriptions_path(area, patient)
     end
     
-    button_to "Continue", path, :method => :get
+    text = options[:text] || "Continue"
+    
+    button_to text, path, :method => :get
   end
   
   def link_to_export_to_dexis(patient)
