@@ -1,7 +1,7 @@
 Mission of Mercy Software
 =========================
 
-Mission of Mercy software was first created to streamline patient intake, x-ray, and check-out processes for the 2009 Connecticut Mission of Mercy dental clinic.
+Clinic management software for Mission of Mercy events.
 
 ## Requirements
 
@@ -10,11 +10,11 @@ Mission of Mercy software was first created to streamline patient intake, x-ray,
 
 ## More Information about the software
 
-For the latest update-to-date information about the software check out the project's wiki pages at http://wiki.github.com/jordanbyron/mission_of_mercy/
+For the latest update-to-date information about the software check out the project's wiki pages at [http://wiki.github.com/jordanbyron/mission_of_mercy/](http://wiki.github.com/jordanbyron/mission_of_mercy/)
 
 ## What is Mission of Mercy?
 
-While there are other Missions of Mercy around the country, ours is a gathering of volunteer dental professionals who along with a volunteer staff of several hundred hold free, two day dental clinics at locations around the country. 
+While there are other Missions of Mercy around the country, this MoM is a gathering of volunteer dental professionals who along with a volunteer staff of several hundred hold free, two day dental clinics at locations around the country. 
 
 ## Software History
 
@@ -28,5 +28,5 @@ In 2010 Mission of Mercy software was released under the license of Ruby 1.8 whi
 
 ## Contributors
 
-Jordan Byron <jordan@ducksoupsoftware.com>
+Jordan Byron <jordan@ducksoupsoftware.com>  
 Christopher Mitchell <cmitchell@integrityss.com>
