@@ -1,5 +1,6 @@
-body { background-color: #788694; color: #333;
-padding: 0px;
+body { 
+  background-color: #788694; color: #333;
+  padding: 0px;
 	margin: 0;
 }
 
@@ -8,7 +9,8 @@ body.admin{
 }
 
 body.logged_out{
-		background-color: #588f00; color: black; 
+	background-color: #333; 
+	color: black; 
 }
 
 html, body {
