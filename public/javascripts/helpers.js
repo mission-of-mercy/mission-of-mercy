@@ -19,15 +19,19 @@ MoM.Helpers.showPatientSurvey = function (){
 }
 
 MoM.Helpers.togglePatientPain = function(){
-  if($('patient_pain_true').checked == true)
-    $('pain_length_div').show();
+  $ = jQuery;
+  
+  if($('#patient_pain_true').is(':checked') == true)
+    $('#pain_length_div').slideDown();
   else
-    $('pain_length_div').hide();
+    $('#pain_length_div').slideUp();
 }
 
 MoM.Helpers.toggleOtherRace = function(){
-  if($('patient_race').value == 'Other')
-    $('race_other_div').show();
+  $ = jQuery;
+  
+  if($('#patient_race').val() == 'Other')
+    $('#race_other_div').slideDown();
   else
-    $('race_other_div').hide();
+    $('#race_other_div').slideUp();
 }
