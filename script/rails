@@ -5,5 +5,5 @@ if [ "s" = $1 ]; then
 fi
 
 if [ "c" = $1 ]; then
-  script/console
+  script/console $2
 fi
