@@ -9,3 +9,4 @@ db/schema.rb
 vendor/plugins/haml/init.rb
 config/mom.yml
 .rvmrc
+config/database.yml
