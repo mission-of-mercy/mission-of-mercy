@@ -1,3 +1,6 @@
+- content_for :header_js do
+  jQuery(function() { MoM.Helpers.checkIn(); });
+
 = f.error_messages
 
 #demographics{:style=>"height: 350px;"}
@@ -83,8 +86,6 @@
           = f.label :attended_previous_mom_event, "Yes", :value => true
           = f.radio_button :attended_previous_mom_event, false
           = f.label :attended_previous_mom_event, "No", :value => false
-         
-          -#TODO :onchange => "showPreviousMomLocation();"
       
       #previous_mom_location_div.row{:style=>show_previous_mom(@patient)}
         %span.label{:style=>"height: 200px;"}

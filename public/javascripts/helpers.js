@@ -35,3 +35,24 @@ MoM.Helpers.toggleOtherRace = function(){
   else
     $('#race_other_div').slideUp();
 }
+
+MoM.Helpers.togglePreviousMoM = function(){
+  $ = jQuery;
+  
+  if($('#patient_attended_previous_mom_event_true').is(':checked') == true)
+    $('#previous_mom_location_div').slideDown();
+  else
+    $('#previous_mom_location_div').slideUp();
+}
+
+MoM.Helpers.checkIn = function(){
+  $ = jQuery;
+  
+  $('#patient_attended_previous_mom_event_true').change(function(e){
+    MoM.Helpers.togglePreviousMoM();
+  });
+  
+  $('#patient_attended_previous_mom_event_false').change(function(e){
+    MoM.Helpers.togglePreviousMoM();
+  });
+}

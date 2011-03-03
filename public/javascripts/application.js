@@ -13,8 +13,8 @@ MoM.init = function(auth_token){
 }
 
 MoM.disableEnterKey = function(){
-  $(document).observe('keypress', function(e) {
-    if(e.keyCode == 13) e.stop();
+  jQuery('form').bind('keypress', function(e) {
+    if(e.keyCode == 13) e.preventDefault();
   });
 }
 
