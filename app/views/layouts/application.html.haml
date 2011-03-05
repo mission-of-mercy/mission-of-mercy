@@ -20,10 +20,11 @@
     
   %body{:class => body_css}
     #help_request
-    #outer_container  
+    #outer_container
       #container
         = render :partial => 'users/user_bar'
         #contents
+          = render :partial => "shared/flash", :locals => { :flash => flash }
           = yield
         #footer-version
           = "Version #{app_version}"

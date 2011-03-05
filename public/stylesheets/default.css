@@ -577,3 +577,25 @@ tbody td a:active		{
 tbody td.integer{
 	text-align: center;
 }
+
+
+/* Flash */
+
+#flash {
+  margin: -20px -20px 20px;
+}
+
+div.flash {
+  padding: 10px;
+  border-bottom-style: groove;
+}
+
+div.flash.notice {
+  background-color: #8c8;
+  color: #252;
+}
+
+div.flash.error {
+  background-color: #c88;
+  color: #522;
+}

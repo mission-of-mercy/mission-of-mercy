@@ -7,7 +7,7 @@
   %p
     = label_tag 'login'
     %br
-    = text_field_tag 'login', @login
+    = select_tag 'login', options_for_select(@users, params[:login])
 
   %p
     = label_tag 'password'
