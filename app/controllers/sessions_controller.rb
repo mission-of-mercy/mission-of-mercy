@@ -30,7 +30,6 @@ class SessionsController < ApplicationController
   private
   
   def find_users
-    @users = User.all.reject {|u| u.name[/admin/i] }.
-      map {|u| [u.name, u.login]}
+    @users = User.all.map {|u| [u.name, u.login]}
   end
 end
