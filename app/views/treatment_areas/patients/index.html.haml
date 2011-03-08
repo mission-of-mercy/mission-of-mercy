@@ -10,7 +10,7 @@
     
 - title "#{@treatment_area.name} Checkout"
 
-- header do
+= header do
   %h1= "#{@treatment_area.name} Checkout"
     
 = render :partial => "patients/search", :locals => {:search_path => treatment_area_patients_path(@treatment_area.id), :link => true}

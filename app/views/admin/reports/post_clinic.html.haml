@@ -3,7 +3,7 @@
 - content_for :header do
   = stylesheet_link_tag('report_print', :media => :print)
   
-- header do
+= header do
   %h1 Post Clinic Report
   #controls
     = button_to 'Print', 'javascript:window.print();'
