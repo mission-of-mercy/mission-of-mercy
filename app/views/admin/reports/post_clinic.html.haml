@@ -39,9 +39,6 @@
         %td{:id => "town_#{town['city']}"}= town["city"]
         %td= town["patient_count"]
         %td= town["percent"]
-        %td
-          = edit_town(town)
-          = save_town(town)
   %tfoot
     %tr
       %td{:colspan => 3}= "Total towns represented: #{@report.town_count}"
@@ -125,7 +122,7 @@
     - @report.previous_moms.each do |mom|
       %tr
         %td= mom["location"]
-        %td= mom["year"]
+        %td= mom["clinic_year"]
         %td= mom["patient_count"]
         %td= mom["percent"]
         

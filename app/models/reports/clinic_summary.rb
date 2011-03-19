@@ -39,12 +39,7 @@ class Reports::ClinicSummary
   end
   
   def date_time_sql(datetime, table)
-    if ENV['RAILS_ENV']=='production'
-      # Use MySQL Style Conditions
-      "#{datetime}(CONVERT_TZ(#{table}.created_at,'+00:00','#{Time.zone.utc_offset / 60 / 60}:00'))"
-    else
-      "#{datetime}(#{table}.created_at, '#{Time.zone.utc_offset} seconds')"
-    end
+    "#{datetime}(#{table}.created_at)"
   end
   
   def date_time_where(sql, table)
@@ -117,7 +112,7 @@ class Reports::ClinicSummary
       
     sql = date_time_where(sql, "patient_procedures")
       
-    sql += %{ GROUP BY procedures.id
+    sql += %{ GROUP BY procedures.code, procedures.description, procedures.cost
       HAVING count(patient_procedures.procedure_id) > 0;}
       
     @procedures = Procedure.connection.select_all(
@@ -144,7 +139,8 @@ class Reports::ClinicSummary
       
     sql = date_time_where(sql, "patient_prescriptions")
       
-    sql += %{ GROUP BY prescriptions.id
+    sql += %{ GROUP BY prescriptions.name, prescriptions.strength, 
+    prescriptions.quantity, prescriptions.dosage, prescriptions.cost
       HAVING count(patient_prescriptions.prescription_id) > 0;}
       
     @prescriptions = Prescription.connection.select_all(
@@ -171,7 +167,7 @@ class Reports::ClinicSummary
       
     sql = date_time_where(sql, "patient_pre_meds")
       
-    sql += %{ GROUP BY pre_meds.id
+    sql += %{ GROUP BY pre_meds.description, pre_meds.cost
       HAVING count(patient_pre_meds.pre_med_id) > 0;}
       
     @pre_meds = PreMed.connection.select_all(
