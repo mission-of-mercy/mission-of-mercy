@@ -2,7 +2,8 @@ require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   setup do
-    @report_date = Date.today
+    @report_date = CLINIC_DATE
+    @patients    = Patient.all(:conditions => ["Date(created_at) = ?", @report_date])
   end
 
   test "should report on the specified date and span" do
@@ -14,7 +15,7 @@ class UserTest < ActiveSupport::TestCase
   
   test "should be reporting all patients checked in" do
     report = Reports::ClinicSummary.new(@report_date, "All")
-    
-    assert_equal Patient.count, report.patient_count
+
+    assert_equal @patients.count, report.patient_count
   end
 end

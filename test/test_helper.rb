@@ -3,6 +3,9 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 
 class ActiveSupport::TestCase
+  
+  CLINIC_DATE = Date.strptime("12/26/1985", "%m/%d/%Y")
+  
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
   # test database remains unchanged so your fixtures don't have to be reloaded
