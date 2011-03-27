@@ -1,0 +1,19 @@
+<% 20.times do %>
+<% name = Faker::Name.name %>
+<%= name %>:
+  first_name: <%= Faker::Name.first_name %>
+  last_name: <%= Faker::Name.last_name %>
+  date_of_birth: <%= Date.today - rand(100).years %>
+  sex: <%= rand(2) == 1 ? 'M' : 'F' %>
+  street: <%= Faker::Address.street_address %>
+  city: <%= Faker::Address.city %>
+  state: CT
+  zip: <%= Faker::Address.zip_code %>
+  race: <%= Faker::Lorem.words(1) %>
+  travel_time: <%= rand(90) %>
+  attended_previous_mom_event: false
+  chief_complaint: TODO
+  last_dental_visit: TODO
+  pain: false
+  phone: <%= Faker::PhoneNumber.phone_number %>
+<% end %>
