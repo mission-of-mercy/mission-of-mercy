@@ -11,6 +11,7 @@ GEM
     activeresource (2.3.11)
       activesupport (= 2.3.11)
     activesupport (2.3.11)
+    contest (0.1.2)
     haml (3.0.25)
     pg (0.9.0)
     rack (1.1.2)
@@ -22,13 +23,16 @@ GEM
       activesupport (= 2.3.11)
       rake (>= 0.8.3)
     rake (0.8.7)
+    test-unit (2.2.0)
     will_paginate (2.3.15)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  contest
   haml (~> 3.0)
   pg (~> 0.9.0)
   rails (~> 2.3.4)
+  test-unit
   will_paginate (~> 2.3.11)
