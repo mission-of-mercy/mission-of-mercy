@@ -1,7 +1,7 @@
 # Patients on the first clinic day
-<% 15.times do |i| %>
-<% name = Faker::Name.name %>
-<%= name %>:
+<% Reports::ClinicSummary::TIME_SPANS.reject {|t| t == "All" }.each do |t| %>
+<% created_at = TestHelper.clinic_date(t) %>
+patient_<%= created_at.strftime("%m_%d_%Y_%H") %>:
   first_name: <%= Faker::Name.first_name %>
   last_name: <%= Faker::Name.last_name %>
   date_of_birth: <%= Date.today - rand(100).years %>
@@ -17,13 +17,14 @@
   last_dental_visit: TODO
   pain: false
   phone: <%= Faker::PhoneNumber.phone_number %>
-  created_at: <%= ActiveSupport::TestCase::CLINIC_DATE + 6.hours + i.hours %>
+  created_at: <%= created_at %>
+  updated_at: <%= created_at %>
 <% end %>
 
 # Patients on the second clinic day
 <% 15.times do |i| %>
-<% name = Faker::Name.name %>
-<%= name %>:
+<% created_at = TestHelper.clinic_date + 1.day + 6.hours + i.hours %>
+patient_<%= created_at.strftime("%m_%d_%Y_%H") %>:
   first_name: <%= Faker::Name.first_name %>
   last_name: <%= Faker::Name.last_name %>
   date_of_birth: <%= Date.today - rand(100).years %>
@@ -39,5 +40,6 @@
   last_dental_visit: TODO
   pain: false
   phone: <%= Faker::PhoneNumber.phone_number %>
-  created_at: <%= (ActiveSupport::TestCase::CLINIC_DATE + 1.day) + 6.hours + i.hours %>
+  created_at: <%= created_at %>
+  updated_at: <%= created_at %>
 <% end %>
