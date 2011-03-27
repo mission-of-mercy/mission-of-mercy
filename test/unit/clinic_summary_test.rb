@@ -18,4 +18,10 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal @patients.count, report.patient_count
   end
+  
+  test "should report on patients for the selected time span only" do
+    report = Reports::ClinicSummary.new(@report_date, "6:00 AM")
+    
+    assert report.patient_count == 1
+  end
 end

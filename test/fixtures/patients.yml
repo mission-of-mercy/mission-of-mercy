@@ -17,7 +17,7 @@
   last_dental_visit: TODO
   pain: false
   phone: <%= Faker::PhoneNumber.phone_number %>
-  created_at: <%= ActiveSupport::TestCase::CLINIC_DATE %>
+  created_at: <%= ActiveSupport::TestCase::CLINIC_DATE + 6.hours + i.hours %>
 <% end %>
 
 # 10 Patients on the second clinic day
@@ -39,5 +39,5 @@
   last_dental_visit: TODO
   pain: false
   phone: <%= Faker::PhoneNumber.phone_number %>
-  created_at: <%= ActiveSupport::TestCase::CLINIC_DATE + 1.day %>
+  created_at: <%= (ActiveSupport::TestCase::CLINIC_DATE + 1.day) + 6.hours + i.hours %>
 <% end %>

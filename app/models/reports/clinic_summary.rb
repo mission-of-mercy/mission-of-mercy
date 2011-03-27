@@ -39,7 +39,7 @@ class Reports::ClinicSummary
   end
   
   def date_time_sql(datetime, table)
-    "#{datetime}(#{table}.created_at)"
+    "#{table}.created_at::#{datetime}"
   end
   
   def date_time_where(sql, table)
