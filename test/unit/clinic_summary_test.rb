@@ -1,6 +1,6 @@
 require "test_helper"
 
-class UserTest < ActiveSupport::TestCase
+class ClinicSummaryTest < ActiveSupport::TestCase
   setup do
     @report_date = CLINIC_DATE
     @patients    = Patient.all(:conditions => ["Date(created_at) = ?", @report_date])
