@@ -1,5 +1,5 @@
-# 20 Patients on the first clinic day
-<% 20.times do |i| %>
+# Patients on the first clinic day
+<% 15.times do |i| %>
 <% name = Faker::Name.name %>
 <%= name %>:
   first_name: <%= Faker::Name.first_name %>
@@ -20,8 +20,8 @@
   created_at: <%= ActiveSupport::TestCase::CLINIC_DATE + 6.hours + i.hours %>
 <% end %>
 
-# 10 Patients on the second clinic day
-<% 20.times do |i| %>
+# Patients on the second clinic day
+<% 15.times do |i| %>
 <% name = Faker::Name.name %>
 <%= name %>:
   first_name: <%= Faker::Name.first_name %>

@@ -20,8 +20,13 @@ class UserTest < ActiveSupport::TestCase
   end
   
   test "should report on patients for the selected time span only" do
-    report = Reports::ClinicSummary.new(@report_date, "6:00 AM")
-    
-    assert report.patient_count == 1
+    Reports::ClinicSummary::TIME_SPANS.each_with_index do |span, index|
+      index = @patients.count if index == 0
+      
+      report = Reports::ClinicSummary.new(@report_date, span)
+      
+      assert_equal index, report.patient_count, 
+                   "#{span} should have #{index} patients"
+    end
   end
 end
