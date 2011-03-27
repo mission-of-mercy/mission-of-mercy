@@ -6,13 +6,13 @@ class SupportRequestsController < ApplicationController
       format.json do        
         @requests = SupportRequest.find_all_by_resolved(false)
         
-        @requests.map! {|request| request.station_description }
+        requested = @requests.find {|r| r.ip_address == request.remote_ip }
         
-        requested = SupportRequest.first(:conditions => {:resolved => false, :ip_address => request.remote_ip})
+        @requests.map! {|request| request.station_description }
         
         if requested
           request_id = requested.id 
-          @requests    = []
+          @requests  = []
         end
         
         render :json => {

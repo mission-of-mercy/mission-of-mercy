@@ -1,6 +1,6 @@
 - title "Checkout - Procedures"
 
-- header do
+= header do
   %h1 Checkout - Procedures
   %br
   = "#{@patient.full_name} | Chart # #{@patient.id}"
@@ -9,15 +9,15 @@
   %h2 Warning!
   %p You have checked out a patient without adding any procedures.
   %p 
-    If this is correct click
+    If this is correct you may
     %b continue
     otherwise click
-    %b cancel
+    %b go back
     and add the patients procedures.
   %hr
   %p
-    = continue_button @treatment_area, @patient
-    = button_to_function "Cancel", "Modalbox.hide();"
+    = continue_button @treatment_area, @patient, :text => "Continue without entering any procedures"
+    = link_to_function "Go back and enter a procedure", "Modalbox.hide();"
     
 #incomplete_procedure{:style => "display:none;"}
   %h2 Warning!
@@ -31,8 +31,8 @@
     and then Add Procedure.
   %hr
   %p
-    = continue_button @treatment_area, @patient
-    = button_to_function "Cancel", "Modalbox.hide();"
+    = continue_button @treatment_area, @patient, :text => "Continue without adding"
+    = button_to_function "Cancel and add procedure", "Modalbox.hide();"
 
 %div.input-left.no_border{:style => "width: 450px;"}
 

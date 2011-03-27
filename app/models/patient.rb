@@ -36,7 +36,7 @@ class Patient < ActiveRecord::Base
     elsif !chart_number.blank?
       ["id = ?", chart_number]
     else
-      nil
+      ["id = ?", -1]
     end
   
 		paginate  :per_page => 30, :page => page,

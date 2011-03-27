@@ -3,7 +3,7 @@
 - content_for :header do
   = stylesheet_link_tag('report_print', :media => :print)
   
-- header do
+= header do
   %h1 Clinic Summary Report
   #controls
     - form_tag admin_clinic_summary_report_path, :method => 'get' do

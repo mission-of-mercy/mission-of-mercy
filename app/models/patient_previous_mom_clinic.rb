@@ -2,8 +2,8 @@ class PatientPreviousMomClinic < ActiveRecord::Base
   attr_accessor :attended
   
   def description
-    if year
-      [year, location].join(" ")
+    if clinic_year
+      [clinic_year, location].join(" ")
     else
       location
     end

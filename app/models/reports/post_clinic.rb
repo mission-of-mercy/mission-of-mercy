@@ -19,10 +19,10 @@ class Reports::PostClinic
   end
   
   def load_treatment_areas
-    sql = %{SELECT `treatment_areas`.`name`, count(*) as `patient_count`
-            FROM treatment_areas LEFT JOIN patient_flows ON `treatment_areas`.`id` = `patient_flows`.`treatment_area_id`
-            WHERE `patient_flows`.`area_id` = 4 OR `patient_flows`.`area_id` = 2
-            GROUP BY `treatment_areas`.`name`}
+    sql = %{SELECT treatment_areas.name, count(*) as patient_count
+            FROM treatment_areas LEFT JOIN patient_flows ON treatment_areas.id = patient_flows.treatment_area_id
+            WHERE patient_flows.area_id = 4 OR patient_flows.area_id = 2
+            GROUP BY treatment_areas.name}
     
     @areas = Patient.connection.select_all(sql)
     
@@ -30,7 +30,7 @@ class Reports::PostClinic
   end
   
   def load_towns
-    sql = %{SELECT patients.city, count(*) as `patient_count`
+    sql = %{SELECT patients.city, count(*) as patient_count
             FROM patients
             GROUP BY patients.city}
     
@@ -42,7 +42,7 @@ class Reports::PostClinic
   end
   
   def load_ethnicities
-    sql = %{SELECT patients.race, count(*) as `patient_count`
+    sql = %{SELECT patients.race, count(*) as patient_count
             FROM patients
             GROUP BY patients.race}
     
@@ -82,13 +82,13 @@ class Reports::PostClinic
   end
   
   def load_travel_times
-    sql = %{SELECT patients.travel_time, count(*) as `patient_count`
+    sql = %{SELECT patients.travel_time, count(*) as patient_count
             FROM patients
             GROUP BY patients.travel_time}
     
     @travel_times = Patient.connection.select_all(sql)
     
-    sql = %{SELECT avg(patients.travel_time) as `average_travel_time`
+    sql = %{SELECT avg(patients.travel_time) as average_travel_time
             FROM patients}
             
     @avg_travel_time = Patient.connection.select_value(sql)
@@ -98,7 +98,7 @@ class Reports::PostClinic
   end
   
   def load_genders
-    sql = %{SELECT patients.sex, count(*) as `patient_count`
+    sql = %{SELECT patients.sex, count(*) as patient_count
             FROM patients
             GROUP BY patients.sex}
             
@@ -108,9 +108,9 @@ class Reports::PostClinic
   end
   
   def load_previous_moms
-    sql = %{SELECT location, year, count(*) as `patient_count`
+    sql = %{SELECT location, clinic_year, count(*) as patient_count
             FROM patient_previous_mom_clinics
-            GROUP BY patient_previous_mom_clinics.location}
+            GROUP BY patient_previous_mom_clinics.location, patient_previous_mom_clinics.clinic_year}
             
     @previous_moms = Patient.connection.select_all(sql)
     
@@ -130,7 +130,7 @@ class Reports::PostClinic
   end
   
   def load_tobacco_use
-    sql = %{SELECT tobacco_use, count(*) as `patient_count`
+    sql = %{SELECT tobacco_use, count(*) as patient_count
             FROM surveys
             GROUP BY tobacco_use}
             
@@ -140,7 +140,7 @@ class Reports::PostClinic
   end
   
   def load_ratings
-    sql = %{SELECT rating_of_services, count(*) as `patient_count`
+    sql = %{SELECT rating_of_services, count(*) as patient_count
             FROM surveys
             GROUP BY rating_of_services
             ORDER BY rating_of_services}
@@ -160,7 +160,7 @@ class Reports::PostClinic
   end
   
   def add_insurance(insurance_name)
-    sql = %{SELECT count(*) as `#{insurance_name}`
+    sql = %{SELECT count(*) as #{insurance_name}
             FROM surveys
             WHERE #{insurance_name} = ?}
           

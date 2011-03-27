@@ -13,10 +13,10 @@ module ApplicationHelper
   end
   
   def header(&block)
-    concat(content_tag(:div, :class => "header") do
+    content_tag(:div, :class => "header") do
       image_tag("logo_small.png") + 
       capture(&block)     
-    end + content_tag(:p, :class => "notify") do flash[:notice] end)
+    end
   end
 
   def app_version

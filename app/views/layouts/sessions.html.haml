@@ -12,7 +12,8 @@
       });
     
   %body{:class => body_css}
-    #outer_container  
+    #outer_container
       #container
         #contents.login
+          = render :partial => "shared/flash", :locals => { :flash => flash }
           = yield

@@ -1,5 +1,6 @@
-body { background-color: #788694; color: #333;
-padding: 0px;
+body { 
+  background-color: #788694; color: #333;
+  padding: 0px;
 	margin: 0;
 }
 
@@ -8,7 +9,8 @@ body.admin{
 }
 
 body.logged_out{
-		background-color: #588f00; color: black; 
+	background-color: #333; 
+	color: black; 
 }
 
 html, body {
@@ -99,6 +101,11 @@ body.red{
 	width: 300px;
 	border: 5px solid #788694;
 	margin: 50px auto 0;
+}
+
+#contents.login input[type=text], #contents.login input[type=password]{
+	width: 280px;
+	font-size: 1.5em;
 }
 
 div.header{
@@ -569,4 +576,26 @@ tbody td a:active		{
 			
 tbody td.integer{
 	text-align: center;
+}
+
+
+/* Flash */
+
+#flash {
+  margin: -20px -20px 20px;
+}
+
+div.flash {
+  padding: 10px;
+  border-bottom-style: groove;
+}
+
+div.flash.notice {
+  background-color: #8c8;
+  color: #252;
+}
+
+div.flash.error {
+  background-color: #c88;
+  color: #522;
 }
