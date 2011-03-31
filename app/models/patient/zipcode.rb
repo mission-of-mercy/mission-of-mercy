@@ -1,4 +1,4 @@
-class User::Zipcode < ActiveRecord::Base
+class Patient::Zipcode < ActiveRecord::Base
   before_create :pad_zip
   
   private

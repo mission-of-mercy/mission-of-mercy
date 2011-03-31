@@ -1,6 +1,6 @@
-class CreateUserZipcodes < ActiveRecord::Migration
+class CreatePatientZipcodes < ActiveRecord::Migration
   def self.up
-    create_table :user_zipcodes do |t|
+    create_table :patient_zipcodes do |t|
       t.string :zip
       t.string :city
       t.string :state
@@ -10,10 +10,10 @@ class CreateUserZipcodes < ActiveRecord::Migration
       t.timestamps
     end
     
-    add_index :user_zipcodes, :zip
+    add_index :patient_zipcodes, :zip
   end
 
   def self.down
-    drop_table :user_zipcodes
+    drop_table :patient_zipcodes
   end
 end
