@@ -390,8 +390,8 @@ div.procedure.odd{
 }
 
 div.procedure:hover{
-	color: #fffefe;
-	background-color: #0033CC;
+	color: #000;
+	background-color: #EDF3FE;
 }
 
 form dt {

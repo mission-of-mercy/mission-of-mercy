@@ -46,7 +46,7 @@ class PatientProcedure < ActiveRecord::Base
   end
   
   def load_procedure_from_code
-    if !self.code.nil? and self.procedure_id == 0
+    if !self.code.blank? and self.procedure_id == 0
       self.procedure = Procedure.find_by_code(self.code)
     end
   end
