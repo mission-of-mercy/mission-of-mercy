@@ -1,0 +1,6 @@
+amoxicillin:
+  name: Amoxicillin
+  quantity: 21
+  dosage: 500mg
+  cost: 12.99
+  strength: 1 TID x 7days

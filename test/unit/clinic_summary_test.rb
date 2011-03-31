@@ -1,7 +1,7 @@
 require "test_helper"
 
 class ClinicSummaryTest < ActiveSupport::TestCase
-  fixtures :patient_flows, :patients
+  fixtures :all
   
   setup do
     @report_date = TestHelper.clinic_date
@@ -45,5 +45,39 @@ class ClinicSummaryTest < ActiveSupport::TestCase
     report = Reports::ClinicSummary.new(@report_date, "8:00 AM")
     
     assert_equal 0, report.xrays
+  end
+  
+  test "should only report on procedures for the specified day / span" do
+    report = Reports::ClinicSummary.new(@report_date, "8:30 AM")
+    
+    assert_equal 1,  report.procedure_count
+    assert_equal 90, report.procedure_value
+    
+    report = Reports::ClinicSummary.new(@report_date, "8:00 AM")
+    
+    assert_equal 0, report.procedure_count
+    assert_equal 0, report.procedure_value
+    
+    report = Reports::ClinicSummary.new(@report_date, "All")
+    
+    assert_equal 2,   report.procedure_count
+    assert_equal 215, report.procedure_value
+  end
+  
+  test "should only report on prescriptions for the specified day / span" do
+    report = Reports::ClinicSummary.new(@report_date, "8:30 AM")
+    
+    assert_equal 1,     report.prescription_count
+    assert_equal 12.99, report.prescription_value
+    
+    report = Reports::ClinicSummary.new(@report_date, "8:00 AM")
+    
+    assert_equal 0, report.prescription_count
+    assert_equal 0, report.prescription_value
+    
+    report = Reports::ClinicSummary.new(@report_date, "All")
+    
+    assert_equal 2,   report.prescription_count
+    assert_equal 25.98, report.prescription_value
   end
 end
