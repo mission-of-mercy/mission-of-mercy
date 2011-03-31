@@ -5,7 +5,7 @@
   %br
   = "#{@patient.full_name} | Chart # #{@patient.id}"
  
-- form_for @patient, :url => pharmacy_check_out_path(@patient) do |f|
+- form_for @patient, :url => pharmacy_finalize_path(@patient) do |f|
   
   %div.input
   

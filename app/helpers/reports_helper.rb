@@ -7,7 +7,7 @@ module ReportsHelper
   
   def days(report)
     existing_dates = Patient.all(
-      :select => "Date(patients.created_at) as created_at_date", 
+      :select => "patients.created_at::Date as created_at_date", 
       :group => report.date_sql("patients")
     ).map {|p| p.created_at_date }
     

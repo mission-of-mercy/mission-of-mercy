@@ -18,14 +18,6 @@
       = p.check_box :prescribed
       = p.label :prescribed, p.object.pre_med.description
       %br
-  
-  %h4 Rating of services received today
-
-  = slider_field :survey, :rating_of_services, :range => 1..10 
-  %br
-  %div.slider_desc Not Satisfied
-  %div.slider_desc Satisfied
-  %div.slider_desc Very Satisfied
     
   #input-bottom{:class => "check_out"}
     %br

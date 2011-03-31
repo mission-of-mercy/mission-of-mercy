@@ -13,6 +13,10 @@ class ClinicArea
     @hash.each {|key,value| yield(key,value)}
   end
   
+  def self.[](value)
+    @hash.select {|k,v| v == value }.flatten.first
+  end
+  
   self.add_enum :CHECKIN, 1
   self.add_enum :XRAY, 2
   self.add_enum :ASSIGNMENT, 3

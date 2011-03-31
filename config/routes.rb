@@ -21,6 +21,8 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
   
+  map.pharmacy_check_out '/pharmacy/check_out/:patient_id', :controller => :pharmacy, :action => :check_out
+  map.pharmacy_finalize  '/pharmacy/finalize/:patient_id',  :controller => :pharmacy, :action => :check_out_complete
   map.resources :patients
   map.resources :patient_procedures
   

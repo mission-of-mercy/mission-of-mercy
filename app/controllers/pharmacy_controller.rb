@@ -32,11 +32,11 @@ class PharmacyController < ApplicationController
       @patient.flows.create(:area_id => ClinicArea::PHARMACY) 
     end
     
-    flash[:notice] = "Patient successfully checked out"
-    
     if session[:treatment_area_id].nil?
+      flash[:notice] = "Prescriptions sucessfully added to patient's record"
       redirect_to patients_path
     else
+      flash[:notice] = "Patient successfully checked out"
       redirect_to patients_path(:treatment_area_id => session[:treatment_area_id])
     end
   end
