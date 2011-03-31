@@ -5,6 +5,10 @@ gem 'pg',            '~> 0.9.0'
 gem 'will_paginate', '~> 2.3.11'
 gem 'haml',          '~> 3.0'
 
+group :development do
+  gem "fastercsv"
+end
+
 group :test do
   gem "contest"
   gem "test-unit"
