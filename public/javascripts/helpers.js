@@ -56,18 +56,25 @@ MoM.Helpers.checkIn = function(){
     MoM.Helpers.togglePreviousMoM();
   });
   
-  $('#patient_zip').blur(function(){
-    $('#zip-spinner').show();
-    $.getJSON("/patients/lookup_zip.json", {
-      zip: $('#patient_zip').val()
-    }, 
-    function(data){
-      $('#zip-spinner').hide();
-      
-      if(data.found == true){
-        $('#patient_city').val(data.city);
-        $('#patient_state').val(data.state);
-      }
-    })
+  $('#patient_zip').keyup(function(){
+    if($('#patient_zip').val().length >= 5)
+      MoM.Helpers.lookupZip();
+  });
+}
+
+MoM.Helpers.lookupZip = function(){
+  var $ = jQuery;
+  
+  $('#zip-spinner').show();
+  $.getJSON("/patients/lookup_zip.json", {
+    zip: $('#patient_zip').val()
+  }, 
+  function(data){
+    $('#zip-spinner').hide();
+    
+    if(data.found == true){
+      $('#patient_city').val(data.city);
+      $('#patient_state').val(data.state);
+    }
   });
 }
