@@ -55,4 +55,19 @@ MoM.Helpers.checkIn = function(){
   $('#patient_attended_previous_mom_event_false').change(function(e){
     MoM.Helpers.togglePreviousMoM();
   });
+  
+  $('#patient_zip').blur(function(){
+    $('#zip-spinner').show();
+    $.getJSON("/patients/lookup_zip.json", {
+      zip: $('#patient_zip').val()
+    }, 
+    function(data){
+      $('#zip-spinner').hide();
+      
+      if(data.found == true){
+        $('#patient_city').val(data.city);
+        $('#patient_state').val(data.state);
+      }
+    })
+  });
 }

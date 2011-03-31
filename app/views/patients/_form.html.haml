@@ -28,14 +28,15 @@
         %span.label= f.label :street
         %span.formw= f.text_field :street
       %div.row
+        %span.label= f.label :zip
+        %span.formw= f.text_field :zip
+        = image_tag "spinner.gif", :id => "zip-spinner", :style => "display: none;"
+      %div.row
         %span.label= f.label :city
         %span.formw= f.text_field :city
       %div.row
         %span.label= f.label :state
         %span.formw= f.text_field :state
-      %div.row
-        %span.label= f.label :zip
-        %span.formw= f.text_field :zip
       %div.row
         %span.label= f.label :race
         %span.formw= f.select :race, *race_select_options
