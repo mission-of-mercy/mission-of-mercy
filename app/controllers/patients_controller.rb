@@ -1,6 +1,8 @@
 class PatientsController < ApplicationController
   before_filter :login_required
   before_filter :admin_required, :only => [ :edit, :destroy ]
+  before_filter :date_input
+  before_filter :find_last_patient, :only => [:new]
   
   def index
     if params[:commit] == "Clear"
@@ -22,12 +24,6 @@ class PatientsController < ApplicationController
   def new
     @patient = Patient.new
     @patient.survey = Survey.new
-
-    @patient.state = app_config["state"]
-    
-    if flash[:last_patient_id] != nil
-      @last_patient = Patient.find(flash[:last_patient_id])
-    end
   end
 
   def edit
@@ -40,7 +36,7 @@ class PatientsController < ApplicationController
     render :action => "print", :layout => "print"
   end
 
-  def create
+  def create    
     @patient = Patient.new(params[:patient])
     
     add_procedures_to_patient(@patient)
@@ -56,12 +52,10 @@ class PatientsController < ApplicationController
     end
     
     if @patient.save      
-      flash[:last_patient_id] = @patient.id
-      
-      redirect_to new_patient_path
+      redirect_to new_patient_path(:last_patient_id =>  @patient.id)
     else
-      flash[:patient_travel_time_minutes] = params[:patient_travel_time_minutes]
-      flash[:patient_travel_time_hours] = params[:patient_travel_time_hours]
+      @patient_travel_time_minutes = params[:patient_travel_time_minutes]
+      @patient_travel_time_hours   = params[:patient_travel_time_hours]
     
       render :action => "new"
     end
@@ -130,13 +124,27 @@ class PatientsController < ApplicationController
     redirect_to(patients_url)
   end
   
-  protected
+  private
   
   def add_procedures_to_patient(patient)
     procedures = Procedure.find(:all, :conditions => {:auto_add => true})
     
     procedures.each do |p|
       patient.patient_procedures.build(:procedure_id => p.id)
+    end
+  end
+  
+  def date_input
+    if params[:date_input]
+      session[:date_input] = params[:date_input]
+    end
+    
+    @date_input = session[:date_input] || 'select'
+  end
+  
+  def find_last_patient
+    if params[:last_patient_id] != nil
+      @last_patient = Patient.find(params[:last_patient_id])
     end
   end
 end

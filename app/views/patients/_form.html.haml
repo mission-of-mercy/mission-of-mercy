@@ -1,7 +1,9 @@
 - content_for :header_js do
-  jQuery(function() { MoM.Helpers.checkIn(); });
+  jQuery(function() { MoM.Helpers.checkIn({dateInput:'#{@date_input}'}); });
 
 = f.error_messages
+
+= hidden_field_tag :date_input
 
 #demographics{:style=>"height: 350px;"}
   %div.input-left
@@ -17,7 +19,13 @@
         %span.formw= f.text_field :last_name
       %div.row
         %span.label= f.label :date_of_birth
-        %span.formw= f.date_select :date_of_birth, dob_select_options
+        %span#date-input-container.formw
+          %span#date-select{:style => "display: none;"}
+            = f.date_select :date_of_birth, dob_select_options
+          %span#date-text{:style => "display: none;"}
+            = f.text_field :date_of_birth
+        = image_tag "cog.png", :id => "date-input-toggle", 
+        :title => "Toggle date input method"
       %div.row
         %span.label= f.label :sex
         %span.formw= f.select :sex, *sex_select_options
@@ -76,9 +84,9 @@
         %span.label= f.label :travel_time
         %span.formw
           Hours: 
-          = text_field_tag 'patient_travel_time_hours', flash[:patient_travel_time_hours], :size => 2
+          = text_field_tag 'patient_travel_time_hours', @patient_travel_time_hours, :size => 2
           Minutes:
-          = text_field_tag 'patient_travel_time_minutes', flash[:patient_travel_time_minutes], :size => 2
+          = text_field_tag 'patient_travel_time_minutes', @patient_travel_time_minutes, :size => 2
       %div.row
         %span.label
           %label Attended previous MoM?

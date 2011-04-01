@@ -341,6 +341,13 @@ div.row #zip-spinner{
   margin-top: 3px;
 }
 
+div.row #date-input-toggle{
+  float: right;
+  margin-top: 3px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
 div.row span.formw {
   /*float: right;*/
   text-align: left;

@@ -20,7 +20,7 @@ module PatientsHelper
   def print_patient_chart
     if @last_patient
       %{MoM.openInBackground('#{print_chart_path(@last_patient)}');
-        Modalbox.show($('last_patient'), {title: 'Patient\'s Chart Number', width: 300});}
+        Modalbox.show($('last_patient'), {title: "Patient\'s Chart Number", width: 300});}
     end
   end
   

@@ -45,7 +45,7 @@ MoM.Helpers.togglePreviousMoM = function(){
     $('#previous_mom_location_div').slideUp();
 }
 
-MoM.Helpers.checkIn = function(){
+MoM.Helpers.checkIn = function(options){
   var $ = jQuery;
   
   $('#patient_attended_previous_mom_event_true').change(function(e){
@@ -60,6 +60,48 @@ MoM.Helpers.checkIn = function(){
     if($('#patient_zip').val().length >= 5)
       MoM.Helpers.lookupZip();
   });
+  
+  if(options.dateInput == "text")
+    MoM.Helpers.useTextDate();
+  else
+    MoM.Helpers.useSelectDate();
+    
+  $('#date-input-toggle').click(function(){
+    MoM.Helpers.toggleDateInput();
+  })
+}
+
+MoM.Helpers.toggleDateInput = function(){
+  var $ = jQuery;
+  
+  if($('#date-select').is(":visible"))
+    MoM.Helpers.useTextDate();
+  else
+    MoM.Helpers.useSelectDate();
+}
+
+MoM.Helpers.useTextDate = function(){
+  var $ = jQuery;
+  
+  $('#date-select').hide();
+  
+  $('body').append($('#date-select'));
+  $('#date-input-container').append($('#date-text'));
+  $('#date-text').show();
+  
+  $('#date_input').val('text');
+}
+
+MoM.Helpers.useSelectDate = function(){
+  var $ = jQuery;
+  
+  $('#date-text').hide();
+  
+  $('body').append($('#date-text'));
+  $('#date-input-container').append($('#date-select'));
+  $('#date-select').show();
+  
+  $('#date_input').val('select');
 }
 
 MoM.Helpers.lookupZip = function(){
