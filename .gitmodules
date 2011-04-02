@@ -1,6 +1,0 @@
-[submodule "vendor/plugins/restful_authentication"]
-	path = vendor/plugins/restful_authentication
-	url = git://github.com/technoweenie/restful-authentication.git
-[submodule "vendor/plugins/scriptaculous_slider"]
-	path = vendor/plugins/scriptaculous_slider
-	url = git://github.com/seamusabshere/scriptaculous_slider.git
