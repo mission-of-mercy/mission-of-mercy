@@ -1,3 +1,15 @@
+GIT
+  remote: git://github.com/seamusabshere/scriptaculous_slider.git
+  revision: e23dafc0f511f8a3d7a1337905d5b899427a00b6
+  specs:
+    scriptaculous_slider (1.2.0)
+
+GIT
+  remote: git@github.com:CTMissionofMercy/restful-authentication.git
+  revision: abd6ad14d99ea71d3fc6f35e3e62e0f8454f5a27
+  specs:
+    restful-authentication (1.1.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -40,5 +52,7 @@ DEPENDENCIES
   haml (~> 3.0)
   pg (~> 0.9.0)
   rails (~> 2.3.4)
+  restful-authentication!
+  scriptaculous_slider!
   test-unit
   will_paginate (~> 2.3.11)
