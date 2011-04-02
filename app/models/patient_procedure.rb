@@ -1,11 +1,19 @@
 class PatientProcedure < ActiveRecord::Base
+  
+  VALID_TOOTH   = /\A[A-T]\Z|\A[1-9]\Z|\A[1-2][0-9]\Z|\A3[0-2]\Z/
+  VALID_SURFACE = /\A[F,L,O,M,D,I,B]+\Z/
+  
   belongs_to :patient
   belongs_to :procedure
-  before_validation_on_create :normalize_data, :load_procedure_from_code, :load_procedure_from_type
+  
+  before_validation_on_create :normalize_data, :load_procedure_from_code, 
+                              :load_procedure_from_type
   
   validates_presence_of :procedure_id, :message => "invalid"
-  validates_format_of :tooth_number, :with => /\A[A-T]\Z|\A[1-9]\Z|\A[1-2][0-9]\Z|\A3[0-2]\Z/, :message => "must be valid (A-T or 1-32)", :allow_blank => true
-  validates_format_of :surface_code, :with => /\A[F,L,O,M,D,I,B]+\Z/, :message => "must be valid (Only F,L,O,M,D,I,B)", :allow_blank => true
+  validates_format_of :tooth_number, :with => VALID_TOOTH,   
+    :message => "must be valid (A-T or 1-32)", :allow_blank => true
+  validates_format_of :surface_code, :with => VALID_SURFACE, 
+    :message => "must be valid (Only F,L,O,M,D,I,B)", :allow_blank => true
   validate :procedure_requirements
   
   attr_accessor :code, :procedure_type

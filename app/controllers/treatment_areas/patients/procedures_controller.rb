@@ -17,7 +17,7 @@ class TreatmentAreas::Patients::ProceduresController < ApplicationController
     end
   end
   
-  def create
+  def create    
     @patient_procedure = PatientProcedure.new(params[:patient_procedure])
     
     if @patient_procedure.save
@@ -27,6 +27,8 @@ class TreatmentAreas::Patients::ProceduresController < ApplicationController
       
       redirect_to treatment_area_patient_procedures_path(@treatment_area, @patient)
     else
+      @selected_procedure = params[:patient_procedure][:procedure_id]
+      
       render :action => :index
     end
   end
