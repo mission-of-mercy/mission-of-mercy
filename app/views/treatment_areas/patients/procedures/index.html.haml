@@ -38,7 +38,9 @@
 
   %h4 New Procedure
 
-  - form_for @patient_procedure, :url => treatment_area_patient_procedures_path(@treatment_area, @patient) do |f|
+  - form_for @patient_procedure, 
+    :url => treatment_area_patient_procedures_path(@treatment_area, @patient),
+    :html => { :autocomplete => "off" } do |f|
     = f.error_messages
     = f.hidden_field :patient_id
   
