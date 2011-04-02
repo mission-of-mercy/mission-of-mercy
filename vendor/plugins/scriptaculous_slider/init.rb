@@ -1,0 +1,1 @@
+require 'scriptaculous_slider'

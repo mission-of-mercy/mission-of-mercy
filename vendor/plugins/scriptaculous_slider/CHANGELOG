@@ -1,0 +1,13 @@
+* Improved slider_element (handle Range for values option, allow to automatically add hidden fields) and cleaned up code
+
+* Fixed typo in README file and updated info (Nicolas Cavigneaux)
+
+* Made plugin load in Rails 2.x (Nicolas Cavigneaux)
+
+* Updated to slider.js as of script.aculo.us 1.8.2 (Nicolas Cavigneaux)
+
+* Updated to slider.js as of script.aculo.us 1.5 final
+
+* Updated copyright notice
+
+* Updated to slider.js as of script.aculo.us changeset [2936]
