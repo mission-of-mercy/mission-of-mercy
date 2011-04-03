@@ -75,9 +75,5 @@ class User < ActiveRecord::Base
       root_path
     end
   end
-
-  protected
-    
-
-
+  
 end

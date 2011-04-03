@@ -51,7 +51,8 @@ class PatientsController < ApplicationController
       @patient.travel_time += params[:patient_travel_time_hours].to_i * 60
     end
     
-    if @patient.save      
+    if @patient.save
+      stats.patient_checked_in
       redirect_to new_patient_path(:last_patient_id =>  @patient.id)
     else
       @patient_travel_time_minutes = params[:patient_travel_time_minutes]

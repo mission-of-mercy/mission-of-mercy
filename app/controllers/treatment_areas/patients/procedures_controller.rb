@@ -23,6 +23,9 @@ class TreatmentAreas::Patients::ProceduresController < ApplicationController
     @patient_procedure = PatientProcedure.new(params[:patient_procedure])
     
     if @patient_procedure.save
+      
+      stats.procedure_added
+      
       @patient_procedure = @patient.patient_procedures.build
       
       redirect_to treatment_area_patient_procedures_path(:procedure_added => true)
