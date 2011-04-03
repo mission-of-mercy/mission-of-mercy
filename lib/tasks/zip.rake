@@ -1,7 +1,7 @@
 namespace :zip do 
 
   # Zipcode CSC can be downloaded from: http://www.boutell.com/zipcodes/
-  desc 'import users from zipcode.csv'
+  desc 'import zips from zipcode.csv'
   task :import => :environment do
     FasterCSV.foreach("#{RAILS_ROOT}/zipcode.csv", :headers => true) do |row|
       Patient::Zipcode.create(

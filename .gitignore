@@ -10,4 +10,7 @@ vendor/plugins/haml/init.rb
 config/mom.yml
 .rvmrc
 config/database.yml
+
+# CSV Import Files
 zipcode.csv
+procedures.csv
