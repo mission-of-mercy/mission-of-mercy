@@ -15,17 +15,17 @@ class TreatmentAreas::Patients::ProceduresController < ApplicationController
         @patient.patient_prescriptions.build(:prescription_id => pres.id)
       end
     end
+    
+    @procedure_added = params.has_key?(:procedure_added)
   end
   
   def create    
     @patient_procedure = PatientProcedure.new(params[:patient_procedure])
     
     if @patient_procedure.save
-      flash[:procedure_added] = true
-      
       @patient_procedure = @patient.patient_procedures.build
       
-      redirect_to treatment_area_patient_procedures_path(@treatment_area, @patient)
+      redirect_to treatment_area_patient_procedures_path(:procedure_added => true)
     else
       @selected_procedure = params[:patient_procedure][:procedure_id]
       

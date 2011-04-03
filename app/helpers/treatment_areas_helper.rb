@@ -136,7 +136,7 @@ module TreatmentAreasHelper
     
     button_to text, path, 
               :method => :get, 
-              :onclick => "return procedure_not_added(#{flash[:procedure_added] == true});"
+              :onclick => "return procedure_not_added(#{@procedure_added});"
   end
 
 end

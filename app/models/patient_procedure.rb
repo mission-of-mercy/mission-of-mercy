@@ -50,14 +50,14 @@ class PatientProcedure < ActiveRecord::Base
   end
   
   def load_procedure_from_code
-    if !self.code.blank? and self.procedure_id == 0
+    if !code.blank? and procedure_id == 0
       self.procedure = Procedure.find_by_code(self.code)
     end
   end
   
   def load_procedure_from_type
     if !procedure_type.blank? and (procedure_id.nil? || procedure_id == 0)
-      surface_count = self.surface_code.gsub(" ", "").gsub(",", "").length
+      surface_count = surface_code.gsub(/\s|,/, "").length
       surface_count = 4 if surface_count > 4
       
       if procedure_type == "Amalgam"
