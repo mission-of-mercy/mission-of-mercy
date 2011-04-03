@@ -22,7 +22,9 @@ MoM.Helpers.togglePatientPain = function(){
   var $ = jQuery;
   
   if($('#patient_pain_true').is(':checked') == true)
-    $('#pain_length_div').slideDown();
+    $('#pain_length_div').slideDown(function(){
+      $('#patient_pain_length_in_days').focus();
+    });
   else
     $('#pain_length_div').slideUp();
 }
@@ -31,7 +33,9 @@ MoM.Helpers.toggleOtherRace = function(){
   var $ = jQuery;
   
   if($('#patient_race').val() == 'Other')
-    $('#race_other_div').slideDown();
+    $('#race_other_div').slideDown(function(){
+      $('#patient_race_other').focus();
+    });
   else
     $('#race_other_div').slideUp();
 }

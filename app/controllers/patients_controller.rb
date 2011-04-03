@@ -51,7 +51,18 @@ class PatientsController < ApplicationController
       @patient.travel_time += params[:patient_travel_time_hours].to_i * 60
     end
     
-    if @patient.save
+    if params[:patient][:pain_length_in_days].split(" ").length == 2
+      number, type = params[:patient][:pain_length_in_days].split(" ")
+      type = type.pluralize.downcase
+    
+      if type[/\Adays\Z|\Aweeks\Z|\Amonths\Z|\Ayears\Z/]
+        @patient.pain_length_in_days = (number.to_f.send(type) / 1.day)
+      else
+        @patient.errors.add(:pain_length_in_days, "isn't valid. Try using days only.")
+      end
+    end
+    
+    if @patient.errors.empty? && @patient.save
       stats.patient_checked_in
       redirect_to new_patient_path(:last_patient_id =>  @patient.id)
     else

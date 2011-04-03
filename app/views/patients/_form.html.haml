@@ -72,8 +72,9 @@
         %span.formw
           = yes_no_group f, :pain, "MoM.Helpers.togglePatientPain();"
       #pain_length_div.row{:style=>"display:none;"}
-        %span.label= f.label :pain_length_in_days
+        %span.label= f.label :pain_length_in_days, "Time in pain"
         %span.formw= f.text_field :pain_length_in_days
+        %span.formexample ("1 month" or "2 years")
   
     / End Visit Details
 
