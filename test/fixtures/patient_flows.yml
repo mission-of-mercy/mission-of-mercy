@@ -1,11 +1,4 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  treatment_area_id: 1
-  patient_id: 1
-  area_id: 1
-
-two:
-  treatment_area_id: 1
-  patient_id: 1
-  area_id: 1
+xray1:
+  area_id: <%= ClinicArea::XRAY %>
+  patient: patient_12_26_1985_07
+  created_at: <%= TestHelper.clinic_date("8:30 AM") %>

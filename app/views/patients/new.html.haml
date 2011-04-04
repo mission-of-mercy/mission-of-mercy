@@ -6,16 +6,13 @@
       $('patient_first_name').focus();
       MoM.disableEnterKey();
       
-      if(#{@last_patient != nil}){
-        MoM.openInBackground('#{print_chart_path(@last_patient)}');
-        Modalbox.show($('last_patient'), {title: 'Patient\'s Chart Number', width: 300});
-      }
+      #{print_patient_chart}
     });
 
 = header do
   %h1 Patient Check In
 
-- form_for(@patient) do |f|
+- form_for @patient, :html => { :autocomplete => "off" } do |f|
   = render :partial => 'form', :locals => {:f => f}
   
   #survey{:style=>"display:none; clear:both;"}

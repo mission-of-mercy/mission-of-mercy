@@ -3,9 +3,9 @@ Mission of Mercy Software
 
 Clinic management software for Mission of Mercy events.
 
-## Requirements
+## Prerequisites
 
-- Rails 2.3.4
+- Bundler
 - Postgresql
 
 ## More Information about the software

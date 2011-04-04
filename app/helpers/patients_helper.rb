@@ -17,6 +17,13 @@ module PatientsHelper
     "display:none;" unless patient.attended_previous_mom_event
   end
   
+  def print_patient_chart
+    if @last_patient
+      %{MoM.openInBackground('#{print_chart_path(@last_patient)}');
+        Modalbox.show($('last_patient'), {title: "Patient\'s Chart Number", width: 300});}
+    end
+  end
+  
   def yes_no_group(f, attribute, onchange)
     [
       f.radio_button(attribute, true, :onchange => onchange),

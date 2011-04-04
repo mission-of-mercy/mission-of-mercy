@@ -5,6 +5,10 @@ class Reports::ClinicSummary
                 :grand_total, :next_chart_number, :xrays, :checkouts,
                 :pre_med_count, :pre_meds, :pre_med_value
   
+  TIME_SPANS = [ "All", "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", 
+                 "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", 
+                 "4:00 PM", "5:00 PM" ]
+  
   def initialize(day=Date.today, span="All")
     reload(day,span)
   end
@@ -39,7 +43,7 @@ class Reports::ClinicSummary
   end
   
   def date_time_sql(datetime, table)
-    "#{datetime}(#{table}.created_at)"
+    "#{table}.created_at::#{datetime}"
   end
   
   def date_time_where(sql, table)

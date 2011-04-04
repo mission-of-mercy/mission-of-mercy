@@ -35,6 +35,7 @@ class TreatmentAreas::Patients::PrescriptionsController < ApplicationController
     end
     
     flash[:notice] = "Patient successfully checked out"
+    stats.patient_checked_out
     
     redirect_to treatment_area_patients_path(@treatment_area)
   end

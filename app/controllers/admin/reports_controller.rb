@@ -14,7 +14,7 @@ class Admin::ReportsController < ApplicationController
   end
   
   def treatment_area_distribution
-    @areas   = TreatmentArea.all(:order => "name")
+    @areas            = TreatmentArea.all(:order => "name")
     @current_capacity = @areas.map {|a| [a.name, a.patients.count || 0] }
   end
   

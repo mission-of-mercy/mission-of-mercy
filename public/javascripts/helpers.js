@@ -22,7 +22,9 @@ MoM.Helpers.togglePatientPain = function(){
   var $ = jQuery;
   
   if($('#patient_pain_true').is(':checked') == true)
-    $('#pain_length_div').slideDown();
+    $('#pain_length_div').slideDown(function(){
+      $('#patient_pain_length_in_days').focus();
+    });
   else
     $('#pain_length_div').slideUp();
 }
@@ -31,7 +33,9 @@ MoM.Helpers.toggleOtherRace = function(){
   var $ = jQuery;
   
   if($('#patient_race').val() == 'Other')
-    $('#race_other_div').slideDown();
+    $('#race_other_div').slideDown(function(){
+      $('#patient_race_other').focus();
+    });
   else
     $('#race_other_div').slideUp();
 }
@@ -45,7 +49,7 @@ MoM.Helpers.togglePreviousMoM = function(){
     $('#previous_mom_location_div').slideUp();
 }
 
-MoM.Helpers.checkIn = function(){
+MoM.Helpers.checkIn = function(options){
   var $ = jQuery;
   
   $('#patient_attended_previous_mom_event_true').change(function(e){
@@ -54,5 +58,69 @@ MoM.Helpers.checkIn = function(){
   
   $('#patient_attended_previous_mom_event_false').change(function(e){
     MoM.Helpers.togglePreviousMoM();
+  });
+  
+  $('#patient_zip').keyup(function(){
+    if($('#patient_zip').val().length >= 5)
+      MoM.Helpers.lookupZip();
+  });
+  
+  if(options.dateInput == "text")
+    MoM.Helpers.useTextDate();
+  else
+    MoM.Helpers.useSelectDate();
+    
+  $('#date-input-toggle').click(function(){
+    MoM.Helpers.toggleDateInput();
+  })
+}
+
+MoM.Helpers.toggleDateInput = function(){
+  var $ = jQuery;
+  
+  if($('#date-select').is(":visible"))
+    MoM.Helpers.useTextDate();
+  else
+    MoM.Helpers.useSelectDate();
+}
+
+MoM.Helpers.useTextDate = function(){
+  var $ = jQuery;
+  
+  $('#date-select').hide();
+  
+  $('body').append($('#date-select'));
+  $('#date-input-container').append($('#date-text'));
+  $('#date-text').show();
+  
+  $('#date_input').val('text');
+}
+
+MoM.Helpers.useSelectDate = function(){
+  var $ = jQuery;
+  
+  $('#date-text').hide();
+  
+  $('body').append($('#date-text'));
+  $('#date-input-container').append($('#date-select'));
+  $('#date-select').show();
+  
+  $('#date_input').val('select');
+}
+
+MoM.Helpers.lookupZip = function(){
+  var $ = jQuery;
+  
+  $('#zip-spinner').show();
+  $.getJSON("/patients/lookup_zip.json", {
+    zip: $('#patient_zip').val()
+  }, 
+  function(data){
+    $('#zip-spinner').hide();
+    
+    if(data.found == true){
+      $('#patient_city').val(data.city);
+      $('#patient_state').val(data.state);
+    }
   });
 }

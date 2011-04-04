@@ -1,6 +1,8 @@
 class PatientsController < ApplicationController
   before_filter :login_required
   before_filter :admin_required, :only => [ :edit, :destroy ]
+  before_filter :date_input
+  before_filter :find_last_patient, :only => [:new]
   
   def index
     if params[:commit] == "Clear"
@@ -22,12 +24,6 @@ class PatientsController < ApplicationController
   def new
     @patient = Patient.new
     @patient.survey = Survey.new
-
-    @patient.state = app_config["state"]
-    
-    if flash[:last_patient_id] != nil
-      @last_patient = Patient.find(flash[:last_patient_id])
-    end
   end
 
   def edit
@@ -40,7 +36,7 @@ class PatientsController < ApplicationController
     render :action => "print", :layout => "print"
   end
 
-  def create
+  def create    
     @patient = Patient.new(params[:patient])
     
     add_procedures_to_patient(@patient)
@@ -55,15 +51,44 @@ class PatientsController < ApplicationController
       @patient.travel_time += params[:patient_travel_time_hours].to_i * 60
     end
     
-    if @patient.save      
-      flash[:last_patient_id] = @patient.id
-      
-      redirect_to new_patient_path
+    if params[:patient][:pain_length_in_days].split(" ").length == 2
+      number, type = params[:patient][:pain_length_in_days].split(" ")
+      type = type.pluralize.downcase
+    
+      if type[/\Adays\Z|\Aweeks\Z|\Amonths\Z|\Ayears\Z/]
+        @patient.pain_length_in_days = (number.to_f.send(type) / 1.day)
+      else
+        @patient.errors.add(:pain_length_in_days, "isn't valid. Try using days only.")
+      end
+    end
+    
+    if @patient.errors.empty? && @patient.save
+      stats.patient_checked_in
+      redirect_to new_patient_path(:last_patient_id =>  @patient.id)
     else
-      flash[:patient_travel_time_minutes] = params[:patient_travel_time_minutes]
-      flash[:patient_travel_time_hours] = params[:patient_travel_time_hours]
+      @patient_travel_time_minutes = params[:patient_travel_time_minutes]
+      @patient_travel_time_hours   = params[:patient_travel_time_hours]
     
       render :action => "new"
+    end
+  end
+  
+  def lookup_zip
+    zip = Patient::Zipcode.find_by_zip(params[:zip])
+    
+    if zip
+      zip = {
+        :found => true,
+        :zip   => zip.zip,
+        :state => zip.state,
+        :city  => zip.city
+      }
+    else
+      zip = { :found => false }
+    end
+    
+    respond_to do |format|
+      format.json { render :json => zip.to_json }
     end
   end
   
@@ -111,13 +136,27 @@ class PatientsController < ApplicationController
     redirect_to(patients_url)
   end
   
-  protected
+  private
   
   def add_procedures_to_patient(patient)
     procedures = Procedure.find(:all, :conditions => {:auto_add => true})
     
     procedures.each do |p|
       patient.patient_procedures.build(:procedure_id => p.id)
+    end
+  end
+  
+  def date_input
+    if params[:date_input]
+      session[:date_input] = params[:date_input]
+    end
+    
+    @date_input = session[:date_input] || 'select'
+  end
+  
+  def find_last_patient
+    if params[:last_patient_id] != nil
+      @last_patient = Patient.find(params[:last_patient_id])
     end
   end
 end

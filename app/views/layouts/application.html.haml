@@ -26,5 +26,9 @@
         #contents
           = render :partial => "shared/flash", :locals => { :flash => flash }
           = yield
+        #footer
+          - stats.messages.each do |message|
+            = message
+            %br
         #footer-version
           = "Version #{app_version}"

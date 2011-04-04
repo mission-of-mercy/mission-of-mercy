@@ -316,7 +316,7 @@ div.input-bottom{
 div.row {
   clear: both;
   padding-top: 10px;
-  }
+}
 
 form.new_patient div.row span.label{
 	  float: left;
@@ -334,7 +334,19 @@ div.row span.label {
   float: left;
   width: 100px;
   text-align: right;
-  }
+}
+
+div.row #zip-spinner{
+  float: right;
+  margin-top: 3px;
+}
+
+div.row #date-input-toggle{
+  float: right;
+  margin-top: 3px;
+  margin-left: 5px;
+  cursor: pointer;
+}
 
 div.row span.formw {
   /*float: right;*/
@@ -390,8 +402,8 @@ div.procedure.odd{
 }
 
 div.procedure:hover{
-	color: #fffefe;
-	background-color: #0033CC;
+	color: #000;
+	background-color: #EDF3FE;
 }
 
 form dt {

@@ -10,11 +10,23 @@ module TreatmentAreasHelper
   end
   
   def procedure_other_radio(form_builder)
-    form_builder.radio_button :procedure_id, "other", :onchange => "showCheckoutFields(true,true, true, false);"
+    options = {:onchange => "showCheckoutFields(true,true, true, false);"}
+    
+    if @selected_procedure && @selected_procedure == "other"
+      options[:checked] = true
+    end
+    
+    form_builder.radio_button :procedure_id, "other", options
   end
   
   def procedure_amalgam_composite_radio(form_builder)
-    form_builder.radio_button :procedure_id, "amalgam_composite", :onchange => "showCheckoutFields(true,true, false, true);"
+    options = {:onchange => "showCheckoutFields(true,true, false, true);"}
+    
+    if @selected_procedure && @selected_procedure == "amalgam_composite"
+      options[:checked] = true
+    end
+    
+    form_builder.radio_button :procedure_id, "amalgam_composite", options
   end
   
   def tooth_visible(patient_procedure)
@@ -25,6 +37,18 @@ module TreatmentAreasHelper
   def surface_visible(patient_procedure)
     return "display:none;" if patient_procedure.procedure.nil?
     "display:none;" unless patient_procedure.procedure.requires_surface_code
+  end
+  
+  def other_visible
+    return if @selected_procedure && @selected_procedure == "other"
+    
+    "display: none;"
+  end
+  
+  def amcomp_visible
+    return if @selected_procedure && @selected_procedure == "amalgam_composite"
+    
+    "display: none;"
   end
   
   def remove_procedure(patient_procedure)
@@ -112,7 +136,7 @@ module TreatmentAreasHelper
     
     button_to text, path, 
               :method => :get, 
-              :onclick => "return procedure_not_added(#{flash[:procedure_added] == true});"
+              :onclick => "return procedure_not_added(#{@procedure_added});"
   end
 
 end

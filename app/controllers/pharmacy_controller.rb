@@ -24,21 +24,14 @@ class PharmacyController < ApplicationController
       p.destroy if !p.new_record? && p.prescribed == "0"
     end
     
-    #TODO Make sure patient is "Checked out" if session[:treatment ...]
-    
     @patient.save
     
-    if (@patient.patient_prescriptions.count > 0 and !session[:treatment_area_id].nil?) or session[:treatment_area_id].nil?
+    if @patient.patient_prescriptions.count > 0
       @patient.flows.create(:area_id => ClinicArea::PHARMACY) 
     end
     
-    flash[:notice] = "Patient successfully checked out"
-    
-    if session[:treatment_area_id].nil?
-      redirect_to patients_path
-    else
-      redirect_to patients_path(:treatment_area_id => session[:treatment_area_id])
-    end
+    flash[:notice] = "Prescriptions sucessfully added to patient's record"
+    redirect_to patients_path
   end
 
 end

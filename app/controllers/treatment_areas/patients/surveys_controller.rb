@@ -8,7 +8,7 @@ class TreatmentAreas::Patients::SurveysController < ApplicationController
   end
   
   def edit
-    @survey         = @patient.survey
+    @survey = @patient.survey
     
     @patient.patient_pre_meds.each do |p| 
       p.prescribed = true
@@ -30,10 +30,14 @@ class TreatmentAreas::Patients::SurveysController < ApplicationController
     
     @patient.save
     
-    if @patient.survey.update_attributes(params[:survey])
-      redirect_to treatment_area_patient_procedures_path(@treatment_area, @patient)
+    if @patient.survey
+      if @patient.survey.update_attributes(params[:survey])
+        redirect_to treatment_area_patient_procedures_path(@treatment_area, @patient)
+      else
+        render :action => "edit"
+      end
     else
-      render :action => "edit"
+      redirect_to treatment_area_patient_procedures_path(@treatment_area, @patient)
     end
   end
   

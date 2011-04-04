@@ -2,7 +2,23 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 
+module TestHelper
+  extend self;
+  
+  # December, 26, 1985
+  def clinic_date(time=nil)
+    date = "12/26/1985"
+    
+    if time
+      Time.parse([date, time].join(' '))
+    else
+      Date.strptime(date, "%m/%d/%Y")
+    end    
+  end
+end
+
 class ActiveSupport::TestCase
+  
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
   # test database remains unchanged so your fixtures don't have to be reloaded
@@ -32,7 +48,7 @@ class ActiveSupport::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
-  fixtures :all
+  # fixtures :all
 
   # Add more helper methods to be used by all tests here...
 end
