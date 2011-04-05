@@ -6,7 +6,7 @@ set :user, "deploy"
 
 set :deploy_to, "/home/deploy/#{application}"
 
-role :server, "mom.integrityss.com", :app, :web, :db, :primary => true
+server "mom.integrityss.com", :app, :web, :db, :primary => true
 
 namespace :deploy do
   task :start do ; end
