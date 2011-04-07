@@ -12,6 +12,8 @@ class Patient < ActiveRecord::Base
   has_many :flows, :class_name => "PatientFlow"
   has_many :previous_mom_clinics, :class_name => "PatientPreviousMomClinic"
   
+  has_one :prosthetic
+  
   belongs_to :survey, :dependent => :delete
   belongs_to :assigned_treatment_area, :class_name => "TreatmentArea"
   
