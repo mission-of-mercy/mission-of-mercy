@@ -18,5 +18,9 @@ namespace :deploy do
 end
 
 after 'deploy:update_code' do
-  run "ln -nfs #{shared_path}/database.yml #{release_path}/config/database.yml"
+  { "database.yml" => "config/database.yml",
+    "mom.yml"      => "config/mom.yml"}.
+   each do |from, to|
+     run "ln -nfs #{shared_path}/#{from} #{release_path}/#{to}"
+   end
 end
