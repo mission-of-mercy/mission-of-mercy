@@ -20,7 +20,7 @@
     %h4 4: Survey Questions
     
     %div{:style=>"padding-left: 20px; padding-bottom: 20px;"}
-      - render :partial => 'surveys/check_in', :locals => {:f => f}
+      = render :partial => 'surveys/check_in', :locals => {:f => f}
 
   %div.input-bottom.check_out
     %span.left= link_to_reset 'new_patient'
