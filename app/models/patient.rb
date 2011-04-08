@@ -3,18 +3,19 @@ class Patient < ActiveRecord::Base
   before_save :normalize_data
   after_create :check_in_flow
   
-  has_many :patient_prescriptions, :dependent => :delete_all
-  has_many :patient_procedures, :dependent => :delete_all
-  has_many :patient_pre_meds, :dependent => :delete_all
-  has_many :procedures, :through => :patient_procedures
-  has_many :prescriptions, :through => :patient_prescriptions
-  has_many :pre_meds, :through => :patient_pre_meds
-  has_many :flows, :class_name => "PatientFlow"
-  has_many :previous_mom_clinics, :class_name => "PatientPreviousMomClinic"
+  has_many :patient_prescriptions, :dependent  => :delete_all
+  has_many :patient_procedures,    :dependent  => :delete_all
+  has_many :patient_pre_meds,      :dependent  => :delete_all
+  has_many :procedures,            :through    => :patient_procedures
+  has_many :prescriptions,         :through    => :patient_prescriptions
+  has_many :pre_meds,              :through    => :patient_pre_meds
+  has_many :flows,                 :class_name => "PatientFlow",
+                                   :dependent  => :delete_all
+  has_many :previous_mom_clinics,  :class_name => "PatientPreviousMomClinic"
   
-  has_one :prosthetic
+  has_one :prosthetic,             :dependent  => :delete
   
-  belongs_to :survey, :dependent => :delete
+  belongs_to :survey,              :dependent  => :delete
   belongs_to :assigned_treatment_area, :class_name => "TreatmentArea"
   
   accepts_nested_attributes_for :survey
@@ -28,7 +29,9 @@ class Patient < ActiveRecord::Base
   accepts_nested_attributes_for :previous_mom_clinics, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['attended'] == "0" }
                                                               
-  validates_presence_of :first_name, :last_name, :date_of_birth, :sex, :race, :chief_complaint, :last_dental_visit, :travel_time, :city, :state
+  validates_presence_of :first_name, :last_name, :date_of_birth, :sex, :race, 
+                        :chief_complaint, :last_dental_visit, :travel_time, 
+                        :city, :state
   
   attr_accessor :race_other
   
