@@ -1,5 +1,5 @@
 class PatientPreviousMomClinic < ActiveRecord::Base
-  attr_accessor :attended
+  after_save :destroy_unless_attended
   
   def description
     if clinic_year
@@ -7,5 +7,11 @@ class PatientPreviousMomClinic < ActiveRecord::Base
     else
       location
     end
+  end
+  
+  private
+  
+  def destroy_unless_attended
+    destroy unless attended
   end
 end

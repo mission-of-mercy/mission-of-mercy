@@ -24,10 +24,14 @@ class PatientsController < ApplicationController
   def new
     @patient = Patient.new
     @patient.survey = Survey.new
+    
+    build_previous_mom_clinics
   end
 
   def edit
     @patient = Patient.find(params[:id])
+    
+    build_previous_mom_clinics
   end
   
   def print
@@ -68,6 +72,8 @@ class PatientsController < ApplicationController
     else
       @patient_travel_time_minutes = params[:patient_travel_time_minutes]
       @patient_travel_time_hours   = params[:patient_travel_time_hours]
+      
+      build_previous_mom_clinics
     
       render :action => "new"
     end
@@ -115,8 +121,9 @@ class PatientsController < ApplicationController
     end
     
     @patient = Patient.find(params[:id])
-    
+      
     if @patient.update_attributes(params[:patient])
+      
       if params[:commit] == "Next"
         redirect_to(:controller => 'exit_surveys', :action => 'new', :id => @patient.id)
       else
@@ -144,6 +151,19 @@ class PatientsController < ApplicationController
     procedures.each do |p|
       patient.patient_procedures.build(:procedure_id => p.id)
     end
+  end
+  
+  def build_previous_mom_clinics
+    {2010 => "Middletown", 2009 => "New Haven", 2008 => "Tolland"}.each do |y, l|
+      existing = @patient.previous_mom_clinics.detect do |c|
+          c.clinic_year == y && c.location == l
+        end
+        
+      unless existing
+        @patient.previous_mom_clinics.build(:clinic_year => y, :location => l)
+      end
+    end
+  
   end
   
   def date_input
