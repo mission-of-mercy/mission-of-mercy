@@ -8,10 +8,7 @@ gem 'restful-authentication', :git =>
   "git@github.com:CTMissionofMercy/restful-authentication.git"
 gem 'scriptaculous_slider', :git =>
   "git://github.com/seamusabshere/scriptaculous_slider.git"
-
-group :development do
-  gem "fastercsv"
-end
+gem "fastercsv"
 
 group :test do
   gem "contest"

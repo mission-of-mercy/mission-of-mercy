@@ -14,6 +14,10 @@ class TreatmentAreas::PatientsController < ApplicationController
       format.html
     end
   end
+  
+  def prosthetics_export
+    
+  end
 
   private
   
