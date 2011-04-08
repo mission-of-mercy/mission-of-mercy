@@ -154,7 +154,7 @@ class PatientsController < ApplicationController
   end
   
   def build_previous_mom_clinics
-    {2010 => "Middletown", 2009 => "New Haven", 2008 => "Tolland"}.each do |y, l|
+    PatientPreviousMomClinic::CLINICS.each do |y, l|
       existing = @patient.previous_mom_clinics.detect do |c|
           c.clinic_year == y && c.location == l
         end
