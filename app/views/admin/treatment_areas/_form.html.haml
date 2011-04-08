@@ -34,6 +34,3 @@
   %p
     = submit_tag 'Save'
     = link_to 'Cancel', admin_treatment_areas_path, :class => "warning"
-    - if @treatment_area.prosthetics?
-      = button_to "Export Prosthetic Lab Report", prosthetics_export_treatment_area_patients_path(@treatment_area, :format => :csv),
-        :method => :get

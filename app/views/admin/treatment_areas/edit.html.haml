@@ -5,3 +5,7 @@
 
 - form_for @treatment_area, :method => :put, :url => admin_treatment_area_path(@treatment_area) do |f|
   = render :partial => "form", :locals => {:f => f}
+  
+- if @treatment_area.prosthetics?
+  = button_to "Export Prosthetic Lab Report", prosthetics_export_treatment_area_patients_path(@treatment_area, :format => :csv),
+    :method => :get
