@@ -27,7 +27,7 @@ MoM.setupNamespace("Support");
 
 // Toggle to disable support
 MoM.Support.Enabled  = true;
-MoM.Support.Interval = 30;
+MoM.Support.Interval = 20;
 
 MoM.Support.startPolling = function (){
   new PeriodicalExecuter(MoM.Support.checkForRequests, MoM.Support.Interval);
@@ -36,7 +36,7 @@ MoM.Support.startPolling = function (){
 MoM.Support.checkForRequests = function (executer){
   if(MoM.Support.Enabled){
     jQuery.getJSON('/active_support_requests.json', 
-      { authenticity_token: encodeURIComponent(MoM.AuthToken)}, 
+      { authenticity_token: MoM.AuthToken}, 
       function(data){
         MoM.Support.processRequests(data);
       }
@@ -91,7 +91,7 @@ MoM.Support.showSupportRequested = function(id){
       type: "PUT",
       url: '/support_requests/' + id,
       dataType: "script",
-      data: {authenticity_token: encodeURIComponent(MoM.AuthToken)}
+      data: {authenticity_token: MoM.AuthToken}
     });
   };
 
