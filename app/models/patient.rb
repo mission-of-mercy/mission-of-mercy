@@ -18,6 +18,7 @@ class Patient < ActiveRecord::Base
   belongs_to :assigned_treatment_area, :class_name => "TreatmentArea"
   
   accepts_nested_attributes_for :survey
+  accepts_nested_attributes_for :prosthetic
   accepts_nested_attributes_for :patient_prescriptions, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['prescribed'] == "0" }
     
