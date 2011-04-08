@@ -90,7 +90,7 @@
           = text_field_tag 'patient_travel_time_minutes', @patient_travel_time_minutes, :size => 2
       %div.row
         %span.label
-          %label Attended previous MoM?
+          %label Attended previous clinic?
         %span.formw
           = f.radio_button :attended_previous_mom_event, true
           = f.label :attended_previous_mom_event, "Yes", :value => true
@@ -99,7 +99,7 @@
       
       #previous_mom_location_div.row{:style=>show_previous_mom(@patient)}
         %span.label{:style=>"height: 200px;"}
-          Previous MoM location(s):
+          Clinic(s) attended
           %br
         - f.fields_for :previous_mom_clinics, @patient.previous_mom_clinics.sort_by(&:clinic_year) do |p|
           %span.formw
