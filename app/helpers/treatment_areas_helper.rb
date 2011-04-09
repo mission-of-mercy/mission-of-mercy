@@ -73,7 +73,7 @@ module TreatmentAreasHelper
     link_to text, path, :class => css
   end
   
-  def continue_button(area,patient, options={})
+  def continue_button(area, patient, options={})
     if area == TreatmentArea.radiology
       path = treatment_area_patients_path(area)
     else
@@ -100,6 +100,18 @@ module TreatmentAreasHelper
                       area.id, 
                       :onmouseover => "graph_highlight('#{area.name.to_s.downcase.gsub(' ', '_')}');",
                       :onmouseout => "graph_reset();"
+  end
+  
+  def radiology_check_box(form)
+    form.check_box :radiology, 
+                   :onmouseover => "graph_highlight('radiology');",
+                   :onmouseout => "graph_reset();"
+  end
+  
+  def radiology_label(form)
+    form.label :radiology, "Radiology",
+    :onmouseover => "graph_highlight('radiology');",
+    :onmouseout => "graph_reset();"
   end
 
   def graph_label(form,area)

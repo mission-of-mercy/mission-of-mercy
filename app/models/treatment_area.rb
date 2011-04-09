@@ -13,4 +13,8 @@ class TreatmentArea < ActiveRecord::Base
   def prosthetics?
     name == "Prosthetics"
   end
+  
+  def radiology?
+    name == "Radiology"
+  end
 end
