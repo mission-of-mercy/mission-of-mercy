@@ -17,10 +17,13 @@
     %h4 Treatment Areas
   
     %p
-      - @areas.each do |area|
+      - @areas.reject {|a| a.radiology? }.each do |area|
         = radio_treatment_area f, area
         = graph_label f, area
         %br
+    %p
+      = radiology_check_box f
+      = radiology_label f
   
   %div.input-right.border
     = bar_graph @current_capacity

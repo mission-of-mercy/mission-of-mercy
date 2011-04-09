@@ -9,4 +9,8 @@ class TreatmentArea < ActiveRecord::Base
   def self.radiology
     TreatmentArea.find(:first, :conditions => {:name => "Radiology"})
   end
+  
+  def radiology?
+    name == "Radiology"
+  end
 end
