@@ -21,14 +21,8 @@ class TreatmentAreas::Patients::SurveysController < ApplicationController
     end
   end
   
-  def update
-    @patient.attributes = params[:patient]
-    
-    @patient.patient_pre_meds.each do |p|
-      p.destroy if !p.new_record? && p.prescribed == "0"
-    end
-    
-    @patient.save
+  def update    
+    @patient.update_attributes(params[:patient])
     
     if @patient.survey
       if @patient.survey.update_attributes(params[:survey])
