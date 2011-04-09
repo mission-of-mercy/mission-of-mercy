@@ -20,8 +20,13 @@ class Reports::PostClinic
   
   def load_treatment_areas
     sql = %{SELECT treatment_areas.name, count(*) as patient_count
-            FROM treatment_areas LEFT JOIN patient_flows ON treatment_areas.id = patient_flows.treatment_area_id
-            WHERE patient_flows.area_id = 4 OR patient_flows.area_id = 2
+            FROM treatment_areas LEFT JOIN 
+            ( SELECT patient_flows.patient_id, patient_flows.treatment_area_id 
+              FROM patient_flows 
+              WHERE patient_flows.area_id = 4 OR patient_flows.area_id = 2 
+              GROUP BY patient_flows.patient_id, patient_flows.treatment_area_id
+            ) AS pf 
+            ON treatment_areas.id = pf.treatment_area_id
             GROUP BY treatment_areas.name}
     
     @areas = Patient.connection.select_all(sql)
@@ -152,7 +157,7 @@ class Reports::PostClinic
   
   private
   
-  def calculate_percentage(data)
+  def calculate_percentage(data)    
     data.each do |d|
       d["percent"] = (d["patient_count"].to_f / @patient_count.to_f) * 100.0
       d["percent"] = sprintf('%.2f', d["percent"])
