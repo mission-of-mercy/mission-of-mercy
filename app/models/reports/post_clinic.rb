@@ -170,7 +170,7 @@ class Reports::PostClinic
       d["percent"] = (d["patient_count"].to_f / @patient_count.to_f) * 100.0
       d["percent"] = sprintf('%.2f', d["percent"])
       
-      total_patients += d["patient_count"].to_f
+      total_patients += d["patient_count"].to_i
     end
     
     total_patients
