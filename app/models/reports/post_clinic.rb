@@ -31,7 +31,12 @@ class Reports::PostClinic
     
     @areas = Patient.connection.select_all(sql)
     
-    calculate_percentage @areas
+    total_patients = calculate_percentage @areas
+    
+    @areas << { "name" => "Never checked out", 
+                "patient_count" => @patient_count - total_patients,
+                "percent" => sprintf('%.2f', ((@patient_count - total_patients) / @patient_count.to_f) * 100.0)
+              }
   end
   
   def load_towns
@@ -89,7 +94,8 @@ class Reports::PostClinic
   def load_travel_times
     sql = %{SELECT patients.travel_time, count(*) as patient_count
             FROM patients
-            GROUP BY patients.travel_time}
+            GROUP BY patients.travel_time
+            ORDER BY patients.travel_time}
     
     @travel_times = Patient.connection.select_all(sql)
     
@@ -158,10 +164,16 @@ class Reports::PostClinic
   private
   
   def calculate_percentage(data)    
+    total_patients = 0 
+    
     data.each do |d|
       d["percent"] = (d["patient_count"].to_f / @patient_count.to_f) * 100.0
       d["percent"] = sprintf('%.2f', d["percent"])
+      
+      total_patients += d["patient_count"].to_f
     end
+    
+    total_patients
   end
   
   def add_insurance(insurance_name)
