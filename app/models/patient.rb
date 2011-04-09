@@ -82,7 +82,8 @@ class Patient < ActiveRecord::Base
                         :treatment_area_id => area.id)
     
       self.update_attributes(:assigned_treatment_area_id => nil,
-                             :survey_id => nil)
+                             :survey_id                  => nil,
+                             :radiology                  => false)
     end
   end
   
