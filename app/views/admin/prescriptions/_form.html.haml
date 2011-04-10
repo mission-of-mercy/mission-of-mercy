@@ -1,31 +1,36 @@
-= f.error_messages 
+= f.error_messages
 
 %p
-  = f.label :name 
+  = f.label :name
   %br
-  = f.text_field :name 
+  = f.text_field :name
 
 %p
-  = f.label :strength 
+  = f.label :strength
   %br
-  = f.text_field :strength 
+  = f.text_field :strength
 
 %p
-  = f.label :quantity 
+  = f.label :quantity
   %br
-  = f.text_field :quantity 
+  = f.text_field :quantity
 
 %p
-  = f.label :dosage 
+  = f.label :dosage
   %br
-  = f.text_field :dosage 
+  = f.text_field :dosage
 
 %p
-  = f.label :cost 
+  = f.label :cost
   %br
-  = f.text_field :cost 
+  = f.text_field :cost
+  
+%p
+  = f.label :position
+  %br
+  = f.text_field :position
 
 %p
   = f.submit "Save"
   |
-  = link_to 'Cancel', admin_prescriptions_path 
+  = link_to 'Cancel', admin_prescriptions_path
