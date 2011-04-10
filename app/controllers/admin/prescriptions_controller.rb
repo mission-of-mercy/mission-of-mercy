@@ -1,6 +1,7 @@
 class Admin::PrescriptionsController < ApplicationController
   before_filter :admin_required
   before_filter :find_prescription, :only => [:show, :edit, :update, :destroy]
+  before_filter :set_current_tab
 
   def index
     @prescriptions = Prescription.find(:all)
@@ -44,5 +45,9 @@ class Admin::PrescriptionsController < ApplicationController
   
   def find_prescription
     @prescription = Prescription.find(params[:id])
+  end
+  
+  def set_current_tab
+    @current_tab = "prescriptions"
   end
 end

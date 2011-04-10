@@ -2,6 +2,7 @@ class Admin::TreatmentAreasController < ApplicationController
   before_filter :admin_required
   before_filter :setup_procedures, :only => [:new, :edit]
   before_filter :find_treatment_area, :only => [:show, :update, :destroy]
+  before_filter :set_current_tab
   
   def index
     @treatment_areas = TreatmentArea.all
@@ -71,5 +72,9 @@ class Admin::TreatmentAreasController < ApplicationController
         @treatment_area.procedure_treatment_area_mappings.build(:procedure_id => pro.id)
       end
     end
+  end
+  
+  def set_current_tab
+    @current_tab = "treatment-areas"
   end
 end

@@ -7,7 +7,7 @@
     = javascript_include_tag 'helpers'
     
     = stylesheet_link_tag 'default', :media => :screen
-    = stylesheet_link_tag 'modalbox'
+    = stylesheet_link_tag 'modalbox', 'tabs'
     
     /Active Bar
     = javascript_include_tag 'jquery-1.5.1.min', 'activebar/activebar2.js'
@@ -23,6 +23,8 @@
     #outer_container
       #container
         = render :partial => 'users/user_bar'
+        - if current_user.try(:user_type) == UserType::ADMIN
+          = render :partial => "admin/nav"
         #contents
           = render :partial => "shared/flash", :locals => { :flash => flash }
           = yield

@@ -1,8 +1,9 @@
 class Admin::ReportsController < ApplicationController
   before_filter :admin_required
+  before_filter :set_current_tab
   
   def index
-  
+
   end
   
   def clinic_summary
@@ -25,6 +26,10 @@ class Admin::ReportsController < ApplicationController
   
   def post_clinic
     @report = Reports::PostClinic.new
+  end
+  
+  def set_current_tab
+    @current_tab = "reports"
   end
 
 end
