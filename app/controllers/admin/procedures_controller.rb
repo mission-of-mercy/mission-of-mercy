@@ -4,7 +4,7 @@ class Admin::ProceduresController < ApplicationController
   before_filter :set_current_tab
   
   def index
-    @procedures = Procedure.find(:all)
+    @procedures = Procedure.all.paginate(:page => params[:page])
   end
 
   def show

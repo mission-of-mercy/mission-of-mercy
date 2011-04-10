@@ -23,7 +23,7 @@
       %td= link_to 'Edit', edit_admin_procedure_path(procedure)
       %td= link_to 'Destroy', admin_procedure_path(procedure), :confirm => 'Are you sure?', :method => :delete
 
+= will_paginate @procedures
+
 %p
   = link_to 'New procedure', new_admin_procedure_path
-  |
-  = link_to 'Back', home_path
