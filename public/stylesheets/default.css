@@ -617,3 +617,9 @@ div.flash.error {
   background-color: #c88;
   color: #522;
 }
+
+/* Pagination */
+
+div.pagination {
+  margin: 1em 0;
+}

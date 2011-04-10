@@ -13,6 +13,8 @@ class PharmacyController < ApplicationController
         @patient.patient_prescriptions.build(:prescription_id => pres.id)
       end
     end
+    
+    @prescriptions = @patient.patient_prescriptions.sort_by {|p| p.prescription.position }
   end
 
   def check_out_complete

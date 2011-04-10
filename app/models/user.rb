@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
   
   def start_path
     if user_type == UserType::ADMIN
-      root_path
+      admin_reports_path
     elsif user_type == UserType::CHECKIN
       new_patient_path
     elsif user_type == UserType::XRAY

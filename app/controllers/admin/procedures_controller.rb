@@ -1,9 +1,10 @@
 class Admin::ProceduresController < ApplicationController
   before_filter :admin_required
   before_filter :find_procedure, :only => [:show, :edit, :update, :destroy]
+  before_filter :set_current_tab
   
   def index
-    @procedures = Procedure.find(:all)
+    @procedures = Procedure.all.paginate(:page => params[:page])
   end
 
   def show
@@ -46,5 +47,9 @@ class Admin::ProceduresController < ApplicationController
   
   def find_procedure
     @procedure = Procedure.find(params[:id])
+  end
+  
+  def set_current_tab
+    @current_tab = "procedures"
   end
 end

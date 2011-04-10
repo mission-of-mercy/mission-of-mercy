@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_filter :admin_required
+  before_filter :set_current_tab
   
   def index
     @users = User.find(:all)
@@ -34,5 +35,11 @@ class Admin::UsersController < ApplicationController
           format.html { redirect_to(users_path) }
       end
     end
+  end
+  
+  private
+  
+  def set_current_tab
+    @current_tab = "users"
   end
 end
