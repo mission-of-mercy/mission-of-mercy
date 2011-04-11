@@ -97,6 +97,13 @@ class PatientsController < ApplicationController
     end
   end
   
+  def lookup_city
+    @cities = Patient::Zipcode.all(:conditions => ["city ILIKE ?", "#{params[:city]}%"],
+      :select => "DISTINCT city")
+    
+    render :layout => false
+  end
+  
   def export_to_dexis_file
     @patient = Patient.find(params[:patient_id])
     

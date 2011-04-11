@@ -23,7 +23,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.pharmacy_check_out '/pharmacy/check_out/:patient_id', :controller => :pharmacy, :action => :check_out
   map.pharmacy_finalize  '/pharmacy/finalize/:patient_id',  :controller => :pharmacy, :action => :check_out_complete
-  map.resources :patients, :collection => { :lookup_zip => :get }
+  map.resources :patients, :collection => { :lookup_zip => :get, :lookup_city => :post }
   map.resources :patient_procedures
   
   map.resources :assignment_desk
