@@ -19,13 +19,15 @@
         %span.formw= f.text_field :last_name
       %div.row
         %span.label= f.label :date_of_birth
+        = image_tag "cog.png", :id => "date-input-toggle", 
+        :title => "Toggle date input method"
         %span#date-input-container.formw
           %span#date-select{:style => "display: none;"}
             = f.date_select :date_of_birth, dob_select_options
           %span#date-text{:style => "display: none;"}
             = f.text_field :date_of_birth
-        = image_tag "cog.png", :id => "date-input-toggle", 
-        :title => "Toggle date input method"
+        %span#date-format.formexample{:style => "display: none;"}
+          Format: mm/dd/yyyy
       %div.row
         %span.label= f.label :sex
         %span.formw= f.select :sex, *sex_select_options

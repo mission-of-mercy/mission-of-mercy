@@ -94,6 +94,8 @@ MoM.Helpers.useTextDate = function(){
   $('#date-text').show();
   
   $('#date_input').val('text');
+  
+  $('#date-format').slideDown();
 }
 
 MoM.Helpers.useSelectDate = function(){
@@ -106,6 +108,8 @@ MoM.Helpers.useSelectDate = function(){
   $('#date-select').show();
   
   $('#date_input').val('select');
+  
+  $('#date-format').slideUp();
 }
 
 MoM.Helpers.lookupZip = function(){
