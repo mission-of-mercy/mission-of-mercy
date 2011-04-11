@@ -344,7 +344,7 @@ div.row span.label {
   text-align: right;
 }
 
-div.row #zip-spinner{
+div.row .spinner{
   float: right;
   margin-top: 3px;
 }
@@ -628,4 +628,32 @@ div.flash.error {
 
 div.pagination {
   margin: 1em 0;
+}
+
+/* Autocomplete */
+
+div.autocomplete {
+  position:absolute;
+  width:250px;
+  background-color:white;
+  border:1px solid #888;
+  margin:0;
+  padding:0;
+}
+
+div.autocomplete ul {
+  list-style-type:none;
+  margin:0;
+  padding:0;
+}
+
+div.autocomplete ul li.selected { background-color: #EDF3FE;}
+
+div.autocomplete ul li {
+  list-style-type:none;
+  display:block;
+  margin:0;
+  padding:2px;
+  height:16px;
+  cursor:pointer;
 }
