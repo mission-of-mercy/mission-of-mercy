@@ -86,10 +86,13 @@
       %div.row
         %span.label= f.label :travel_time
         %span.formw
-          Hours: 
-          = text_field_tag 'patient_travel_time_hours', @patient_travel_time_hours, :size => 2
-          Minutes:
-          = text_field_tag 'patient_travel_time_minutes', @patient_travel_time_minutes, :size => 2
+          - if @patient.new_record?
+            Hours: 
+            = text_field_tag 'patient_travel_time_hours', @patient_travel_time_hours, :size => 2
+            Minutes:
+            = text_field_tag 'patient_travel_time_minutes', @patient_travel_time_minutes, :size => 2
+          - else
+            = f.text_field :travel_time
       %div.row
         %span.label
           %label Attended previous MoM?
