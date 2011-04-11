@@ -18,12 +18,14 @@ MoM.Helpers.showPatientSurvey = function (){
   return false;
 }
 
-MoM.Helpers.togglePatientPain = function(){
+MoM.Helpers.togglePatientPain = function(focus){
   var $ = jQuery;
+  
+  if(focus == undefined) focus = true;
   
   if($('#patient_pain_true').is(':checked') == true)
     $('#pain_length_div').slideDown(function(){
-      $('#patient_pain_length_in_days').focus();
+      if(focus) $('#patient_pain_length_in_days').focus();
     });
   else
     $('#pain_length_div').slideUp();
@@ -73,6 +75,9 @@ MoM.Helpers.checkIn = function(options){
   $('#date-input-toggle').click(function(){
     MoM.Helpers.toggleDateInput();
   })
+  
+  if($('#patient_pain_true').is(":checked"))
+    MoM.Helpers.togglePatientPain(false);
 }
 
 MoM.Helpers.toggleDateInput = function(){
@@ -94,6 +99,8 @@ MoM.Helpers.useTextDate = function(){
   $('#date-text').show();
   
   $('#date_input').val('text');
+  
+  $('#date-format').slideDown();
 }
 
 MoM.Helpers.useSelectDate = function(){
@@ -106,6 +113,8 @@ MoM.Helpers.useSelectDate = function(){
   $('#date-select').show();
   
   $('#date_input').val('select');
+  
+  $('#date-format').slideUp();
 }
 
 MoM.Helpers.lookupZip = function(){
