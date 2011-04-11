@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
   before_filter :find_users, :only => [:new, :create]
   
   def new
+    @last_user = cookies[:last_user]
   end
 
   def create
@@ -9,6 +10,8 @@ class SessionsController < ApplicationController
     user = User.authenticate(params[:login], params[:password])
     if user
       self.current_user = user
+      cookies[:last_user] = user.login
+      
       flash.delete(:error)
 
       redirect_to user.start_path
