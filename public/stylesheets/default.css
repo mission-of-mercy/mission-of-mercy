@@ -359,7 +359,8 @@ div.row span.formw {
 div.row span.formexample{
 	font-size: x-small;
 	font-style: italic;
-	margin-left: 10px;
+	display: block;
+	margin-left: 175px;
 }
 
 span.procedure{
