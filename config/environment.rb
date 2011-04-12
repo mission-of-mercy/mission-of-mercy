@@ -31,4 +31,5 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 end
 
+# Set default date format to mm/dd/yyyy
 ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS[:default] = '%m/%d/%Y'
