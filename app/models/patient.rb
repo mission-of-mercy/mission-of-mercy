@@ -26,7 +26,8 @@ class Patient < ActiveRecord::Base
                                 :reject_if => proc { |attributes| attributes['attended'] == "0" }
                                                               
   validates_presence_of :first_name, :last_name, :date_of_birth, :sex, :race, :chief_complaint, :last_dental_visit, :travel_time, :city, :state
-  validates_length_of   :zip, :maximum => 5
+  validates_length_of   :zip,   :maximum => 10
+  validates_length_of   :state, :maximum => 2
 
   attr_accessor :race_other
   
