@@ -13,6 +13,18 @@ class Reports::ClinicSummary
     reload(day,span)
   end
   
+  def day_and_span
+    return "Every day" if @day == "All" and @span == "All"
+    
+    if @span == "All"
+      @day
+    elsif @day == "All"
+      ["Every day", @span].join(" at ")
+    else
+      [@day, @span].join(" at ")
+    end
+  end
+  
   def reload(day, span)
     @day, @span = day, span
     @procedures, @prescriptions, @pre_meds = [], [], []

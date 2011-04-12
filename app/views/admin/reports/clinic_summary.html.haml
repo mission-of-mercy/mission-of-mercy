@@ -14,9 +14,7 @@
     = button_to 'Print', 'javascript:window.print();'
   #report_date
     %h3
-      = @report.day
-      at
-      = @report.span
+      = @report.day_and_span
     
 %h2
   %u Summary
