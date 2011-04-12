@@ -35,7 +35,6 @@ class Patient < ActiveRecord::Base
   validates_length_of   :zip,   :maximum => 10
   validates_length_of   :state, :maximum => 2
 
->>>>>>> 56da6ab68b4daf1b07608aa76710d5fe247a8cd7
   attr_accessor :race_other
   
   # Old Pagination Method ...
