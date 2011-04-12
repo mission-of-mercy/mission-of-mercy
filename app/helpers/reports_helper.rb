@@ -10,7 +10,7 @@ module ReportsHelper
       :select => "patients.created_at::Date as created_at_date", 
       :group => report.date_sql("patients"),
       :order => "patients.created_at::Date"
-    ).map {|p| p.created_at_date }
+    ).map {|p| p.created_at_date.to_date }
     
     ["All", *existing_dates]
   end
