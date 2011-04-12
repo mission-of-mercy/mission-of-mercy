@@ -29,9 +29,9 @@ class Patient < ActiveRecord::Base
   validates_length_of   :zip,   :maximum => 10
   validates_length_of   :state, :maximum => 2
   
-  validates_format_of :phone,
-      :message => "must be a valid telephone number.",
-      :with => /^[\(\)0-9\- \+\.]{10,20}$/
+  validates_format_of :phone, :message => "must be a valid telephone number.",
+                              :with => /^[\(\)0-9\- \+\.]{10,20}$/,
+                              :allow_blank => true
 
   attr_accessor :race_other
   
