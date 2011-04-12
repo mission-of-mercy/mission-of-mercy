@@ -63,7 +63,7 @@ class PatientsController < ApplicationController
       end
     end
     
-    if params[:patient][:date_of_birth] && !params[:patient][:date_of_birth][/\d\d?\/\d\d?\/\d{4}/]
+    if params[:patient][:date_of_birth] && !params[:patient][:date_of_birth][/\A\d\d?\/\d\d?\/\d{4}\z/]
       @patient.errors.add(:date_of_birth, "is in the wrong format. Use mm/dd/yyyy")
     end
     
