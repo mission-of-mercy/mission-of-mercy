@@ -124,5 +124,13 @@ MoM.Support.startStatusPolling = function(){
 }
 
 MoM.Support.checkForStatusRequests = function (executer){ 
-  jQuery.get('/status',null,null,"script"); 
+  jQuery.ajax({
+    url: '/status',
+    timeout: 2000,
+    dataType: "script",
+    error: function(){
+      $(document.body).addClassName('red')
+      jQuery('#requests').html("<h1>Error connecting to server</h1>");
+    }
+  }); 
 }
