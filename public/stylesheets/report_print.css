@@ -6,6 +6,15 @@ a, #controls, #top_navigation, #footer, #footer-version{
 	display: none;
 }
 
+div.header img, div.header h1 {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+div.header img{
+  margin-right: 10px;
+}
+
 table {
 border: 1px solid #666666;
 width:100%;
