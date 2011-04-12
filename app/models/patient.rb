@@ -33,6 +33,8 @@ class Patient < ActiveRecord::Base
                         :chief_complaint, :last_dental_visit, :travel_time, 
                         :city, :state
   
+  validates_length_of   :zip, :maximum => 5
+  
   attr_accessor :race_other
   
   # Old Pagination Method ...
