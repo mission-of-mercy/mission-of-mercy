@@ -1,6 +1,11 @@
 class Patient < ActiveRecord::Base
-  before_save :update_survey
-  before_save :normalize_data
+  TIME_IN_PAIN = {
+    1 => /\A(\d*\.?\d*)([dwmy])\Z/,
+    2 => /\Adays\Z|\Aweeks\Z|\Amonths\Z|\Ayears\Z/
+  }
+  
+  before_save  :update_survey
+  before_save  :normalize_data
   after_create :check_in_flow
   
   has_many :patient_prescriptions, :dependent  => :delete_all
@@ -28,18 +33,19 @@ class Patient < ActiveRecord::Base
                                 
   accepts_nested_attributes_for :previous_mom_clinics, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['attended'] == "0" }
-                                                              
+  
+  validate              :time_in_pain_format
+  validates_length_of   :zip,   :maximum => 10, :allow_blank => true
+  validates_length_of   :state, :maximum => 2
   validates_presence_of :first_name, :last_name, :date_of_birth, :sex, :race, 
                         :chief_complaint, :last_dental_visit, :travel_time, 
                         :city, :state
-  validates_length_of   :zip,   :maximum => 10
-  validates_length_of   :state, :maximum => 2
-  
-  validates_format_of :phone, :message => "must be a valid telephone number.",
-                              :with => /^[\(\)0-9\- \+\.]{10,20}$/,
-                              :allow_blank => true
-
+  validates_format_of   :phone, :message     => "must be a valid telephone number.",
+                                :with        => /^[\(\)0-9\- \+\.]{10,20}$/,
+                                :allow_blank => true                              
+  validates_numericality_of :travel_time, :greater_than => 0
   attr_accessor :race_other
+  attr_reader   :time_in_pain
   
   # Old Pagination Method ...
   def self.search(chart_number, name, page)
@@ -103,6 +109,59 @@ class Patient < ActiveRecord::Base
     f.close
   end
   
+  def travel_time_hours=(hours)
+    @travel_time_hours = hours.to_i
+    
+    calculate_travel_time
+  end
+  
+  def travel_time_hours
+    @travel_time_hours ||= 0
+  end
+  
+  def travel_time_minutes=(minutes)
+    @travel_time_minutes = minutes.to_i
+    
+    calculate_travel_time
+  end
+  
+  def travel_time_minutes
+    @travel_time_minutes ||= 0
+  end
+  
+  def time_in_pain=(time_in_pain)
+    @time_in_pain = time_in_pain
+    time_in_pain  = time_in_pain.split(" ")
+    
+    if time_in_pain.length == 2
+      number, type = *time_in_pain
+      type = type.pluralize.downcase
+    
+      if type =~ TIME_IN_PAIN[2]
+        self.pain_length_in_days = (number.to_f.send(type) / 1.day)
+      end
+    elsif time_in_pain.length == 1
+      time_in_pain = time_in_pain.first
+      
+      if time_in_pain =~ TIME_IN_PAIN[1]
+        number, type = TIME_IN_PAIN[1].match(time_in_pain).captures
+        
+        type = case type
+        when "d" then "days"
+        when "w" then "weeks"
+        when "m" then "months"
+        when "y" then "years"
+        else
+          nil
+        end
+        
+        self.pain_length_in_days = (number.to_f.send(type) / 1.day) unless type.nil?
+      elsif time_in_pain =~ /\A\d*\Z/
+        self.pain_length_in_days = time_in_pain
+      end
+    end
+  end
+  
   private
   
   def update_survey
@@ -127,5 +186,39 @@ class Patient < ActiveRecord::Base
   
   def check_in_flow
     self.flows.create(:area_id => ClinicArea::CHECKIN)
+  end
+  
+  def time_in_pain_format
+    error_message = "must be in a valid format (1 day, 1w, 5 years)"
+    
+    unless @time_in_pain.blank?
+      time_in_pain = @time_in_pain.split(" ")
+
+      if time_in_pain.length == 2
+        number, type = *time_in_pain
+        type = type.pluralize.downcase
+
+        unless type =~ TIME_IN_PAIN[2]
+          errors.add(:time_in_pain, error_message)
+          return false
+        end
+      elsif time_in_pain.length == 1
+        time_in_pain = time_in_pain.first
+
+        if !(time_in_pain =~ TIME_IN_PAIN[1]) && !(time_in_pain =~ /\A\d*\Z/)
+          errors.add(:time_in_pain, error_message)
+          return false
+        end
+      else
+        errors.add(:time_in_pain, error_message)
+        return false
+      end
+    end
+    
+    return true
+  end
+  
+  def calculate_travel_time
+    self.travel_time = travel_time_minutes + (travel_time_hours * 60)
   end
 end

@@ -85,9 +85,12 @@
         %span.formw
           = yes_no_group f, :pain, "MoM.Helpers.togglePatientPain();"
       #pain_length_div.row{:style=>"display:none;"}
-        %span.label= f.label :pain_length_in_days, "Time in pain"
-        %span.formw= f.text_field :pain_length_in_days
-        %span.formexample Example: "1 month" or "2 years"
+        %span.label= f.label :time_in_pain, "Time in pain"
+        - if @patient.new_record?
+          %span.formw= f.text_field :time_in_pain
+          %span.formexample Example: "1 month" or "2 years"
+        - else
+          %span.formw= f.text_field :pain_length_in_days
   
     / End Visit Details
 
@@ -99,9 +102,9 @@
         %span.formw
           - if @patient.new_record?
             Hours: 
-            = text_field_tag 'patient_travel_time_hours', @patient_travel_time_hours, :size => 2
+            = f.text_field :travel_time_hours, :size => 2
             Minutes:
-            = text_field_tag 'patient_travel_time_minutes', @patient_travel_time_minutes, :size => 2
+            = f.text_field :travel_time_minutes, :size => 2
           - else
             = f.text_field :travel_time
       %div.row

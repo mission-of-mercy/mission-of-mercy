@@ -46,27 +46,6 @@ class PatientsController < ApplicationController
     
     add_procedures_to_patient(@patient)
     
-    # Calculate Travel Time
-    if params[:patient_travel_time_minutes].length > 0 && params[:patient_travel_time_minutes].match(/^\d+$/) != nil
-      @patient.travel_time = params[:patient_travel_time_minutes].to_i
-    end
-    
-    if params[:patient_travel_time_hours].length > 0 && params[:patient_travel_time_hours].match(/^\d+$/) != nil
-      @patient.travel_time = 0 if @patient.travel_time.nil?
-      @patient.travel_time += params[:patient_travel_time_hours].to_i * 60
-    end
-    
-    if params[:patient][:pain_length_in_days].split(" ").length == 2
-      number, type = params[:patient][:pain_length_in_days].split(" ")
-      type = type.pluralize.downcase
-    
-      if type[/\Adays\Z|\Aweeks\Z|\Amonths\Z|\Ayears\Z/]
-        @patient.pain_length_in_days = (number.to_f.send(type) / 1.day)
-      else
-        @patient.errors.add(:pain_length_in_days, "isn't valid. Try using days only.")
-      end
-    end
-    
     if params[:patient][:date_of_birth] && !params[:patient][:date_of_birth][/\A\d\d?\/\d\d?\/\d{4}\z/]
       @patient.errors.add(:date_of_birth, "is in the wrong format. Use mm/dd/yyyy")
     end
