@@ -7,13 +7,13 @@ class PatientTest < ActiveSupport::TestCase
     
     patient.save
     
-    assert patient.errors.select {|field, message| field == "state" }.any?
+    assert patient.errors.invalid?(:state)
     
     patient.state = "CT"
     
     patient.save
     
-    assert patient.errors.select {|field, message| field == "state" }.empty?
+    assert !patient.errors.invalid?(:state)
   end
   
   test "shouldn't allow more than 10 digits in zip field" do
@@ -21,14 +21,56 @@ class PatientTest < ActiveSupport::TestCase
     
     patient.save
     
-    assert patient.errors.select {|field, message| field == "zip" }.any?,
+    assert patient.errors.invalid?(:zip),
            "More than 10 digits allowed for zip"
     
     patient.zip = "1234567890"
     
     patient.save
     
-    assert patient.errors.select {|field, message| field == "zip" }.empty?,
+    assert !patient.errors.invalid?(:zip),
            "10 or less digits are causing validation problems"
+  end
+  
+  test "time in pain should set the pain_length_in_days attribute" do
+    valid_formats = {
+      "12d"      => 12,
+      "1.5m"     => 45,
+      "45 weeks" => 315,
+      "1 year"   => 365
+    }
+    
+    patient = TestHelper.valid_patient
+    
+    valid_formats.each do |format, result|
+      patient.time_in_pain = format
+
+      assert patient.save
+
+      assert_equal result, patient.pain_length_in_days
+    end
+  end
+  
+  test "invalid time in pain values should cause validation errors" do
+    invalid_formats = ["12dd", "1.5.1m", "45 weeks months", "about a year", 
+      "aaa", "123z"]
+    
+    patient = TestHelper.valid_patient
+    
+    invalid_formats.each do |format|
+      patient.time_in_pain = format
+      
+      patient.save
+
+      assert patient.errors.invalid?(:time_in_pain), "#{format} is not a valid format"
+    end
+  end
+  
+  test "time in pain validations should only be run if time in pain is set" do
+    patient = TestHelper.valid_patient
+    
+    assert patient.save
+    
+    assert !patient.errors.invalid?(:time_in_pain)
   end
 end
