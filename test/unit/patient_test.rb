@@ -73,4 +73,24 @@ class PatientTest < ActiveSupport::TestCase
     
     assert !patient.errors.invalid?(:time_in_pain)
   end
+  
+  test "travel time is calculated" do
+    patient = TestHelper.valid_patient
+    
+    patient.travel_time_minutes = 15
+    
+    assert_equal 15, patient.travel_time_minutes
+    
+    assert_equal 15, patient.travel_time
+    
+    assert patient.save
+    
+    patient.travel_time_hours = "1"
+    
+    assert_equal 1, patient.travel_time_hours
+    
+    assert_equal 75, patient.travel_time
+    
+    assert patient.save    
+  end
 end

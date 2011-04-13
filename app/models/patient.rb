@@ -42,8 +42,8 @@ class Patient < ActiveRecord::Base
                         :city, :state
   validates_format_of   :phone, :message     => "must be a valid telephone number.",
                                 :with        => /^[\(\)0-9\- \+\.]{10,20}$/,
-                                :allow_blank => true
-                                
+                                :allow_blank => true                              
+  validates_numericality_of :travel_time, :greater_than => 0
   attr_accessor :race_other
   attr_reader   :time_in_pain
   
@@ -109,6 +109,26 @@ class Patient < ActiveRecord::Base
     f.close
   end
   
+  def travel_time_hours=(hours)
+    @travel_time_hours = hours.to_i
+    
+    calculate_travel_time
+  end
+  
+  def travel_time_hours
+    @travel_time_hours ||= 0
+  end
+  
+  def travel_time_minutes=(minutes)
+    @travel_time_minutes = minutes.to_i
+    
+    calculate_travel_time
+  end
+  
+  def travel_time_minutes
+    @travel_time_minutes ||= 0
+  end
+  
   def time_in_pain=(time_in_pain)
     @time_in_pain = time_in_pain
     time_in_pain  = time_in_pain.split(" ")
@@ -171,7 +191,7 @@ class Patient < ActiveRecord::Base
   def time_in_pain_format
     error_message = "must be in a valid format (1 day, 1w, 5 years)"
     
-    if @time_in_pain
+    unless @time_in_pain.blank?
       time_in_pain = @time_in_pain.split(" ")
 
       if time_in_pain.length == 2
@@ -196,5 +216,9 @@ class Patient < ActiveRecord::Base
     end
     
     return true
+  end
+  
+  def calculate_travel_time
+    self.travel_time = travel_time_minutes + (travel_time_hours * 60)
   end
 end
