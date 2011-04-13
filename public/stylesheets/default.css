@@ -146,14 +146,16 @@ div.header{
   vertical-align: middle;
 }
 
+#footer, #footer-version{
+  margin: 5px 20px;
+  padding-bottom: 5px;
+}
+
 #footer{
 	color: #e6e6e6;
 	font-size: 10px;
 	float: right;
 	text-align: right;
-	margin-right: 20px;
-	margin-left: 20px;
-	margin-top: 5px;
 }
 
 #controls form{
@@ -177,12 +179,8 @@ div.header{
 }
 
 #footer-version{
-	margin-right: 20px;
-	margin-left: 20px;
 	color: #e6e6e6;
 	font-size: 10px;
-	width: 600px;
-	margin-top: 5px;
 }
 
 a.general, a.warning, a.back{
