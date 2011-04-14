@@ -11,7 +11,15 @@
   
   %div.input
   
-    %h4 Prescriptions
+    %h4 
+      Prescriptions
+      = help_icon("prescriptions")
+
+    = help_box("prescriptions") do
+      Check each prescription the patient was prescribed. This information is 
+      located in the patient's chart at the bottom right of the back page.
+      
+      = image_tag "help/prescriptions.png", :class => "help-example "
   
     %p
       - f.fields_for :patient_prescriptions, @prescriptions do |s|

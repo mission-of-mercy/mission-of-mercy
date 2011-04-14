@@ -1,9 +1,15 @@
 - f.fields_for :survey do |s|  
   %h4 
-    Medical Information (From 
-    %u Health History
-    on Patient's Chart)
-
+    Medical Information
+    = help_icon("tobacco")
+    
+  = help_box("tobacco") do
+        
+    Check "Tobacco use" if the patient's chart indicates they use tobacco. This 
+    information is located towards the bottom of the front page.
+    
+    = image_tag "help/tobacco_use.png", :class => "help-example" 
+    
   %p
     = s.check_box :tobacco_use
     = s.label :tobacco_use
