@@ -12,12 +12,10 @@ class Admin::UsersController < ApplicationController
  
   def create
     @user = User.new(params[:user])
-    success = @user && @user.save
-    if success && @user.errors.empty?
-      redirect_to users_path
+    if @user.save
       flash[:notice] = "User Created"
+      redirect_to admin_users_path
     else
-      flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
       render :action => 'new'
     end
   end
