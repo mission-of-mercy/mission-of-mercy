@@ -16,7 +16,8 @@ class Patient < ActiveRecord::Base
   has_many :pre_meds,              :through    => :patient_pre_meds
   has_many :flows,                 :class_name => "PatientFlow",
                                    :dependent  => :delete_all
-  has_many :previous_mom_clinics,  :class_name => "PatientPreviousMomClinic"
+  has_many :previous_mom_clinics,  :class_name => "PatientPreviousMomClinic",
+                                   :dependent  => :delete_all
   
   has_one :prosthetic,             :dependent  => :delete
   
