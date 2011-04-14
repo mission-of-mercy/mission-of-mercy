@@ -6,7 +6,7 @@ class ClinicSummaryTest < ActiveSupport::TestCase
   setup do
     @report_date = TestHelper.clinic_date
     @patients    = Patient.all(:order => "created_at",
-                    :conditions => ["Date(created_at) = ?", @report_date])
+                    :conditions => ["created_at::Date = ?", @report_date])
   end
 
   test "should report on the specified date and span" do
@@ -22,7 +22,7 @@ class ClinicSummaryTest < ActiveSupport::TestCase
     assert_equal @patients.count, report.patient_count
   end
   
-  test "should report on patients for the selected time span only" do
+  test "should report on patients for the selected time span only" do    
     Reports::ClinicSummary::TIME_SPANS.each_with_index do |span, index|
       if index == 0 # All
         expected_patient_count = @patients.count 

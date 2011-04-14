@@ -1,6 +1,6 @@
 # Patients on the first clinic day
 <% Reports::ClinicSummary::TIME_SPANS.reject {|t| t == "All" }.each do |t| %>
-<% created_at = TestHelper.clinic_date(t) %>
+<% created_at = TestHelper.clinic_date(t).utc %>
 patient_<%= created_at.strftime("%m_%d_%Y_%H") %>:
   first_name: <%= Faker::Name.first_name %>
   last_name: <%= Faker::Name.last_name %>
@@ -23,7 +23,7 @@ patient_<%= created_at.strftime("%m_%d_%Y_%H") %>:
 
 # Patients on the second clinic day
 <% 15.times do |i| %>
-<% created_at = TestHelper.clinic_date + 1.day + 6.hours + i.hours %>
+<% created_at = (TestHelper.clinic_date + 1.day + 6.hours + i.hours).utc %>
 patient_<%= created_at.strftime("%m_%d_%Y_%H") %>:
   first_name: <%= Faker::Name.first_name %>
   last_name: <%= Faker::Name.last_name %>
