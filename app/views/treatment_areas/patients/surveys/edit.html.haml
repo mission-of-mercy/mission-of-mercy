@@ -12,7 +12,15 @@
   
   = render :partial => "surveys/check_out", :locals => {:f => f}
   
-  %h4 Pre-Medication
+  %h4 
+    Pre-Medication
+    = help_icon("pre-med")
+  
+  = help_box("pre-med") do
+    Check each pre-medication the patient was given. This information is located
+    at the bottom of the front page.
+
+    = image_tag "help/pre-meds.png", :class => "help-example"
   
   %p
     - f.fields_for :patient_pre_meds do |p|

@@ -10,6 +10,18 @@ MoM.init = function(auth_token){
   MoM.AuthToken = auth_token;
   
   MoM.Support.startPolling();
+  
+  jQuery(function($) {
+    $('img.help').click(function(e){
+      helpBox = $(e.target).attr('data-help');
+    
+      $('#' + helpBox).slideToggle();
+    });
+    
+    $('div.help-box img.close').click(function(e){
+      $(e.target).parent().slideUp();
+    });
+  });
 }
 
 MoM.disableEnterKey = function(){
