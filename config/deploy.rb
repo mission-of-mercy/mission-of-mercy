@@ -1,5 +1,7 @@
 set :application, "mom"
-set :repository,  "git@github.com:CTMissionofMercy/mission_of_mercy.git"
+
+set :repository, "git@github.com:CTMissionofMercy/mission_of_mercy.git"
+set :deploy_via, :remote_cache
 
 set :scm, :git
 set :user, "deploy"
@@ -9,9 +11,13 @@ set :use_sudo, false
 
 server "mom.integrityss.com", :app, :web, :db, :primary => true
 
+task :local do
+  set :repository, %w(/Users/byron/code/personal/ct_mission_of_mercy)
+  set :deploy_via, :copy
+  set :copy_exclude, [".git"]
+end
+
 namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{File.join(current_path,'tmp','restart.txt')}"
   end
