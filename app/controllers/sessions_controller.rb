@@ -33,6 +33,6 @@ class SessionsController < ApplicationController
   private
   
   def find_users
-    @users = User.all.map {|u| [u.name, u.login]}
+    @users = User.all(:order => "login").map {|u| [u.name, u.login]}
   end
 end
