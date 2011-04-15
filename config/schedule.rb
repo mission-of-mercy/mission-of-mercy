@@ -1,6 +1,3 @@
-require "futils"
-require "yaml"
-
 set :output, "#{Dir.pwd}/log/cron_log.log"
 
 every 15.minutes do
