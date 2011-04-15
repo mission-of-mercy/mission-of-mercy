@@ -1,4 +1,4 @@
-set :output, "#{Dir.pwd}/log/cron_log.log"
+set :output, "/home/deploy/mom/current/log/cron_log.log"
 
 every 15.minutes do
   db_config  = YAML.load_file("#{Dir.pwd}/config/database.yml")["production"]
