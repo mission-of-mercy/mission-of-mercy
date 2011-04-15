@@ -75,7 +75,7 @@ module TreatmentAreasHelper
   
   def continue_button(area, patient, options={})
     if area == TreatmentArea.radiology
-      path = treatment_area_patients_path(area)
+      path = patients_path
     else
       path = treatment_area_patient_prescriptions_path(area, patient)
     end
