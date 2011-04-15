@@ -297,10 +297,6 @@ form.new_patient  label, form.new_patient_procedure label{
 	white-space: pre;
 } 	
 
-form.new_patient div.input-left, form.edit_patient div.input-left {
-  max-width: 355px;
-}
-
 div.input-left{
 	float: left;
 	border-right: 1px solid gray;
