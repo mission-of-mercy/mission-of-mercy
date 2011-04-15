@@ -16,7 +16,7 @@ module CssGraphs
     width ||= 600
     height ||= 200
     
-    colors = %w(#efba29 #efe708 #5a7dd6 #73a25a purple teal)
+    colors = %w(#efba29 #efe708 #5a7dd6 #73a25a purple teal #2C58D7)
     floor_cutoff = 24 # Pixels beneath which values will not be drawn in graph
     data_max = data.inject(0) { |memo, array| array.last > memo ? array.last : memo }
 
