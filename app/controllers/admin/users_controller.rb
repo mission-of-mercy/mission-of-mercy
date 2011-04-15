@@ -30,7 +30,7 @@ class Admin::UsersController < ApplicationController
     respond_to do |format|
       if @user.update_attributes(params[:user])
           flash[:notice] = 'User was successfully updated.'
-          format.html { redirect_to(users_path) }
+          format.html { redirect_to(admin_users_path) }
       end
     end
   end
