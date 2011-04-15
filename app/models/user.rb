@@ -51,8 +51,12 @@ class User < ActiveRecord::Base
   end
   
   def name
-    if user_type == UserType::XRAY && login[/\Axray/]
-      "X-Ray Station #{x_ray_station_id}"
+    if user_type == UserType::XRAY
+      if login[/\Axray/]
+        "X-Ray Station #{x_ray_station_id}"
+      else
+        "#{login.humanize} (#{x_ray_station_id})"
+      end
     else
       login.humanize
     end
