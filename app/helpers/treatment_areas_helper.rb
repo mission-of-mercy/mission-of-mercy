@@ -144,7 +144,7 @@ module TreatmentAreasHelper
   def button_to_next_checkout(area,patient)
     if area == TreatmentArea.radiology
       text = "Finish"
-      path = treatment_area_patients_path(area)
+      path = patients_path
     else
       text = "Next"
       path = treatment_area_patient_prescriptions_path(area, patient)
