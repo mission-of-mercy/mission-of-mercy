@@ -66,6 +66,9 @@ module TreatmentAreasHelper
       css  = "back"
     else
       path = treatment_area_patients_path(area)
+      if current_user.user_type == UserType::XRAY
+        path = patients_path
+      end
       text = "Cancel"
       css  = "warning"
     end
