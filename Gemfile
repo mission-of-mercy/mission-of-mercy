@@ -10,6 +10,8 @@ gem 'scriptaculous_slider', :git =>
   "git://github.com/seamusabshere/scriptaculous_slider.git"
 gem "fastercsv"
 
+gem "whenever", '~> 0.6.7', :require => false
+
 group :test do
   gem "contest"
   gem "test-unit"

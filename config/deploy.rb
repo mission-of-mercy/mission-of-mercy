@@ -1,3 +1,5 @@
+require "whenever/capistrano"
+
 set :application, "mom"
 
 set :repository, "git@github.com:CTMissionofMercy/mission_of_mercy.git"
