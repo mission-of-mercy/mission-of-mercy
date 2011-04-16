@@ -51,7 +51,7 @@ class Patient < ActiveRecord::Base
   # Old Pagination Method ...
   def self.search(chart_number, name, page)
     conditions = if chart_number.blank? && !name.blank?
-      ['first_name like ? or last_name like ?', "%#{name}%","%#{name}%"]
+      ['first_name ILIKE ? or last_name ILIKE ?', "%#{name}%","%#{name}%"]
     elsif !chart_number.blank?
       ["id = ?", chart_number]
     else
