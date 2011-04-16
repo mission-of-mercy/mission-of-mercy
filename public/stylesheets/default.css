@@ -359,6 +359,10 @@ div.row span.label {
   text-align: right;
 }
 
+#patient_date_of_birth {
+  width: 150px;
+}
+
 div.row .spinner{
   float: right;
   margin-top: 3px;
