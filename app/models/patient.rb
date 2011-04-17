@@ -52,7 +52,7 @@ class Patient < ActiveRecord::Base
   def self.search(chart_number, name, page)
     conditions = if chart_number.blank? && !name.blank?
       ['first_name ILIKE ? or last_name ILIKE ?', "%#{name}%","%#{name}%"]
-    elsif !chart_number.blank?
+    elsif !chart_number.blank? && chart_number.to_i != 0
       ["id = ?", chart_number]
     else
       ["id = ?", -1]
