@@ -92,9 +92,11 @@ class PatientsController < ApplicationController
   def export_to_dexis_file
     @patient = Patient.find(params[:patient_id])
     
-    path = [app_config["dexis_path"],"passtodex",current_user.x_ray_station_id.to_s,".dat"].join()
-    
-    @patient.export_to_dexis(path)
+    app_config["dexis_paths"].each do |root_path|
+      path = [root_path, "passtodex", current_user.x_ray_station_id, ".dat"].join()
+      
+      @patient.export_to_dexis(path)
+    end
     
     respond_to do |format|
       format.html do 
