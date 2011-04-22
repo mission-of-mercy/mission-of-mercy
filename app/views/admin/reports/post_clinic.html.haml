@@ -30,18 +30,20 @@
 %table
   %thead
     %tr
-      %th Town Name
+      %th City
+      %th State
       %th Total Patients
       %th Percent
   %tbody
     - @report.towns.each do |town|
       %tr
-        %td{:id => "town_#{town['city']}"}= town["city"]
+        %td= town["city"]
+        %td= town["state"]
         %td= town["patient_count"]
         %td= town["percent"]
   %tfoot
     %tr
-      %td{:colspan => 3}= "Total towns represented: #{@report.town_count}"
+      %td{:colspan => 4}= "Total towns represented: #{@report.town_count}"
       
 %h2
   %u Ethnicities

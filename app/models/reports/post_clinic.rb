@@ -27,7 +27,8 @@ class Reports::PostClinic
               GROUP BY patient_flows.patient_id, patient_flows.treatment_area_id
             ) AS pf LEFT JOIN treatment_areas  
             ON treatment_areas.id = pf.treatment_area_id
-            GROUP BY treatment_areas.name}
+            GROUP BY treatment_areas.name
+            ORDER BY treatment_areas.name}
     
     @areas = Patient.connection.select_all(sql)
     
@@ -40,9 +41,10 @@ class Reports::PostClinic
   end
   
   def load_towns
-    sql = %{SELECT patients.city, count(*) as patient_count
+    sql = %{SELECT patients.city, patients.state, count(*) as patient_count
             FROM patients
-            GROUP BY patients.city}
+            GROUP BY patients.city, patients.state
+            ORDER BY patients.state, patients.city}
     
     @towns = Patient.connection.select_all(sql)
     
@@ -88,6 +90,11 @@ class Reports::PostClinic
     @ages << {"age" => "ages 65 and over",
               "patient_count" => count}
     
+    count = patients.reject {|p| !(p.age <= 18) }.length
+
+    @ages << {"age" => "18 and under",
+              "patient_count" => count}
+              
     calculate_percentage @ages
   end
   
