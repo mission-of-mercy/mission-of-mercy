@@ -1,12 +1,13 @@
 class Reports::PostClinic
   attr_reader :town_count, :towns, :ethnicities, :ages, :travel_times, 
               :avg_travel_time, :genders, :previous_moms, :insurances,
-              :tobacco_use, :ratings, :areas, :time_in_pain
+              :tobacco_use, :ratings, :areas, :time_in_pain, :counties
   
   def initialize
     @patient_count = Patient.count
     
     load_towns
+    load_counties
     load_ethnicities
     load_ages
     load_travel_times
@@ -52,6 +53,17 @@ class Reports::PostClinic
     calculate_percentage @towns
     
     @town_count = @towns.length
+  end
+  
+  def load_counties
+    sql = %{SELECT patient_zipcodes.county, patients.state, count(*) as patient_count
+            FROM patients LEFT JOIN patient_zipcodes ON patients.zip = patient_zipcodes.zip
+            GROUP BY patients.state, patient_zipcodes.county
+            ORDER BY patients.state, patient_zipcodes.county }
+    
+    @counties = Patient.connection.select_all(sql)
+    
+    calculate_percentage @counties
   end
   
   def load_ethnicities

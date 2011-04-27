@@ -46,6 +46,24 @@
       %td{:colspan => 4}= "Total towns represented: #{@report.town_count}"
       
 %h2
+  %u Counties
+
+%table
+  %thead
+    %tr
+      %th County
+      %th State
+      %th Total Patients
+      %th Percent
+  %tbody
+    - @report.counties.each do |county|
+      %tr
+        %td= county["county"]
+        %td= county["state"]
+        %td= county["patient_count"]
+        %td= county["percent"]
+    
+%h2
   %u Ethnicities
 
 %table
