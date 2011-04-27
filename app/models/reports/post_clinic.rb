@@ -81,7 +81,8 @@ class Reports::PostClinic
   def load_ethnicities
     sql = %{SELECT patients.race, count(*) as patient_count
             FROM patients
-            GROUP BY patients.race}
+            GROUP BY patients.race
+            ORDER BY patients.race}
     
     @ethnicities = Patient.connection.select_all(sql)
     
@@ -169,7 +170,8 @@ class Reports::PostClinic
   def load_previous_moms
     sql = %{SELECT location, clinic_year, count(*) as patient_count
             FROM patient_previous_mom_clinics
-            GROUP BY location, clinic_year}
+            GROUP BY location, clinic_year
+            ORDER BY clinic_year}
             
     @previous_moms = Patient.connection.select_all(sql)
     
@@ -263,6 +265,7 @@ class Reports::PostClinic
   def load_told_needed_more_dental_treatment
     sql = %{SELECT told_needed_more_dental_treatment, count(*) AS patient_count
             FROM surveys
+            WHERE told_needed_more_dental_treatment <> NULL
             GROUP BY told_needed_more_dental_treatment}
             
     @told_needed_more_dental_treatment = Patient.connection.select_all(sql)
