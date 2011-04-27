@@ -90,24 +90,34 @@ class Reports::PostClinic
     patients = Survey.all(:select => "age")
     @ages = []
     
-    count = patients.reject {|p| !(p.age <= 13) }.length
+    count = patients.reject {|p| !(p.age <= 10) }.length
     
-    @ages << {"age" => "between 1 and 13",
+    @ages << {"age" => "between 1 and 10",
               "patient_count" => count}
               
-    count = patients.reject {|p| !(p.age >= 14 and p.age <= 20) }.length
+    count = patients.reject {|p| !(p.age > 10 and p.age <= 20) }.length
 
-    @ages << {"age" => "between 14 and 20",
+    @ages << {"age" => "between 11 and 20",
               "patient_count" => count}        
               
-    count = patients.reject {|p| !(p.age >= 21 and p.age <= 64) }.length
+    count = patients.reject {|p| !(p.age > 20 and p.age <= 30) }.length
 
-    @ages << {"age" => "between 21 and 64",
+    @ages << {"age" => "between 21 and 30",
               "patient_count" => count}  
               
-    count = patients.reject {|p| !(p.age >= 65) }.length
+    count = patients.reject {|p| !(p.age > 30 and p.age <= 40) }.length
 
-    @ages << {"age" => "ages 65 and over",
+    @ages << {"age" => "between 31 and 40",
+              "patient_count" => count}
+    
+    count = patients.reject {|p| !(p.age > 50 and p.age <= 60) }.length
+
+    @ages << {"age" => "between 51 and 60",
+              "patient_count" => count}
+              
+    count = patients.reject {|p| !(p.age > 60) }.length
+
+    @ages << {"age" => "over 60",
               "patient_count" => count}
     
     count = patients.reject {|p| !(p.age <= 18) }.length
