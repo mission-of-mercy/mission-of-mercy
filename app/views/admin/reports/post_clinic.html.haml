@@ -165,6 +165,39 @@
         %td= ins["insurance"]
         %td= ins["patient_count"]
         %td= ins["percent"]
+
+
+%h2
+  %u Heard about clinic
+
+%table
+  %thead
+    %tr
+      %th 
+      %th Total Patients
+      %th Percent
+  %tbody
+    - @report.heard_about_clinic.each do |heard|
+      %tr
+        %td= heard["heard_about_clinic"]
+        %td= heard["patient_count"]
+        %td= heard["percent"]
+
+%h2
+  %u Told more dental treatment needed
+
+%table
+  %thead
+    %tr
+      %th 
+      %th Total Patients
+      %th Percent
+  %tbody
+    - @report.told_needed_more_dental_treatment.each do |needed|
+      %tr
+        %td= needed["told_needed_more_dental_treatment"] == "t" ? "Yes" : "No"
+        %td= needed["patient_count"]
+        %td= needed["percent"]
         
 %h2
   %u Tobacco Use

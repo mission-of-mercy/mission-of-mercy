@@ -2,7 +2,8 @@ class Reports::PostClinic
   attr_reader :town_count, :towns, :ethnicities, :ages, :travel_times, 
               :avg_travel_time, :genders, :previous_moms, :insurances,
               :tobacco_use, :ratings, :areas, :time_in_pain, :counties,
-              :distinct_previous_moms
+              :distinct_previous_moms, :heard_about_clinic,
+              :told_needed_more_dental_treatment
   
   def initialize
     @patient_count = Patient.count
@@ -19,6 +20,8 @@ class Reports::PostClinic
     load_ratings
     load_treatment_areas
     load_time_in_pain
+    load_heard_about_clinic
+    load_told_needed_more_dental_treatment
   end
   
   def load_treatment_areas
@@ -196,6 +199,27 @@ class Reports::PostClinic
             WHERE pain = 't'}
             
     @time_in_pain = Patient.connection.select_all(sql).first
+  end
+  
+  def load_heard_about_clinic
+    sql = %{SELECT heard_about_clinic, count(*) AS patient_count
+            FROM surveys
+            GROUP BY heard_about_clinic
+            ORDER BY heard_about_clinic}
+            
+    @heard_about_clinic = Patient.connection.select_all(sql)
+    
+    calculate_percentage @heard_about_clinic
+  end
+  
+  def load_told_needed_more_dental_treatment
+    sql = %{SELECT told_needed_more_dental_treatment, count(*) AS patient_count
+            FROM surveys
+            GROUP BY told_needed_more_dental_treatment}
+            
+    @told_needed_more_dental_treatment = Patient.connection.select_all(sql)
+    
+    calculate_percentage @told_needed_more_dental_treatment
   end
   
   private
