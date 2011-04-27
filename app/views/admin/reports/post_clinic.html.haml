@@ -94,6 +94,16 @@
         %td= age["age"]
         %td= age["patient_count"]
         %td= age["percent"]
+  %tfoot
+    %tr
+      %td Youngest Patient
+      %td{:colspan => 2}= @report.ages.min
+    %tr
+      %td Oldest Patient
+      %td{:colspan => 2}= @report.ages.max
+    %tr
+      %td Average Age
+      %td{:colspan => 2}= @report.ages.avg
         
 %h2
   %u Travel Times
@@ -230,6 +240,15 @@
         %td= use["tobacco"] == "t" ? "Yes" : "No"
         %td= use["patient_count"]
         %td= use["percent"]
+  %thead
+    %tr
+      %th{:colspan => 3} By Age
+  %tbody
+    - @report.tobacco_use_ages.each do |age|
+      %tr
+        %td= age["range"]
+        %td= age["patient_count"]
+        %td= age["percent"]
         
 %h2
   %u Rating of Services

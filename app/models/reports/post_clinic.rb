@@ -3,7 +3,7 @@ class Reports::PostClinic
               :avg_travel_time, :genders, :previous_moms, :insurances,
               :tobacco_use, :ratings, :areas, :time_in_pain, :counties,
               :distinct_previous_moms, :heard_about_clinic,
-              :told_needed_more_dental_treatment, 
+              :told_needed_more_dental_treatment, :tobacco_use_ages,
               :has_place_to_be_seen_for_dental_care
   
   def initialize
@@ -24,6 +24,7 @@ class Reports::PostClinic
     load_heard_about_clinic
     load_told_needed_more_dental_treatment
     load_has_place_to_be_seen_for_dental_care
+    load_tobacco_use_ages
   end
   
   def load_treatment_areas
@@ -86,7 +87,7 @@ class Reports::PostClinic
   # TODO: Make this suck less
   #
   def load_ages    
-    patients = Patient.all
+    patients = Survey.all(:select => "age")
     @ages = []
     
     count = patients.reject {|p| !(p.age <= 13) }.length
@@ -115,6 +116,12 @@ class Reports::PostClinic
               "patient_count" => count}
               
     calculate_percentage @ages
+    
+    @ages.extend(AggregateMeta)
+    
+    @ages.min = Survey.minimum(:age)
+    @ages.max = Survey.maximum(:age)
+    @ages.avg = sprintf('%.2f', Survey.average(:age) || 0)
   end
   
   def load_travel_times
@@ -180,6 +187,29 @@ class Reports::PostClinic
     @tobacco_use = Patient.connection.select_all(sql)
 
     calculate_percentage @tobacco_use
+  end
+  
+  def load_tobacco_use_ages
+    sql = %{SELECT age, count(*) as patient_count
+            FROM surveys
+            WHERE tobacco_use = 't'
+            GROUP BY age}
+            
+    ages = Patient.connection.select_all(sql)
+    
+    @tobacco_use_ages = Hash.new(0)
+    
+    ages.each do |age|
+      group = age["age"].to_i == 0 % 10 ? age["age"].to_i : age["age"].to_i - (age["age"].to_i % 10)
+      
+      @tobacco_use_ages[group] += age["patient_count"].to_i
+    end
+    
+    @tobacco_use_ages = @tobacco_use_ages.to_a.map do |age, count|
+      {"age" => age, "patient_count" => count, "range" => "#{age} - #{age + 10}"}
+    end.sort {|x,y| x["age"] <=> y["age"] }
+    
+    calculate_percentage @tobacco_use_ages
   end
   
   def load_ratings
@@ -262,4 +292,8 @@ class Reports::PostClinic
     @insurances << {"insurance" => insurance_name.humanize, 
                     "patient_count" => count}
   end
+end
+
+module AggregateMeta
+  attr_accessor :min, :max, :avg
 end
