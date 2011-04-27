@@ -40,11 +40,17 @@ class Reports::PostClinic
     
     @areas = Patient.connection.select_all(sql)
     
-    total_patients = calculate_percentage @areas
+    calculate_percentage @areas
+    
+    sql = %{SELECT count(distinct patients.id)
+            FROM   patients LEFT JOIN patient_flows ON patients.id = patient_flows.patient_id
+            WHERE  patient_flows.area_id = #{ClinicArea::CHECKOUT}}
+    
+    remaining = @patient_count - Patient.connection.select_value(sql).to_i
     
     @areas << { "name" => "Never checked out", 
-                "patient_count" => @patient_count - total_patients,
-                "percent" => sprintf('%.2f', ((@patient_count - total_patients) / @patient_count.to_f) * 100.0)
+                "patient_count" => remaining,
+                "percent" => sprintf('%.2f', (remaining / @patient_count.to_f) * 100.0)
               }
   end
   
