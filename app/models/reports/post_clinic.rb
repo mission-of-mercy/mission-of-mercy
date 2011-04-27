@@ -29,14 +29,12 @@ class Reports::PostClinic
   end
   
   def load_treatment_areas
-    sql = %{SELECT treatment_areas.name, count(*) as patient_count
-            FROM 
-            ( SELECT patient_flows.patient_id, patient_flows.treatment_area_id 
-              FROM patient_flows 
-              WHERE (patient_flows.area_id = 4 OR patient_flows.area_id = 2) AND treatment_area_id IS NOT NULL 
-              GROUP BY patient_flows.patient_id, patient_flows.treatment_area_id
-            ) AS pf LEFT JOIN treatment_areas  
-            ON treatment_areas.id = pf.treatment_area_id
+    sql = %{SELECT treatment_areas.name, 
+                   count(distinct patient_procedures.patient_id) as patient_count 
+            FROM treatment_areas LEFT JOIN procedure_treatment_area_mappings 
+                 ON treatment_areas.id = procedure_treatment_area_mappings.treatment_area_id 
+                 LEFT JOIN patient_procedures 
+                 ON procedure_treatment_area_mappings.procedure_id = patient_procedures.procedure_id 
             GROUP BY treatment_areas.name
             ORDER BY treatment_areas.name}
     
