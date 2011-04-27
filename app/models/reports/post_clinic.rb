@@ -3,7 +3,8 @@ class Reports::PostClinic
               :avg_travel_time, :genders, :previous_moms, :insurances,
               :tobacco_use, :ratings, :areas, :time_in_pain, :counties,
               :distinct_previous_moms, :heard_about_clinic,
-              :told_needed_more_dental_treatment
+              :told_needed_more_dental_treatment, 
+              :has_place_to_be_seen_for_dental_care
   
   def initialize
     @patient_count = Patient.count
@@ -22,6 +23,7 @@ class Reports::PostClinic
     load_time_in_pain
     load_heard_about_clinic
     load_told_needed_more_dental_treatment
+    load_has_place_to_be_seen_for_dental_care
   end
   
   def load_treatment_areas
@@ -170,9 +172,10 @@ class Reports::PostClinic
   end
   
   def load_tobacco_use
-    sql = %{SELECT tobacco_use, count(*) as patient_count
+    sql = %{SELECT COALESCE(tobacco_use, 'f') AS tobacco, 
+                   count(*) as patient_count
             FROM surveys
-            GROUP BY tobacco_use}
+            GROUP BY COALESCE(tobacco_use, 'f')}
             
     @tobacco_use = Patient.connection.select_all(sql)
 
@@ -220,6 +223,17 @@ class Reports::PostClinic
     @told_needed_more_dental_treatment = Patient.connection.select_all(sql)
     
     calculate_percentage @told_needed_more_dental_treatment
+  end
+  
+  def load_has_place_to_be_seen_for_dental_care
+    sql = %{SELECT COALESCE(has_place_to_be_seen_for_dental_care, 'f') AS has_place, 
+                   count(*) AS patient_count
+            FROM surveys
+            GROUP BY COALESCE(has_place_to_be_seen_for_dental_care, 'f')}
+            
+    @has_place_to_be_seen_for_dental_care = Patient.connection.select_all(sql)
+    
+    calculate_percentage @has_place_to_be_seen_for_dental_care
   end
   
   private

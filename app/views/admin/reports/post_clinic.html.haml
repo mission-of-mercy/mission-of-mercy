@@ -200,18 +200,34 @@
         %td= needed["percent"]
         
 %h2
+  %u Patient has a place to be seen for dental care
+
+%table
+  %thead
+    %tr
+      %th 
+      %th Total Patients
+      %th Percent
+  %tbody
+    - @report.has_place_to_be_seen_for_dental_care.each do |record|
+      %tr
+        %td= record["has_place"] == "t" ? "Yes" : "No"
+        %td= record["patient_count"]
+        %td= record["percent"]
+        
+%h2
   %u Tobacco Use
 
 %table
   %thead
     %tr
-      %th Use
+      %th
       %th Total Patients
       %th Percentage
   %tbody
     - @report.tobacco_use.each do |use|
       %tr
-        %td= use["tobacco_use"]
+        %td= use["tobacco"] == "t" ? "Yes" : "No"
         %td= use["patient_count"]
         %td= use["percent"]
         
