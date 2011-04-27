@@ -265,7 +265,7 @@ class Reports::PostClinic
   def load_told_needed_more_dental_treatment
     sql = %{SELECT told_needed_more_dental_treatment, count(*) AS patient_count
             FROM surveys
-            WHERE told_needed_more_dental_treatment <> NULL
+            WHERE told_needed_more_dental_treatment IS NOT NULL
             GROUP BY told_needed_more_dental_treatment}
             
     @told_needed_more_dental_treatment = Patient.connection.select_all(sql)
