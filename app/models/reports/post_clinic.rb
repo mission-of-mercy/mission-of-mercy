@@ -1,7 +1,7 @@
 class Reports::PostClinic
   attr_reader :town_count, :towns, :ethnicities, :ages, :travel_times, 
               :avg_travel_time, :genders, :previous_moms, :insurances,
-              :tobacco_use, :ratings, :areas
+              :tobacco_use, :ratings, :areas, :time_in_pain
   
   def initialize
     @patient_count = Patient.count
@@ -16,6 +16,7 @@ class Reports::PostClinic
     load_tobacco_use
     load_ratings
     load_treatment_areas
+    load_time_in_pain
   end
   
   def load_treatment_areas
@@ -112,7 +113,7 @@ class Reports::PostClinic
     @avg_travel_time = Patient.connection.select_value(sql)
     
     @avg_travel_time ||= 0
-    @avg_travel_time = @avg_travel_time.to_f
+    @avg_travel_time = sprintf('%.2f', @avg_travel_time.to_f)
   end
   
   def load_genders
@@ -166,6 +167,17 @@ class Reports::PostClinic
     @ratings = Patient.connection.select_all(sql)
 
     calculate_percentage @ratings
+  end
+  
+  def load_time_in_pain
+    sql = %{SELECT max(pain_length_in_days) AS max_length, 
+                   min(pain_length_in_days) AS min_length,
+                   avg(pain_length_in_days) AS avg_length,
+                   count(*) AS patient_count
+            FROM surveys
+            WHERE pain = 't'}
+            
+    @time_in_pain = Patient.connection.select_all(sql).first
   end
   
   private

@@ -175,3 +175,23 @@
         %td= rate["rating_of_services"]
         %td= rate["patient_count"]
         %td= rate["percent"]
+%p
+
+%table
+  %thead
+    %tr
+      %th{:colspan => 2}
+        Days in pain
+  %tbody
+    %tr
+      %th Average
+      %td= sprintf('%.2f', @report.time_in_pain["avg_length"] || 0)
+    %tr
+      %th Minimum
+      %td= @report.time_in_pain["min_length"]
+    %tr
+      %th Maximum
+      %td= @report.time_in_pain["max_length"]
+    %tr
+      %th Patients
+      %td= @report.time_in_pain["patient_count"]
