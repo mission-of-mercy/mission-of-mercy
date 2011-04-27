@@ -145,7 +145,11 @@
         %td= mom["clinic_year"]
         %td= mom["patient_count"]
         %td= mom["percent"]
-        
+  %tfoot
+    %tr
+      %td{:colspan => 4}
+        Total unique patients:
+        = @report.distinct_previous_moms
 %h2
   %u Insurance
 

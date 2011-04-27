@@ -1,7 +1,8 @@
 class Reports::PostClinic
   attr_reader :town_count, :towns, :ethnicities, :ages, :travel_times, 
               :avg_travel_time, :genders, :previous_moms, :insurances,
-              :tobacco_use, :ratings, :areas, :time_in_pain, :counties
+              :tobacco_use, :ratings, :areas, :time_in_pain, :counties,
+              :distinct_previous_moms
   
   def initialize
     @patient_count = Patient.count
@@ -141,11 +142,16 @@ class Reports::PostClinic
   def load_previous_moms
     sql = %{SELECT location, clinic_year, count(*) as patient_count
             FROM patient_previous_mom_clinics
-            GROUP BY patient_previous_mom_clinics.location, patient_previous_mom_clinics.clinic_year}
+            GROUP BY location, clinic_year}
             
     @previous_moms = Patient.connection.select_all(sql)
     
     calculate_percentage @previous_moms
+    
+    distinct_sql = %{SELECT count(distinct patient_id)
+                     FROM patient_previous_mom_clinics }
+
+    @distinct_previous_moms = Patient.connection.select_value(distinct_sql)
   end
   
   def load_insurance
