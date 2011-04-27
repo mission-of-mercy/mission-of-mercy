@@ -192,7 +192,22 @@
         %td= heard["heard_about_clinic"]
         %td= heard["patient_count"]
         %td= heard["percent"]
+        
+%h2
+  %u Last dental visit
 
+%table
+  %thead
+    %tr
+      %th
+      %th Total Patients
+      %th Percentage
+  %tbody
+    - @report.last_dental_visit.each do |visit|
+      %tr
+        %td= visit["last_dental_visit"]
+        %td= visit["patient_count"]
+        %td= visit["percent"]
 %h2
   %u Told more dental treatment needed
 
@@ -242,7 +257,8 @@
         %td= use["percent"]
   %thead
     %tr
-      %th{:colspan => 3} By Age
+      %th Age Group
+      %th{:colspan => 2}
   %tbody
     - @report.tobacco_use_ages.each do |age|
       %tr

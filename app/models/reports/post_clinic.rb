@@ -4,7 +4,7 @@ class Reports::PostClinic
               :tobacco_use, :ratings, :areas, :time_in_pain, :counties,
               :distinct_previous_moms, :heard_about_clinic,
               :told_needed_more_dental_treatment, :tobacco_use_ages,
-              :has_place_to_be_seen_for_dental_care
+              :has_place_to_be_seen_for_dental_care, :last_dental_visit
   
   def initialize
     @patient_count = Patient.count
@@ -25,6 +25,7 @@ class Reports::PostClinic
     load_told_needed_more_dental_treatment
     load_has_place_to_be_seen_for_dental_care
     load_tobacco_use_ages
+    load_last_dental_visit
   end
   
   def load_treatment_areas
@@ -216,7 +217,7 @@ class Reports::PostClinic
     end
     
     @tobacco_use_ages = @tobacco_use_ages.to_a.map do |age, count|
-      {"age" => age, "patient_count" => count, "range" => "#{age} - #{age + 10}"}
+      {"age" => age, "patient_count" => count, "range" => "between #{age} and #{age + 10}"}
     end.sort {|x,y| x["age"] <=> y["age"] }
     
     calculate_percentage @tobacco_use_ages
@@ -274,6 +275,16 @@ class Reports::PostClinic
     @has_place_to_be_seen_for_dental_care = Patient.connection.select_all(sql)
     
     calculate_percentage @has_place_to_be_seen_for_dental_care
+  end
+  
+  def load_last_dental_visit
+    sql = %{SELECT last_dental_visit, count(*) AS patient_count
+            FROM patients
+            GROUP BY last_dental_visit}
+            
+    @last_dental_visit = Patient.connection.select_all(sql)
+    
+    calculate_percentage @last_dental_visit
   end
   
   private
