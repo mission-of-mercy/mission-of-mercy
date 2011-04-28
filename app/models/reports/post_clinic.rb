@@ -34,11 +34,39 @@ class Reports::PostClinic
             FROM treatment_areas LEFT JOIN procedure_treatment_area_mappings 
                  ON treatment_areas.id = procedure_treatment_area_mappings.treatment_area_id 
                  LEFT JOIN patient_procedures 
-                 ON procedure_treatment_area_mappings.procedure_id = patient_procedures.procedure_id 
+                 ON procedure_treatment_area_mappings.procedure_id = patient_procedures.procedure_id
+            WHERE    treatment_areas.amalgam_composite_procedures = 'f' OR 
+                     treatment_areas.amalgam_composite_procedures IS NULL
             GROUP BY treatment_areas.name
             ORDER BY treatment_areas.name}
     
     @areas = Patient.connection.select_all(sql)
+    
+    TreatmentArea.all(
+      :conditions => {:amalgam_composite_procedures => true}).each do |treatment_area|
+      
+      amalgam_composite_sql = %{
+        SELECT DISTINCT patient_procedures.patient_id
+        FROM   patient_procedures LEFT JOIN procedures ON 
+               patient_procedures.procedure_id = procedures.id
+        WHERE  procedures.procedure_type = 'Amalgam' OR 
+               procedures.procedure_type LIKE '%Composite' }
+               
+      amalgam_composite_patients = Patient.connection.select_values(amalgam_composite_sql)
+      
+      other_procedures_sql = %{
+        SELECT DISTINCT patient_procedures.patient_id
+        FROM procedure_treatment_area_mappings LEFT JOIN patient_procedures 
+             ON procedure_treatment_area_mappings.procedure_id = patient_procedures.procedure_id
+        WHERE procedure_treatment_area_mappings.treatment_area_id = #{treatment_area.id}}
+        
+      other_procedures_patients = Patient.connection.select_values(other_procedures_sql)
+      
+      @areas << {
+        "name"          => treatment_area.name,
+        "patient_count" => (amalgam_composite_patients + other_procedures_patients).uniq.length
+      }
+    end
     
     calculate_percentage @areas
     
