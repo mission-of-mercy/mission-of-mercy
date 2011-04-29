@@ -8,18 +8,21 @@ class Patient < ActiveRecord::Base
   before_save  :normalize_data
   after_create :check_in_flow
   
-  has_many :patient_prescriptions, :dependent  => :delete_all
-  has_many :patient_procedures,    :dependent  => :delete_all
-  has_many :patient_pre_meds,      :dependent  => :delete_all
-  has_many :procedures,            :through    => :patient_procedures
-  has_many :prescriptions,         :through    => :patient_prescriptions
-  has_many :pre_meds,              :through    => :patient_pre_meds
-  has_many :flows,                 :class_name => "PatientFlow",
-                                   :dependent  => :delete_all
-  has_many :previous_mom_clinics,  :class_name => "PatientPreviousMomClinic",
-                                   :dependent  => :delete_all
-  
-  has_one :prosthetic,             :dependent  => :delete
+  has_many :patient_prescriptions, :dependent   => :delete_all
+  has_many :patient_procedures,    :dependent   => :delete_all
+  has_many :patient_pre_meds,      :dependent   => :delete_all
+  has_many :procedures,            :through     => :patient_procedures
+  has_many :prescriptions,         :through     => :patient_prescriptions
+  has_many :pre_meds,              :through     => :patient_pre_meds
+  has_many :flows,                 :class_name  => "PatientFlow",
+                                   :dependent   => :delete_all
+  has_many :previous_mom_clinics,  :class_name  => "PatientPreviousMomClinic",
+                                   :dependent   => :delete_all
+                                                
+  has_one :prosthetic,             :dependent   => :delete
+  has_one :zipcode,                :class_name  => "Patient::Zipcode", 
+                                   :foreign_key => "zip", 
+                                   :primary_key => "zip"
   
   belongs_to :survey,              :dependent  => :delete
   belongs_to :assigned_treatment_area, :class_name => "TreatmentArea"

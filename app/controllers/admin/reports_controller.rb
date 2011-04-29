@@ -34,7 +34,7 @@ class Admin::ReportsController < ApplicationController
     csv_string = FasterCSV.generate do |csv|
       csv << ["Chart #", "First Name", "Last Name", "Date of Birth", "Phone",
               "Street Address", "City", "State", "Zip", "Sex"]
-      patients.each do |patient|
+      patients.sort_by(&:id).each do |patient|
         csv << [ patient.id, patient.first_name, patient.last_name, 
                  patient.date_of_birth, patient.phone, patient.street,
                  patient.city, patient.state, patient.zip, patient.sex ]
