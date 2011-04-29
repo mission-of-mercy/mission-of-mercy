@@ -2,7 +2,7 @@ class Reports::PostClinic
   attr_reader :town_count, :towns, :ethnicities, :ages, :travel_times, 
               :avg_travel_time, :genders, :previous_moms, :insurances,
               :tobacco_use, :ratings, :areas, :time_in_pain, :counties,
-              :distinct_previous_moms, :heard_about_clinic,
+              :distinct_previous_moms, :heard_about_clinic, :patient_count,
               :told_needed_more_dental_treatment, :tobacco_use_ages,
               :has_place_to_be_seen_for_dental_care, :last_dental_visit
   

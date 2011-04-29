@@ -35,4 +35,9 @@ module ReportsHelper
   def county_filename(county)
     [county["state"], county["county"]].compact.join("_")
   end
+  
+  def percent_of_clinic(number_of_patients, total)
+    percent = (number_of_patients.to_f / total.to_f) * 100.0
+    sprintf('%.2f', percent)
+  end
 end

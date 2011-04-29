@@ -162,9 +162,10 @@
         %td= mom["percent"]
   %tfoot
     %tr
-      %td{:colspan => 4}
-        Total unique patients:
-        = @report.distinct_previous_moms
+      %td{:colspan => 2} Total unique patients:
+      %td= @report.distinct_previous_moms
+      %td= percent_of_clinic @report.distinct_previous_moms, @report.patient_count
+      
 %h2
   %u Insurance
 
