@@ -44,10 +44,21 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :users
     admin.resources :support_requests, :collection => {:destroy_all => :delete}
     
-    admin.reports '/reports', :controller => 'reports', :action => 'index'
-    admin.clinic_summary_report '/reports/clinic_summary/', :controller => 'reports', :action => 'clinic_summary'
-    admin.treatment_area_distribution_report '/reports/treatment_area_distribution', :controller => 'reports', :action => 'treatment_area_distribution'
-    admin.post_clinic_report '/reports/post_clinic', :controller => 'reports', :action => 'post_clinic'
+    admin.reports                            '/reports', 
+                                             :controller => 'reports', 
+                                             :action     => 'index'
+    admin.clinic_summary_report              '/reports/clinic_summary/',
+                                             :controller => 'reports', 
+                                             :action     => 'clinic_summary'
+    admin.treatment_area_distribution_report '/reports/treatment_area_distribution', 
+                                             :controller => 'reports', 
+                                             :action     => 'treatment_area_distribution'
+    admin.post_clinic_report                 '/reports/post_clinic', 
+                                             :controller => 'reports', 
+                                             :action     => 'post_clinic'
+    admin.export_patients                    '/reports/export_patients', 
+                                             :controller => 'reports', 
+                                             :action     => 'export_patients'
   end
   
 end
