@@ -137,7 +137,8 @@ class Reports::ClinicSummary
     sql = date_time_where(sql, "patient_procedures")
       
     sql += %{ GROUP BY procedures.code, procedures.description, procedures.cost
-      HAVING count(patient_procedures.procedure_id) > 0;}
+      HAVING count(patient_procedures.procedure_id) > 0
+      ORDER BY procedures.code;}
       
     @procedures = Procedure.connection.select_all(
                       Procedure.send(:sanitize_sql_array, 
@@ -165,7 +166,8 @@ class Reports::ClinicSummary
       
     sql += %{ GROUP BY prescriptions.name, prescriptions.strength, 
     prescriptions.quantity, prescriptions.dosage, prescriptions.cost
-      HAVING count(patient_prescriptions.prescription_id) > 0;}
+      HAVING count(patient_prescriptions.prescription_id) > 0
+      ORDER BY prescriptions.name;}
       
     @prescriptions = Prescription.connection.select_all(
                       Prescription.send(:sanitize_sql_array, 
@@ -192,7 +194,8 @@ class Reports::ClinicSummary
     sql = date_time_where(sql, "patient_pre_meds")
       
     sql += %{ GROUP BY pre_meds.description, pre_meds.cost
-      HAVING count(patient_pre_meds.pre_med_id) > 0;}
+      HAVING count(patient_pre_meds.pre_med_id) > 0
+      ORDER BY pre_meds.description;}
       
     @pre_meds = PreMed.connection.select_all(
                       PreMed.send(:sanitize_sql_array, 
