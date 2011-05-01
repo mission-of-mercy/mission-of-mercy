@@ -128,7 +128,7 @@ class Reports::ClinicSummary
   def collect_procedures    
     sql = %{SELECT 
       procedures.code, 
-      procedures.description, 
+      initcap(procedures.description) AS description,
       count(patient_procedures.procedure_id) AS procedure_count, 
       count(patient_procedures.procedure_id) * procedures.cost AS procedure_value
       FROM procedures 
@@ -136,7 +136,7 @@ class Reports::ClinicSummary
       
     sql = date_time_where(sql, "patient_procedures")
       
-    sql += %{ GROUP BY procedures.code, procedures.description, procedures.cost
+    sql += %{ GROUP BY procedures.code, initcap(procedures.description), procedures.cost
       HAVING count(patient_procedures.procedure_id) > 0
       ORDER BY procedures.code;}
       

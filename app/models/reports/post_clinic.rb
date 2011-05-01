@@ -83,10 +83,10 @@ class Reports::PostClinic
   end
   
   def load_towns
-    sql = %{SELECT patients.city, patients.state, count(*) as patient_count
+    sql = %{SELECT initcap(patients.city) AS city, patients.state, count(*) as patient_count
             FROM patients
-            GROUP BY patients.city, patients.state
-            ORDER BY patients.state, patients.city}
+            GROUP BY initcap(patients.city), patients.state
+            ORDER BY patients.state, initcap(patients.city)}
     
     @towns = Patient.connection.select_all(sql)
     
