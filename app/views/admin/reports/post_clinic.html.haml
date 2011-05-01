@@ -80,7 +80,7 @@
   %tbody
     - @report.ethnicities.each do |ethnic|
       %tr
-        %td= ethnic["race"]
+        %td= ethnic["race"].titleize
         %td= ethnic["patient_count"]
         %td= ethnic["percent"]
         
