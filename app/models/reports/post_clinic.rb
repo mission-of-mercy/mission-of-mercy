@@ -107,10 +107,10 @@ class Reports::PostClinic
   end
   
   def load_ethnicities
-    sql = %{SELECT upper(patients.race) as race, count(*) as patient_count
+    sql = %{SELECT initcap(patients.race) as race, count(*) as patient_count
             FROM patients
-            GROUP BY upper(patients.race)
-            ORDER BY upper(patients.race)}
+            GROUP BY initcap(patients.race)
+            ORDER BY initcap(patients.race)}
     
     @ethnicities = Patient.connection.select_all(sql)
     
