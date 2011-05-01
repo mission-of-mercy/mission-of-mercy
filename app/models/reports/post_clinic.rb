@@ -96,7 +96,7 @@ class Reports::PostClinic
   end
   
   def load_counties
-    sql = %{SELECT patient_zipcodes.county, patients.state, count(*) as patient_count
+    sql = %{SELECT patient_zipcodes.county, patients.state, count(distinct patients.id) as patient_count
             FROM patients LEFT JOIN patient_zipcodes ON patients.zip = patient_zipcodes.zip
             GROUP BY patients.state, patient_zipcodes.county
             ORDER BY patients.state, patient_zipcodes.county }

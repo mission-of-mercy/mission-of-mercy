@@ -16,7 +16,7 @@ module ReportsHelper
   end
   
   def patients_by_county(county)
-    conditions = "patient_zipcodes.state = ? AND patient_zipcodes.county "
+    conditions = "patients.state = ? AND patient_zipcodes.county "
     
     if county["county"].blank?
       county["county"] = nil
