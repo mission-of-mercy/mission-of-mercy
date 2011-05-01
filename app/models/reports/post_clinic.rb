@@ -107,10 +107,10 @@ class Reports::PostClinic
   end
   
   def load_ethnicities
-    sql = %{SELECT initcap(patients.race) as race, count(*) as patient_count
+    sql = %{SELECT trim(initcap(patients.race)) as race, count(*) as patient_count
             FROM patients
-            GROUP BY initcap(patients.race)
-            ORDER BY initcap(patients.race)}
+            GROUP BY trim(initcap(patients.race))
+            ORDER BY trim(initcap(patients.race))}
     
     @ethnicities = Patient.connection.select_all(sql)
     
@@ -280,10 +280,11 @@ class Reports::PostClinic
   end
   
   def load_heard_about_clinic
-    sql = %{SELECT heard_about_clinic, count(*) AS patient_count
+    sql = %{SELECT trim(initcap(heard_about_clinic)) AS heard_about_clinic, 
+                   count(*) AS patient_count
             FROM surveys
-            GROUP BY heard_about_clinic
-            ORDER BY heard_about_clinic}
+            GROUP BY trim(initcap(heard_about_clinic))
+            ORDER BY trim(initcap(heard_about_clinic))}
             
     @heard_about_clinic = Patient.connection.select_all(sql)
     
