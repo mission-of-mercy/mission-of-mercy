@@ -153,10 +153,7 @@ class Reports::ClinicSummary
   
   def collect_prescriptions
     sql = %{SELECT 
-      prescriptions.name, 
-      prescriptions.strength, 
-      prescriptions.quantity, 
-      prescriptions.dosage, 
+      prescriptions.id, prescriptions.name,
       count(patient_prescriptions.prescription_id) AS prescription_count, 
       count(patient_prescriptions.prescription_id) * prescriptions.cost AS prescription_value
       FROM prescriptions 
@@ -164,8 +161,7 @@ class Reports::ClinicSummary
       
     sql = date_time_where(sql, "patient_prescriptions")
       
-    sql += %{ GROUP BY prescriptions.name, prescriptions.strength, 
-    prescriptions.quantity, prescriptions.dosage, prescriptions.cost
+    sql += %{ GROUP BY prescriptions.id, prescriptions.name, prescriptions.cost
       HAVING count(patient_prescriptions.prescription_id) > 0
       ORDER BY prescriptions.name;}
       
@@ -175,8 +171,8 @@ class Reports::ClinicSummary
                              :report_time => @span_time}]))
                              
     @prescriptions.map! do |p|
-      desc = [p["name"], p["strength"], ["#", p["quantity"]," -"].join(), p["dosage"]].join(' ')
-      [desc,p["prescription_count"].to_i,p["prescription_value"].to_f ]
+      desc = Prescription.find(p["id"]).full_description
+      [desc, p["prescription_count"].to_i, p["prescription_value"].to_f ]
     end
     
     @prescription_count = @prescriptions.sum {|p| p[1] }
