@@ -7,22 +7,48 @@
   %h1 Post Clinic Report
   #controls
     = button_to 'Print', 'javascript:window.print();'
-  
+
 %h2
-  %u Treatment Areas
-  
+  %u Age Breakdown
+
 %table
   %thead
     %tr
-      %th Area
+      %th Age Group
       %th Total Patients
-      %th Percent
+      %th Percentage
   %tbody
-    - @report.areas.each do |area|
+    - @report.ages.each do |age|
       %tr
-        %td= area["name"]
-        %td= area["patient_count"]
-        %td= area["percent"]
+        %td= age["age"]
+        %td= age["patient_count"]
+        %td= age["percent"]
+  %tfoot
+    %tr
+      %td Youngest Patient
+      %td{:colspan => 2}= @report.ages.min
+    %tr
+      %td Oldest Patient
+      %td{:colspan => 2}= @report.ages.max
+    %tr
+      %td Average Age
+      %td{:colspan => 2}= @report.ages.avg
+
+%h2
+  %u Genders
+
+%table
+  %thead
+    %tr
+      %th Gender
+      %th Total Patients
+      %th Percentage
+  %tbody
+    - @report.genders.each do |gend|
+      %tr
+        %td= gend["sex"]
+        %td= gend["patient_count"]
+        %td= gend["percent"]
     
 %h2
   %u Towns
@@ -85,32 +111,6 @@
         %td= ethnic["percent"]
         
 %h2
-  %u Age Breakdown
-
-%table
-  %thead
-    %tr
-      %th Age Group
-      %th Total Patients
-      %th Percentage
-  %tbody
-    - @report.ages.each do |age|
-      %tr
-        %td= age["age"]
-        %td= age["patient_count"]
-        %td= age["percent"]
-  %tfoot
-    %tr
-      %td Youngest Patient
-      %td{:colspan => 2}= @report.ages.min
-    %tr
-      %td Oldest Patient
-      %td{:colspan => 2}= @report.ages.max
-    %tr
-      %td Average Age
-      %td{:colspan => 2}= @report.ages.avg
-        
-%h2
   %u Travel Times
 
 %table
@@ -126,22 +126,6 @@
   %tfoot
     %tr
       %td{:colspan => 2}= "Average travel time: #{@report.avg_travel_time}"
-  
-%h2
-  %u Genders
-
-%table
-  %thead
-    %tr
-      %th Gender
-      %th Total Patients
-      %th Percentage
-  %tbody
-    - @report.genders.each do |gend|
-      %tr
-        %td= gend["sex"]
-        %td= gend["patient_count"]
-        %td= gend["percent"]
         
 %h2
   %u Previous Mom Clinics
