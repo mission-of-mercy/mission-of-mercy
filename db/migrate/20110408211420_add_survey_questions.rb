@@ -9,8 +9,6 @@ class AddSurveyQuestions < ActiveRecord::Migration
     add_column :surveys, :insurance_from_job,                   :boolean 
     add_column :surveys, :medicaid_or_chp_plus,                 :boolean 
     add_column :surveys, :self_purchase_insurance,              :boolean 
-    add_column :surveys, :husky_insurance,                      :boolean 
-    add_column :surveys, :saga_insurance,                       :boolean 
     add_column :surveys, :other_insurance,                      :string  
     add_column :surveys, :tobacco_use,                          :boolean 
   end
@@ -25,8 +23,6 @@ class AddSurveyQuestions < ActiveRecord::Migration
     remove_column :surveys, :insurance_from_job
     remove_column :surveys, :medicaid_or_chp_plus
     remove_column :surveys, :self_purchase_insurance
-    remove_column :surveys, :husky_insurance
-    remove_column :surveys, :saga_insurance
     remove_column :surveys, :other_insurance   
     remove_column :surveys, :tobacco_use
   end
