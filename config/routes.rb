@@ -14,12 +14,10 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :treatment_areas, :collection => {:change => :post} do |area|
     area.resources :patients, 
-                   :controller => "treatment_areas/patients",
-                     :collection => { :prosthetics_export => :get } do |patient|
+                   :controller => "treatment_areas/patients" do |patient|
       patient.resources :prescriptions, :controller => "treatment_areas/patients/prescriptions"
       patient.resources :procedures,    :controller => "treatment_areas/patients/procedures"
       patient.resource  :survey,        :controller => "treatment_areas/patients/surveys"
-      patient.resources :prosthetics,   :controller => "treatment_areas/patients/prosthetics"
     end
   end
   

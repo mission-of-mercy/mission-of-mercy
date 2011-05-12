@@ -14,19 +14,6 @@ class TreatmentAreas::PatientsController < ApplicationController
       format.html
     end
   end
-  
-  def prosthetics_export
-    csv_string = FasterCSV.generate do |csv|
-      Prosthetic.all.each do |prosthetic|
-        csv << [ prosthetic.patient.id, prosthetic.patient.full_name, 
-                 prosthetic.patient.phone, prosthetic.pickup, prosthetic.notes]
-      end
-    end
-    
-    send_data csv_string,
-              :type => 'text/csv; charset=iso-8859-1; header=present',
-              :disposition => "attachment; filename=prosthetics.csv"
-  end
 
   private
   

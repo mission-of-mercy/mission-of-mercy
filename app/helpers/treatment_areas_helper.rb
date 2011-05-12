@@ -83,10 +83,6 @@ module TreatmentAreasHelper
       path = treatment_area_patient_prescriptions_path(area, patient)
     end
     
-    if area.prosthetics?
-      path = treatment_area_patient_prosthetics_path(area, patient)
-    end
-    
     text = options[:text] || "Continue"
     
     button_to text, path, :method => :get

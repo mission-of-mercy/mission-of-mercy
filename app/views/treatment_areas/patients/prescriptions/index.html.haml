@@ -30,7 +30,4 @@
 
   %div.input-bottom{:class => "check_out"}
     = f.submit "Finish"
-    - if @treatment_area.prosthetics?
-      = link_to "Back", treatment_area_patient_prosthetics_path, :class => "back"
-    - else
-      = link_to "Back", treatment_area_patient_procedures_path, :class => "back"
+    = link_to "Back", treatment_area_patient_procedures_path, :class => "back"
