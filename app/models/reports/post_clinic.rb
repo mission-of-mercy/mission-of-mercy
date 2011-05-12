@@ -144,6 +144,11 @@ class Reports::PostClinic
     @ages << {"age" => "between 31 and 40",
               "patient_count" => count}
     
+    count = patients.reject {|p| !(p.age > 40 and p.age <= 50) }.length
+
+    @ages << {"age" => "between 41 and 50",
+              "patient_count" => count}
+    
     count = patients.reject {|p| !(p.age > 50 and p.age <= 60) }.length
 
     @ages << {"age" => "between 51 and 60",
