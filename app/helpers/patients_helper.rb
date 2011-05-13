@@ -5,14 +5,6 @@ module PatientsHelper
     link_to "#{name} Checkout", checkout_path(area,patient), :title => "Right click to change treatment area"
   end
   
-  def checkout_path(area,patient)
-    if patient.survey
-      return treatment_area_pre_checkout_path(:treatment_area_id => area, :patient_id => patient.id)
-    else
-      return treatment_area_checkout_path(:treatment_area_id => area, :patient_id => patient.id)
-    end
-  end
-  
   def show_previous_mom(patient)
     "display:none;" unless patient.attended_previous_mom_event
   end

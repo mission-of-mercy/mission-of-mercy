@@ -66,6 +66,9 @@ module TreatmentAreasHelper
       css  = "back"
     else
       path = treatment_area_patients_path(area)
+      if current_user.user_type == UserType::XRAY
+        path = patients_path
+      end
       text = "Cancel"
       css  = "warning"
     end
@@ -75,7 +78,7 @@ module TreatmentAreasHelper
   
   def continue_button(area, patient, options={})
     if area == TreatmentArea.radiology
-      path = treatment_area_patients_path(area)
+      path = patients_path
     else
       path = treatment_area_patient_prescriptions_path(area, patient)
     end
@@ -140,7 +143,7 @@ module TreatmentAreasHelper
   def button_to_next_checkout(area,patient)
     if area == TreatmentArea.radiology
       text = "Finish"
-      path = treatment_area_patients_path(area)
+      path = patients_path
     else
       text = "Next"
       path = treatment_area_patient_prescriptions_path(area, patient)

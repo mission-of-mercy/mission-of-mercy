@@ -14,4 +14,30 @@ module ReportsHelper
     
     ["All", *existing_dates]
   end
+  
+  def patients_by_county(county)
+    conditions = "patients.state = ? AND patient_zipcodes.county "
+    
+    if county["county"].blank?
+      county["county"] = nil
+      conditions << "IS ?"
+    else
+      conditions << "= ?"
+    end
+    
+    Patient.all(
+      :select => "patients.id", 
+      :include => [:zipcode],
+      :conditions => [conditions, county["state"], county["county"]]
+    ).map(&:id)
+  end
+  
+  def county_filename(county)
+    [county["state"], county["county"]].compact.join("_")
+  end
+  
+  def percent_of_clinic(number_of_patients, total)
+    percent = (number_of_patients.to_f / total.to_f) * 100.0
+    sprintf('%.2f', percent)
+  end
 end

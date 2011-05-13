@@ -28,6 +28,26 @@ class Admin::ReportsController < ApplicationController
     @report = Reports::PostClinic.new
   end
   
+  def export_patients
+    patients = Patient.find(params[:patients])
+    
+    csv_string = FasterCSV.generate do |csv|
+      csv << ["Chart #", "First Name", "Last Name", "Date of Birth", "Phone",
+              "Street Address", "City", "State", "Zip", "Sex"]
+      patients.sort_by(&:id).each do |patient|
+        csv << [ patient.id, patient.first_name, patient.last_name, 
+                 patient.date_of_birth, patient.phone, patient.street,
+                 patient.city, patient.state, patient.zip, patient.sex ]
+      end
+    end
+    
+    send_data csv_string,
+              :type => 'text/csv; charset=iso-8859-1; header=present',
+              :disposition => "attachment; filename=#{params[:filename] || 'patients'}.csv"
+  end
+  
+  private
+  
   def set_current_tab
     @current_tab = "reports"
   end

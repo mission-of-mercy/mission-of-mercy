@@ -1,5 +1,5 @@
 class PatientsController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :except => [ :lookup_zip, :lookup_city ]
   before_filter :admin_required, :only => [ :edit, :destroy ]
   before_filter :date_input
   before_filter :find_last_patient, :only => [:new]
@@ -25,10 +25,14 @@ class PatientsController < ApplicationController
   def new
     @patient = Patient.new
     @patient.survey = Survey.new
+    
+    build_previous_mom_clinics
   end
 
   def edit
     @patient = Patient.find(params[:id])
+    
+    build_previous_mom_clinics
   end
   
   def print
@@ -52,6 +56,8 @@ class PatientsController < ApplicationController
     else
       @patient_travel_time_minutes = params[:patient_travel_time_minutes]
       @patient_travel_time_hours   = params[:patient_travel_time_hours]
+      
+      build_previous_mom_clinics
     
       render :action => "new"
     end
@@ -86,9 +92,11 @@ class PatientsController < ApplicationController
   def export_to_dexis_file
     @patient = Patient.find(params[:patient_id])
     
-    path = [app_config["dexis_path"],"passtodex",current_user.x_ray_station_id.to_s,".dat"].join()
-    
-    @patient.export_to_dexis(path)
+    app_config["dexis_paths"].each do |root_path|
+      path = [root_path, "passtodex", current_user.x_ray_station_id, ".dat"].join()
+      
+      @patient.export_to_dexis(path)
+    end
     
     respond_to do |format|
       format.html do 
@@ -107,8 +115,9 @@ class PatientsController < ApplicationController
     end
     
     @patient = Patient.find(params[:id])
-    
+      
     if @patient.update_attributes(params[:patient])
+      
       if params[:commit] == "Next"
         redirect_to(:controller => 'exit_surveys', :action => 'new', :id => @patient.id)
       else
@@ -136,6 +145,19 @@ class PatientsController < ApplicationController
     procedures.each do |p|
       patient.patient_procedures.build(:procedure_id => p.id)
     end
+  end
+  
+  def build_previous_mom_clinics
+    PatientPreviousMomClinic::CLINICS.each do |y, l|
+      existing = @patient.previous_mom_clinics.detect do |c|
+          c.clinic_year == y && c.location == l
+        end
+        
+      unless existing
+        @patient.previous_mom_clinics.build(:clinic_year => y, :location => l)
+      end
+    end
+  
   end
   
   def date_input

@@ -23,7 +23,7 @@
 %p
   = f.label :x_ray_station_id
   %br
-  = f.select :x_ray_station_id, (1..6).map {|v| [v,v] }
+  = f.select :x_ray_station_id, (1..15).map {|v| [v,v] }
 
 %p
   = submit_tag 'Save'

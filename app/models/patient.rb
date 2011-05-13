@@ -8,23 +8,27 @@ class Patient < ActiveRecord::Base
   before_save  :normalize_data
   after_create :check_in_flow
   
-  has_many :patient_prescriptions, :dependent  => :delete_all
-  has_many :patient_procedures,    :dependent  => :delete_all
-  has_many :patient_pre_meds,      :dependent  => :delete_all
-  has_many :procedures,            :through    => :patient_procedures
-  has_many :prescriptions,         :through    => :patient_prescriptions
-  has_many :pre_meds,              :through    => :patient_pre_meds
-  has_many :flows,                 :class_name => "PatientFlow",
-                                   :dependent  => :delete_all
-  has_many :previous_mom_clinics,  :class_name => "PatientPreviousMomClinic",
-                                   :dependent  => :delete_all
-  
-  has_one :prosthetic,             :dependent  => :delete
+  has_many :patient_prescriptions, :dependent   => :delete_all
+  has_many :patient_procedures,    :dependent   => :delete_all
+  has_many :patient_pre_meds,      :dependent   => :delete_all
+  has_many :procedures,            :through     => :patient_procedures
+  has_many :prescriptions,         :through     => :patient_prescriptions
+  has_many :pre_meds,              :through     => :patient_pre_meds
+  has_many :flows,                 :class_name  => "PatientFlow",
+                                   :dependent   => :delete_all
+  has_many :previous_mom_clinics,  :class_name  => "PatientPreviousMomClinic",
+                                   :dependent   => :delete_all
+                                                
+  has_one :prosthetic,             :dependent   => :delete
+  has_one :zipcode,                :class_name  => "Patient::Zipcode", 
+                                   :foreign_key => "zip", 
+                                   :primary_key => "zip"
   
   belongs_to :survey,              :dependent  => :delete
   belongs_to :assigned_treatment_area, :class_name => "TreatmentArea"
   
   accepts_nested_attributes_for :survey
+  accepts_nested_attributes_for :prosthetic
   accepts_nested_attributes_for :patient_prescriptions, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['prescribed'] == "0" }
     
@@ -33,7 +37,6 @@ class Patient < ActiveRecord::Base
                                 
   accepts_nested_attributes_for :previous_mom_clinics, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['attended'] == "0" }
-                                                              
   
   validate              :time_in_pain_format
   validates_length_of   :zip,   :maximum => 10, :allow_blank => true
@@ -51,8 +54,8 @@ class Patient < ActiveRecord::Base
   # Old Pagination Method ...
   def self.search(chart_number, name, page)
     conditions = if chart_number.blank? && !name.blank?
-      ['first_name like ? or last_name like ?', "%#{name}%","%#{name}%"]
-    elsif !chart_number.blank?
+      ['first_name ILIKE ? or last_name ILIKE ?', "%#{name}%","%#{name}%"]
+    elsif !chart_number.blank? && chart_number.to_i != 0
       ["id = ?", chart_number]
     else
       ["id = ?", -1]

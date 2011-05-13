@@ -1,2 +1,40 @@
-- f.fields_for :survey do |s|    
-  Survey Questions Here
+- f.fields_for :survey do |s|
+  %p
+    = s.label :heard_about_clinic, 'How did you hear about the clinic?', :class => 'question'
+    %br
+    .input
+      = s.select :heard_about_clinic,  
+        ['Friend or Family','Media: Newspaper/TV/Radio','Flyer or Poster','Other'], 
+        {:include_blank => true}
+   
+   
+      = observe_field :patient_survey_attributes_heard_about_clinic,
+        :on => :changed, :function => "showOtherHeardAbout()"
+    
+    #heard_about_other_div{:style=>'display:none;'}
+      %p
+        = s.label :heard_about_other, "Please describe:"
+        = s.text_field :heard_about_other
+  %p
+    Do you have a place to go for dental care after today?
+    %br
+    .input
+      = s.radio_button :has_place_to_be_seen_for_dental_care, true
+      = s.label :has_place_to_be_seen_for_dental_care, "Yes", :value => true
+      = s.radio_button :has_place_to_be_seen_for_dental_care, false
+      = s.label :has_place_to_be_seen_for_dental_care, "No", :value => false
+  %p
+    What, if any, insurance do you have to pay for dental care? (Check all that apply)<br/>
+    .input
+      = s.check_box :no_insurance
+      = s.label :no_insurance
+      %br
+      = s.check_box :insurance_from_job
+      = s.label :insurance_from_job
+      %br
+      = s.check_box :medicaid_or_chp_plus
+      = s.label :medicaid_or_chp_plus, "Medicaid or CHP+"
+      %br
+      = s.check_box :self_purchase_insurance
+      = s.label :self_purchase_insurance, "Insurance purchased by myself"
+      %br

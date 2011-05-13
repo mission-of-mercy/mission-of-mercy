@@ -1,2 +1,3 @@
 state: CT
-dexis_path: /path/to/samba/share
+dexis_paths:
+  - /path/to/samba/share

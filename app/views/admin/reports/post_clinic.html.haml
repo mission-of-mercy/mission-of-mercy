@@ -7,22 +7,48 @@
   %h1 Post Clinic Report
   #controls
     = button_to 'Print', 'javascript:window.print();'
-  
+
 %h2
-  %u Treatment Areas
-  
+  %u Age Breakdown
+
 %table
   %thead
     %tr
-      %th Area
+      %th Age Group
       %th Total Patients
-      %th Percent
+      %th Percentage
   %tbody
-    - @report.areas.each do |area|
+    - @report.ages.each do |age|
       %tr
-        %td= area["name"]
-        %td= area["patient_count"]
-        %td= area["percent"]
+        %td= age["age"]
+        %td= age["patient_count"]
+        %td= age["percent"]
+  %tfoot
+    %tr
+      %td Youngest Patient
+      %td{:colspan => 2}= @report.ages.min
+    %tr
+      %td Oldest Patient
+      %td{:colspan => 2}= @report.ages.max
+    %tr
+      %td Average Age
+      %td{:colspan => 2}= @report.ages.avg
+
+%h2
+  %u Genders
+
+%table
+  %thead
+    %tr
+      %th Gender
+      %th Total Patients
+      %th Percentage
+  %tbody
+    - @report.genders.each do |gend|
+      %tr
+        %td= gend["sex"]
+        %td= gend["patient_count"]
+        %td= gend["percent"]
     
 %h2
   %u Towns
@@ -30,19 +56,44 @@
 %table
   %thead
     %tr
-      %th Town Name
+      %th City
+      %th State
       %th Total Patients
       %th Percent
   %tbody
     - @report.towns.each do |town|
       %tr
-        %td{:id => "town_#{town['city']}"}= town["city"]
+        %td= town["city"]
+        %td= town["state"]
         %td= town["patient_count"]
         %td= town["percent"]
   %tfoot
     %tr
-      %td{:colspan => 3}= "Total towns represented: #{@report.town_count}"
+      %td{:colspan => 4}= "Total towns represented: #{@report.town_count}"
       
+%h2
+  %u Counties
+
+%table
+  %thead
+    %tr
+      %th County
+      %th State
+      %th Total Patients
+      %th Percent
+      %th
+  %tbody
+    - @report.counties.each do |county|
+      %tr
+        %td= county["county"]
+        %td= county["state"]
+        %td= county["patient_count"]
+        %td= county["percent"]
+        %td= link_to "Export", 
+          admin_export_patients_path(:patients => patients_by_county(county),
+            :filename => county_filename(county)),
+          :target => "_blank"
+    
 %h2
   %u Ethnicities
 
@@ -60,22 +111,6 @@
         %td= ethnic["percent"]
         
 %h2
-  %u Age Breakdown
-
-%table
-  %thead
-    %tr
-      %th Age Group
-      %th Total Patients
-      %th Percentage
-  %tbody
-    - @report.ages.each do |age|
-      %tr
-        %td= age["age"]
-        %td= age["patient_count"]
-        %td= age["percent"]
-        
-%h2
   %u Travel Times
 
 %table
@@ -91,22 +126,6 @@
   %tfoot
     %tr
       %td{:colspan => 2}= "Average travel time: #{@report.avg_travel_time}"
-  
-%h2
-  %u Genders
-
-%table
-  %thead
-    %tr
-      %th Gender
-      %th Total Patients
-      %th Percentage
-  %tbody
-    - @report.genders.each do |gend|
-      %tr
-        %td= gend["sex"]
-        %td= gend["patient_count"]
-        %td= gend["percent"]
         
 %h2
   %u Previous Mom Clinics
@@ -125,7 +144,12 @@
         %td= mom["clinic_year"]
         %td= mom["patient_count"]
         %td= mom["percent"]
-        
+  %tfoot
+    %tr
+      %td{:colspan => 2} Total unique patients:
+      %td= @report.distinct_previous_moms
+      %td= percent_of_clinic @report.distinct_previous_moms, @report.patient_count
+      
 %h2
   %u Insurance
 
@@ -141,6 +165,70 @@
         %td= ins["insurance"]
         %td= ins["patient_count"]
         %td= ins["percent"]
+
+
+%h2
+  %u Heard about clinic
+
+%table
+  %thead
+    %tr
+      %th 
+      %th Total Patients
+      %th Percent
+  %tbody
+    - @report.heard_about_clinic.each do |heard|
+      %tr
+        %td= heard["heard_about_clinic"]
+        %td= heard["patient_count"]
+        %td= heard["percent"]
+        
+%h2
+  %u Last dental visit
+
+%table
+  %thead
+    %tr
+      %th
+      %th Total Patients
+      %th Percentage
+  %tbody
+    - @report.last_dental_visit.each do |visit|
+      %tr
+        %td= visit["last_dental_visit"]
+        %td= visit["patient_count"]
+        %td= visit["percent"]
+%h2
+  %u Told more dental treatment needed
+
+%table
+  %thead
+    %tr
+      %th 
+      %th Total Patients
+      %th Percent
+  %tbody
+    - @report.told_needed_more_dental_treatment.each do |needed|
+      %tr
+        %td= needed["told_needed_more_dental_treatment"] == "t" ? "Yes" : "No"
+        %td= needed["patient_count"]
+        %td= needed["percent"]
+        
+%h2
+  %u Patient has a place to be seen for dental care
+
+%table
+  %thead
+    %tr
+      %th 
+      %th Total Patients
+      %th Percent
+  %tbody
+    - @report.has_place_to_be_seen_for_dental_care.each do |record|
+      %tr
+        %td= record["has_place"] == "t" ? "Yes" : "No"
+        %td= record["patient_count"]
+        %td= record["percent"]
         
 %h2
   %u Tobacco Use
@@ -148,15 +236,25 @@
 %table
   %thead
     %tr
-      %th Use
+      %th
       %th Total Patients
       %th Percentage
   %tbody
     - @report.tobacco_use.each do |use|
       %tr
-        %td= use["tobacco_use"]
+        %td= use["tobacco"] == "t" ? "Yes" : "No"
         %td= use["patient_count"]
         %td= use["percent"]
+  %thead
+    %tr
+      %th Age Group
+      %th{:colspan => 2}
+  %tbody
+    - @report.tobacco_use_ages.each do |age|
+      %tr
+        %td= age["range"]
+        %td= age["patient_count"]
+        %td= age["percent"]
         
 %h2
   %u Rating of Services
@@ -173,3 +271,23 @@
         %td= rate["rating_of_services"]
         %td= rate["patient_count"]
         %td= rate["percent"]
+%p
+
+%table
+  %thead
+    %tr
+      %th{:colspan => 2}
+        Days in pain
+  %tbody
+    %tr
+      %th Average
+      %td= sprintf('%.2f', @report.time_in_pain["avg_length"] || 0)
+    %tr
+      %th Minimum
+      %td= @report.time_in_pain["min_length"]
+    %tr
+      %th Maximum
+      %td= @report.time_in_pain["max_length"]
+    %tr
+      %th Patients
+      %td= @report.time_in_pain["patient_count"]

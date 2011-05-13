@@ -339,13 +339,15 @@ div.row {
   padding-top: 10px;
 }
 
-form.new_patient div.row span.label{
-	  float: left;
+form.new_patient div.row span.label, 
+form.edit_patient div.row span.label{
+	float: left;
   width: 100px;
   text-align: right;
 }
 
-form.new_patient div.input-right div.row span.label{
+form.new_patient div.input-right div.row span.label,
+form.edit_patient div.input-right div.row span.label{
 	float: left;
   width: 150px;
   text-align: right;
@@ -355,6 +357,10 @@ div.row span.label {
   float: left;
   width: 100px;
   text-align: right;
+}
+
+#patient_date_of_birth {
+  width: 150px;
 }
 
 div.row .spinner{

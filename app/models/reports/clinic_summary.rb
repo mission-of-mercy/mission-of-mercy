@@ -30,7 +30,7 @@ class Reports::ClinicSummary
     @procedures, @prescriptions, @pre_meds = [], [], []
     
     @day = Date.parse(day) if day.kind_of?(String) && day != "All"
-    
+
     if span == "All" || @day == "All"
       @span_time = "All"
       @span      = "All"
@@ -128,7 +128,7 @@ class Reports::ClinicSummary
   def collect_procedures    
     sql = %{SELECT 
       procedures.code, 
-      procedures.description, 
+      initcap(procedures.description) AS description,
       count(patient_procedures.procedure_id) AS procedure_count, 
       count(patient_procedures.procedure_id) * procedures.cost AS procedure_value
       FROM procedures 
@@ -136,8 +136,9 @@ class Reports::ClinicSummary
       
     sql = date_time_where(sql, "patient_procedures")
       
-    sql += %{ GROUP BY procedures.code, procedures.description, procedures.cost
-      HAVING count(patient_procedures.procedure_id) > 0;}
+    sql += %{ GROUP BY procedures.code, initcap(procedures.description), procedures.cost
+      HAVING count(patient_procedures.procedure_id) > 0
+      ORDER BY procedures.code;}
       
     @procedures = Procedure.connection.select_all(
                       Procedure.send(:sanitize_sql_array, 
@@ -152,10 +153,7 @@ class Reports::ClinicSummary
   
   def collect_prescriptions
     sql = %{SELECT 
-      prescriptions.name, 
-      prescriptions.strength, 
-      prescriptions.quantity, 
-      prescriptions.dosage, 
+      prescriptions.id, prescriptions.name,
       count(patient_prescriptions.prescription_id) AS prescription_count, 
       count(patient_prescriptions.prescription_id) * prescriptions.cost AS prescription_value
       FROM prescriptions 
@@ -163,9 +161,9 @@ class Reports::ClinicSummary
       
     sql = date_time_where(sql, "patient_prescriptions")
       
-    sql += %{ GROUP BY prescriptions.name, prescriptions.strength, 
-    prescriptions.quantity, prescriptions.dosage, prescriptions.cost
-      HAVING count(patient_prescriptions.prescription_id) > 0;}
+    sql += %{ GROUP BY prescriptions.id, prescriptions.name, prescriptions.cost
+      HAVING count(patient_prescriptions.prescription_id) > 0
+      ORDER BY prescriptions.name;}
       
     @prescriptions = Prescription.connection.select_all(
                       Prescription.send(:sanitize_sql_array, 
@@ -173,8 +171,8 @@ class Reports::ClinicSummary
                              :report_time => @span_time}]))
                              
     @prescriptions.map! do |p|
-      desc = [p["name"], p["strength"], ["#", p["quantity"]," -"].join(), p["dosage"]].join(' ')
-      [desc,p["prescription_count"].to_i,p["prescription_value"].to_f ]
+      desc = Prescription.find(p["id"]).full_description
+      [desc, p["prescription_count"].to_i, p["prescription_value"].to_f ]
     end
     
     @prescription_count = @prescriptions.sum {|p| p[1] }
@@ -192,7 +190,8 @@ class Reports::ClinicSummary
     sql = date_time_where(sql, "patient_pre_meds")
       
     sql += %{ GROUP BY pre_meds.description, pre_meds.cost
-      HAVING count(patient_pre_meds.pre_med_id) > 0;}
+      HAVING count(patient_pre_meds.pre_med_id) > 0
+      ORDER BY pre_meds.description;}
       
     @pre_meds = PreMed.connection.select_all(
                       PreMed.send(:sanitize_sql_array, 

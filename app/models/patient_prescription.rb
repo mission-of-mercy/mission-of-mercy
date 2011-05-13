@@ -1,8 +1,8 @@
 class PatientPrescription < ActiveRecord::Base
+  after_save :destroy_unless_prescribed
+
   belongs_to :patient
   belongs_to :prescription
-  
-  attr_accessor :prescribed
   
   def full_description
     if prescription != nil
@@ -10,6 +10,11 @@ class PatientPrescription < ActiveRecord::Base
     else
       "Prescription"
     end
-    
+  end
+  
+  private
+  
+  def destroy_unless_prescribed
+    destroy unless prescribed
   end
 end

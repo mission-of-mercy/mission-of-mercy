@@ -23,8 +23,6 @@ class TreatmentAreas::Patients::PrescriptionsController < ApplicationController
     @patient.attributes = params[:patient]
     
     @patient.patient_prescriptions.each do |p|
-      p.destroy if !p.new_record? && p.prescribed == "0"
-      
       new_prescription = true if p.new_record?
     end
     

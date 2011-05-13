@@ -14,4 +14,20 @@ class TreatmentArea < ActiveRecord::Base
   def radiology?
     name == "Radiology"
   end
+  
+  def patients_treated
+    patients = Patient.all(
+      :include    => [:patient_procedures => {:procedure => :procedure_treatment_area_mappings}],
+      :conditions => ["procedure_treatment_area_mappings.treatment_area_id = ?", id]
+    )
+    
+    if amalgam_composite_procedures
+      patients += Patient.all(
+        :include    => [:patient_procedures => :procedure],
+        :conditions => ["procedures.procedure_type = ? OR procedures.procedure_type LIKE ?", "Amalgam", "%Composite"]
+      )
+    end
+    
+    patients.uniq
+  end
 end
