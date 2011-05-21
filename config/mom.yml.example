@@ -1,3 +1,4 @@
 state: CT
 dexis_paths:
   - /path/to/samba/share
+backup_path: /path/to/backup
