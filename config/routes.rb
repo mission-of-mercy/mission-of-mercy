@@ -63,8 +63,9 @@ ActionController::Routing::Routes.draw do |map|
     admin.maintenance_reset                  '/maintenance/reset',
                                              :controller => 'maintenance',
                                              :action     => 'reset'
-  
-  
+    admin.maintenance_reset_distribution     '/maintenance/reset_distribution',
+                                              :controller => 'maintenance',
+                                              :action     => 'reset_distribution'
   end
 
 end

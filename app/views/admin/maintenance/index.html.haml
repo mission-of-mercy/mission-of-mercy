@@ -8,3 +8,10 @@
     :class   => "warning",
     :confirm => "WARNING: This will destroy all patient information! Are you sure you want to proceed?",
     :method  => :post
+
+%p
+  = link_to 'Reset Treatment Area Distribution Report',
+    admin_maintenance_reset_distribution_path,
+    :class   => "warning",
+    :confirm => "This will reset the Treatment Area Distribution Report. Are you sure you want to proceed?",
+    :method  => :post

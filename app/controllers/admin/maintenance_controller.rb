@@ -24,6 +24,13 @@ module Admin
       redirect_to admin_maintenance_path
     end
 
+    def reset_distribution
+      Patient.update_all(:assigned_treatment_area_id => nil, :radiology => false)
+
+      flash[:notice] = "Treatment Area Distribution Report Reset"
+      redirect_to admin_maintenance_path
+    end
+
     private
 
     def set_current_tab
