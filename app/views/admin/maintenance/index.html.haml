@@ -3,6 +3,18 @@
 = header do
   %h1 Maintenance
 
+%h2 Diagnostics
+
+%p
+  %b Backup Path:
+  = @backup
+
+%p
+  %b X-Ray Paths:
+  = @xray
+
+%h2 Tools
+
 %p
   = link_to 'Reset Clinic DB', admin_maintenance_reset_path,
     :class   => "warning",

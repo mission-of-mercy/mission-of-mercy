@@ -4,7 +4,8 @@ module Admin
     before_filter :set_current_tab
 
     def index
-
+      @backup = app_config["backup_path"]
+      @xray   = app_config["dexis_paths"].join(", ")
     end
 
     def reset
