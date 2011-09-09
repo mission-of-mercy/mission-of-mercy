@@ -37,7 +37,15 @@ class PatientTest < ActiveSupport::TestCase
       "12d"      => 12,
       "1m"       => 30,
       "45 weeks" => 315,
-      "1 year"   => 365
+      "1 year"   => 365,
+      "4 Months"  => 120,
+      "1W   "     => 7,
+      "6Months"   => 180,
+      "0days"     => 0,
+      "03w"       => 21,
+      "1.5months" => 45,
+      "0.5days"   => 1,
+      ".9 Months" => 27
     }
 
     patient = TestHelper.valid_patient
@@ -45,7 +53,7 @@ class PatientTest < ActiveSupport::TestCase
     valid_formats.each do |format, result|
       patient.time_in_pain = format
 
-      assert patient.save
+      assert patient.save, "Couldn't save Patient with time_in_pain value = #{ format }"
 
       assert_equal result, patient.pain_length_in_days
     end
@@ -53,14 +61,14 @@ class PatientTest < ActiveSupport::TestCase
 
   test "invalid time in pain values should cause validation errors" do
     invalid_formats = ["12dd", "1.5.1m", "45 weeks months", "about a year",
-      "aaa", "123z"]
+      "15 minutes", "aaa", "123z"]
 
     patient = TestHelper.valid_patient
 
     invalid_formats.each do |format|
       patient.time_in_pain = format
 
-      patient.save
+      assert !patient.save, "Patient was saved with time_in_pain format = #{ format }"
 
       assert patient.errors.invalid?(:time_in_pain), "#{format} is not a valid format"
     end
