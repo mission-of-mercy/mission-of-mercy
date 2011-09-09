@@ -28,7 +28,9 @@ MoM.Helpers.togglePatientPain = function(focus){
       if(focus) $('#patient_pain_length_in_days').focus();
     });
   else
-    $('#pain_length_div').slideUp();
+    $('#pain_length_div').slideUp(function(){
+      $('#patient_time_in_pain').val('');
+    });
 }
 
 MoM.Helpers.toggleOtherRace = function(){
