@@ -39,9 +39,10 @@ class Patient < ActiveRecord::Base
                                 :reject_if => proc { |attributes| attributes['attended'] == "0" }
 
   validate              :time_in_pain_format
+  validate              :date_of_birth_entry
   validates_length_of   :zip,   :maximum => 10, :allow_blank => true
   validates_length_of   :state, :maximum => 2
-  validates_presence_of :first_name, :last_name, :date_of_birth, :sex, :race,
+  validates_presence_of :first_name, :last_name, :sex, :race,
                         :chief_complaint, :last_dental_visit, :travel_time,
                         :city, :state
   validates_format_of   :phone, :message     => "must be a valid telephone number.",
@@ -78,14 +79,16 @@ class Patient < ActiveRecord::Base
     today = DateTime.now
     age = today - date_of_birth
     age.to_i / 365
+  rescue
+    nil
   end
 
   def dob
-    date_of_birth.strftime("%m/%d/%Y")
+    date_of_birth.strftime("%m/%d/%Y") rescue nil
   end
 
   def date_of_birth_dexis
-    date_of_birth.strftime("%d.%m.%Y")
+    date_of_birth.strftime("%d.%m.%Y") rescue nil
   end
 
   def procedures_grouped
@@ -166,6 +169,15 @@ class Patient < ActiveRecord::Base
     end
   end
 
+  def date_of_birth=(date_of_birth)
+    if date_of_birth.is_a?(String)
+      @date_string = date_of_birth
+      self[:date_of_birth] = Date.parse(date_of_birth.tr("-.", "/")) rescue nil
+    else
+      super
+    end
+  end
+
   private
 
   def update_survey
@@ -224,5 +236,18 @@ class Patient < ActiveRecord::Base
 
   def calculate_travel_time
     self.travel_time = travel_time_minutes + (travel_time_hours * 60)
+  end
+
+  def date_of_birth_entry
+    if self.date_of_birth.nil?
+      if @date_string.blank?
+        errors.add(:date_of_birth, "can't be blank")
+      else
+        errors.add(:date_of_birth, "must be in a valid format (mm/dd/yyyy, mm-dd-yyyy)")
+      end
+      return false
+    end
+
+    return true
   end
 end

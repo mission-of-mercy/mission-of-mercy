@@ -46,9 +46,9 @@ class PatientsController < ApplicationController
 
     add_procedures_to_patient(@patient)
 
-    if params[:patient][:date_of_birth] && !params[:patient][:date_of_birth][/\A\d\d?\/\d\d?\/\d{4}\z/]
-      @patient.errors.add(:date_of_birth, "is in the wrong format. Use mm/dd/yyyy")
-    end
+    #if params[:patient][:date_of_birth] && !params[:patient][:date_of_birth][/\A\d\d?\/\d\d?\/\d{4}\z/]
+    #  @patient.errors.add(:date_of_birth, "is in the wrong format. Use mm/dd/yyyy")
+    #end
 
     if @patient.errors.empty? && @patient.save
       stats.patient_checked_in
