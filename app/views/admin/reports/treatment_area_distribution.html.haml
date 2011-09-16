@@ -13,7 +13,9 @@
       = submit_tag "Refresh"
 
 
-= bar_graph @current_capacity, :width => 845
+= raw bar_graph "treatment_area_graph", 
+                @current_capacity,
+                { :style => "width:845px;height:200px" }
 
 %p
   = link_to "Back", admin_reports_path, :class => "back"
