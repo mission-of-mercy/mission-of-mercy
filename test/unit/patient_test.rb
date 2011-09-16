@@ -101,4 +101,22 @@ class PatientTest < ActiveSupport::TestCase
 
     assert patient.save
   end
+
+  test "text entry for date of birth should accept reasonable date formats" do
+    valid_formats = {
+      "05/23/2008"    => Date.civil(2008, 5, 23),
+      "05-23-2008"    => Date.civil(2008, 5, 23),
+      "05.23.2008"    => Date.civil(2008, 5, 23),
+    }
+
+    patient = TestHelper.valid_patient
+
+    valid_formats.each do |format, result|
+      patient.date_of_birth = format
+
+      assert patient.save, "Couldn't save Patient with date_of_birth value = #{ format }"
+
+      assert_equal result, patient.date_of_birth
+    end
+  end
 end
