@@ -159,7 +159,7 @@ class Patient < ActiveRecord::Base
 
       # Use highest possible precision - Float if possible, otherwise Integer
       unless units.nil?
-        if number.to_f.respond_to?(units.to_sym)
+        if ["days", "weeks"].include?(units)
           self.pain_length_in_days = (number.to_f.send(units) / 1.day).round
         else
           self.pain_length_in_days = (number.to_i.send(units) / 1.day)

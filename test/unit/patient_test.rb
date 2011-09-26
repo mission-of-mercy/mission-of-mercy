@@ -43,9 +43,9 @@ class PatientTest < ActiveSupport::TestCase
       "6Months"   => 180,
       "0days"     => 0,
       "03w"       => 21,
-      "1.5months" => 45,
+      "1.5months" => 30,
       "0.5days"   => 1,
-      ".9 Months" => 27
+      ".9 Months" => 0
     }
 
     patient = TestHelper.valid_patient
