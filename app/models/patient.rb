@@ -1,8 +1,17 @@
 class Patient < ActiveRecord::Base
-  TIME_IN_PAIN = {
-    1 => /\A(\d*\.?\d*)([dwmy])\Z/,
-    2 => /\Adays\Z|\Aweeks\Z|\Amonths\Z|\Ayears\Z/
+  REGEXP = {
+    :time_in_pain   => /\A(\d*\.?\d*)\s*(.+)\Z/,
+    :number_only    => /\A(\d*\.?\d*)\Z/,
+    :days           => /\Ad(ay(s)?)?\Z/i,
+    :weeks          => /\Aw(eek(s)?)?\Z/i,
+    :months         => /\Am(onth(s)?)?\Z/i,
+    :years          => /\Ay(ear(s)?)?\Z/i
   }
+  REGEXP[:all_time_units] = Regexp.union( REGEXP[:days],
+                                          REGEXP[:weeks],
+                                          REGEXP[:months],
+                                          REGEXP[:years] )
+
 
   before_save  :update_survey
   before_save  :normalize_data
@@ -134,35 +143,30 @@ class Patient < ActiveRecord::Base
   end
 
   def time_in_pain=(time_in_pain)
-    @time_in_pain = time_in_pain
-    time_in_pain  = time_in_pain.split(" ")
+    @time_in_pain = time_in_pain.strip
+    if match = REGEXP[:time_in_pain].match(@time_in_pain)
+      number, units = match.captures
+      units.downcase!
 
-    if time_in_pain.length == 2
-      number, type = *time_in_pain
-      type = type.pluralize.downcase
-
-      if type =~ TIME_IN_PAIN[2]
-        self.pain_length_in_days = (number.to_f.send(type) / 1.day)
+      units = case units
+      when REGEXP[:days] then "days"
+      when REGEXP[:weeks] then "weeks"
+      when REGEXP[:months] then "months"
+      when REGEXP[:years] then "years"
+      else
+        nil
       end
-    elsif time_in_pain.length == 1
-      time_in_pain = time_in_pain.first
 
-      if time_in_pain =~ TIME_IN_PAIN[1]
-        number, type = TIME_IN_PAIN[1].match(time_in_pain).captures
-
-        type = case type
-        when "d" then "days"
-        when "w" then "weeks"
-        when "m" then "months"
-        when "y" then "years"
+      # Use highest possible precision - Float if possible, otherwise Integer
+      unless units.nil?
+        if number.to_f.respond_to?(units.to_sym)
+          self.pain_length_in_days = (number.to_f.send(units) / 1.day).round
         else
-          nil
+          self.pain_length_in_days = (number.to_i.send(units) / 1.day)
         end
-
-        self.pain_length_in_days = (number.to_i.send(type) / 1.day) unless type.nil?
-      elsif time_in_pain =~ /\A\d*\Z/
-        self.pain_length_in_days = time_in_pain
       end
+    elsif REGEXP[:number_only].match(@time_in_pain)
+      self.pain_length_in_days = @time_in_pain.to_i
     end
   end
 
@@ -196,30 +200,18 @@ class Patient < ActiveRecord::Base
     error_message = "must be in a valid format (1 day, 1w, 5 years)"
 
     unless @time_in_pain.blank?
-      time_in_pain = @time_in_pain.split(" ")
-
-      if time_in_pain.length == 2
-        number, type = *time_in_pain
-        type = type.pluralize.downcase
-
-        unless type =~ TIME_IN_PAIN[2]
-          errors.add(:time_in_pain, error_message)
-          return false
+      if match = REGEXP[:time_in_pain].match(@time_in_pain)
+        number, units = match.captures
+        if units =~ REGEXP[:all_time_units]
+          return true
         end
-      elsif time_in_pain.length == 1
-        time_in_pain = time_in_pain.first
-
-        if !(time_in_pain =~ TIME_IN_PAIN[1]) && !(time_in_pain =~ /\A\d*\Z/)
-          errors.add(:time_in_pain, error_message)
-          return false
-        end
-      else
-        errors.add(:time_in_pain, error_message)
-        return false
+      elsif @time_in_pain =~ REGEXP[:number_only]
+        return true
       end
-    end
 
-    return true
+      errors.add(:time_in_pain, error_message)
+      return false
+    end
   end
 
   def calculate_travel_time
