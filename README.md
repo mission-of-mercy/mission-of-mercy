@@ -17,12 +17,16 @@ project's wiki pages at [http://wiki.github.com/jordanbyron/mission_of_mercy/](h
 
 While there are other Missions of Mercy around the country, this MoM is a 
 gathering of volunteer dental professionals who along with a volunteer staff of 
-several hundred hold free, two day dental clinics at locations around the country. 
+several hundred hold free, two day dental clinics at locations around the country.
+
+The following is a video of the 2011 Connecticut Mission of Mercy clinic:
+
+<http://www.youtube.com/watch?v=aGAEtleugnk>
 
 ## Software History
 
-The Mission of Mercy software, or MoM for short, is a web-based software 
-solution created for the 2009 Connecticut Mission of Mercy clinic. The project’s 
+The Mission of Mercy software project, or MoM for short, is a rails based  
+project created for the 2009 Connecticut Mission of Mercy clinic. The project’s 
 goal is to streamline patient intake, digital x-ray, and check-out processes during 
 the clinic’s operating hours.
 
