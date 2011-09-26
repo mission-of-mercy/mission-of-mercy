@@ -93,11 +93,11 @@ class Patient < ActiveRecord::Base
   end
 
   def dob
-    date_of_birth.strftime("%m/%d/%Y") rescue nil
+    date_of_birth.strftime("%m/%d/%Y") if date_of_birth
   end
 
   def date_of_birth_dexis
-    date_of_birth.strftime("%d.%m.%Y") rescue nil
+    date_of_birth.strftime("%d.%m.%Y") if date_of_birth
   end
 
   def procedures_grouped
