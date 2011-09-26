@@ -119,4 +119,14 @@ class PatientTest < ActiveSupport::TestCase
       assert_equal result, patient.date_of_birth
     end
   end
+
+  test "text entry for date of birth should not accept invalid date formats" do
+    patient = TestHelper.valid_patient
+
+    patient.date_of_birth = "23/1/1"
+
+    assert !patient.save,
+      "Saved patient with an invalid date_of_birth value"
+
+  end
 end
