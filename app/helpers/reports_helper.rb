@@ -40,4 +40,39 @@ module ReportsHelper
     percent = (number_of_patients.to_f / total.to_f) * 100.0
     sprintf('%.2f', percent)
   end
+
+  def bar_graph(name, data_series=[], div_options={}, graph_options={})
+    output = ""
+
+    div_options.merge!({ :id => name })
+    output << content_tag(:div, "", div_options)
+    output << javascript_tag(:defer => 'defer') do
+      <<-JS_OUTPUT
+      var placeholder = $('\##{ name }');
+      var data = #{ bar_graph_data(data_series) };
+      var options = #{ bar_graph_options(data_series) };
+      var plot = $.plot(placeholder, data, options);
+      JS_OUTPUT
+    end
+  end
+
+  def bar_graph_data(original_data)
+    data_series = original_data.each_with_index.map {|s, i| [ [ i, s[1] ] ] }
+    data_series.to_json
+  end
+
+  def bar_graph_options(original_data)
+    {
+      :bars => { :show => true, :align => :center, :barWidth => 0.6 },
+      :valueLabels => { :show => true },
+      :xaxis => {
+        :min => -0.6,
+        :max => original_data.count - 0.4,
+        :ticks => original_data.each_with_index.map {|data, i| [i, data[0]] }
+      },
+      :yaxis => { :minTickSize => 1, :tickDecimals => 0 },
+      :grid => { :tickColor => "#ffffff" }
+    }.to_json
+  end
+
 end
