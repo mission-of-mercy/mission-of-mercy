@@ -5,7 +5,7 @@
     document.observe('dom:loaded', function(){
       #{over_capacity(@areas)}
     });
-  
+
 = header do
   %h1 Treatment Area Distribution
   #controls
@@ -13,9 +13,9 @@
       = submit_tag "Refresh"
 
 
-= raw bar_graph "treatment_area_graph", 
+= raw bar_graph "treatment_area_graph",
                 @current_capacity,
-                { :style => "width:845px;height:200px" }
+                { :style => "width:845px; height:200px" }
 
 %p
   = link_to "Back", admin_reports_path, :class => "back"

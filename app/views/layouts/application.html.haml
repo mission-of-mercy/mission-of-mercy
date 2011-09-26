@@ -2,25 +2,25 @@
 %html
   %head
     %title= "Mission of Mercy - #{yield(:title) || controller_name.humanize}"
-    
+
     %link{:rel => "apple-touch-icon", :href => "/images/apple-touch-icon.png"}
-    
+
     = javascript_include_tag :defaults, 'modalbox.js', 'application_old'
     = javascript_include_tag 'helpers'
     = javascript_include_tag 'jquery', 'jquery.flot', 'jquery.flot.valuelabels'
-    
+
     = stylesheet_link_tag 'default', :media => :screen
     = stylesheet_link_tag 'modalbox', 'tabs', 'plot'
-    
+
     /Active Bar
-    = javascript_include_tag 'jquery-1.5.1.min', 'activebar/activebar2.js'
+    = javascript_include_tag 'activebar/activebar2.js'
     :javascript
       jQuery.noConflict();
       MoM.init('#{form_authenticity_token}');
       #{yield(:header_js)}
-    
+
     = yield(:header)
-    
+
   %body{:class => body_css}
     #help_request
     #outer_container
