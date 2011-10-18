@@ -12,5 +12,5 @@ config/mom.yml
 config/database.yml
 
 # CSV Import Files
-zipcode.csv
-procedures.csv
+/zipcode.csv
+/procedures.csv
