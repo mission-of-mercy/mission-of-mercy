@@ -3,45 +3,45 @@
 
 function showCheckoutFields(tooth, surface, code, type){
   if(tooth){
-    $('tooth_dt').show(); 
+    $('tooth_dt').show();
     $('tooth_dd').show();
 
     new Effect.Highlight("tooth_dt");
-    
+
     $('patient_procedure_tooth_number').focus();
   }else{
-    $('tooth_dt').hide(); 
+    $('tooth_dt').hide();
     $('tooth_dd').hide();
   }
-  
+
   if(surface){
-    $('surface_dt').show(); 
+    $('surface_dt').show();
     $('surface_dd').show();
-    
+
     new Effect.Highlight("surface_dt");
   }else{
-    $('surface_dt').hide(); 
+    $('surface_dt').hide();
     $('surface_dd').hide();
   }
-  
+
   if(code){
-    $('other_dt').show(); 
+    $('other_dt').show();
     $('other_dd').show();
-    
+
     new Effect.Highlight("other_dt");
-    
+
     $('patient_procedure_code').focus();
   }else{
-    $('other_dt').hide(); 
+    $('other_dt').hide();
     $('other_dd').hide();
   }
-  
+
   if(type){
     $('amcomp_dt').show();
     $('amcomp_dd').show();
-    
+
     new Effect.Highlight("amcomp_dt");
-    
+
     $('patient_procedure_procedure_type').focus();
   }else{
     $('amcomp_dt').hide();
@@ -50,9 +50,9 @@ function showCheckoutFields(tooth, surface, code, type){
 }
 
 function showOtherHeardAbout()
-{  
+{
   var heardAbout = $('patient_survey_attributes_heard_about_clinic');
-  
+
   if(heardAbout.selectedIndex == 4)
   {
     $('heard_about_other_div').show();
@@ -63,30 +63,6 @@ function showOtherHeardAbout()
     $('heard_about_other_div').hide();
     $('patient_survey_attributes_heard_about_other').value = "";
   }
-}
-
-function graph_highlight(id){
-  highlight_bar = $$('#vertgraph dl dd.' + id).first();
-  bars = $$('#vertgraph dl dd');
-  
-  for(var i = 0; i < bars.length; i++)
-    if(bars[i] != highlight_bar) bars[i].hide();
-  
-  $($$('dt.' + id).first()).addClassName("highlight");
-  $('vertgraph').addClassName("highlight");
-}
-
-function graph_reset(){
-  bars   = $$('#vertgraph dl dd');
-  labels = $$('#vertgraph dl dt.highlight');
-  
-  for(var i = 0; i < bars.length; i++)
-    bars[i].show();
-    
-  for(var i = 0; i < labels.length; i++)
-    labels[i].removeClassName("highlight");
-  
-  $('vertgraph').removeClassName("highlight");
 }
 
 function procedure_not_added(hasProcedures){
