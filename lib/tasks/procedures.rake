@@ -1,6 +1,6 @@
 namespace :procedures do
 
-  desc 'import procedures from procedures.csv'
+  desc 'import procedures from ./procedures.csv if present, otherwise use ./data/procedures.csv'
   task :import => :environment do
     Procedure.destroy_all
 
