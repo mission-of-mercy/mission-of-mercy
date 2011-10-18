@@ -17,7 +17,13 @@ To install a development version of Mission of Mercy, follow these steps:
 2. Clone the fork to your computer
 3. Run `bundle install` to install all of the dependencies
 
-To configure MoM:
+Automatic Setup:
+
+Simply run `bundle exec rake setup` and all necessary files will be created, databases created, and seed data loaded.
+
+_NOTE: This requires you have the EDITOR shell environment variable set: `EDITOR=vim`_
+
+Manual Setup:
 
 1. Create a `database.yml` file in `config`. The `config` directory contains
    an example `database.yml` for PostgreSQL.
