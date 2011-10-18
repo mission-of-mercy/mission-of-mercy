@@ -21,7 +21,7 @@ To install a development version of Mission of Mercy, follow these steps:
 
 Simply run `bundle exec rake setup` and all necessary files will be created, databases created, and seed data loaded.
 
-_NOTE: This requires you have the EDITOR shell environment variable set: `EDITOR=vim`_
+_NOTE: This requires you have the EDITOR shell environment variable set: Example - `EDITOR=vim`_
 
 **Manual Setup:**
 
