@@ -11,7 +11,7 @@ or SQLite are not officially supported.
 
 ### Setting Up a Development Copy: Step by Step
 
-To install a development version of University Web, follow these steps:
+To install a development version of Mission of Mercy, follow these steps:
 
 1. Fork our GitHub repository: <http://github.com/jordanbyron/mission_of_mercy>
 2. Clone the fork to your computer
@@ -22,7 +22,11 @@ To configure MoM:
 1. Create a `database.yml` file in `config`. The `config` directory contains
    an example `database.yml` for PostgreSQL.
 
-2. Run the Rails tasks to initialize a development and a test database:
+2. Create a `mom.yml` file in `config`. This file sets up some basic information
+   about the clinic and where certain information is backed up to. The `config`
+   directory contains an example `mom.yml` file which can be used.
+
+3. Run the Rails tasks to initialize a development and a test database:
 
     ```bash
     $ bundle exec rake db:create     # If you haven't created your databases
@@ -30,15 +34,15 @@ To configure MoM:
     $ bundle exec rake db:test:prepare
     ```
 
-3. Seed the database with standard user accounts and treatment areas:
+4. Seed the database with standard user accounts and treatment areas:
 
     ```bash
     $ bundle exec rake db:seed
     ```
 
-    __Note: All passwords are by default set to `temp123`__
+    _Note: All passwords are by default set to `temp123`_
 
-4. Finally, run the test suite to make sure everything is working correctly:
+5. Finally, run the test suite to make sure everything is working correctly:
 
     ```bash
     $ bundle exec rake test
@@ -81,8 +85,8 @@ which made it available to all Mission of Mercy clinics throughout the US.
 
 **Core**
 
-Jordan Byron | <http://jordanbyron.com>
-Christopher Mitchell | <cmitchell@integrityss.com>
+- Jordan Byron | <http://jordanbyron.com>
+- Christopher Mitchell | <cmitchell@integrityss.com>
 
 **Full List**
 
