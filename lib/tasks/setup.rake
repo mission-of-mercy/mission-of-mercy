@@ -11,13 +11,13 @@ task :setup do
   unless File.exists?(database_file)
     FileUtils.cp(database_file + '.example', database_file)
     puts "Database config file created"
-    edit_file(database_file)
+    puts "Please edit config/database.yml, and then run rake setup to continue"
+    return
   end
 
   unless File.exists?(mom_file)
     FileUtils.cp(mom_file + '.example', mom_file)
     puts "MoM config file created"
-    edit_file(mom_file)
   end
 
   puts "Config files created"
@@ -39,22 +39,4 @@ task :setup do
   Rake::Task["test"].invoke
 
   puts "--- Setup Complete ---"
-end
-
-# Inspired by open_gem
-# https://github.com/adamsanderson/open_gem/blob/master/lib/rubygems/commands/open_command.rb
-#
-def edit_file(file)
-  editor = ENV['VISUAL'] || ENV['EDITOR']
-
-  if !editor
-    fail "Please set $VISUAL or $EDITOR to continue"
-  else
-    command_parts = Shellwords.shellwords(editor)
-    command_parts << file
-    success = system(*command_parts)
-    if !success
-      fail "Could not run '#{editor} #{file}'"
-    end
-  end
 end
