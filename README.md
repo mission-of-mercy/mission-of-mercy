@@ -32,23 +32,16 @@ _NOTE: This requires you have the EDITOR shell environment variable set: Example
    about the clinic and where certain information is backed up to. The `config`
    directory contains an example `mom.yml` file which can be used.
 
-3. Run the Rails tasks to initialize a development and a test database:
+3. Create and seed a development database, and initialize a test database:
 
     ```bash
-    $ bundle exec rake db:create     # If you haven't created your databases
-    $ bundle exec rake db:migrate
+    $ bundle exec rake db:setup
     $ bundle exec rake db:test:prepare
-    ```
-
-4. Seed the database with standard user accounts and treatment areas:
-
-    ```bash
-    $ bundle exec rake db:seed
     ```
 
     _Note: All passwords are by default set to `temp123`_
 
-5. Finally, run the test suite to make sure everything is working correctly:
+4. Finally, run the test suite to make sure everything is working correctly:
 
     ```bash
     $ bundle exec rake test
