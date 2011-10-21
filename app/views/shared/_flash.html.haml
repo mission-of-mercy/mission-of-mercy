@@ -1,7 +1,0 @@
-- if flash.any?
-  #flash
-    - flash.each do |flashtype, message|
-      %div{:class => "flash #{flashtype}", :id => "flash-#{flashtype}"}
-        = message
-    :javascript
-      setTimeout("Effect.SlideUp('flash')", 4000);

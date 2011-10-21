@@ -1,6 +1,0 @@
-%h3 Please select your primary treatment area:
-
-%div{:style => "text-align:center;"}
-  - TreatmentArea.all(:order => "name").each do |area|
-    %div.checkout_selection
-      = link_to area.name, treatment_area_patients_path(area.id)
