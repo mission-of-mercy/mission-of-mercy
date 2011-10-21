@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  require File.join(Rails.root, 'lib', 'authenticated_system.rb')
   include AuthenticatedSystem
   
   helper :all
@@ -7,7 +6,6 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery
   
-  filter_parameter_logging :password
   before_filter :set_area_id
   around_filter :setup_stats
 

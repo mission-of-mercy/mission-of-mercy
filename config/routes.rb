@@ -1,16 +1,30 @@
 MissionOfMercy::Application.routes.draw do
   root :to => 'home#index'
 
-  #map.home '/', :controller => :home, :action => :index
+  match '/' => 'home#index' # I am not sure we need this
 
-  #map.logout '/logout', :controller => 'sessions', :action => 'destroy'
-  #map.login '/login', :controller => 'sessions', :action => 'new'
-
-  #map.resource :session
-
-  #map.resources :support_requests
-  #map.connect '/active_support_requests.:format', :controller => "support_requests", :action => "active_requests"
+  match '/logout' => 'sessions#destroy'
   
+  match '/login' => 'sessions#new'
+  
+  resource :session
+  
+  resources :support_requests
+  
+  match '/active_support_requests.:format' =>  'support_requests#active_requests'
+  
+=begin
+  Not sure about this route. will come back later.  
+  map.resources :treatment_areas, :collection => {:change => :post} do |area|
+    area.resources :patients,
+                   :controller => "treatment_areas/patients" do |patient|
+      patient.resources :prescriptions, :controller => "treatment_areas/patients/prescriptions"
+      patient.resources :procedures,    :controller => "treatment_areas/patients/procedures"
+      patient.resource  :survey,        :controller => "treatment_areas/patients/surveys"
+    end
+  end
+=end  
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
