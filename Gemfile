@@ -42,7 +42,7 @@ gem "will_paginate",'3.0.pre'
 gem 'restful-authentication', :git =>
   "git@github.com:CTMissionofMercy/restful-authentication.git"
 
-gem 'scriptaculous_slider', :git =>
+#gem 'scriptaculous_slider', :git =>
   "git://github.com/seamusabshere/scriptaculous_slider.git"
 
 gem "fastercsv"

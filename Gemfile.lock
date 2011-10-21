@@ -1,10 +1,4 @@
 GIT
-  remote: git://github.com/seamusabshere/scriptaculous_slider.git
-  revision: e23dafc0f511f8a3d7a1337905d5b899427a00b6
-  specs:
-    scriptaculous_slider (1.2.0)
-
-GIT
   remote: git@github.com:CTMissionofMercy/restful-authentication.git
   revision: abd6ad14d99ea71d3fc6f35e3e62e0f8454f5a27
   specs:
@@ -141,7 +135,6 @@ DEPENDENCIES
   rails (= 3.1.0)
   restful-authentication!
   sass-rails (~> 3.1.0)
-  scriptaculous_slider!
   test-unit
   turn
   uglifier
