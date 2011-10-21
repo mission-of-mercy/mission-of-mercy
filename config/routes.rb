@@ -1,4 +1,6 @@
 MissionOfMercy::Application.routes.draw do
+  devise_for :users
+
   root :to => 'home#index'
 
   match '/' => 'home#index' # I am not sure we need this
