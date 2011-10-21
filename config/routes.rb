@@ -1,71 +1,58 @@
-ActionController::Routing::Routes.draw do |map|
+MissionOfMercy::Application.routes.draw do
+  # The priority is based upon order of creation:
+  # first created -> highest priority.
 
-  map.root :controller => :home, :action => :index
+  # Sample of regular route:
+  #   match 'products/:id' => 'catalog#view'
+  # Keep in mind you can assign values other than :controller and :action
 
-  map.home '/', :controller => :home, :action => :index
+  # Sample of named route:
+  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+  # This route can be invoked with purchase_url(:id => product.id)
 
-  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
-  map.login '/login', :controller => 'sessions', :action => 'new'
+  # Sample resource route (maps HTTP verbs to controller actions automatically):
+  #   resources :products
 
-  map.resource :session
+  # Sample resource route with options:
+  #   resources :products do
+  #     member do
+  #       get 'short'
+  #       post 'toggle'
+  #     end
+  #
+  #     collection do
+  #       get 'sold'
+  #     end
+  #   end
 
-  map.resources :support_requests
-  map.connect '/active_support_requests.:format', :controller => "support_requests", :action => "active_requests"
+  # Sample resource route with sub-resources:
+  #   resources :products do
+  #     resources :comments, :sales
+  #     resource :seller
+  #   end
 
-  map.resources :treatment_areas, :collection => {:change => :post} do |area|
-    area.resources :patients,
-                   :controller => "treatment_areas/patients" do |patient|
-      patient.resources :prescriptions, :controller => "treatment_areas/patients/prescriptions"
-      patient.resources :procedures,    :controller => "treatment_areas/patients/procedures"
-      patient.resource  :survey,        :controller => "treatment_areas/patients/surveys"
-    end
-  end
+  # Sample resource route with more complex sub-resources
+  #   resources :products do
+  #     resources :comments
+  #     resources :sales do
+  #       get 'recent', :on => :collection
+  #     end
+  #   end
 
-  map.pharmacy_check_out '/pharmacy/check_out/:patient_id', :controller => :pharmacy, :action => :check_out
-  map.pharmacy_finalize  '/pharmacy/finalize/:patient_id',  :controller => :pharmacy, :action => :check_out_complete
-  map.resources :patients, :collection => { :lookup_zip => :get, :lookup_city => :post }
-  map.resources :patient_procedures
+  # Sample resource route within a namespace:
+  #   namespace :admin do
+  #     # Directs /admin/products/* to Admin::ProductsController
+  #     # (app/controllers/admin/products_controller.rb)
+  #     resources :products
+  #   end
 
-  map.resources :assignment_desk
+  # You can have the root of your site routed with "root"
+  # just remember to delete public/index.html.
+  # root :to => 'welcome#index'
 
-  map.print_chart '/patients/:id/print', :controller => 'patients', :action => 'print'
+  # See how all your routes lay out with "rake routes"
 
-  map.export_to_dexis_file '/patients/:patient_id/export', :controller => 'patients', :action => 'export_to_dexis_file'
-
-  map.status '/status', :controller => 'status', :action => 'index'
-
-  map.namespace :admin do |admin|
-    admin.resources :treatment_areas
-    admin.resources :procedures
-    admin.resources :pre_meds
-    admin.resources :prescriptions
-    admin.resources :users
-    admin.resources :support_requests, :collection => {:destroy_all => :delete}
-
-    admin.reports                            '/reports',
-                                             :controller => 'reports',
-                                             :action     => 'index'
-    admin.clinic_summary_report              '/reports/clinic_summary/',
-                                             :controller => 'reports',
-                                             :action     => 'clinic_summary'
-    admin.treatment_area_distribution_report '/reports/treatment_area_distribution',
-                                             :controller => 'reports',
-                                             :action     => 'treatment_area_distribution'
-    admin.post_clinic_report                 '/reports/post_clinic',
-                                             :controller => 'reports',
-                                             :action     => 'post_clinic'
-    admin.export_patients                    '/reports/export_patients',
-                                             :controller => 'reports',
-                                             :action     => 'export_patients'
-    admin.maintenance                        '/maintenance',
-                                             :controller => 'maintenance',
-                                             :action     => 'index'
-    admin.maintenance_reset                  '/maintenance/reset',
-                                             :controller => 'maintenance',
-                                             :action     => 'reset'
-    admin.maintenance_reset_distribution     '/maintenance/reset_distribution',
-                                              :controller => 'maintenance',
-                                              :action     => 'reset_distribution'
-  end
-
+  # This is a legacy wild controller route that's not recommended for RESTful applications.
+  # Note: This route will make all actions in every controller accessible via GET requests.
+  # match ':controller(/:action(/:id(.:format)))'
 end
