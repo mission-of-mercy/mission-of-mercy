@@ -1,4 +1,16 @@
 MissionOfMercy::Application.routes.draw do
+  root :to => 'home#index'
+
+  #map.home '/', :controller => :home, :action => :index
+
+  #map.logout '/logout', :controller => 'sessions', :action => 'destroy'
+  #map.login '/login', :controller => 'sessions', :action => 'new'
+
+  #map.resource :session
+
+  #map.resources :support_requests
+  #map.connect '/active_support_requests.:format', :controller => "support_requests", :action => "active_requests"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
