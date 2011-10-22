@@ -1,0 +1,2 @@
+module AssignmentDeskHelper
+end
