@@ -1,0 +1,10 @@
+#patients= @patients
+
+%h1 
+  System Status
+  %span{:style=>"float:right;"}= link_to 'Home', root_path
+
+%hr
+
+#requests
+  = render :partial => "requests"

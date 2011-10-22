@@ -1,0 +1,129 @@
+- content_for :header_js do
+  jQuery(function() { MoM.Helpers.checkIn({dateInput:'#{@date_input}'}); });
+
+= f.error_messages
+
+= hidden_field_tag :date_input
+
+#demographics{:style=>"height: 350px;"}
+  %div.input-left
+  
+    %h4 1: Demographics
+  
+    %div.input
+      %div.row
+        %span.label= f.label :first_name
+        %span.formw= f.text_field :first_name
+      %div.row
+        %span.label= f.label :last_name
+        %span.formw= f.text_field :last_name
+      %div.row
+        %span.label= f.label :date_of_birth
+        = image_tag "cog.png", :id => "date-input-toggle", 
+        :title => "Toggle date input method"
+        %span#date-input-container.formw
+          %span#date-select{:style => "display: none;"}
+            = f.date_select :date_of_birth, dob_select_options
+          %span#date-text{:style => "display: none;"}
+            = f.text_field :date_of_birth
+        %span#date-format.formexample{:style => "display: none;"}
+          Format: mm/dd/yyyy
+      %div.row
+        %span.label= f.label :sex
+        %span.formw= f.select :sex, *sex_select_options
+      %div.row
+        %span.label= f.label :phone
+        %span.formw= f.text_field :phone
+      %div.row
+        %span.label= f.label :street
+        %span.formw= f.text_field :street
+      %div.row
+        %span.label= f.label :zip
+        %span.formw= f.text_field :zip
+        = image_tag "spinner.gif", :id => "zip-spinner", :style => "display: none;",
+          :class => "spinner"
+      %div.row
+        %span.label= f.label :city
+        %span.formw= f.text_field :city
+        = image_tag "spinner.gif", :id => "city-spinner", :style => "display: none;",
+          :class => "spinner"
+        #city_autocomplete.autocomplete
+        :javascript
+          new Ajax.Autocompleter('patient_city', 'city_autocomplete', '#{lookup_city_patients_path}', {
+            paramName: 'city',
+            minChars: 2,
+            indicator: 'city-spinner',
+            parameters: "authenticity_token=" + encodeURIComponent("#{escape_javascript(form_authenticity_token)}")
+          });
+      %div.row
+        %span.label= f.label :state
+        %span.formw= f.text_field :state
+      %div.row
+        %span.label= f.label :race
+        %span.formw= f.select :race, *race_select_options
+      #race_other_div.row{:style=>"display:none;"}
+        %span.label= f.label :race_other, 'Specify race'
+        %span.formw= f.text_field :race_other
+    %br
+    
+  / End Demographics & Left Column
+
+  %div.input-right
+
+    %h4 2: Visit Details
+    
+    %div.input
+      %div.row
+        %span.label= f.label :chief_complaint, "Reason for today's visit"
+        %span.formw= f.select :chief_complaint, *chief_complaint_options
+      %div.row
+        %span.label= f.label :last_dental_visit
+        %span.formw= f.select :last_dental_visit, *last_dental_visit_options
+      %div.row
+        %span.label
+          %label Is the patient in pain?
+        %span.formw
+          = yes_no_group f, :pain, "MoM.Helpers.togglePatientPain();"
+      #pain_length_div.row{:style=>"display:none;"}
+        %span.label= f.label :time_in_pain, "Time in pain"
+        - if @patient.new_record?
+          %span.formw= f.text_field :time_in_pain
+          %span.formexample Example: "1 month" or "2 years"
+        - else
+          %span.formw= f.text_field :pain_length_in_days
+  
+    / End Visit Details
+
+    %h4 3: Additional Information
+
+    %div.input
+      %div.row
+        %span.label= f.label :travel_time
+        %span.formw
+          - if @patient.new_record?
+            Hours: 
+            = f.text_field :travel_time_hours, :size => 2
+            Minutes:
+            = f.text_field :travel_time_minutes, :size => 2
+          - else
+            = f.text_field :travel_time
+      %div.row
+        %span.label
+          %label Attended previous clinic?
+        %span.formw
+          = f.radio_button :attended_previous_mom_event, true
+          = f.label :attended_previous_mom_event, "Yes", :value => true
+          = f.radio_button :attended_previous_mom_event, false
+          = f.label :attended_previous_mom_event, "No", :value => false
+      
+      #previous_mom_location_div.row{:style=>show_previous_mom(@patient)}
+        %span.label{:style=>"height: 200px;"}
+          Clinic(s) attended
+          %br
+        - f.fields_for :previous_mom_clinics, @patient.previous_mom_clinics.sort_by(&:clinic_year) do |p|
+          %span.formw
+            = p.hidden_field :location
+            = p.hidden_field :clinic_year
+            = p.check_box :attended
+            = p.label :attended, p.object.description
+          %br

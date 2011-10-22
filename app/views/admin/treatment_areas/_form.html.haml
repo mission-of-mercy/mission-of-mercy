@@ -1,0 +1,36 @@
+= error_messages_for :treatment_area
+
+%div.input-left.no_border
+  
+  %h4 Treatment Area
+  
+  %p
+    = f.label :name
+    %br
+    = f.text_field :name
+
+  %p
+    = f.label :capacity
+    %br
+    = f.text_field :capacity
+
+  %p
+    = f.label :amalgam_composite_procedures
+    = f.check_box :amalgam_composite_procedures
+
+%div.input-right.border
+
+  %h4 Procedures
+  
+  - f.fields_for :procedure_treatment_area_mappings do |p|
+    = p.hidden_field :procedure_id
+    = p.check_box :assigned
+    = p.label :assigned, p.object.procedure.full_description
+    %br
+    
+  %p
+
+%div.input-bottom.check_out
+  %p
+    = submit_tag 'Save'
+    = link_to 'Cancel', admin_treatment_areas_path, :class => "warning"

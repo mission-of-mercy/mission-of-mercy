@@ -1,0 +1,36 @@
+= f.error_messages
+
+%p
+  = f.label :name
+  %br
+  = f.text_field :name
+
+%p
+  = f.label :strength
+  %br
+  = f.text_field :strength
+
+%p
+  = f.label :quantity
+  %br
+  = f.text_field :quantity
+
+%p
+  = f.label :dosage
+  %br
+  = f.text_field :dosage
+
+%p
+  = f.label :cost
+  %br
+  = f.text_field :cost
+  
+%p
+  = f.label :position
+  %br
+  = f.text_field :position
+
+%p
+  = f.submit "Save"
+  |
+  = link_to 'Cancel', admin_prescriptions_path

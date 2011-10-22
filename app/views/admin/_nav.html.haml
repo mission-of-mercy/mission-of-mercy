@@ -1,0 +1,19 @@
+%ul#tabnav
+  %li{:class => current_tab("reports")}
+    = link_to "Reports", admin_reports_path
+  %li{:class => current_tab("patients")}
+    = link_to "Patients", patients_path
+  %li{:class => current_tab("procedures")}
+    = link_to "Procedures", admin_procedures_path
+  %li{:class => current_tab("prescriptions")}
+    = link_to "Prescriptions", admin_prescriptions_path
+  %li{:class => current_tab("pre-meds")}
+    = link_to "Pre-Meds", admin_pre_meds_path
+  %li{:class => current_tab("treatment-areas")}
+    = link_to "Treatment Areas", admin_treatment_areas_path
+  %li{:class => current_tab("support-requests")}
+    = link_to "Support Requests", admin_support_requests_path
+  %li{:class => current_tab("users")}
+    = link_to "Users", admin_users_path
+  %li{:class => current_tab("maintenance")}
+    = link_to "Maintenance", admin_maintenance_path

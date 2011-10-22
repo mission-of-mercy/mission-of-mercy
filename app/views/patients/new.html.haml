@@ -1,0 +1,36 @@
+- title 'Patient Check In'
+
+- content_for :header do
+  :javascript
+    Event.observe(window, 'load', function() {
+      $('patient_first_name').focus();
+      MoM.disableEnterKey();
+      
+      #{print_patient_chart}
+    });
+
+= header do
+  %h1 Patient Check In
+
+- form_for @patient, :html => { :autocomplete => "off" } do |f|
+  = render :partial => 'form', :locals => {:f => f}
+  
+  #survey{:style=>"display:none; clear:both;"}
+    
+    %h4 4: Survey Questions
+    
+    %div{:style=>"padding-left: 20px; padding-bottom: 20px;"}
+      = render :partial => 'surveys/check_in', :locals => {:f => f}
+
+  %div.input-bottom.check_out
+    %span.left= link_to_reset 'new_patient'
+    #bottom_demographics
+      = button_to_function "Next", "return MoM.Helpers.showPatientSurvey()"
+    #bottom_survey{:style=>"display:none;"}
+      = f.submit "Check In"
+      = link_to_function "Back", "return MoM.Helpers.showPatientDemographics()", :class => 'back'
+
+#last_patient{:style=>"display:none;"}
+  %h1{:style=>"text-align:center;"}= @last_patient.chart_number if @last_patient
+
+  = link_to_function "Check In Next Patient ", "Modalbox.hide(); $('patient_first_name').focus(); return false;", :class => "back"
