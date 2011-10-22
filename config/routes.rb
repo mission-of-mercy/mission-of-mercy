@@ -8,7 +8,6 @@ MissionOfMercy::Application.routes.draw do
     match '/login' => 'devise/sessions#new', :as => :login
   end 
   
-  resource :session
   resources :support_requests
   match '/active_support_requests.:format' => 'support_requests#active_requests'
   resources :treatment_areas do
