@@ -9,6 +9,15 @@ class ApplicationController < ActionController::Base
   attr_accessor :current_area_id, :current_treatment_area_id
 
   private
+  
+  # Filter method to enforce admin access rights
+  def admin_required
+    if signed_in?
+      current_user.user_type == UserType::ADMIN
+    else
+      redirect_to login_path
+    end
+  end
 
   def set_area_id
     self.current_area_id = current_user.user_type if current_user
