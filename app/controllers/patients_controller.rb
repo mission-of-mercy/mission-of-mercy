@@ -1,5 +1,5 @@
 class PatientsController < ApplicationController
-  before_filter :login_required, :except => [ :lookup_zip, :lookup_city ]
+  before_filter :authenticate_user!, :except => [ :lookup_zip, :lookup_city ]
   before_filter :admin_required, :only => [ :edit, :destroy ]
   before_filter :date_input
   before_filter :find_last_patient, :only => [:new]

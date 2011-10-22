@@ -1,5 +1,5 @@
 class PharmacyController < ApplicationController
-  before_filter :login_required
+  before_filter :authenticate_user!
 
   def check_out
     @patient = Patient.find(params[:patient_id])

@@ -1,5 +1,5 @@
 class TreatmentAreas::Patients::SurveysController < ApplicationController  
-  before_filter :login_required
+  before_filter :authenticate_user!
   before_filter :find_treatment_area
   before_filter :find_patient
   

@@ -1,5 +1,5 @@
 class SupportRequestsController < ApplicationController
-  before_filter :login_required, :except => [:active_requests]
+  before_filter :authenticate_user!, :except => [:active_requests]
   
   def active_requests
     respond_to do |format|
