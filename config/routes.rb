@@ -1,86 +1,64 @@
 MissionOfMercy::Application.routes.draw do
   devise_for :users
-
-  root :to => 'home#index'
-
-  match '/' => 'home#index' # I am not sure we need this
-
-  match '/logout' => 'sessions#destroy'
   
-  match '/login' => 'sessions#new'
-  
+  match '/' => 'home#index'
+  match '/' => 'home#index', :as => :home
+  match '/logout' => 'sessions#destroy', :as => :logout
+  match '/login' => 'sessions#new', :as => :login
   resource :session
-  
   resources :support_requests
+  match '/active_support_requests.:format' => 'support_requests#active_requests'
+  resources :treatment_areas do
+    collection do
+  post :change
+  end
   
-  match '/active_support_requests.:format' =>  'support_requests#active_requests'
-  
-=begin
-  Not sure about this route. will come back later.  
-  map.resources :treatment_areas, :collection => {:change => :post} do |area|
-    area.resources :patients,
-                   :controller => "treatment_areas/patients" do |patient|
-      patient.resources :prescriptions, :controller => "treatment_areas/patients/prescriptions"
-      patient.resources :procedures,    :controller => "treatment_areas/patients/procedures"
-      patient.resource  :survey,        :controller => "treatment_areas/patients/surveys"
+      resources :patients do
+    
+    
+          resources :prescriptions
+      resources :procedures
+      resource :survey
     end
   end
-=end  
 
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
+  match '/pharmacy/check_out/:patient_id' => 'pharmacy#check_out', :as => :pharmacy_check_out
+  match '/pharmacy/finalize/:patient_id' => 'pharmacy#check_out_complete', :as => :pharmacy_finalize
+  resources :patients do
+    collection do
+  get :lookup_zip
+  post :lookup_city
+  end
+  
+  
+  end
 
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
+  resources :patient_procedures
+  resources :assignment_desk
+  match '/patients/:id/print' => 'patients#print', :as => :print_chart
+  match '/patients/:patient_id/export' => 'patients#export_to_dexis_file', :as => :export_to_dexis_file
+  match '/status' => 'status#index', :as => :status
+  namespace :admin do
+      resources :treatment_areas
+      resources :procedures
+      resources :pre_meds
+      resources :prescriptions
+      resources :users
+      resources :support_requests do
+        collection do
+    delete :destroy_all
+    end
+    
+    
+    end
+      match '/reports' => 'reports#index', :as => :reports
+      match '/reports/clinic_summary/' => 'reports#clinic_summary', :as => :clinic_summary_report
+      match '/reports/treatment_area_distribution' => 'reports#treatment_area_distribution', :as => :treatment_area_distribution_report
+      match '/reports/post_clinic' => 'reports#post_clinic', :as => :post_clinic_report
+      match '/reports/export_patients' => 'reports#export_patients', :as => :export_patients
+      match '/maintenance' => 'maintenance#index', :as => :maintenance
+      match '/maintenance/reset' => 'maintenance#reset', :as => :maintenance_reset
+      match '/maintenance/reset_distribution' => 'maintenance#reset_distribution', :as => :maintenance_reset_distribution
+  end
 
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
 end
