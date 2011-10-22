@@ -60,5 +60,5 @@ MissionOfMercy::Application.routes.draw do
       match '/maintenance/reset' => 'maintenance#reset', :as => :maintenance_reset
       match '/maintenance/reset_distribution' => 'maintenance#reset_distribution', :as => :maintenance_reset_distribution
   end
-
+  root :to => 'home#index'
 end

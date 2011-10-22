@@ -95,12 +95,12 @@ module UsersHelper
                 :area_id            => current_area_id,
                 :treatment_area_id  => current_treatment_area_id }
                 
-    link_to_remote image_tag("need_help.png", :class => "no_border"), 
+    link_to image_tag("need_help.png", :class => "no_border"), 
                    {:url => {:controller => "/support_requests", 
                              :action => "create", 
                              :support_request => request },
                    :before => "$('help_loading').show(); $(this).hide()"},
-                   {:id => "help_link"}
+                   {:id => "help_link"}, :remote => true
   end
 
 end
