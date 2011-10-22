@@ -24,11 +24,14 @@ GEM
       activesupport (= 2.3.11)
     activesupport (2.3.11)
     contest (0.1.2)
+    factory_girl (2.2.0)
+      activesupport
     faker (0.9.5)
       i18n (~> 0.4)
     fastercsv (1.5.4)
     haml (3.0.25)
     i18n (0.5.0)
+    minitest (2.6.2)
     pg (0.9.0)
     rack (1.1.2)
     rails (2.3.11)
@@ -39,7 +42,6 @@ GEM
       activesupport (= 2.3.11)
       rake (>= 0.8.3)
     rake (0.8.7)
-    test-unit (2.2.0)
     will_paginate (2.3.15)
 
 PLATFORMS
@@ -47,12 +49,13 @@ PLATFORMS
 
 DEPENDENCIES
   contest
+  factory_girl
   faker (~> 0.9.5)
   fastercsv
   haml (~> 3.0)
+  minitest
   pg (~> 0.9.0)
   rails (~> 2.3.4)
   restful-authentication!
   scriptaculous_slider!
-  test-unit
   will_paginate (~> 2.3.11)

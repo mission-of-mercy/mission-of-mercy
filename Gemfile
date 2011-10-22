@@ -15,6 +15,7 @@ gem "fastercsv"
 
 group :test do
   gem "contest"
-  gem "test-unit"
+  gem "minitest"
   gem "faker", '~> 0.9.5'
+  gem "factory_girl"
 end
