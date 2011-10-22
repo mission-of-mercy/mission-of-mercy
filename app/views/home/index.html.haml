@@ -5,7 +5,7 @@
     = clinic_state
     Mission of Mercy
 
-- if logged_in?
+- if signed_in?
   - if current_user.user_type == UserType::ADMIN
     = render :partial => 'admin_index'
   - elsif current_user.user_type == UserType::CHECKOUT
