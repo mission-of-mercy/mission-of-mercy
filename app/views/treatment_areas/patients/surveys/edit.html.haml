@@ -5,7 +5,7 @@
   %br
   = "#{@patient.full_name} | Chart # #{@patient.id}"
   
-- form_for @patient, 
+= form_for @patient, 
   :url  => treatment_area_patient_survey_path(@treatment_area, @patient), 
   :html => { :autocomplete => "off" } do |f|
   = f.error_messages

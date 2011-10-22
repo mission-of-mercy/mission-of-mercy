@@ -5,7 +5,7 @@
   %br
   = "#{@patient.full_name} | Chart # #{@patient.id}"
  
-- form_for @patient, 
+= form_for @patient, 
   :url  => pharmacy_finalize_path(@patient), 
   :html => { :autocomplete => "off" } do |f|
   

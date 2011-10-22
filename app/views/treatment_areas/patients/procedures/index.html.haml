@@ -38,7 +38,7 @@
 
   %h4 New Procedure
 
-  - form_for @patient_procedure, 
+  = form_for @patient_procedure, 
     :url => treatment_area_patient_procedures_path(@treatment_area, @patient),
     :html => { :autocomplete => "off" } do |f|
     = f.error_messages

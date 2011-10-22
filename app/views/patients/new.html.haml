@@ -12,7 +12,7 @@
 = header do
   %h1 Patient Check In
 
-- form_for @patient, :html => { :autocomplete => "off" } do |f|
+= form_for @patient, :html => { :autocomplete => "off" } do |f|
   = render :partial => 'form', :locals => {:f => f}
   
   #survey{:style=>"display:none; clear:both;"}

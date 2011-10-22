@@ -3,5 +3,5 @@
 = header do
   %h1 Edit Prescription
 
-- form_for @prescription, :url => admin_prescription_path(@prescription) do |f|
+= form_for @prescription, :url => admin_prescription_path(@prescription) do |f|
   = render :partial => "form", :locals => {:f => f}

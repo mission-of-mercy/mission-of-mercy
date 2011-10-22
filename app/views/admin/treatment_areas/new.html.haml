@@ -3,5 +3,5 @@
 = header do
   %h1 New Treatment Area
 
-- form_for @treatment_area , :url => admin_treatment_areas_path do |f|
+= form_for @treatment_area , :url => admin_treatment_areas_path do |f|
   = render :partial => "form", :locals => {:f => f}

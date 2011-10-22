@@ -3,5 +3,5 @@
 = header do
   %h1 Edit Pre-Med
   
-- form_for @pre_med, :url => admin_pre_med_path(@pre_med) do |f|
+= form_for @pre_med, :url => admin_pre_med_path(@pre_med) do |f|
   = render :partial => "form", :locals => {:f => f}
