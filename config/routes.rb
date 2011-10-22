@@ -5,7 +5,7 @@ MissionOfMercy::Application.routes.draw do
   match '/' => 'home#index', :as => :home
   match '/logout' => 'sessions#destroy', :as => :logout
   match '/login' => 'sessions#new', :as => :login
-  #resource :session
+  resource :session
   resources :support_requests
   match '/active_support_requests.:format' => 'support_requests#active_requests'
   resources :treatment_areas do
