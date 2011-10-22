@@ -3,8 +3,11 @@ MissionOfMercy::Application.routes.draw do
   
   match '/' => 'home#index'
   match '/' => 'home#index', :as => :home
-  match '/logout' => 'sessions#destroy', :as => :logout
-  match '/login' => 'sessions#new', :as => :login
+  devise_scope :user do 
+    match '/logout' => 'devise/sessions#destroy', :as => :logout
+    match '/login' => 'devise/sessions#new', :as => :login
+  end 
+  
   resource :session
   resources :support_requests
   match '/active_support_requests.:format' => 'support_requests#active_requests'
