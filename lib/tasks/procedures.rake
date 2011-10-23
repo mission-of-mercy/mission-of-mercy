@@ -4,9 +4,9 @@ namespace :procedures do
   task :import => :environment do
     Procedure.destroy_all
 
-    custom_file   = "#{RAILS_ROOT}/procedures.csv"
+    custom_file   = "#{Rails.root}/procedures.csv"
     import_file   = custom_file if File.exists?(custom_file)
-    import_file ||= "#{RAILS_ROOT}/data/procedures.csv"
+    import_file ||= "#{Rails.root}/data/procedures.csv"
 
     FasterCSV.foreach(import_file, :headers => true) do |row|
       procedure = Procedure.create(
