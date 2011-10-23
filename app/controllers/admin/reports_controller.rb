@@ -1,3 +1,5 @@
+require 'csv'
+
 class Admin::ReportsController < ApplicationController
   before_filter :admin_required
   before_filter :set_current_tab
@@ -35,7 +37,7 @@ class Admin::ReportsController < ApplicationController
       patients = Patient.all
     end
 
-    csv_string = FasterCSV.generate do |csv|
+    csv_string = CSV.generate do |csv|
       csv << ["Chart #", "First Name", "Last Name", "Date of Birth", "Phone",
               "Street Address", "City", "State", "Zip", "Sex"]
       patients.sort_by(&:id).each do |patient|

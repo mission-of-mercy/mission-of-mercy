@@ -1,3 +1,5 @@
+require 'csv'
+
 namespace :procedures do
 
   desc 'import procedures from ./procedures.csv if present, otherwise use ./data/procedures.csv'
@@ -8,7 +10,7 @@ namespace :procedures do
     import_file   = custom_file if File.exists?(custom_file)
     import_file ||= "#{Rails.root}/data/procedures.csv"
 
-    FasterCSV.foreach(import_file, :headers => true) do |row|
+    CSV.foreach(import_file, :headers => true) do |row|
       procedure = Procedure.create(
         :code                  => row["Procedure Code"],
         :description           => row["Description"],
