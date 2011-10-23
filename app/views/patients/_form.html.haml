@@ -47,7 +47,7 @@
         %span.formw= f.text_field :city
         = image_tag "spinner.gif", :id => "city-spinner", :style => "display: none;",
           :class => "spinner"
-        #city_autocomplete.autocomplete
+        /#city_autocomplete.autocomplete
         / TODO Replace with jQuery
         / :javascript
         /   new Ajax.Autocompleter('patient_city', 'city_autocomplete', '#{lookup_city_patients_path}', {
