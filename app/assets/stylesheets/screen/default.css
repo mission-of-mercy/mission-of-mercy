@@ -1,16 +1,16 @@
-body { 
+body {
   background-color: #788694; color: #333;
   padding: 0px;
 	margin: 0;
 }
 
 body.admin{
-	background-color: #c12317; color: black; 
+	background-color: #c12317; color: black;
 }
 
 body.logged_out{
-	background-color: #333; 
-	color: black; 
+	background-color: #333;
+	color: black;
 }
 
 html, body {
@@ -28,7 +28,7 @@ body, p, ol, ul, td {
 	padding: 0;
 	width: 950px;
   min-height: 100%;
-  
+
   -moz-box-shadow: #222 0px -10px 10px 0;
   box-shadow: #222 0px 0px 10px 0;
 }
@@ -38,14 +38,14 @@ body.red{
 }
 
 #status_container {
-  background-color: white; 
+  background-color: white;
   min-height: 50%;
   padding:20px;
   -moz-border-radius: 10px;
   -moz-box-shadow: 0px 0px 5px #000 inset;
   border-radius: 10px;
   box-shadow: 0px 0px 5px #000 inset;
-  width: 75%; 
+  width: 75%;
   margin: 50px auto;
   position: relative;
 }
@@ -59,7 +59,7 @@ body.red{
   right: -20px;
   font-size: 2em;
   color: #fff;
-  
+
   background: #6db3f2; /* old browsers */
   background: -moz-linear-gradient(top, #6db3f2 0%, #54a3ee 50%, #1e69de 100%); /* firefox */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6db3f2), color-stop(50%,#54a3ee), color-stop(100%,#1e69de)); /* webkit */
@@ -84,7 +84,7 @@ body.red{
 #top_navigation a, #top_navigation a:visited{
 	color: white;
 	text-decoration: underline;
-} 
+}
 
 #top_navigation a:hover{
 	color: silver;
@@ -109,7 +109,7 @@ body.red{
 
 #top_left a:hover{
 	text-decoration: underline;
-} 
+}
 
 #contents{
 	background-color: #fff;
@@ -295,7 +295,7 @@ img.table_image{
 form.new_patient  label, form.new_patient_procedure label{
 	width: 250px;
 	white-space: pre;
-} 	
+}
 
 div.input-left{
 	float: left;
@@ -339,7 +339,7 @@ div.row {
   padding-top: 10px;
 }
 
-form.new_patient div.row span.label, 
+form.new_patient div.row span.label,
 form.edit_patient div.row span.label{
 	float: left;
   width: 100px;
@@ -378,7 +378,7 @@ div.row #date-input-toggle{
 div.row span.formw {
   text-align: left;
 	margin-left: 20px;
-} 
+}
 
 div.input-right div.row span.formexample {
   margin-left: 175px;
@@ -451,9 +451,9 @@ form dd {
 }
 
 div.check_out{
-	text-align:right; 
-	padding-bottom: 6px; 
-	padding-right: 6px; 
+	text-align:right;
+	padding-bottom: 6px;
+	padding-right: 6px;
 	border-top: 1px solid gray;
 }
 
@@ -500,20 +500,20 @@ table		{
 		border: 4px solid #ADBBCA;
 		color: #4F6480;
 		background: #F0F0F0;
-		
+
 		}
-		
-		
+
+
 thead		{
 		color: #fff;
 		background: #5E7796;
 		}
-		
+
 thead tr th	{
 		padding: 4px 8px 4px 8px;
 		}
 
-		
+
 thead th	{
 		border: 4px solid #ADBBCA;
 		}
@@ -521,24 +521,24 @@ thead th	{
 tfoot		{
 		background: #fff;
 		}
-		
+
 tfoot tr td, tfoot tr th, tbody tr td	{
 		padding: 4px;
 		}
-		
+
 tbody tr:hover	{
 		background: #fff;
 		}
-		
+
 tbody tr	{
 		border: 4px solid #ADBBCA;
 		}
-		
+
 tbody th	{
 		padding: 8px;
 		border: 4px solid #ADBBCA;
 		}
-		
+
 tbody td	{
 		background: #E9ECEE;
 		font-size: 1.2em;
@@ -547,76 +547,76 @@ tbody td	{
 tbody tr.odd		{
 		background: #C4CFDB;
 		}
-		
+
 tbody tr.odd td		{
 		background: #F0F0F0;
 		color: #4F6480;
 		}
-		
 
-		
+
+
 tbody tr.odd:hover		{
 		background: #fff;
 		}
-		
 
-		
+
+
 tbody tr th a:link		{
 		font: bold 1.2em tahoma, arial, sans-serif;
 		color: #5E7796;
 		text-decoration: underline;
-		
+
 		}
-		
+
 tbody tr th a:visited		{
 		font: bold 1.2em tahoma, arial, sans-serif;
 		color: #5E7796;
 		text-decoration: none;
-		
+
 		}
-		
+
 tbody tr th a:hover		{
 		font: bold 1.2em tahoma, arial, sans-serif;
 		color: #5E7796;
 		text-decoration: none;
-		
+
 		}
-		
+
 tbody tr th a:active		{
 		font: bold 1.2em tahoma, arial, sans-serif;
 		color: #5E7796;
 		/*text-decoration: line-through;*/
-		
+
 		}
-		
+
 tbody tr th a:visited:after {
 		content: "\00A0\221A";
 		}
-		
+
 tbody td a:link		{
 		font: normal 0.9em tahoma, arial, sans-serif;
 		color: #808000;
 		text-decoration: underline;
 		}
-		
+
 tbody td a:visited		{
 		font: normal 0.9em tahoma, arial, sans-serif;
 		color: #808000;
 		text-decoration: none;
 		}
-		
+
 tbody td a:hover		{
 		font: normal 0.9em tahoma, arial, sans-serif;
 		color: #808000;
 		text-decoration: none;
 		}
-		
+
 tbody td a:active		{
 		font: normal 0.9em tahoma, arial, sans-serif;
 		color: #808000;
 		text-decoration: underline;
 		}
-			
+
 tbody td.integer{
 	text-align: center;
 }
@@ -638,7 +638,7 @@ div.flash.notice {
   color: #252;
 }
 
-div.flash.error {
+div.flash.error, div.flash.alert {
   background-color: #c88;
   color: #522;
 }
