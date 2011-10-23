@@ -5,7 +5,7 @@ Clinic management software for Mission of Mercy free dental clinics.
 
 ## Installation
 
-Mission of Mercy Software is a Ruby on Rails 2.3 application which runs on Ruby 1.8.7 and
+Mission of Mercy Software is a Ruby on Rails 3.1 application which runs on Ruby 1.9.2 and
 [PostgreSQL](http://www.postgresql.org) databases. Other databases like MySQL
 or SQLite are not officially supported.
 
