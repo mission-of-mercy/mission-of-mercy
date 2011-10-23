@@ -12,15 +12,14 @@ gem 'haml', '~> 3.0'
 #   gem 'uglifier'
 # end
 
+gem "will_paginate",'3.0.pre'
+gem "devise"
+
 gem 'jquery-rails'
 
 group :test do
-  # Pretty printed test output
-  gem 'turn', :require => false
-  gem "contest"
-  gem "test-unit"
+  gem "minitest",  "~> 2.3.1"
   gem "faker", '~> 0.9.5'
+  gem "factory_girl_rails"
+  gem 'colorific', '~> 1.0.0'
 end
-
-gem "will_paginate",'3.0.pre'
-gem "devise"

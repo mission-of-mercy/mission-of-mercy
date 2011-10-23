@@ -7,13 +7,13 @@ class PatientTest < MiniTest::Unit::TestCase
 
     patient.save
 
-    assert patient.errors[:state].any?
+    assert patient.errors.invalid?(:state)
 
     patient.state = "CT"
 
     patient.save
 
-    assert patient.errors[:state].none?
+    assert !patient.errors.invalid?(:state)
   end
 
   def test_should_not_allow_more_than_10_digits_in_zip_field
@@ -21,14 +21,14 @@ class PatientTest < MiniTest::Unit::TestCase
 
     patient.save
 
-    assert patient.errors[:zip].any?,
+    assert patient.errors.invalid?(:zip),
            "More than 10 digits allowed for zip"
 
     patient.zip = "1234567890"
 
     patient.save
 
-    assert patient.errors[:zip].none?,
+    assert !patient.errors.invalid?(:zip),
            "10 or less digits are causing validation problems"
   end
 
@@ -70,7 +70,7 @@ class PatientTest < MiniTest::Unit::TestCase
 
       assert !patient.save, "Patient was saved with time_in_pain format = #{ format }"
 
-      assert patient.errors[:time_in_pain].any?, "#{format} is not a valid format"
+      assert patient.errors.invalid?(:time_in_pain), "#{format} is not a valid format"
     end
   end
 
@@ -79,7 +79,7 @@ class PatientTest < MiniTest::Unit::TestCase
 
     assert patient.save
 
-    assert patient.errors[:time_in_pain].none?
+    assert !patient.errors.invalid?(:time_in_pain)
   end
 
   def test_travel_time_is_calculated

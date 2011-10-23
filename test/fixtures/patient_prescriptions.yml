@@ -1,9 +1,0 @@
-amoxicillin_8_30:
-  patient: patient_12_26_1985_07
-  prescription: amoxicillin
-  created_at: <%= TestHelper.clinic_date("8:30 AM").utc %>
-  
-amoxicillin_9_30:
-  patient: patient_12_26_1985_07
-  prescription: amoxicillin
-  created_at: <%= TestHelper.clinic_date("9:30 AM").utc %>
