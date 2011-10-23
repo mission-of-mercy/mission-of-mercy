@@ -1,0 +1,9 @@
+oral_examl_8_30:
+  patient: patient_12_26_1985_07
+  procedure: oral_exam
+  created_at: <%= TestHelper.clinic_date("8:30 AM").utc %>
+  
+pan_9_30:
+  patient: patient_12_26_1985_07
+  procedure: pan
+  created_at: <%= TestHelper.clinic_date("9:30 AM").utc %>

@@ -1,0 +1,4 @@
+xray1:
+  area_id: <%= ClinicArea::XRAY %>
+  patient: patient_12_26_1985_07
+  created_at: <%= TestHelper.clinic_date("8:30 AM").utc %>

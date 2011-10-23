@@ -1,0 +1,4 @@
+radiology:
+  name: Radiology
+  capacity: 20
+  amalgam_composite_procedures: false
