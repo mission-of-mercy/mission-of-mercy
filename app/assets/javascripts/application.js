@@ -50,6 +50,11 @@ MoM.Support.Timer    = null;
 MoM.Support.startPolling = function (){
   var interval = MoM.Support.Interval * 1000;
   MoM.Support.Timer = setInterval(MoM.Support.checkForRequests, interval);
+
+  $('#help_link').click(function(){
+    $('#help_loading').show();
+    $(this).hide();
+  });
 }
 
 MoM.Support.checkForRequests = function (){
@@ -70,8 +75,8 @@ MoM.Support.processRequests = function(data){
 
     var text    = "Help needed at " + data.requests;
     var options = {
-			'icon': '/images/activebar/icon.png',
-			'button': '/images/activebar/close.png',
+			'icon': '/assets/activebar/icon.png',
+			'button': '/assets/activebar/close.png',
 			'highlight': 'InfoBackground',
 			'border': 'InfoBackground'
 		}
@@ -93,7 +98,7 @@ MoM.Support.processRequests = function(data){
   }
   else
   {
-    if($.fn.activebar && ($('help_link') && $('help_link').visible()) || $('help_link') == null)
+    if($.fn.activebar && ($('#help_link') && $('#help_link').is(':visible')) || $('#help_link') == null)
       $.fn.activebar.hide();
   }
 }
@@ -101,7 +106,7 @@ MoM.Support.processRequests = function(data){
 MoM.Support.showSupportRequested = function(id){
   MoM.Support.Enabled = false;
 
-  if($('help_link') != null) $('help_link').hide();
+  if($('#help_link') != null) $('#help_link').hide();
 
   var text = "Help is on the way. <span style='float:right;'> Click here to cancel your request:</span>";
 
@@ -116,8 +121,8 @@ MoM.Support.showSupportRequested = function(id){
 
 
   var options = {
-    'icon': '/images/activebar/icon.png',
-    'button': '/images/activebar/close.png',
+    'icon': '/assets/activebar/icon.png',
+    'button': '/assets/activebar/close.png',
     'highlight': 'none repeat scroll 0 0 #d23234',
     'background': 'none repeat scroll 0 0 #d23234',
     'border': '#d23234',
