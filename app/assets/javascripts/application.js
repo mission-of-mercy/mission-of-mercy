@@ -1,6 +1,15 @@
 //= require jquery
 //= require jquery_ujs
+//= require_self
 //= require_tree .
+
+// Setup the MoM Namespace
+var MoM = MoM ? MoM : new Object();
+
+MoM.setupNamespace = function(namespace){
+	if(MoM[namespace] == undefined)
+		MoM[namespace] = {}
+}
 
 MoM.init = function(auth_token){
   MoM.AuthToken = auth_token;
