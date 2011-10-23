@@ -2,10 +2,35 @@ class User < ActiveRecord::Base
   devise :database_authenticatable
 
   attr_accessible :password, :password_confirmation, :login, :user_type, :station_id
-  
+
+  def name
+    if user_type == UserType::XRAY
+      if login[/\Axray/]
+        "X-Ray Station #{x_ray_station_id}"
+      else
+        "#{login.humanize} (#{x_ray_station_id})"
+      end
+    else
+      login.humanize
+    end
+  end
+
+  # TODO Replace / Move
   def start_path
-    #temporary hack because I don't know where is the start_path defined. Maybe it is a restful_authentication specific variable from old times
-    #tried to use root_path but it isn't working for some reason
-    '/'
+    if user_type == UserType::ADMIN
+      Rails.application.routes.url_helpers.admin_reports_path
+    elsif user_type == UserType::CHECKIN
+      Rails.application.routes.url_helpers.new_patient_path
+    elsif user_type == UserType::XRAY
+      Rails.application.routes.url_helpers.patients_path
+    elsif user_type == UserType::CHECKOUT
+      Rails.application.routes.url_helpers.root_path
+    elsif user_type == UserType::PHARMACY
+      Rails.application.routes.url_helpers.patients_path
+    elsif user_type == UserType::ASSIGNMENT
+      Rails.application.routes.url_helpers.patients_path
+    else
+      Rails.application.routes.url_helpers.root_path
+    end
   end
 end
