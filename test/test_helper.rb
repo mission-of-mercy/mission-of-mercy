@@ -2,6 +2,36 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 require "factory_girl"
+require "minitest/autorun"
+
+
+module MiniTestWithHooks
+  class Unit <  MiniTest::Unit
+    def before_suites; end
+    def before_suite; end
+    def after_suites; end
+    def after_suite; end
+
+    def _run_suites(suites, type)
+      begin
+        before_suites
+        super(suites, type)
+      ensure
+        after_suites
+      end
+    end
+
+    def _run_suite(suite, type)
+      begin
+        suite.before_suite if suite.respond_to?(:before_suite)
+        super(suite, type)
+      ensure
+        suite.after_suite if suite.respond_to?(:after_suite)
+      end
+    end
+  end
+end
+MiniTest::Unit.runner = MiniTestWithHooks::Unit.new
 
 module TestHelper
   extend self;
@@ -22,7 +52,7 @@ module TestHelper
   end
 end
 
-class ActiveSupport::TestCase
+class MiniTest::Unit::TestCase
 
   def create_test_patients(date=Date.today)
     (6..17).map { |i| date + i.hours }.each do |datetime|
