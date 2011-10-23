@@ -1,6 +1,6 @@
 require "test_helper"
 
-class PatientTest < MiniTest::Unit::TestCase
+class PatientTest < ActiveSupport::TestCase
 
   def test_should_not_allow_more_than_2_digits_in_state_field
     patient = Factory.build(:patient, :state => "CTZ")
