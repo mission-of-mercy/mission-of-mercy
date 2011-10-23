@@ -1,23 +1,23 @@
 MissionOfMercy::Application.routes.draw do
   devise_for :users
-  
-  match '/' => 'home#index'
-  match '/' => 'home#index', :as => :home
-  devise_scope :user do 
+
+  root :to => 'home#index'
+
+  devise_scope :user do
     match '/logout' => 'devise/sessions#destroy', :as => :logout
-    match '/login' => 'devise/sessions#new', :as => :login
-  end 
-  
+    match '/login'  => 'devise/sessions#new',     :as => :login
+  end
+
   resources :support_requests
   match '/active_support_requests.:format' => 'support_requests#active_requests'
   resources :treatment_areas do
     collection do
   post :change
   end
-  
+
       resources :patients do
-    
-    
+
+
           resources :prescriptions
       resources :procedures
       resource :survey
@@ -31,8 +31,8 @@ MissionOfMercy::Application.routes.draw do
   get :lookup_zip
   post :lookup_city
   end
-  
-  
+
+
   end
 
   resources :patient_procedures
@@ -50,8 +50,8 @@ MissionOfMercy::Application.routes.draw do
         collection do
     delete :destroy_all
     end
-    
-    
+
+
     end
       match '/reports' => 'reports#index', :as => :reports
       match '/reports/clinic_summary/' => 'reports#clinic_summary', :as => :clinic_summary_report

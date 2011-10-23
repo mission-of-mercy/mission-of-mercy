@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   attr_accessor :current_area_id, :current_treatment_area_id
 
   private
-  
+
   # Filter method to enforce admin access rights
   def admin_required
     if signed_in?
