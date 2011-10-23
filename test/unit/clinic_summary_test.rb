@@ -1,31 +1,34 @@
 require "test_helper"
 
-class ClinicSummaryTest < ActiveSupport::TestCase
-  setup do
+class ClinicSummaryTest < MiniTest::Unit::TestCase
+  def self.before_suite
+    TestHelper.create_test_prescriptions
+    TestHelper.create_test_procedures
+    (0..1).each do |i| 
+      TestHelper.create_test_patients(TestHelper.clinic_date + i.days)
+    end
+  end
+
+  def setup
     @report_date = TestHelper.clinic_date
-
-    create_test_prescriptions
-    create_test_procedures
-    (0..1).each { |i| create_test_patients(@report_date + i.days) }
-
     @patients    = Patient.all(:order => "created_at",
                      :conditions => ["created_at::Date = ?", @report_date])
   end
 
-  test "should report on the specified date and span" do
+  def test_should_report_on_the_specified_date_and_span
     report = Reports::ClinicSummary.new(@report_date, "All")
     
     assert_equal report.day,  @report_date
     assert_equal report.span, "All"
   end
   
-  test "should be reporting all patients checked in" do
+  def test_should_be_reporting_all_patients_checked_in
     report = Reports::ClinicSummary.new(@report_date, "All")
 
     assert_equal @patients.count, report.patient_count
   end
   
-  test "should report on patients for the selected time span only" do    
+  def test_should_report_on_patients_for_the_selected_time_span_only
     Reports::ClinicSummary::TIME_SPANS.each_with_index do |span, index|
       if index == 0 # All
         expected_patient_count = @patients.count 
@@ -39,10 +42,12 @@ class ClinicSummaryTest < ActiveSupport::TestCase
     end
   end
 
-  test "should report on radiology numbers" do
+  def test_should_report_on_radiology_numbers
     xray_time = TestHelper.clinic_date("8:30 AM")
     xray_count = 3
-    @patients.first(xray_count).each { |p| create_test_xray(xray_time, p) }
+    @patients.first(xray_count).each do |patient|
+      TestHelper.create_test_xray(xray_time, patient)
+    end
 
     report = Reports::ClinicSummary.new(@report_date, xray_time)
     assert_equal xray_count, report.xrays
@@ -51,8 +56,9 @@ class ClinicSummaryTest < ActiveSupport::TestCase
     assert_equal 0, report.xrays
   end
 
-  test "should only report on procedures for the specified day / span" do
-    @procedures = Procedure.all
+  def test_should_only_report_on_procedures_for_the_specified_day_or_span
+    @oral_exam = Procedure.find_by_code(150)
+    @pan_film  = Procedure.find_by_code(330)
     PatientProcedure.create(:patient => @patients.first,
                             :procedure => @oral_exam,
                             :created_at => TestHelper.clinic_date("8:30 AM"))
@@ -73,7 +79,8 @@ class ClinicSummaryTest < ActiveSupport::TestCase
     assert_equal 215, report.procedure_value
   end
   
-  test "should only report on prescriptions for the specified day / span" do
+  def test_should_only_report_on_prescriptions_for_the_specified_day_or_span
+    @amoxicillin = Prescription.find_by_name("Amoxicillin")
     ["8:30 AM", "9:30 AM"].each do |time|
       PatientPrescription.create(:patient => @patients.first,
                                  :prescription => @amoxicillin,
