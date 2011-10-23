@@ -57,18 +57,19 @@ class ClinicSummaryTest < MiniTest::Unit::TestCase
   end
 
   def test_should_only_report_on_procedures_for_the_specified_day_or_span
-    @oral_exam = Procedure.find_by_code(150)
-    @pan_film  = Procedure.find_by_code(330)
+    @first_proc  = Procedure.first
+    @second_proc = Procedure.all.second || Procedure.first
+
     PatientProcedure.create(:patient => @patients.first,
-                            :procedure => @oral_exam,
+                            :procedure => @first_proc,
                             :created_at => TestHelper.clinic_date("8:30 AM"))
     PatientProcedure.create(:patient => @patients.first,
-                            :procedure => @pan_film,
+                            :procedure => @second_proc,
                             :created_at => TestHelper.clinic_date("9:30 AM"))
 
     report = Reports::ClinicSummary.new(@report_date, "8:30 AM")
     assert_equal 1,  report.procedure_count
-    assert_equal 90, report.procedure_value
+    assert_equal @first_proc.cost, report.procedure_value
     
     report = Reports::ClinicSummary.new(@report_date, "8:00 AM")
     assert_equal 0, report.procedure_count
@@ -76,21 +77,21 @@ class ClinicSummaryTest < MiniTest::Unit::TestCase
     
     report = Reports::ClinicSummary.new(@report_date, "All")
     assert_equal 2,   report.procedure_count
-    assert_equal 215, report.procedure_value
+    assert_equal @first_proc.cost + @second_proc.cost, report.procedure_value
   end
   
   def test_should_only_report_on_prescriptions_for_the_specified_day_or_span
-    @amoxicillin = Prescription.find_by_name("Amoxicillin")
+    @prescription = Prescription.first
     ["8:30 AM", "9:30 AM"].each do |time|
       PatientPrescription.create(:patient => @patients.first,
-                                 :prescription => @amoxicillin,
+                                 :prescription => @prescription,
                                  :prescribed => true,
                                  :created_at => TestHelper.clinic_date(time))
     end
 
     report = Reports::ClinicSummary.new(@report_date, "8:30 AM")
     assert_equal 1, report.prescription_count
-    assert_equal @amoxicillin.cost, report.prescription_value
+    assert_equal @prescription.cost, report.prescription_value
     
     report = Reports::ClinicSummary.new(@report_date, "8:00 AM")
     assert_equal 0, report.prescription_count
@@ -98,6 +99,6 @@ class ClinicSummaryTest < MiniTest::Unit::TestCase
     
     report = Reports::ClinicSummary.new(@report_date, "All")
     assert_equal 2, report.prescription_count
-    assert_equal @amoxicillin.cost * 2.0, report.prescription_value
+    assert_equal @prescription.cost * 2.0, report.prescription_value
   end
 end
