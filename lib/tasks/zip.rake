@@ -5,7 +5,7 @@ namespace :zip do
   # Zipcode CSC can be downloaded from: http://www.boutell.com/zipcodes/
   desc 'import zips from zipcode.csv'
   task :import => :environment do
-    FasterCSV.foreach("#{RAILS_ROOT}/zipcode.csv", :headers => true) do |row|
+    FasterCSV.foreach("#{Rails.root}/zipcode.csv", :headers => true) do |row|
       Patient::Zipcode.create(
         :zip       => row["zip"],
         :city      => row["city"].try(:titlecase),
@@ -21,7 +21,7 @@ namespace :zip do
   
   desc 'add county information to zips'
   task :add_county => :environment do
-    FasterCSV.foreach("#{RAILS_ROOT}/zipcode.csv", :headers => true) do |row|
+    FasterCSV.foreach("#{Rails.root}/zipcode.csv", :headers => true) do |row|
       zip_code = Patient::Zipcode.find_by_zip(row["zip"])
       
       if zip_code
