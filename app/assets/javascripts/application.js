@@ -16,7 +16,7 @@ MoM.init = function(auth_token){
 
   MoM.Support.startPolling();
 
-  jQuery(function($) {
+  $(function($) {
     $('img.help').click(function(e){
       helpBox = $(e.target).attr('data-help');
 
@@ -44,15 +44,17 @@ MoM.setupNamespace("Support");
 
 // Toggle to disable support
 MoM.Support.Enabled  = true;
-MoM.Support.Interval = 20;
+MoM.Support.Interval = 20;    // In seconds
+MoM.Support.Timer    = null;
 
 MoM.Support.startPolling = function (){
-  new PeriodicalExecuter(MoM.Support.checkForRequests, MoM.Support.Interval);
+  var interval = MoM.Support.Interval * 1000;
+  MoM.Support.Timer = setInterval(MoM.Support.checkForRequests, interval);
 }
 
 MoM.Support.checkForRequests = function (executer){
   if(MoM.Support.Enabled){
-    jQuery.getJSON('/active_support_requests.json',
+    $.getJSON('/active_support_requests.json',
       { authenticity_token: MoM.AuthToken},
       function(data){
         MoM.Support.processRequests(data);
@@ -74,16 +76,16 @@ MoM.Support.processRequests = function(data){
 			'border': 'InfoBackground'
 		}
 
-    if(jQuery.fn.activebar.container != null){
-      jQuery('.content',jQuery.fn.activebar.container).html(text);
-      jQuery.fn.activebar.updateBar(options);
+    if($.fn.activebar.container != null){
+      $('.content',$.fn.activebar.container).html(text);
+      $.fn.activebar.updateBar(options);
 
-      if(!jQuery.fn.activebar.container.is(':visible'))
-        jQuery.fn.activebar.show();
+      if(!$.fn.activebar.container.is(':visible'))
+        $.fn.activebar.show();
     }
     else
     {
-      jQuery('<div></div>').html(text).activebar(options);
+      $('<div></div>').html(text).activebar(options);
   	}
   }
   else if(data.help_requested){
@@ -91,8 +93,8 @@ MoM.Support.processRequests = function(data){
   }
   else
   {
-    if(jQuery.fn.activebar && ($('help_link') && $('help_link').visible()) || $('help_link') == null)
-      jQuery.fn.activebar.hide();
+    if($.fn.activebar && ($('help_link') && $('help_link').visible()) || $('help_link') == null)
+      $.fn.activebar.hide();
   }
 }
 
@@ -104,7 +106,7 @@ MoM.Support.showSupportRequested = function(id){
   var text = "Help is on the way. <span style='float:right;'> Click here to cancel your request:</span>";
 
   var closeCallback = function(){
-    jQuery.ajax({
+    $.ajax({
       type: "PUT",
       url: '/support_requests/' + id,
       dataType: "script",
@@ -123,31 +125,32 @@ MoM.Support.showSupportRequested = function(id){
     onClose: closeCallback
   }
 
-  if(jQuery.fn.activebar.container != null){
-    jQuery('.content',jQuery.fn.activebar.container).html(text);
-    jQuery.fn.activebar.updateBar(options);
+  if($.fn.activebar.container != null){
+    $('.content',$.fn.activebar.container).html(text);
+    $.fn.activebar.updateBar(options);
 
-    if(!jQuery.fn.activebar.container.is(':visible'))
-      jQuery.fn.activebar.show();
+    if(!$.fn.activebar.container.is(':visible'))
+      $.fn.activebar.show();
   }
   else
   {
-    jQuery('<div></div>').html(text).activebar(options);
+    $('<div></div>').html(text).activebar(options);
   }
 }
 
 MoM.Support.startStatusPolling = function(){
-  new PeriodicalExecuter(MoM.Support.checkForStatusRequests, 15);
+  var interval = 15 * 1000;
+  setInterval(MoM.Support.checkForStatusRequests, interval);
 }
 
 MoM.Support.checkForStatusRequests = function (executer){
-  jQuery.ajax({
+  $.ajax({
     url: '/status',
     timeout: 2000,
     dataType: "script",
     error: function(){
       $(document.body).addClassName('red')
-      jQuery('#requests').html("<h1>Error connecting to server</h1>");
+      $('#requests').html("<h1>Error connecting to server</h1>");
     }
   });
 }
