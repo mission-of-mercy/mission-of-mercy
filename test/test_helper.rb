@@ -10,7 +10,8 @@ module TestHelper
     date = "12/26/1985"
     
     if time
-      Time.parse([date, time].join(' '))
+      m, d, y = date.split('/')
+      Time.parse "#{[y, m, d] * '-'} #{time}"
     else
       Date.strptime(date, "%m/%d/%Y")
     end    

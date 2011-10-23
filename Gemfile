@@ -24,7 +24,3 @@ end
 
 gem "will_paginate",'3.0.pre'
 gem "devise"
-
-# TODO Remove when we've upgraded to Ruby 1.9.2
-gem "fastercsv"
-

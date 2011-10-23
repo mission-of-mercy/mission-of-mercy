@@ -1,7 +1,7 @@
 class PatientProcedure < ActiveRecord::Base
   
   VALID_TOOTH   = /\A[A-T]\Z|\A[1-9]\Z|\A[1-2][0-9]\Z|\A3[0-2]\Z/
-  VALID_SURFACE = /\A[F,L,O,M,D,I,B]+\Z/
+  VALID_SURFACE = /\A[FLOMDIB,]+\Z/
   
   belongs_to :patient
   belongs_to :procedure
