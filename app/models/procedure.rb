@@ -6,6 +6,6 @@ class Procedure < ActiveRecord::Base
   has_many :treatment_areas, :through => :procedure_treatment_area_mappings
   
   def full_description
-    [code,": ", description].join()
+    "#{code}: #{description}"
   end
 end
