@@ -22,7 +22,7 @@ module PatientsHelper
       f.label(attribute, "Yes", :value => true),
       f.radio_button(attribute, false, :onchange => onchange),
       f.label(attribute, "No", :value => false)
-    ].join("\n")
+    ].join("\n").html_safe
   end
 
   def dob_select_options
