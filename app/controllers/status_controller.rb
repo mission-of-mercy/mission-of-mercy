@@ -6,6 +6,7 @@ class StatusController < ApplicationController
       WHERE patients.created_at::Date = '#{Date.today}'}
 
     @patients = Patient.connection.select_value(sql)
+
   end
 
 end

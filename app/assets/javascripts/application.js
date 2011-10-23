@@ -31,7 +31,7 @@ MoM.init = function(auth_token){
 
 MoM.disableEnterKey = function(){
   $(document).observe('keypress', function(e) {
-    if(e.keyCode == 13) e.stop();
+    if(e.keyCode == 13) e.preventDefault();
   });
 }
 
@@ -52,7 +52,7 @@ MoM.Support.startPolling = function (){
   MoM.Support.Timer = setInterval(MoM.Support.checkForRequests, interval);
 }
 
-MoM.Support.checkForRequests = function (executer){
+MoM.Support.checkForRequests = function (){
   if(MoM.Support.Enabled){
     $.getJSON('/active_support_requests.json',
       { authenticity_token: MoM.AuthToken},
@@ -62,7 +62,7 @@ MoM.Support.checkForRequests = function (executer){
     );
   }
   else
-   executer.stop();
+    clearInterval(MoM.Support.Timer);
 }
 
 MoM.Support.processRequests = function(data){
@@ -143,13 +143,13 @@ MoM.Support.startStatusPolling = function(){
   setInterval(MoM.Support.checkForStatusRequests, interval);
 }
 
-MoM.Support.checkForStatusRequests = function (executer){
+MoM.Support.checkForStatusRequests = function (){
   $.ajax({
     url: '/status',
     timeout: 2000,
     dataType: "script",
     error: function(){
-      $(document.body).addClassName('red')
+      $(document.body).addClass('red')
       $('#requests').html("<h1>Error connecting to server</h1>");
     }
   });
