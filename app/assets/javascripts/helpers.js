@@ -23,8 +23,6 @@ MoM.Helpers.showPatientSurvey = function (){
 }
 
 MoM.Helpers.togglePatientPain = function(focus){
-  var $ = jQuery;
-
   if(focus == undefined) focus = true;
 
   if($('#patient_pain_true').is(':checked') == true)
@@ -38,8 +36,6 @@ MoM.Helpers.togglePatientPain = function(focus){
 }
 
 MoM.Helpers.toggleOtherRace = function(){
-  var $ = jQuery;
-
   if($('#patient_race').val() == 'Other')
     $('#race_other_div').slideDown(function(){
       $('#patient_race_other').focus();
@@ -49,8 +45,6 @@ MoM.Helpers.toggleOtherRace = function(){
 }
 
 MoM.Helpers.togglePreviousMoM = function(){
-  var $ = jQuery;
-
   if($('#patient_attended_previous_mom_event_true').is(':checked') == true)
     $('#previous_mom_location_div').slideDown();
   else
@@ -58,7 +52,6 @@ MoM.Helpers.togglePreviousMoM = function(){
 }
 
 MoM.Helpers.checkIn = function(options){
-  var $ = jQuery;
 
   $('#patient_attended_previous_mom_event_true').change(function(e){
     MoM.Helpers.togglePreviousMoM();
@@ -87,7 +80,6 @@ MoM.Helpers.checkIn = function(options){
 }
 
 MoM.Helpers.toggleDateInput = function(){
-  var $ = jQuery;
 
   if($('#date-select').is(":visible"))
     MoM.Helpers.useTextDate();
@@ -96,7 +88,6 @@ MoM.Helpers.toggleDateInput = function(){
 }
 
 MoM.Helpers.useTextDate = function(){
-  var $ = jQuery;
 
   $('#date-select').hide();
 
@@ -110,7 +101,6 @@ MoM.Helpers.useTextDate = function(){
 }
 
 MoM.Helpers.useSelectDate = function(){
-  var $ = jQuery;
 
   $('#date-text').hide();
 
@@ -124,7 +114,6 @@ MoM.Helpers.useSelectDate = function(){
 }
 
 MoM.Helpers.lookupZip = function(){
-  var $ = jQuery;
 
   $('#zip-spinner').show();
   $.getJSON("/patients/lookup_zip.json", {
