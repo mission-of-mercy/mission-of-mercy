@@ -3,7 +3,7 @@ require "test_helper"
 class PatientTest < ActiveSupport::TestCase
 
   test "shouldn't allow more than 2 digits in state field" do
-    patient = Patient.new(:state => "CTZ")
+    patient = Factory.build(:patient, :state => "CTZ")
 
     patient.save
 
@@ -17,7 +17,7 @@ class PatientTest < ActiveSupport::TestCase
   end
 
   test "shouldn't allow more than 10 digits in zip field" do
-    patient = Patient.new(:zip => "1234567890!")
+    patient = Factory.build(:patient, :zip => "1234567890!")
 
     patient.save
 
