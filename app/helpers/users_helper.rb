@@ -96,11 +96,11 @@ module UsersHelper
                 :treatment_area_id  => current_treatment_area_id }
 
     link_to image_tag("need_help.png", :class => "no_border"),
-                   {:url => {:controller => "/support_requests",
-                             :action => "create",
-                             :support_request => request },
-                   :before => "$('help_loading').show(); $(this).hide()"},
-                   {:id => "help_link"}, :remote => true
+      support_requests_path(:support_request => request,
+        :authenticity_token => form_authenticity_token),
+      :remote => true,
+      :method => :post,
+      :id     => "help_link"
   end
 
 end
