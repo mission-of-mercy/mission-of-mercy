@@ -29,7 +29,7 @@ class Reports::ClinicSummary
     @day, @span = day, span
     @procedures, @prescriptions, @pre_meds = [], [], []
     
-    @day = Date.parse(day) if day.kind_of?(String) && day != "All"
+    @day = Date.strptime(day, "%m/%d/%Y") if day.kind_of?(String) && day != "All"
 
     if span == "All" || @day == "All"
       @span_time = "All"
@@ -37,7 +37,7 @@ class Reports::ClinicSummary
     else
       # Parse time with current date to make sure any timezone offsets are correct
       
-      @span_time = Time.parse([@day.to_s,span].join(' ')).utc.strftime("%H:%M:00")
+      @span_time = Time.parse([@day.strftime('%Y-%m-%d'),span].join(' ')).utc.strftime("%H:%M:00")
     end
 
     @patient_count = load_patient_count
