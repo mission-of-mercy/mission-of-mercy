@@ -48,13 +48,14 @@
         = image_tag "spinner.gif", :id => "city-spinner", :style => "display: none;",
           :class => "spinner"
         #city_autocomplete.autocomplete
-        :javascript
-          new Ajax.Autocompleter('patient_city', 'city_autocomplete', '#{lookup_city_patients_path}', {
-            paramName: 'city',
-            minChars: 2,
-            indicator: 'city-spinner',
-            parameters: "authenticity_token=" + encodeURIComponent("#{escape_javascript(form_authenticity_token)}")
-          });
+        / TODO Replace with jQuery
+        / :javascript
+        /   new Ajax.Autocompleter('patient_city', 'city_autocomplete', '#{lookup_city_patients_path}', {
+        /     paramName: 'city',
+        /     minChars: 2,
+        /     indicator: 'city-spinner',
+        /     parameters: "authenticity_token=" + encodeURIComponent("#{escape_javascript(form_authenticity_token)}")
+        /   });
       %div.row
         %span.label= f.label :state
         %span.formw= f.text_field :state

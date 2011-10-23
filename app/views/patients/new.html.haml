@@ -2,10 +2,8 @@
 
 - content_for :header do
   :javascript
-    Event.observe(window, 'load', function() {
-      $('patient_first_name').focus();
-      MoM.disableEnterKey();
-
+    $(function(){
+      MoM.Checkin.init();
       #{print_patient_chart}
     });
 
