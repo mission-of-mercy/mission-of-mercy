@@ -6,8 +6,8 @@ class PatientProcedure < ActiveRecord::Base
   belongs_to :patient
   belongs_to :procedure
   
-  before_validation_on_create :normalize_data, :load_procedure_from_code, 
-                              :load_procedure_from_type
+  before_validation :normalize_data, :load_procedure_from_code,
+                    :load_procedure_from_type, :on => :create
   
   validates_presence_of :procedure_id, :message => "invalid"
   validates_format_of :tooth_number, :with => VALID_TOOTH,   
