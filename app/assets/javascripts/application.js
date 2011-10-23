@@ -30,7 +30,7 @@ MoM.init = function(auth_token){
 }
 
 MoM.disableEnterKey = function(){
-  $(document).observe('keypress', function(e) {
+  $(document).keypress(function(e) {
     if(e.keyCode == 13) e.preventDefault();
   });
 }
