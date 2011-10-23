@@ -1,12 +1,12 @@
 MoM.setupNamespace('Helpers');
 
 MoM.Helpers.showPatientDemographics = function(){
-  $('demographics').show();
-  $('bottom_demographics').show();
-  if($('errorExplanation')) $('errorExplanation').show();
+  $('#demographics').show();
+  $('#bottom_demographics').show();
+  if($('#errorExplanation')) $('errorExplanation').show();
 
-  $('survey').hide();
-  $('bottom_survey').hide();
+  $('#survey').hide();
+  $('#bottom_survey').hide();
 
   return false;
 }
