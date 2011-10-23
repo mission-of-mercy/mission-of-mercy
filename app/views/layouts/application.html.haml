@@ -9,7 +9,6 @@
     = stylesheet_link_tag 'application'
 
     :javascript
-      jQuery.noConflict();
       MoM.init('#{form_authenticity_token}');
       #{yield(:header_js)}
 
