@@ -3,8 +3,7 @@
 - content_for :header do
   :javascript
     $(function(){
-      MoM.Checkin.init();
-      #{print_patient_chart}
+      MoM.Checkin.init(#{@last_patient.try(:id)});
     });
 
 = header do
