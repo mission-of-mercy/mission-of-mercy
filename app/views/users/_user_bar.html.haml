@@ -10,10 +10,10 @@
       = link_to "#{@treatment_area.name} #{current_user.name}", current_user.start_path, :style => "text-decoration: none;"
     - else
       = link_to current_user.name, current_user.start_path, :style => "text-decoration: none;"
-    | 
+    |
     = link_to 'Log out', logout_path
   - else
     %span{:style=>"float:left;"}= link_to 'System status', status_path
-    Not Logged In 
-    | 
+    Not Logged In
+    |
     = link_to 'Log in', login_path

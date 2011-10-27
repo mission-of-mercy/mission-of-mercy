@@ -2,7 +2,7 @@
 
 - content_for :header do
   = stylesheet_link_tag('report_print', :media => :print)
-  
+
 = header do
   %h1 Clinic Summary Report
   #controls
@@ -15,12 +15,12 @@
   #report_date
     %h3
       = @report.day_and_span
-    
+
 %h2
   %u Summary
-  
+
 %p
-  Total Patients Checked In: 
+  Total Patients Checked In:
   = @report.patient_count
   %br
   Total Patients Given X-Rays:
@@ -50,14 +50,14 @@
   %br
   Grand Total Value:
   = real_currency @report.grand_total
-  
+
 %p
   Next Chart Number:
   = @report.next_chart_number
-  
+
 %h2
   %u Detail
-  
+
 - if @report.procedure_count > 0
   %table
     %thead
@@ -120,6 +120,6 @@
 %h2
   Grand Total Value:
   = real_currency @report.grand_total
-  
+
 %p
   = link_to "Back", admin_reports_path, :class => "back"

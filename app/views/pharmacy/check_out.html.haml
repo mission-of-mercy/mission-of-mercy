@@ -4,15 +4,15 @@
   %h1 Pharmacy Checkout
   %br
   = "#{@patient.full_name} | Chart # #{@patient.id}"
- 
-= form_for @patient, 
-  :url  => pharmacy_finalize_path(@patient), 
+
+= form_for @patient,
+  :url  => pharmacy_finalize_path(@patient),
   :html => { :autocomplete => "off" } do |f|
-  
+
   %div.input
-  
+
     %h4 Prescriptions
-  
+
     %p
       - f.fields_for :patient_prescriptions, @prescriptions do |s|
         = s.hidden_field :prescription_id

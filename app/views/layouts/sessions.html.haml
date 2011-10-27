@@ -2,15 +2,15 @@
 %html
   %head
     %title Mission of Mercy - Log in
-    
+
     = javascript_include_tag :defaults
     = stylesheet_link_tag 'default', :media => :screen
-    
+
     :javascript
       Event.observe(window, 'load', function() {
         $('login').focus();
       });
-    
+
   %body{:class => body_css}
     #outer_container
       #container

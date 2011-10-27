@@ -40,13 +40,13 @@ class Admin::PrescriptionsController < ApplicationController
 
     redirect_to admin_prescriptions_path
   end
-  
+
   private
-  
+
   def find_prescription
     @prescription = Prescription.find(params[:id])
   end
-  
+
   def set_current_tab
     @current_tab = "prescriptions"
   end

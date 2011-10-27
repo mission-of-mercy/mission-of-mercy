@@ -5,7 +5,7 @@ development:
   host: localhost
   min_messages: error
   encoding: utf8
-  
+
 test:
   adapter: postgresql
   database: mom-test

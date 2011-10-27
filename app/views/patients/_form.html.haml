@@ -7,9 +7,9 @@
 
 #demographics{:style=>"height: 350px;"}
   %div.input-left
-  
+
     %h4 1: Demographics
-  
+
     %div.input
       %div.row
         %span.label= f.label :first_name
@@ -19,7 +19,7 @@
         %span.formw= f.text_field :last_name
       %div.row
         %span.label= f.label :date_of_birth
-        = image_tag "cog.png", :id => "date-input-toggle", 
+        = image_tag "cog.png", :id => "date-input-toggle",
         :title => "Toggle date input method"
         %span#date-input-container.formw
           %span#date-select{:style => "display: none;"}
@@ -65,13 +65,13 @@
         %span.label= f.label :race_other, 'Specify race'
         %span.formw= f.text_field :race_other
     %br
-    
+
   / End Demographics & Left Column
 
   %div.input-right
 
     %h4 2: Visit Details
-    
+
     %div.input
       %div.row
         %span.label= f.label :chief_complaint, "Reason for today's visit"
@@ -91,7 +91,7 @@
           %span.formexample Example: "1 month" or "2 years"
         - else
           %span.formw= f.text_field :pain_length_in_days
-  
+
     / End Visit Details
 
     %h4 3: Additional Information
@@ -101,7 +101,7 @@
         %span.label= f.label :travel_time
         %span.formw
           - if @patient.new_record?
-            Hours: 
+            Hours:
             = f.text_field :travel_time_hours, :size => 2
             Minutes:
             = f.text_field :travel_time_minutes, :size => 2
@@ -115,7 +115,7 @@
           = f.label :attended_previous_mom_event, "Yes", :value => true
           = f.radio_button :attended_previous_mom_event, false
           = f.label :attended_previous_mom_event, "No", :value => false
-      
+
       #previous_mom_location_div.row{:style=>show_previous_mom(@patient)}
         %span.label{:style=>"height: 200px;"}
           Clinic(s) attended

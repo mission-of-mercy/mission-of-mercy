@@ -1,7 +1,7 @@
 - form_tag search_path, :method => 'get', :autocomplete => "off" do
   = hidden_field_tag :treatment_area_id, @area
   %p
-    = label_tag :chart_number, "Chart number:" 
+    = label_tag :chart_number, "Chart number:"
     = text_field_tag :chart_number, params[:chart_number]
     - if current_user.user_type == UserType::ADMIN
       %b OR
@@ -33,5 +33,5 @@
           %td= patient.sex
           - if link
             %th{:id => "checkout_#{patient.id}", :scope => "row"}= link_to_checkout(@treatment_area, patient)
-          
+
   = will_paginate @patients
