@@ -2,7 +2,7 @@
 
 - content_for :header do
   = stylesheet_link_tag('report_print', :media => :print)
-  
+
 = header do
   %h1 Post Clinic Report
   #controls
@@ -49,10 +49,10 @@
         %td= gend["sex"]
         %td= gend["patient_count"]
         %td= gend["percent"]
-    
+
 %h2
   %u Towns
-  
+
 %table
   %thead
     %tr
@@ -70,7 +70,7 @@
   %tfoot
     %tr
       %td{:colspan => 4}= "Total towns represented: #{@report.town_count}"
-      
+
 %h2
   %u Counties
 
@@ -89,11 +89,11 @@
         %td= county["state"]
         %td= county["patient_count"]
         %td= county["percent"]
-        %td= link_to "Export", 
+        %td= link_to "Export",
           admin_export_patients_path(:patients => patients_by_county(county),
             :filename => county_filename(county)),
           :target => "_blank"
-    
+
 %h2
   %u Ethnicities
 
@@ -109,7 +109,7 @@
         %td= ethnic["race"]
         %td= ethnic["patient_count"]
         %td= ethnic["percent"]
-        
+
 %h2
   %u Travel Times
 
@@ -126,7 +126,7 @@
   %tfoot
     %tr
       %td{:colspan => 2}= "Average travel time: #{@report.avg_travel_time}"
-        
+
 %h2
   %u Previous Mom Clinics
 
@@ -149,7 +149,7 @@
       %td{:colspan => 2} Total unique patients:
       %td= @report.distinct_previous_moms
       %td= percent_of_clinic @report.distinct_previous_moms, @report.patient_count
-      
+
 %h2
   %u Insurance
 
@@ -173,7 +173,7 @@
 %table
   %thead
     %tr
-      %th 
+      %th
       %th Total Patients
       %th Percent
   %tbody
@@ -182,7 +182,7 @@
         %td= heard["heard_about_clinic"]
         %td= heard["patient_count"]
         %td= heard["percent"]
-        
+
 %h2
   %u Last dental visit
 
@@ -204,7 +204,7 @@
 %table
   %thead
     %tr
-      %th 
+      %th
       %th Total Patients
       %th Percent
   %tbody
@@ -213,14 +213,14 @@
         %td= needed["told_needed_more_dental_treatment"] == "t" ? "Yes" : "No"
         %td= needed["patient_count"]
         %td= needed["percent"]
-        
+
 %h2
   %u Patient has a place to be seen for dental care
 
 %table
   %thead
     %tr
-      %th 
+      %th
       %th Total Patients
       %th Percent
   %tbody
@@ -229,7 +229,7 @@
         %td= record["has_place"] == "t" ? "Yes" : "No"
         %td= record["patient_count"]
         %td= record["percent"]
-        
+
 %h2
   %u Tobacco Use
 
@@ -255,7 +255,7 @@
         %td= age["range"]
         %td= age["patient_count"]
         %td= age["percent"]
-        
+
 %h2
   %u Rating of Services
 

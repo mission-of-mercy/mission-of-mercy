@@ -11,12 +11,12 @@
     %th Dosage
   - @prescriptions.each do |prescription|
     %tr
-      %td=  prescription.name 
-      %td=  prescription.strength 
-      %td=  prescription.quantity 
-      %td=  prescription.dosage 
-      %td=  link_to 'Edit', edit_admin_prescription_path(prescription) 
-      %td=  link_to 'Destroy', admin_prescription_path(prescription), :confirm => 'Are you sure?', :method => :delete 
+      %td=  prescription.name
+      %td=  prescription.strength
+      %td=  prescription.quantity
+      %td=  prescription.dosage
+      %td=  link_to 'Edit', edit_admin_prescription_path(prescription)
+      %td=  link_to 'Destroy', admin_prescription_path(prescription), :confirm => 'Are you sure?', :method => :delete
 
 %br
 

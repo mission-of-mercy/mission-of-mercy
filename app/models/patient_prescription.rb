@@ -3,7 +3,7 @@ class PatientPrescription < ActiveRecord::Base
 
   belongs_to :patient
   belongs_to :prescription
-  
+
   def full_description
     if prescription != nil
       prescription.full_description
@@ -11,9 +11,9 @@ class PatientPrescription < ActiveRecord::Base
       "Prescription"
     end
   end
-  
+
   private
-  
+
   def destroy_unless_prescribed
     destroy unless prescribed
   end

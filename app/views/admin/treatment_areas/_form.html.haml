@@ -1,9 +1,9 @@
 = error_messages_for :treatment_area
 
 %div.input-left.no_border
-  
+
   %h4 Treatment Area
-  
+
   %p
     = f.label :name
     %br
@@ -21,13 +21,13 @@
 %div.input-right.border
 
   %h4 Procedures
-  
+
   - f.fields_for :procedure_treatment_area_mappings do |p|
     = p.hidden_field :procedure_id
     = p.check_box :assigned
     = p.label :assigned, p.object.procedure.full_description
     %br
-    
+
   %p
 
 %div.input-bottom.check_out

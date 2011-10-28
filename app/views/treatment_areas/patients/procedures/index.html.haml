@@ -8,7 +8,7 @@
 #no_procedure{:style => "display:none;"}
   %h2 Warning!
   %p You have checked out a patient without adding any procedures.
-  %p 
+  %p
     If this is correct you may
     %b continue
     otherwise click
@@ -18,11 +18,11 @@
   %p
     = continue_button @treatment_area, @patient, :text => "Continue without entering any procedures"
     = link_to_function "Go back and enter a procedure", "Modalbox.hide();"
-    
+
 #incomplete_procedure{:style => "display:none;"}
   %h2 Warning!
   %p A procedure has been selected but not added.
-  %p 
+  %p
     To finish without adding the procedure click
     %b continue.
   %p
@@ -38,12 +38,12 @@
 
   %h4 New Procedure
 
-  = form_for @patient_procedure, 
+  = form_for @patient_procedure,
     :url => treatment_area_patient_procedures_path(@treatment_area, @patient),
     :html => { :autocomplete => "off" } do |f|
     = f.error_messages
     = f.hidden_field :patient_id
-  
+
     %dl
       %dt Procedure:
       %dd
@@ -73,14 +73,14 @@
         = f.label :surface_code, "Surface Code(s):"
       %dd{:id => "surface_dd", :style => surface_visible(@patient_procedure)}
         = f.text_field :surface_code
-  
+
     %p
       = f.submit "Add Procedure"
       = link_to_reset "new_patient_procedure"
 
 %div.input-right.border
   %h4 Entered Procedures
-  
+
   - @patient.patient_procedures.each do |p|
     - unless p.new_record?
       %div{:id => "procedure_#{p.id}", :class => "procedure #{cycle('','odd')}"}
@@ -97,7 +97,7 @@
       %p
         Once all procedures have been entered click
         %b Finish
-  
+
 %div.input-bottom{:class => "check_out"}
   - if current_user.user_type == UserType::XRAY
     %span{:style => "float:left;"}

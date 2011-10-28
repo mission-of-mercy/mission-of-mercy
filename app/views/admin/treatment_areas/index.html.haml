@@ -7,7 +7,7 @@
   %tr
     %th Name
     %th{:colspan=>2} Controls
-    
+
   - @treatment_areas.each do |area|
     %tr{:class=>cycle('even', 'odd')}
       %td= area.name

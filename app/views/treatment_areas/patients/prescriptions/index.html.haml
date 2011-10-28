@@ -4,23 +4,23 @@
   %h1 Checkout - Prescriptions
   %br
   = "#{@patient.full_name} | Chart # #{@patient.id}"
- 
-= form_for @patient, 
+
+= form_for @patient,
   :url => treatment_area_patient_prescription_path(@treatment_area, @patient, 0),
   :html => { :autocomplete => "off" } do |f|
-  
+
   %div.input
-  
-    %h4 
+
+    %h4
       Prescriptions
       = help_icon("prescriptions")
 
     = help_box("prescriptions") do
-      Check each prescription the patient was prescribed. This information is 
+      Check each prescription the patient was prescribed. This information is
       located in the patient's chart at the bottom right of the back page.
-      
+
       = image_tag "help/prescriptions.png", :class => "help-example "
-  
+
     %p
       - f.fields_for :patient_prescriptions, @prescriptions do |s|
         = s.hidden_field :prescription_id

@@ -4,31 +4,31 @@
   %h1 Pre-Checkout
   %br
   = "#{@patient.full_name} | Chart # #{@patient.id}"
-  
-= form_for @patient, 
-  :url  => treatment_area_patient_survey_path(@treatment_area, @patient), 
+
+= form_for @patient,
+  :url  => treatment_area_patient_survey_path(@treatment_area, @patient),
   :html => { :autocomplete => "off" } do |f|
   = f.error_messages
-  
+
   = render :partial => "surveys/check_out", :locals => {:f => f}
-  
-  %h4 
+
+  %h4
     Pre-Medication
     = help_icon("pre-med")
-  
+
   = help_box("pre-med") do
     Check each pre-medication the patient was given. This information is located
     at the bottom of the front page.
 
     = image_tag "help/pre-meds.png", :class => "help-example"
-  
+
   %p
     - f.fields_for :patient_pre_meds do |p|
       = p.hidden_field :pre_med_id
       = p.check_box :prescribed
       = p.label :prescribed, p.object.pre_med.description
       %br
-    
+
   #input-bottom{:class => "check_out"}
     %br
     = f.submit "Next"

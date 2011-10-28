@@ -7,12 +7,12 @@
       $('chart_number').select();
       $('chart_number').focus();
     });
-    
+
 - title "#{@treatment_area.name} Checkout"
 
 = header do
   %h1= "#{@treatment_area.name} Checkout"
-    
+
 = render :partial => "patients/search", :locals => {:search_path => treatment_area_patients_path(@treatment_area.id), :link => true}
 
 - @patients.each do |patient|

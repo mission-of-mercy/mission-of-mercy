@@ -1,15 +1,15 @@
-- f.fields_for :survey do |s|  
-  %h4 
+- f.fields_for :survey do |s|
+  %h4
     Medical Information
     = help_icon("tobacco")
-    
+
   = help_box("tobacco") do
-        
-    Check "Tobacco use" if the patient's chart indicates they use tobacco. This 
+
+    Check "Tobacco use" if the patient's chart indicates they use tobacco. This
     information is located towards the bottom of the front page.
-    
-    = image_tag "help/tobacco_use.png", :class => "help-example" 
-    
+
+    = image_tag "help/tobacco_use.png", :class => "help-example"
+
   %p
     = s.check_box :tobacco_use
     = s.label :tobacco_use
@@ -21,10 +21,10 @@
     = s.label :told_needed_more_dental_treatment, "Yes", :value => true
     = s.radio_button :told_needed_more_dental_treatment, false
     = s.label :told_needed_more_dental_treatment, "No", :value => false
-    
+
   %h4 Rating of services received today
 
-  = slider_field :survey, :rating_of_services, :range => 1..10 
+  = slider_field :survey, :rating_of_services, :range => 1..10
   %br
   %div.slider_desc Not Satisfied
   %div.slider_desc Satisfied

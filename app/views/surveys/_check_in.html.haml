@@ -3,14 +3,14 @@
     = s.label :heard_about_clinic, 'How did you hear about the clinic?', :class => 'question'
     %br
     .input
-      = s.select :heard_about_clinic,  
-        ['Friend or Family','Media: Newspaper/TV/Radio','Flyer or Poster','Other'], 
+      = s.select :heard_about_clinic,
+        ['Friend or Family','Media: Newspaper/TV/Radio','Flyer or Poster','Other'],
         {:include_blank => true}
-   
-   
+
+
       = observe_field :patient_survey_attributes_heard_about_clinic,
         :on => :changed, :function => "showOtherHeardAbout()"
-    
+
     #heard_about_other_div{:style=>'display:none;'}
       %p
         = s.label :heard_about_other, "Please describe:"

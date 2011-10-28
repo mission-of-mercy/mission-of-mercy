@@ -5,7 +5,7 @@
     Event.observe(window, 'load', function() {
       $('patient_first_name').focus();
       MoM.disableEnterKey();
-      
+
       #{print_patient_chart}
     });
 
@@ -14,11 +14,11 @@
 
 = form_for @patient, :html => { :autocomplete => "off" } do |f|
   = render :partial => 'form', :locals => {:f => f}
-  
+
   #survey{:style=>"display:none; clear:both;"}
-    
+
     %h4 4: Survey Questions
-    
+
     %div{:style=>"padding-left: 20px; padding-bottom: 20px;"}
       = render :partial => 'surveys/check_in', :locals => {:f => f}
 

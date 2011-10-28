@@ -2,7 +2,7 @@ class Admin::PreMedsController < ApplicationController
   before_filter :admin_required
   before_filter :find_pre_med, :only => [:edit, :update, :destroy, :show]
   before_filter :set_current_tab
-  
+
   def index
     @pre_meds = PreMed.all
   end
@@ -12,7 +12,7 @@ class Admin::PreMedsController < ApplicationController
   end
 
   def edit
-    
+
   end
 
   def create
@@ -41,13 +41,13 @@ class Admin::PreMedsController < ApplicationController
 
     redirect_to admin_pre_meds_path
   end
-  
+
   private
-  
+
   def find_pre_med
     @pre_med = PreMed.find(params[:id])
   end
-  
+
   def set_current_tab
     @current_tab = "pre-meds"
   end
