@@ -55,4 +55,3 @@ module MissionOfMercy
     }
   end
 end
-
