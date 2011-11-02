@@ -3,8 +3,6 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  filter_parameter_logging :password, :password_confirmation
-
   before_filter :set_area_id
   around_filter :setup_stats
 
