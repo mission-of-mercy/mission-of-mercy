@@ -47,9 +47,7 @@ module MissionOfMercy
 
     config.time_zone = 'Eastern Time (US & Canada)'
 
-    Date::DATE_FORMATS.merge!(
-      :default => '%m/%d/%Y'
-    )
+    Date::DATE_FORMATS.merge!(:default => '%m/%d/%Y')
 
     # Default uses divs which cause rendering issues
     ActionView::Base.field_error_proc = Proc.new { |html_tag, instance|
@@ -57,3 +55,4 @@ module MissionOfMercy
     }
   end
 end
+
