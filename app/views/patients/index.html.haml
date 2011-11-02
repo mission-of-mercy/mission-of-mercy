@@ -10,7 +10,7 @@
 = header do
   %h1 Patients
 
-- form_tag patients_path, :method => 'get', :autocomplete => "off" do
+= form_tag patients_path, :method => 'get', :autocomplete => "off" do
   = hidden_field_tag :treatment_area_id, @area
   %p
     = label_tag :chart_number, "Chart number:"
