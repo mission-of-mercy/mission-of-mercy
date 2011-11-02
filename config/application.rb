@@ -50,3 +50,7 @@ module MissionOfMercy
 end
 
 Date::DATE_FORMATS.merge!(:default => '%m/%d/%Y')
+
+ActionView::Base.field_error_proc = Proc.new { |html_tag, instance|
+  "<span class=\"fieldWithErrors\">#{html_tag}</span>".html_safe
+}
