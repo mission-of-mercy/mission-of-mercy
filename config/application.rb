@@ -48,6 +48,5 @@ module MissionOfMercy
     config.time_zone = 'Eastern Time (US & Canada)'
   end
 end
-Date::DATE_FORMATS.merge!(
-  :default => '%m/%d/%Y'
-)
+
+Date::DATE_FORMATS.merge!(:default => '%m/%d/%Y')
