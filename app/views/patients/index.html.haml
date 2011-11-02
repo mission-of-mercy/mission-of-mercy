@@ -1,13 +1,10 @@
 - title 'Patients'
 
 - content_for :header do
-  = javascript_include_tag 'proto.menu.0.6'
-  = stylesheet_link_tag 'proto.menu.0.6', :media => :screen
-
   :javascript
-    document.observe('dom:loaded', function(){
-      $('chart_number').select();
-      $('chart_number').focus();
+    $(function(){
+      $('#chart_number').select();
+      $('#chart_number').focus();
     });
 
 = header do
