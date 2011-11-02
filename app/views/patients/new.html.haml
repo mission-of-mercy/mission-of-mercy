@@ -1,11 +1,5 @@
 - title 'Patient Check In'
 
-- content_for :header do
-  :javascript
-    $(function(){
-      MoM.Checkin.init(#{@last_patient.try(:id)});
-    });
-
 = header do
   %h1 Patient Check In
 

@@ -1,5 +1,13 @@
 - content_for :header_js do
-  jQuery(function() { MoM.Helpers.checkIn({dateInput:'#{@date_input}'}); });
+  :plain
+    $(function(){
+      var options = {
+        lastPatientId: #{@last_patient.try(:id) || 'null'},
+        dateInput:     '#{@date_input}'
+      };
+
+      MoM.Checkin.init(options);
+    });
 
 = f.error_messages
 
@@ -83,8 +91,7 @@
       %div.row
         %span.label
           %label Is the patient in pain?
-        %span.formw
-          = yes_no_group f, :pain, "MoM.Helpers.togglePatientPain();"
+        %span.formw= yes_no_group f, :pain
       #pain_length_div.row{:style=>"display:none;"}
         %span.label= f.label :time_in_pain, "Time in pain"
         - if @patient.new_record?
