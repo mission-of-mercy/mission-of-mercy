@@ -39,10 +39,10 @@ module ApplicationHelper
     end
   end
 
-  def link_to_reset(form_id)
+  def link_to_reset(url)
     link_to_function 'Reset Form',
       %{if (confirm('Are you sure you wish to reset this form?'))
-        $('##{form_id}')[0].reset();},
+        document.location.href = '#{url}';},
       :class => 'warning'
   end
 end

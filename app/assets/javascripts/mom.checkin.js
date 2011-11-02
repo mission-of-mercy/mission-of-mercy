@@ -144,7 +144,6 @@ MoM.Checkin.toggleOtherRace = function(){
 MoM.Checkin.showPatientDemographics = function(){
   $('#demographics').show();
   $('#bottom_demographics').show();
-  if($('#errorExplanation')) $('errorExplanation').show();
 
   $('#survey').hide();
   $('#bottom_survey').hide();
@@ -153,7 +152,6 @@ MoM.Checkin.showPatientDemographics = function(){
 MoM.Checkin.showPatientSurvey = function (){
   $('#demographics').hide();
   $('#bottom_demographics').hide();
-  if($('#errorExplanation')) $('errorExplanation').hide();
 
   $('#survey').show();
   $('#bottom_survey').show();
