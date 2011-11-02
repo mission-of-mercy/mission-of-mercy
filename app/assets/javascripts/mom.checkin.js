@@ -38,6 +38,18 @@ MoM.Checkin.init = function(options){
       MoM.Checkin.lookupZip();
   });
 
+  $('#bottom_survey a.back').click(function(e){
+    MoM.Checkin.showPatientDemographics();
+
+    e.preventDefault();
+  });
+
+  $('#bottom_demographics button').click(function(e){
+     MoM.Checkin.showPatientSurvey();
+
+     e.preventDefault();
+  })
+
   if(options.lastPatientId){
     MoM.Checkin.printChart(options.lastPatientId);
 
@@ -128,3 +140,22 @@ MoM.Checkin.toggleOtherRace = function(){
   else
     $('#race_other_div').slideUp();
 }
+
+MoM.Checkin.showPatientDemographics = function(){
+  $('#demographics').show();
+  $('#bottom_demographics').show();
+  if($('#errorExplanation')) $('errorExplanation').show();
+
+  $('#survey').hide();
+  $('#bottom_survey').hide();
+}
+
+MoM.Checkin.showPatientSurvey = function (){
+  $('#demographics').hide();
+  $('#bottom_demographics').hide();
+  if($('#errorExplanation')) $('errorExplanation').hide();
+
+  $('#survey').show();
+  $('#bottom_survey').show();
+}
+
