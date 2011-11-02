@@ -103,7 +103,7 @@ GEM
     tzinfo (0.3.30)
     warden (1.0.6)
       rack (>= 1.0)
-    will_paginate (3.0.pre)
+    will_paginate (3.0.2)
 
 PLATFORMS
   ruby
@@ -118,4 +118,4 @@ DEPENDENCIES
   minitest (~> 2.3.1)
   pg
   rails (~> 3.1.0)
-  will_paginate (= 3.0.pre)
+  will_paginate (~> 3.0.2)

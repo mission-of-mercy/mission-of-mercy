@@ -71,9 +71,7 @@ class Patient < ActiveRecord::Base
       ["id = ?", -1]
     end
 
-		paginate  :per_page => 30, :page => page,
-              :conditions => conditions,
-              :order => 'id'
+		Patient.where(conditions).order('id').paginate(:per_page => 30, :page => page)
 	end
 
   def chart_number

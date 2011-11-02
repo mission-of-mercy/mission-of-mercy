@@ -12,7 +12,7 @@ gem 'haml', '~> 3.0'
 #   gem 'uglifier'
 # end
 
-gem "will_paginate",'3.0.pre'
+gem 'will_paginate', '~> 3.0.2'
 gem "devise"
 
 gem 'jquery-rails'
