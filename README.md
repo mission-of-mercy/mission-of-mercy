@@ -15,7 +15,8 @@ To install a development version of Mission of Mercy, follow these steps:
 
 1. Fork our GitHub repository: <http://github.com/jordanbyron/mission_of_mercy>
 2. Clone the fork to your computer
-3. Run `bundle install` to install all of the dependencies
+3. If you don't already have bundler installed, get it by running `gem install bundler`
+4. Then, run `bundle install` to install all of the dependencies 
 
 **Automatic Setup:**
 
