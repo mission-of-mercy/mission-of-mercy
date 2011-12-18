@@ -219,7 +219,7 @@ a { color: #000; }
 a:visited { color: #666; }
 a:hover { color: #000; }
 
-.fieldWithErrors {
+.field_with_errors {
   padding: 2px;
   background-color: red;
   display: inline-block;
