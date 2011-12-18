@@ -91,8 +91,8 @@ which made it available to all Mission of Mercy clinics throughout the US.
 
 **Core**
 
-- Jordan Byron | <http://jordanbyron.com>
-- Christopher Mitchell | <cmitchell@integrityss.com>
+- Jordan Byron // <http://jordanbyron.com>
+- Christopher Mitchell // <cmitchell@integrityss.com>
 
 **Full List**
 
