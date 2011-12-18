@@ -5,13 +5,12 @@ gem 'rails', '~> 3.1.0'
 gem 'pg'
 gem 'haml', '~> 3.0'
 
-# TODO Re-enable asset pipeline
-# group :assets do
-#   gem 'sass-rails',   '~> 3.1.0'
-#   gem 'coffee-rails', '~> 3.1.0'
-#   gem 'uglifier'
-#   gem 'compass',      '~> 0.12.alpha'
-# end
+group :assets do
+  gem 'sass-rails',   '~> 3.1.0'
+  gem 'coffee-rails', '~> 3.1.0'
+  gem 'uglifier'
+  gem 'compass',      '~> 0.12.alpha'
+end
 
 gem 'will_paginate', '~> 3.0.2'
 gem 'devise'

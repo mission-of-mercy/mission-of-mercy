@@ -71,7 +71,7 @@
       %div.row
         %span.label= f.label :race
         %span.formw= f.select :race, *race_select_options
-      #race_other_div.row{:style=>"display:none;"}
+      #race_other_div.row
         %span.label= f.label :race_other, 'Specify race'
         %span.formw= f.text_field :race_other
     %br
@@ -93,7 +93,7 @@
         %span.label
           %label Is the patient in pain?
         %span.formw= yes_no_group f, :pain
-      #pain_length_div.row{:style=>"display:none;"}
+      #pain_length_div.row
         %span.label= f.label :time_in_pain, "Time in pain"
         - if @patient.new_record?
           %span.formw= f.text_field :time_in_pain
@@ -125,7 +125,7 @@
           = f.radio_button :attended_previous_mom_event, false
           = f.label :attended_previous_mom_event, "No", :value => false
 
-      #previous_mom_location_div.row{:style=>show_previous_mom(@patient)}
+      #previous_mom_location_div.row
         %span.label{:style=>"height: 200px;"}
           Clinic(s) attended
           %br

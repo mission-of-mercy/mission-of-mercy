@@ -6,7 +6,7 @@
       = s.select :heard_about_clinic,
         ['Friend or Family','Media: Newspaper/TV/Radio','Flyer or Poster','Other'],
         {:include_blank => true}
-    #heard_about_other_div{:style=>'display:none;'}
+    #heard_about_other_div
       %p
         = s.label :heard_about_other, "Please describe:"
         = s.text_field :heard_about_other

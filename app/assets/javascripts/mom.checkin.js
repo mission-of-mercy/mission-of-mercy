@@ -1,7 +1,6 @@
 MoM.setupNamespace("Checkin");
 
 MoM.Checkin.init = function(options){
-  $('#patient_first_name').focus();
 
   MoM.disableEnterKey();
 
@@ -16,9 +15,6 @@ MoM.Checkin.init = function(options){
   $('input[name="patient[pain]"]').change(function(e){
     MoM.Checkin.togglePatientPain();
   });
-
-  if($('#patient_pain_true').is(":checked"))
-    MoM.Checkin.togglePatientPain(false);
 
   if(options.dateInput == "text")
     MoM.Checkin.useTextDate();
@@ -48,7 +44,14 @@ MoM.Checkin.init = function(options){
      MoM.Checkin.showPatientSurvey();
 
      e.preventDefault();
-  })
+  });
+
+  // Toggle Fields
+
+  MoM.Checkin.toggleOtherHeardAbout(false);
+  MoM.Checkin.togglePreviousMoM(false);
+  MoM.Checkin.togglePatientPain(false);
+  MoM.Checkin.toggleOtherRace(false);
 
   if(options.lastPatientId){
     MoM.Checkin.printChart(options.lastPatientId);
@@ -56,6 +59,8 @@ MoM.Checkin.init = function(options){
     // TODO Restore ModalBox
     //Modalbox.show($('last_patient'), {title: "Patient\'s Chart Number", width: 300});}
   }
+
+  $('#patient_first_name').focus();
 }
 
 MoM.Checkin.printChart = function(patientId){
@@ -63,7 +68,7 @@ MoM.Checkin.printChart = function(patientId){
 }
 
 MoM.Checkin.togglePatientPain = function(focus){
-  if(focus == undefined) focus = true;
+  if(focus == undefined) var focus = true;
 
   if($('#patient_pain_true').is(':checked') == true)
     $('#pain_length_div').slideDown(function(){
@@ -109,11 +114,13 @@ MoM.Checkin.useSelectDate = function(){
   $('#date-format').slideUp();
 }
 
-MoM.Checkin.togglePreviousMoM = function(){
+MoM.Checkin.togglePreviousMoM = function(animate){
+  var previousMoM = $('#previous_mom_location_div');
+
   if($('#patient_attended_previous_mom_event_true').is(':checked') == true)
-    $('#previous_mom_location_div').slideDown();
+    previousMoM.slideDown();
   else
-    $('#previous_mom_location_div').slideUp();
+    previousMoM.slideUp();
 }
 
 MoM.Checkin.lookupZip = function(){
@@ -132,10 +139,12 @@ MoM.Checkin.lookupZip = function(){
   });
 }
 
-MoM.Checkin.toggleOtherRace = function(){
+MoM.Checkin.toggleOtherRace = function(focus){
+  if(focus == undefined) var focus = true;
+
   if($('#patient_race').val() == 'Other')
     $('#race_other_div').slideDown(function(){
-      $('#patient_race_other').focus();
+      if(focus) $('#patient_race_other').focus();
     });
   else{
     $('#race_other_div').slideUp();
@@ -143,13 +152,16 @@ MoM.Checkin.toggleOtherRace = function(){
   }
 }
 
-MoM.Checkin.toggleOtherHeardAbout = function (){
+MoM.Checkin.toggleOtherHeardAbout = function(focus){
   var heardAbout = $('#patient_survey_attributes_heard_about_clinic').val();
+  if(focus == undefined) var focus = true;
 
   if(heardAbout == "Other")
   {
     $('#heard_about_other_div').slideDown(function(){
-      $('#patient_survey_attributes_heard_about_other').focus();
+      if(focus){
+        $('#patient_survey_attributes_heard_about_other').focus();
+      }
     });
   }
   else
