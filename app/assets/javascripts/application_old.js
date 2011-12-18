@@ -49,22 +49,6 @@ function showCheckoutFields(tooth, surface, code, type){
   }
 }
 
-function showOtherHeardAbout()
-{
-  var heardAbout = $('patient_survey_attributes_heard_about_clinic');
-
-  if(heardAbout.selectedIndex == 4)
-  {
-    $('heard_about_other_div').show();
-    $('patient_survey_attributes_heard_about_other').focus();
-  }
-  else
-  {
-    $('heard_about_other_div').hide();
-    $('patient_survey_attributes_heard_about_other').value = "";
-  }
-}
-
 function procedure_not_added(hasProcedures){
   var checked = $('new_patient_procedure').getInputs('radio', 'patient_procedure[procedure_id]').find(
   	        function(re) {return re.checked;}

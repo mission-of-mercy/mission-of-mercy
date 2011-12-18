@@ -6,7 +6,7 @@ MoM.Checkin.init = function(options){
   MoM.disableEnterKey();
 
   $('#patient_survey_attributes_heard_about_clinic').change(function(e){
-    showOtherHeardAbout();
+    MoM.Checkin.toggleOtherHeardAbout();
   });
 
   $('#patient_race').change(function(){
@@ -137,8 +137,26 @@ MoM.Checkin.toggleOtherRace = function(){
     $('#race_other_div').slideDown(function(){
       $('#patient_race_other').focus();
     });
-  else
+  else{
     $('#race_other_div').slideUp();
+    $('#patient_race_other').val("");
+  }
+}
+
+MoM.Checkin.toggleOtherHeardAbout = function (){
+  var heardAbout = $('#patient_survey_attributes_heard_about_clinic').val();
+
+  if(heardAbout == "Other")
+  {
+    $('#heard_about_other_div').slideDown(function(){
+      $('#patient_survey_attributes_heard_about_other').focus();
+    });
+  }
+  else
+  {
+    $('#heard_about_other_div').slideUp();
+    $('#patient_survey_attributes_heard_about_other').val("");
+  }
 }
 
 MoM.Checkin.showPatientDemographics = function(){
