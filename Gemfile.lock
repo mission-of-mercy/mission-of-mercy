@@ -39,6 +39,7 @@ GEM
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
       warden (~> 1.0.3)
+    dynamic_form (1.1.4)
     erubis (2.7.0)
     factory_girl (2.1.0)
     factory_girl_rails (1.2.0)
@@ -111,6 +112,7 @@ PLATFORMS
 DEPENDENCIES
   colorific (~> 1.0.0)
   devise
+  dynamic_form
   factory_girl_rails
   faker (~> 0.9.5)
   haml (~> 3.0)
