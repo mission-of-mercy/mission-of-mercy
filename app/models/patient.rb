@@ -7,11 +7,11 @@ class Patient < ActiveRecord::Base
     :months         => /\Am(onth(s)?)?\Z/i,
     :years          => /\Ay(ear(s)?)?\Z/i
   }
+
   REGEXP[:all_time_units] = Regexp.union( REGEXP[:days],
                                           REGEXP[:weeks],
                                           REGEXP[:months],
                                           REGEXP[:years] )
-
 
   before_save  :update_survey
   before_save  :normalize_data

@@ -380,11 +380,11 @@ div.row span.formw {
 	margin-left: 20px;
 }
 
-div.input-right div.row span.formexample {
+div.input-right div.row .formexample {
   margin-left: 175px;
 }
 
-div.row span.formexample{
+div.row .formexample{
 	font-size: x-small;
 	font-style: italic;
 	display: block;
