@@ -1,11 +1,5 @@
 - title 'Reports - Treatment Area Distribution'
 
-- content_for :header do
-  :javascript
-    document.observe('dom:loaded', function(){
-      #{over_capacity(@areas)}
-    });
-
 = header do
   %h1 Treatment Area Distribution
   #controls

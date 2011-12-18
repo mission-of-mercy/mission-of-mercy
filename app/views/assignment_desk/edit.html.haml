@@ -1,11 +1,5 @@
 - title 'Assignment Desk'
 
-- content_for :header do
-  :javascript
-    document.observe('dom:loaded', function(){
-      #{over_capacity(@areas)}
-    });
-
 = header do
   %h1 Assignment Desk
   %br
@@ -26,9 +20,9 @@
       = f.label :radiology, "Radiology"
 
   %div.input-right.border
-    = raw bar_graph "treatment_area_graph",
-                    @current_capacity,
-                    { :style => "width:590px;height:200px" }
+    = bar_graph "treatment_area_graph",
+                @current_capacity,
+                { :style => "width:590px;height:200px" }
 
     %br
 

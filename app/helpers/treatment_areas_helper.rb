@@ -94,19 +94,6 @@ module TreatmentAreasHelper
                    :before => "$('exporting').show()"
   end
 
-  def over_capacity(areas)
-    js = ""
-
-    areas.each do |a|
-      if a.patients.length >= (a.capacity || 0)
-        id = a.name.to_s.downcase.gsub(' ', '_')
-        js += "$($$('dd.#{id}').first()).addClassName('over');"
-      end
-    end
-
-    js
-  end
-
   def checkout_path(area, patient)
     if patient.survey
       treatment_area_patient_survey_path(area, patient)

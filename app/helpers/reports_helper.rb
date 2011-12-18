@@ -46,14 +46,18 @@ module ReportsHelper
 
     div_options.merge!({ :id => name })
     output << content_tag(:div, "", div_options)
-    output << javascript_tag(:defer => 'defer') do
-      <<-JS_OUTPUT
-      var placeholder = jQuery('\##{ name }');
-      var data = #{ bar_graph_data(data_series) };
-      var options = #{ bar_graph_options(data_series) };
-      var plot = jQuery.plot(placeholder, data, options);
-      JS_OUTPUT
+    output << javascript_tag do
+      %{
+        $(function(){
+          var placeholder = jQuery('\##{ name }');
+          var data = #{ bar_graph_data(data_series) };
+          var options = #{ bar_graph_options(data_series) };
+          var plot = jQuery.plot(placeholder, data, options);
+        });
+      }.html_safe
     end
+
+    output.html_safe
   end
 
   def bar_graph_data(original_data)
