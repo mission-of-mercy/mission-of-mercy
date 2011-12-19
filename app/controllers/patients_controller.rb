@@ -75,15 +75,8 @@ class PatientsController < ApplicationController
 
         redirect_to treatment_area_patient_procedures_path(TreatmentArea.radiology, @patient.id)
       end
-      format.js
     end
   rescue => e
-    # SupportRequest.create(:user_id            => current_user.id,
-    #                           :area_id            => current_area_id,
-    #                           :treatment_area_id  => current_treatment_area_id,
-    #                           :ip_address         => request.remote_ip,
-    #                           :resolved           => false )
-
     flash[:error] = e.message
     redirect_to patients_path
   end
