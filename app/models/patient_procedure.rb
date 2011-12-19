@@ -9,7 +9,7 @@ class PatientProcedure < ActiveRecord::Base
   before_validation :normalize_data, :load_procedure_from_code,
                     :load_procedure_from_type, :on => :create
 
-  validates_presence_of :procedure_id, :message => "invalid"
+  validates_presence_of :procedure, :message => "invalid"
   validates_format_of :tooth_number, :with => VALID_TOOTH,
     :message => "must be valid (A-T or 1-32)", :allow_blank => true
   validates_format_of :surface_code, :with => VALID_SURFACE,
@@ -50,7 +50,7 @@ class PatientProcedure < ActiveRecord::Base
   end
 
   def load_procedure_from_code
-    if !code.blank? and procedure_id == 0
+    if !code.blank? && procedure_id == 0
       self.procedure = Procedure.find_by_code(self.code)
     end
   end

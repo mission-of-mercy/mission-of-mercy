@@ -64,7 +64,7 @@
           Once all procedures have been entered click
           %b Finish
 
-  %div.input-bottom{:class => "check_out"}
+  %div.input-bottom.check_out
     - if current_user.user_type == UserType::XRAY
       %span{:style => "float:left;"}
         = link_to_export_to_dexis @patient

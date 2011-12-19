@@ -4,13 +4,15 @@ module TreatmentAreasHelper
   end
 
   def procedure_radio(procedure, form_builder)
-    form_builder.radio_button :procedure_id,
-                               procedure.id,
-                              :onchange => "showCheckoutFields(#{procedure.requires_tooth_number},#{procedure.requires_surface_code}, false, false);"
+    form_builder.radio_button :procedure_id, procedure.id,
+      :data => {
+        :'requires-tooth-number' => procedure.requires_tooth_number,
+        :'requires-surface-code' => procedure.requires_surface_code
+      }
   end
 
   def procedure_other_radio(form_builder)
-    options = {:onchange => "showCheckoutFields(true,true, true, false);"}
+    options = { :'data-generic-procedure' => true }
 
     if @selected_procedure && @selected_procedure == "other"
       options[:checked] = true
@@ -20,7 +22,7 @@ module TreatmentAreasHelper
   end
 
   def procedure_amalgam_composite_radio(form_builder)
-    options = {:onchange => "showCheckoutFields(true,true, false, true);"}
+    options = { :'data-amalgam-composite' => true }
 
     if @selected_procedure && @selected_procedure == "amalgam_composite"
       options[:checked] = true
