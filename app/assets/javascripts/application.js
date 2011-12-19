@@ -4,6 +4,9 @@
 //= require_self
 //= require_tree .
 
+$.facebox.settings.closeImage   = '/assets/facebox/closelabel.png';
+$.facebox.settings.loadingImage = '/assets/loading.gif';
+
 // Setup the MoM Namespace
 var MoM = MoM ? MoM : new Object();
 

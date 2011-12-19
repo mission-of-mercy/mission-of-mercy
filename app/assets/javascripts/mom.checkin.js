@@ -66,8 +66,13 @@ MoM.Checkin.init = function(options){
   if(options.lastPatientId){
     MoM.Checkin.printChart(options.lastPatientId);
 
-    // TODO Restore ModalBox
-    //Modalbox.show($('last_patient'), {title: "Patient\'s Chart Number", width: 300});}
+    jQuery.facebox({ div: '#last_patient' }, 'last-patient');
+
+    $('div.last-patient a').click(function(e){
+      jQuery(document).trigger('close.facebox');
+      $('#patient_first_name').focus();
+      e.preventDefault();
+    });
   }
 
   $('#patient_first_name').focus();

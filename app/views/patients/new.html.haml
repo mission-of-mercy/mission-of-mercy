@@ -21,7 +21,10 @@
       = f.submit "Check In"
       = link_to "Back", "#", :class => 'back'
 
-#last_patient{:style=>"display:none;"}
-  %h1{:style=>"text-align:center;"}= @last_patient.chart_number if @last_patient
+#last_patient
+  .top
+    Patient's Chart Number
+    %h1= @last_patient.chart_number if @last_patient
 
-  = link_to_function "Check In Next Patient ", "Modalbox.hide(); $('patient_first_name').focus(); return false;", :class => "back"
+  .bottom
+    = link_to "Check In Next Patient &rarr;".html_safe, "#", :class => "back"

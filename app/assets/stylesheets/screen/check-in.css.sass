@@ -1,3 +1,5 @@
+@import compass/css3/border-radius
+
 form.new_patient, form.edit_patient
   img.spinner
     display: none
@@ -14,12 +16,31 @@ form.new_patient, form.edit_patient
 #previous_mom_location_div span.label
   height: 200px
 
+
+.last-patient
+  div.top
+    text-align: center
+    h1
+      font-size: 3em
+  div.bottom
+    text-align: right
+    +border-bottom-radius(5px)
+    background-color: #eee
+    padding: 10px
+    margin:
+      left: -10px
+      bottom: -10px
+      right: -10px
+    a
+      text-decoration: none
+
 // Hidden / Optional Fields
 
 #pain_length_div,
 #heard_about_other_div,
 #previous_mom_location_div,
 #pain_length_div,
-#race_other_div
+#race_other_div,
+#last_patient
   display: none
 
