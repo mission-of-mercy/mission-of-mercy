@@ -5,4 +5,10 @@ MoM.Checkout.init = function(options){
     $(this).hide();
     $(this).siblings('img').show();
   });
+
+  $('#export_to_dexis').bind('ajax:beforeSend', function(e){
+    $(this).siblings('img').show();
+  }).bind('ajax:complete', function(e){
+    $(this).siblings('img').hide();
+  });
 }

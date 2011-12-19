@@ -93,7 +93,7 @@ module TreatmentAreasHelper
     link_to "Export to Dexis",
             export_to_dexis_file_path(:patient_id => patient.id),
             :remote => true,
-            :before => "$('exporting').show()"
+            :id     => "export_to_dexis"
   end
 
   def checkout_path(area, patient)
