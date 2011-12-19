@@ -15,7 +15,7 @@ MissionOfMercy::Application.routes.draw do
     collection do
       post :change
     end
-    resources :patients do
+    resources :patients, :controller => "TreatmentAreas::Patients" do
       resources :prescriptions, :controller => "TreatmentAreas::Patients::Prescriptions"
       resources :procedures, :controller => "TreatmentAreas::Patients::Procedures"
       resource :survey, :controller => "TreatmentAreas::Patients::Surveys"

@@ -2,7 +2,7 @@ module PatientsHelper
   def link_to_checkout(area, patient)
     name = TreatmentArea.find(area).name
 
-    link_to "#{name} Checkout", checkout_path(area,patient), :title => "Right click to change treatment area"
+    link_to "#{name} Checkout", checkout_path(area,patient)
   end
 
   def show_previous_mom(patient)
