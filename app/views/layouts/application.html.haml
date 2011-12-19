@@ -10,7 +10,7 @@
     = csrf_meta_tag
 
     :javascript
-      MoM.init('#{form_authenticity_token}');
+      $(function() { MoM.init(); });
       #{yield(:header_js)}
 
     = yield(:header)

@@ -8,11 +8,9 @@
     = csrf_meta_tag
 
     :javascript
-      MoM.init('#{form_authenticity_token}');
-
-      MoM.Support.Enabled = false;
-
-      MoM.Support.startStatusPolling();
+      $(function(){
+        MoM.Support.startStatusPolling();
+      });
 
   %body{:style => "height: 0;"}
     #status_container= yield

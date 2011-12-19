@@ -52,11 +52,12 @@ module TreatmentAreasHelper
   end
 
   def remove_procedure(patient_procedure)
-    link_to_remote image_tag("delete.png", :class => "side_image right"),
-                   :url => patient_procedure_path(patient_procedure),
-                   :method => :delete,
-                   :confirm => "Are you sure you wish to remove this procedure?",
-                   :before => "$(this).hide(); $('loading_#{patient_procedure.id}').show();"
+    link_to image_tag("delete.png", :class => "side_image right"),
+            patient_procedure_path(patient_procedure),
+            :remote  => true,
+            :method  => :delete,
+            :confirm => "Are you sure you wish to remove this procedure?",
+            :class   => "delete-procedure"
   end
 
   def link_to_previous(area, patient)
@@ -89,9 +90,10 @@ module TreatmentAreasHelper
   end
 
   def link_to_export_to_dexis(patient)
-    link_to_remote "Export to Dexis",
-                   :url  => export_to_dexis_file_path(:patient_id => patient.id),
-                   :before => "$('exporting').show()"
+    link_to "Export to Dexis",
+            export_to_dexis_file_path(:patient_id => patient.id),
+            :remote => true,
+            :before => "$('exporting').show()"
   end
 
   def checkout_path(area, patient)

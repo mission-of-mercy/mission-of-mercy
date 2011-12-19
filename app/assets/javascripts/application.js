@@ -15,22 +15,8 @@ MoM.setupNamespace = function(namespace){
 		MoM[namespace] = {}
 }
 
-MoM.init = function(auth_token){
-  MoM.AuthToken = auth_token;
-
-  MoM.Support.startPolling();
-
-  $(function($) {
-    $('img.help').click(function(e){
-      helpBox = $(e.target).attr('data-help');
-
-      $('#' + helpBox).slideToggle();
-    });
-
-    $('div.help-box img.close').click(function(e){
-      $(e.target).parent().slideUp();
-    });
-  });
+MoM.init = function(){
+  MoM.Support.init(true);
 }
 
 MoM.disableEnterKey = function(){
@@ -51,6 +37,20 @@ MoM.Support.Enabled  = true;
 MoM.Support.Interval = 20;    // In seconds
 MoM.Support.Timer    = null;
 
+MoM.Support.init = function(startPolling){
+  $('img.help').click(function(e){
+    helpBox = $(e.target).attr('data-help');
+
+    $('#' + helpBox).slideToggle();
+  });
+
+  $('div.help-box img.close').click(function(e){
+    $(e.target).parent().slideUp();
+  });
+
+  if(startPolling == true) MoM.Support.startPolling();
+}
+
 MoM.Support.startPolling = function (){
   var interval = MoM.Support.Interval * 1000;
   MoM.Support.Timer = setInterval(MoM.Support.checkForRequests, interval);
@@ -64,7 +64,6 @@ MoM.Support.startPolling = function (){
 MoM.Support.checkForRequests = function (){
   if(MoM.Support.Enabled){
     $.getJSON('/active_support_requests.json',
-      { authenticity_token: MoM.AuthToken},
       function(data){
         MoM.Support.processRequests(data);
       }
@@ -118,8 +117,7 @@ MoM.Support.showSupportRequested = function(id){
     $.ajax({
       type: "PUT",
       url: '/support_requests/' + id,
-      dataType: "script",
-      data: {authenticity_token: MoM.AuthToken}
+      dataType: "script"
     });
   };
 

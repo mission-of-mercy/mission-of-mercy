@@ -1,5 +1,15 @@
 - title "Checkout - Procedures"
 
+- content_for :header_js do
+  :plain
+    $(function(){
+      var options = {
+
+      };
+
+      MoM.Checkout.init(options);
+    });
+
 = header do
   %h1 Checkout - Procedures
   %br

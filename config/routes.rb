@@ -16,7 +16,7 @@ MissionOfMercy::Application.routes.draw do
     end
     resources :patients do
       resources :prescriptions
-      resources :procedures
+      resources :procedures, :controller => "TreatmentAreas::Patients::Procedures"
       resource :survey
     end
   end
