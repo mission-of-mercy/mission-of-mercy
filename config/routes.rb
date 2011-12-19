@@ -23,12 +23,10 @@ MissionOfMercy::Application.routes.draw do
 
   match '/pharmacy/check_out/:patient_id' => 'pharmacy#check_out', :as => :pharmacy_check_out
   match '/pharmacy/finalize/:patient_id' => 'pharmacy#check_out_complete', :as => :pharmacy_finalize
-  resources :patients do
-    collection do
-      get :lookup_zip
-      post :lookup_city
-    end
-  end
+  resources :patients
+
+  match '/autocomplete/city.json' => 'autocomplete#city', :as => :autocomplete_city
+  match '/autocomplete/zip.json'  => 'autocomplete#zip',  :as => :autocomplete_zip
 
   resources :patient_procedures
   resources :assignment_desk

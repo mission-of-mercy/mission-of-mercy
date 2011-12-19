@@ -59,32 +59,6 @@ class PatientsController < ApplicationController
     end
   end
 
-  def lookup_zip
-    zip = Patient::Zipcode.find_by_zip(params[:zip])
-
-    if zip
-      zip = {
-        :found => true,
-        :zip   => zip.zip,
-        :state => zip.state,
-        :city  => zip.city
-      }
-    else
-      zip = { :found => false }
-    end
-
-    respond_to do |format|
-      format.json { render :json => zip.to_json }
-    end
-  end
-
-  def lookup_city
-    @cities = Patient::Zipcode.all(:conditions => ["city ILIKE ?", "#{params[:city]}%"],
-      :select => "DISTINCT city")
-
-    render :layout => false
-  end
-
   def export_to_dexis_file
     @patient = Patient.find(params[:patient_id])
 
