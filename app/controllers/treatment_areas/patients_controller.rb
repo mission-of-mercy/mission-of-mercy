@@ -9,10 +9,6 @@ class TreatmentAreas::PatientsController < ApplicationController
     end
 
     @patients = Patient.search(params[:chart_number],params[:name],params[:page])
-
-    respond_to do |format|
-      format.html
-    end
   end
 
   private

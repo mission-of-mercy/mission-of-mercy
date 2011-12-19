@@ -3,4 +3,6 @@
   = hidden_field_tag "current_controller", controller_name
   = hidden_field_tag "current_action", action_name
   = hidden_field_tag "patient_id", @patient.id if @patient
-  = select_tag "treatment_area_id", options_for_select([["Change Treatment Area", nil]] + TreatmentArea.all(:order => [:name]).map {|a| [a.name, a.id]}, :include_blank => true), :onchange => "$('change_form').submit();", :class => "change_treatment_area"
+  = select_tag "treatment_area_id",
+    options_for_select([["Change Treatment Area", nil]] + TreatmentArea.all(:order => [:name]).map {|a| [a.name, a.id]}, :include_blank => true),
+    :class => "change_treatment_area"

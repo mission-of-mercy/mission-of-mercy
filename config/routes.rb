@@ -10,6 +10,7 @@ MissionOfMercy::Application.routes.draw do
 
   resources :support_requests
   match '/active_support_requests.:format' => 'support_requests#active_requests'
+
   resources :treatment_areas do
     collection do
       post :change
