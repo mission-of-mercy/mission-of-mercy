@@ -96,8 +96,7 @@ module UsersHelper
                 :treatment_area_id  => current_treatment_area_id }
 
     link_to image_tag("need_help.png", :class => "no_border"),
-      support_requests_path(:support_request => request,
-        :authenticity_token => form_authenticity_token),
+      support_requests_path(:support_request => request),
       :remote => true,
       :method => :post,
       :id     => "help_link"
