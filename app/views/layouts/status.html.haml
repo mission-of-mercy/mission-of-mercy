@@ -5,6 +5,7 @@
 
     = javascript_include_tag 'application'
     = stylesheet_link_tag 'application'
+    = csrf_meta_tag
 
     :javascript
       MoM.init('#{form_authenticity_token}');
