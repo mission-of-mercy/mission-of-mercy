@@ -1,0 +1,44 @@
+.input-left.no_border
+
+  %h4 New Procedure
+
+  = form_for @patient_procedure,
+    :url => treatment_area_patient_procedures_path(@treatment_area, @patient),
+    :html => { :autocomplete => "off" } do |f|
+    = f.error_messages
+    = f.hidden_field :patient_id
+
+    %dl
+      %dt Procedure:
+      %dd
+        - @treatment_area.procedures.each do |procedure|
+          = procedure_radio procedure, f
+          = f.label :procedure_id, procedure.full_description, :value => procedure.id
+          %br
+        - if @treatment_area.amalgam_composite_procedures
+          = procedure_amalgam_composite_radio f
+          = f.label :procedure_id,  "Amalgam / Composite", :value => "amalgam_composite"
+          %br
+        = procedure_other_radio f
+        = f.label :procedure_id, "Other Procedure", :value => "other"
+      %dt{:id => "other_dt", :style => other_visible}
+        = f.label :code, "Procedure Code:"
+      %dd{:id => "other_dd", :style => other_visible}
+        = f.text_field :code
+      %dt{:id => "amcomp_dt", :style => amcomp_visible}
+        = f.label :procedure_type, "Procedure Type:"
+      %dd{:id => "amcomp_dd", :style => amcomp_visible}
+        = f.select :procedure_type, ['Amalgam','Composite'], :include_blank => true
+      %dt{:id => "tooth_dt", :style => tooth_visible(@patient_procedure)}
+        = f.label :tooth_number, "Tooth Number:"
+      %dd{:id => "tooth_dd", :style => tooth_visible(@patient_procedure)}
+        = f.text_field :tooth_number
+      %dt{:id => "surface_dt", :style => surface_visible(@patient_procedure)}
+        = f.label :surface_code, "Surface Code(s):"
+      %dd{:id => "surface_dd", :style => surface_visible(@patient_procedure)}
+        = f.text_field :surface_code
+
+    %p
+      = f.submit "Add Procedure"
+      - # TODO Replace with current URL
+      = link_to_reset "TODO"
