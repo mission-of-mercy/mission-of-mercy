@@ -67,6 +67,11 @@ body.red{
   border-radius: 25px;
 }
 
+#status_container #alert {
+  width: 0px;
+  height: 0px;
+}
+
 #container{
 	width: 950px;
 	margin: 0 auto;
