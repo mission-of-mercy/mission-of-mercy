@@ -1,6 +1,7 @@
 class TreatmentAreasController < ApplicationController
   before_filter :authenticate_user!
 
+  # TODO Clean this up
   def change
     base =  "TreatmentAreas"
     base += "::Patients" unless params[:current_controller] == "patients"

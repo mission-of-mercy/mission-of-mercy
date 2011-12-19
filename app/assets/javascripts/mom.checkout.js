@@ -12,7 +12,7 @@ MoM.Checkout.init = function(options){
     $(this).siblings('img').hide();
   });
 
-  $('form.new_patient_procedure input').change(function(e){
+  $('form.new_patient_procedure input[type=radio]').change(function(e){
     var code = $(this).data('generic-procedure') || false;
     var type = $(this).data('amalgam-composite') || false;
     var tooth = $(this).data('requires-tooth-number') || false;
