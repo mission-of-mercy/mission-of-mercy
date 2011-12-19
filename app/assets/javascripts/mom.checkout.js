@@ -32,8 +32,7 @@ MoM.Checkout.addProcedure = function (tooth, surface, code, type){
     $('#tooth_dt').show();
     $('#tooth_dd').show();
 
-    // TODO Replace highlight effects
-    // new Effect.Highlight("tooth_dt");
+    $("#tooth_dt").effect("highlight", {}, 2000);
 
     $('#patient_procedure_tooth_number').focus();
   }else{
@@ -45,8 +44,8 @@ MoM.Checkout.addProcedure = function (tooth, surface, code, type){
     $('#surface_dt').show();
     $('#surface_dd').show();
 
-    // TODO Replace highlight effects
-    //new Effect.Highlight("surface_dt");
+
+    $("#surface_dt").effect("highlight", {}, 2000);
 
   }else{
     $('#surface_dt').hide();
@@ -57,8 +56,7 @@ MoM.Checkout.addProcedure = function (tooth, surface, code, type){
     $('#other_dt').show();
     $('#other_dd').show();
 
-    // TODO Replace highlight effects
-    //new Effect.Highlight("other_dt");
+    $("#other_dt").effect("highlight", {}, 2000);
 
     $('#patient_procedure_code').focus();
   }else{
@@ -70,8 +68,7 @@ MoM.Checkout.addProcedure = function (tooth, surface, code, type){
     $('#amcomp_dt').show();
     $('#amcomp_dd').show();
 
-    // TODO Replace highlight effects
-    //new Effect.Highlight("amcomp_dt");
+    $("#amcomp_dt").effect("highlight", {}, 2000);
 
     $('#patient_procedure_procedure_type').focus();
   }else{
