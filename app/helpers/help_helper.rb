@@ -5,7 +5,7 @@ module HelpHelper
         image_tag( "up.png", :class => "close",
           :title => "Click here to close this help page"),
         capture(&block)
-      ].join("\n")
+      ].join("\n").html_safe
     end
   end
 
