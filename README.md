@@ -1,6 +1,8 @@
 ![Mission of Mercy Logo](https://github.com/jordanbyron/mission_of_mercy/raw/master/doc/mom.png)
 
-Clinic management software for Mission of Mercy free dental clinics.
+Clinic management software for Mission of Mercy free dental clinics. Created to streamline patient intake, digital x-ray, and check-out processes during the clinic’s operating hours.
+
+For the latest information about the software check out [this project's wiki](http://wiki.github.com/jordanbyron/mission_of_mercy)
 
 ## Installation
 
@@ -18,7 +20,7 @@ To install a development version of Mission of Mercy, follow these steps:
 4. Run `bundle install` to install all of the project's dependencies
 5. Finally, run `rake setup` to create the required config files, create the database, and seed it with data
 
-Or, if you are really lazy, just copy and paste this into your terminal once you've got the project cloned to your computer
+To make things even easier, you can copy and paste this into your terminal once you've got the project cloned to your computer
 
 ```bash
 gem install bundler
@@ -26,14 +28,9 @@ bundle install
 bundle exec rake setup
 ```
 
-## More Information about the software
-
-For the latest update-to-date information about the software check out the
-project's wiki pages at <http://wiki.github.com/jordanbyron/mission_of_mercy/>
-
 ## What is Mission of Mercy?
 
-While there are other Missions of Mercy around the country, this MoM is a
+While there are other Missions of Mercy around the country, this mission is a
 gathering of volunteer dental professionals who along with a volunteer staff of
 several hundred hold free, two day dental clinics at locations around the country.
 
