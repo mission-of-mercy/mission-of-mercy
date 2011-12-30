@@ -23,7 +23,7 @@ module TestHelper
 
   def create_test_patients(date=Date.today)
     (6..17).map { |i| date + i.hours }.each do |datetime|
-      Factory(:patient, :created_at => datetime, :updated_at => datetime)
+      Factory.create(:patient, :created_at => datetime, :updated_at => datetime)
     end
   end
 
@@ -37,11 +37,11 @@ module TestHelper
   end
 
   def create_test_procedures
-    Factory(:procedure,
+    Factory.create(:procedure,
             :description => "Comp. Oral Exam",
             :code        => 150,
             :cost        => 90)
-    Factory(:procedure,
+    Factory.create(:procedure,
             :description => "Panoramic film",
             :code        => 330,
             :cost        => 125)

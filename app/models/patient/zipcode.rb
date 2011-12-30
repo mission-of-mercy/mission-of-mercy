@@ -1,7 +1,8 @@
 class Patient::Zipcode < ActiveRecord::Base
-  before_create :pad_zip
+  before_validation :pad_zip
 
-  validates_presence_of :zip
+  validates_presence_of   :zip
+  validates_uniqueness_of :zip
 
   private
 

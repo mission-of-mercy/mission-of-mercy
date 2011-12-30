@@ -17,6 +17,11 @@ gem 'dynamic_form'
 
 gem 'jquery-rails'
 
+group :development do
+  gem 'rainbow'
+  gem 'progress_bar'
+end
+
 group :test do
   gem 'minitest',  '~> 2.3.1'
   gem 'faker',     '~> 0.9.5'

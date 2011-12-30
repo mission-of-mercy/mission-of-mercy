@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable
 
+  validates_uniqueness_of :login
+
   attr_accessible :password, :password_confirmation, :login, :user_type, :station_id
 
   def name

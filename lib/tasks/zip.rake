@@ -3,10 +3,21 @@ require "csv"
 
 namespace :zip do
 
-  # Zipcode CSC can be downloaded from: http://www.boutell.com/zipcodes/
   desc 'import zips from zipcode.csv'
   task :import => :environment do
-    CSV.foreach("#{Rails.root}/zipcode.csv", :headers => true) do |row|
+    zip_file = File.join(Rails.root, "zipcode.csv")
+
+    unless File.exists?(zip_file)
+      puts "#{zip_file} does not exist!".color(:red)
+      puts "Zipcode CSV can be downloaded from: http://www.boutell.com/zipcodes"
+      next
+    end
+
+    zip_count = File.foreach(zip_file).inject(0) {|c, line| c + 1 }
+
+    bar = ProgressBar.new(zip_count, :bar, :percentage)
+
+    CSV.foreach(zip_file, :headers => true) do |row|
       Patient::Zipcode.create(
         :zip       => row["zip"],
         :city      => row["city"].try(:titlecase),
@@ -15,23 +26,12 @@ namespace :zip do
         :longitude => row["longitude"],
         :county    => row["county"].try(:titlecase)
       )
+
+      bar.increment!
     end
 
-    puts "Zipcodes sucessfully imported"
-  end
+    bar.increment!(bar.remaining) # The total is approximate
 
-  desc 'add county information to zips'
-  task :add_county => :environment do
-    CSV.foreach("#{Rails.root}/zipcode.csv", :headers => true) do |row|
-      zip_code = Patient::Zipcode.find_by_zip(row["zip"])
-
-      if zip_code
-        zip_code.update_attributes(:county => row["county"].try(:titlecase))
-      else
-        puts "#{row["zip"]} not found!"
-      end
-    end
-
-    puts "County information sucessfully added to zips"
+    puts "#{Patient::Zipcode.count} zipcodes sucessfully imported"
   end
 end
