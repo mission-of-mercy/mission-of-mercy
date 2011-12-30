@@ -3,11 +3,11 @@
   %head
     %title= "Mission of Mercy - #{yield(:title) || controller_name.humanize}"
 
-    = javascript_include_tag :defaults
+    = javascript_include_tag 'application'
     = stylesheet_link_tag 'print/default', :media => :all
 
     :javascript
-      Event.observe(window, 'load', function() {
+      $(function(){
         window.print();
         window.close(); // We don't mess around. In and out.
       });
