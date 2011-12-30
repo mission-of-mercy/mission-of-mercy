@@ -34,7 +34,7 @@ While there are other Missions of Mercy around the country, this mission is a
 gathering of volunteer dental professionals who along with a volunteer staff of
 several hundred hold free, two day dental clinics at locations around the country.
 
-### Media
+### Seeing is believing
 
 It's easy to work on a software project and never see the impact it makes on people. For Mission of Mercy, it' hard NOT to see the amazing impact your contributions make on people's lives. Below is a collection of photos and videos from various clinics throughout the country which use this software.
 
