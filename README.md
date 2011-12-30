@@ -34,9 +34,19 @@ While there are other Missions of Mercy around the country, this mission is a
 gathering of volunteer dental professionals who along with a volunteer staff of
 several hundred hold free, two day dental clinics at locations around the country.
 
-The following is a video of the 2011 Connecticut Mission of Mercy clinic:
+### Media
 
-<http://www.youtube.com/watch?v=aGAEtleugnk>
+It's easy to work on a software project and never see the impact it makes on people. For Mission of Mercy, it' hard NOT to see the amazing impact your contributions make on people's lives. Below is a collection of photos and videos from various clinics throughout the country which use this software.
+
+**Photos**
+
+- [CT Mission of Mercy](http://www.flickr.com/photos/ctmissionofmercy)
+- [GA Mission of Mercy](http://www.flickr.com/photos/29180323@N06/)
+
+**Videos**
+
+- [2011 Connecticut Mission of Mercy clinic](http://youtu.be/aGAEtleugnk)
+- [2011 Georgia Mission of Mercy clinic](http://youtu.be/u4jvLU3RGfU)
 
 ## Contributing
 
