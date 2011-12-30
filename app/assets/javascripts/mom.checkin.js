@@ -35,13 +35,7 @@ MoM.Checkin.init = function(options){
   });
 
   $('#patient_city').autocomplete({
-    source: "/autocomplete/city.json",
-    search: function(event, ui) {
-      $('#city-spinner').show();
-    },
-    open: function(event, ui) {
-      $('#city-spinner').hide();
-    }
+    source: "/autocomplete/city.json"
   });
 
   $('#bottom_survey a.back').click(function(e){
