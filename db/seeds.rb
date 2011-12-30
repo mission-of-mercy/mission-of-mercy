@@ -1,7 +1,15 @@
-# Users
+# Custom Settings
 
-default_password = "temp123"
-total_xray_stations = 5
+console = HighLine.new
+
+password = console.ask("Default password for all user accounts") do |q|
+  q.default = "temp123"
+end
+total_xray_stations = console.ask("Number of X-Ray Stations", Integer) do |q|
+  q.default = 5
+end
+
+# Users
 
 users = [ { :login => "admin",           :user_type => UserType::ADMIN },
           { :login => "check_in",        :user_type => UserType::CHECKIN },
@@ -18,12 +26,13 @@ end
 users.each do |user|
   User.create( :login                  => user[:login],
                :user_type              => user[:user_type],
-               :password               => default_password,
-               :password_confirmation  => default_password,
+               :password               => password,
+               :password_confirmation  => password,
                :x_ray_station_id       => user[:station_id] )
 end
 
 puts "#{User.count} users created"
+puts "Passwords have been set to #{password.bright}".color(:red)
 
 # Treatment Areas
 

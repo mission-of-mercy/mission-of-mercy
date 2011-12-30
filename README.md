@@ -16,44 +16,8 @@ To install a development version of Mission of Mercy, follow these steps:
 1. Fork our GitHub repository: <http://github.com/jordanbyron/mission_of_mercy>
 2. Clone the fork to your computer
 3. If you don't already have bundler installed, get it by running `gem install bundler`
-4. Then, run `bundle install` to install all of the dependencies 
-
-**Automatic Setup:**
-
-Simply run `bundle exec rake setup` and all necessary files will be created, databases created, and seed data loaded.
-
-_NOTE: This requires you have the EDITOR shell environment variable set: Example - `EDITOR=vim`_
-
-**Manual Setup:**
-
-1. Create a `database.yml` file in `config`. The `config` directory contains
-   an example `database.yml` for PostgreSQL.
-
-2. Create a `mom.yml` file in `config`. This file sets up some basic information
-   about the clinic and where certain information is backed up to. The `config`
-   directory contains an example `mom.yml` file which can be used.
-
-3. Run the Rails tasks to initialize a development and a test database:
-
-    ```bash
-    $ bundle exec rake db:create     # If you haven't created your databases
-    $ bundle exec rake db:migrate
-    $ bundle exec rake db:test:prepare
-    ```
-
-4. Seed the database with standard user accounts and treatment areas:
-
-    ```bash
-    $ bundle exec rake db:seed
-    ```
-
-    _Note: All passwords are by default set to `temp123`_
-
-5. Finally, run the test suite to make sure everything is working correctly:
-
-    ```bash
-    $ bundle exec rake test
-    ```
+4. Then, run `bundle install` to install all of the dependencies
+5. Finally, run `bundle setup` to create the required config files, create the database, and seed it with data
 
 ## More Information about the software
 

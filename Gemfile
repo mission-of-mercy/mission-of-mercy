@@ -20,6 +20,7 @@ gem 'jquery-rails'
 group :development do
   gem 'rainbow'
   gem 'progress_bar'
+  gem 'highline'
 end
 
 group :test do
