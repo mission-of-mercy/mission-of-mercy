@@ -1,6 +1,6 @@
 ![Mission of Mercy Logo](https://github.com/jordanbyron/mission_of_mercy/raw/master/doc/mom.png)
 
-Clinic management software for Mission of Mercy free dental clinics. Created to streamline patient intake, digital x-ray, and check-out processes during the clinic’s operating hours.
+Clinic management software for Mission of Mercy free dental clinics. Created to streamline patient intake, digital x-ray, and check-out processes during the clinic’s operating hours. Since its creation in 2009 it has been used in Mission of Mercy clinics throughout the United States.
 
 For the latest information about the software check out [this project's wiki](http://wiki.github.com/jordanbyron/mission_of_mercy)
 
@@ -30,9 +30,7 @@ bundle exec rake setup
 
 ## What is Mission of Mercy?
 
-While there are other Missions of Mercy around the country, this mission is a
-gathering of volunteer dental professionals who along with a volunteer staff of
-several hundred hold free, two day dental clinics at locations around the country.
+While there are other Missions of Mercy around the country, the mission this project supports is a one or two-day clinic in which portable dental stations are set up in a large public arena and dental screenings and services are provided at no charge to those who attend. Historically, demand for these clinics has been so intense that individuals often stand in line, as early as midnight, to receive the services. In the USA half of the states run Mission of Mercy clinics.
 
 ![Georgia Clinic](https://github.com/jordanbyron/mission_of_mercy/raw/master/doc/ga_clinic.png)
 
