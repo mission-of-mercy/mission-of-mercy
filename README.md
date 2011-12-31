@@ -34,7 +34,7 @@ While there are other Missions of Mercy around the country, this mission is a
 gathering of volunteer dental professionals who along with a volunteer staff of
 several hundred hold free, two day dental clinics at locations around the country.
 
-### Seeing is believing
+![Georgia Clinic](https://github.com/jordanbyron/mission_of_mercy/raw/master/doc/ga_clinic.png)
 
 It's easy to work on a software project and never see the impact it makes on people. For Mission of Mercy, it' hard NOT to see the amazing impact your contributions make on people's lives. Below is a collection of photos and videos from various clinics throughout the country which use this software.
 
@@ -56,7 +56,7 @@ Contributors retain copyright to their work but must agree to release their
 contributions under the same terms as this project. For details, please see the LICENSE file.
 
 If you would like to help with developing Mission of Mercy, please get in touch!
-Our contact details are at the top of this file.
+Contact Jordan through [GitHub (@jordanbyron)](https://github.com/jordanbyron) or [Twitter (@jordan_byron)](http://twitter.com/jordan_byron)
 
 ### Submitting a Pull Request
 
@@ -67,7 +67,7 @@ Our contact details are at the top of this file.
 4. Implement your feature or bug fix.
 5. Add documentation for your feature or bug fix.
 6. Add tests for your feature or bug fix.
-7. Run `rake test`. If your changes are not 100% covered, go back to step 5.
+7. Run `rake test`. If your changes are not 100% covered, go back to step 6.
 8. If your change affects something in this README, please update it
 9. Commit and push your changes.
 10. Submit a pull request.
