@@ -1,5 +1,7 @@
 require "active_support"
 require "csv"
+require "open-uri"
+require "zip/zip"
 
 namespace :zip do
 
@@ -8,9 +10,12 @@ namespace :zip do
     zip_file = File.join(Rails.root, "zipcode.csv")
 
     unless File.exists?(zip_file)
-      puts "#{zip_file} does not exist!".color(:red)
-      puts "Zipcode CSV can be downloaded from: http://www.boutell.com/zipcodes"
-      next
+      begin
+        Rake::Task["zip:download"].invoke
+      rescue
+        puts "Error downloading zipcodes.".color(:red)
+        next
+      end
     end
 
     zip_count = File.foreach(zip_file).inject(0) {|c, line| c + 1 }
@@ -33,5 +38,25 @@ namespace :zip do
     bar.increment!(bar.remaining) # The total is approximate
 
     puts "#{Patient::Zipcode.count} zipcodes sucessfully imported"
+  end
+
+  task :download do
+    puts "Downloading zipcodes ..."
+
+    zip_file_path = File.join(Rails.root, "zipcode.zip")
+    zip_file      = open(zip_file_path, "wb")
+    zip_file.write(open('http://www.boutell.com/zipcodes/zipcode.zip').read)
+    zip_file.close
+
+    puts "Unzipping ..."
+
+    Zip::ZipFile.open(zip_file_path) do |files|
+      file = files.find {|f| f.name[/csv/] }
+      files.extract(file, File.join(Rails.root, file.name))
+    end
+
+    FileUtils.rm(zip_file_path)
+
+    puts "Zipcode CSV downloaded"
   end
 end

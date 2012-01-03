@@ -108,6 +108,7 @@ GEM
     rdoc (3.12)
       json (~> 1.4)
     ruby-progressbar (0.0.10)
+    rubyzip (0.9.5)
     sass (3.1.11)
     sass-rails (3.1.5)
       actionpack (~> 3.1.0)
@@ -140,7 +141,7 @@ DEPENDENCIES
   devise
   dynamic_form
   factory_girl_rails
-  faker (~> 0.9.5)
+  faker
   haml (~> 3.0)
   highline
   jquery-rails
@@ -149,6 +150,7 @@ DEPENDENCIES
   progress_bar
   rails (~> 3.1.0)
   rainbow
+  rubyzip
   sass-rails (~> 3.1.0)
   uglifier
   will_paginate (~> 3.0.2)

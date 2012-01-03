@@ -21,11 +21,13 @@ group :development do
   gem 'rainbow'
   gem 'progress_bar'
   gem 'highline'
+  gem 'faker'
+  gem 'rubyzip'
 end
 
 group :test do
   gem 'minitest',  '~> 2.3.1'
-  gem 'faker',     '~> 0.9.5'
+  gem 'faker'
   gem 'colorific', '~> 1.0.0'
   gem 'factory_girl_rails'
 end

@@ -50,3 +50,27 @@ areas.each do |area|
 end
 
 puts "#{TreatmentArea.count} treatment areas created"
+
+sample_patients = console.agree("Would you like to create sample patient data?")
+
+if sample_patients
+  50.times do
+    Patient.create(
+      :first_name        => Faker::Name.first_name,
+      :last_name         => Faker::Name.last_name,
+      :date_of_birth     => Date.today - rand(100).years,
+      :sex               => %w( M F ).shuffle.first,
+      :race              => Faker::Lorem.words(2).join(" ").titlecase,
+      :chief_complaint   => Faker::Lorem.sentence(rand(7)),
+      :last_dental_visit => "today",
+      :travel_time       => 1 + rand(90),
+      :street            => Faker::Address.street_address,
+      :city              => Faker::Address.city,
+      :state             => Faker::Address.state_abbr,
+      :zip               => Faker::Address.zip_code,
+      :phone             => Faker::PhoneNumber.phone_number.split(" ").first
+    )
+  end
+
+  puts "#{Patient.count} patients created"
+end
