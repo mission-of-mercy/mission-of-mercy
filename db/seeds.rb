@@ -1,3 +1,6 @@
+require 'highline'
+require 'faker'
+
 # Custom Settings
 
 console = HighLine.new

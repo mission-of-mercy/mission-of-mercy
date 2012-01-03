@@ -2,6 +2,7 @@ require "active_support"
 require "csv"
 require "open-uri"
 require "zip/zip"
+require "progress_bar"
 
 namespace :zip do
 
