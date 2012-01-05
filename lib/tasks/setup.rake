@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'highline'
 
 desc 'runs the tasks necessary to setup MoM'
 task :setup do
@@ -19,7 +20,21 @@ task :setup do
     end
 
     unless File.exists?(mom_file)
-      FileUtils.cp(mom_file + '.example', mom_file)
+      template     = ERB.new(File.read(mom_file + '.erb'))
+      console      = HighLine.new
+      default_path = Rails.root.join("tmp").to_s
+
+      puts # Empty Line
+
+      state = console.ask("In which state will you be running the clinic?") do |q|
+        q.default = "CT"
+      end
+
+      dexis_path  = console.ask("Path to dexis folder")  {|q| q.default = default_path }
+      backup_path = console.ask("Path to backup folder") {|q| q.default = default_path }
+
+      File.open(mom_file, 'w') {|f| f.write(template.result(binding)) }
+
       puts "MoM config file created".color(:green)
     else
       puts "MoM config file already exists"
