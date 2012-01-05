@@ -19,6 +19,8 @@ namespace :zip do
       end
     end
 
+    puts "Importing zipcodes (This may take a while)"
+
     zip_count = File.foreach(zip_file).inject(0) {|c, line| c + 1 }
 
     bar = ProgressBar.new(zip_count, :bar, :percentage)

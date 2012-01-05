@@ -45,8 +45,10 @@ task :setup do
   Rake::Task["environment"].invoke
 
   section "Seed Data" do
-    Rake::Task["db:seed"].invoke
     Rake::Task["procedures:import"].invoke
+    puts # Empty Line
+    Rake::Task["db:seed"].invoke
+    puts # Empty Line
     Rake::Task["zip:import"].invoke
   end
 
