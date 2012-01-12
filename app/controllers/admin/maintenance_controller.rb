@@ -26,6 +26,7 @@ module Admin
     end
 
     def reset_distribution
+      # TODO_MAPI
       Patient.update_all(:assigned_treatment_area_id => nil, :radiology => false)
 
       flash[:notice] = "Treatment Area Distribution Report Reset"

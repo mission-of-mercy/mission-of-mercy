@@ -27,6 +27,8 @@ class Patient < ActiveRecord::Base
                                    :dependent   => :delete_all
   has_many :previous_mom_clinics,  :class_name  => "PatientPreviousMomClinic",
                                    :dependent   => :delete_all
+  has_many :patient_assigments
+  has_many :treatment_areas,       :through     => :patient_assigments
 
   has_one :prosthetic,             :dependent   => :delete
   has_one :zipcode,                :class_name  => "Patient::Zipcode",
@@ -34,7 +36,6 @@ class Patient < ActiveRecord::Base
                                    :primary_key => "zip"
 
   belongs_to :survey,              :dependent  => :delete
-  belongs_to :assigned_treatment_area, :class_name => "TreatmentArea"
 
   accepts_nested_attributes_for :survey
   accepts_nested_attributes_for :prosthetic
@@ -107,6 +108,7 @@ class Patient < ActiveRecord::Base
       self.flows.create(:area_id => ClinicArea::CHECKOUT,
                         :treatment_area_id => area.id)
 
+      # TODO_MAPI
       self.update_attributes(:assigned_treatment_area_id => nil,
                              :survey_id                  => nil,
                              :radiology                  => false)
