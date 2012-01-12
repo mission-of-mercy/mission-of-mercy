@@ -27,8 +27,8 @@ class Patient < ActiveRecord::Base
                                    :dependent   => :delete_all
   has_many :previous_mom_clinics,  :class_name  => "PatientPreviousMomClinic",
                                    :dependent   => :delete_all
-  has_many :patient_assigments
-  has_many :treatment_areas,       :through     => :patient_assigments
+  has_many :patient_assignments
+  has_many :treatment_areas,       :through     => :patient_assignments
 
   has_one :prosthetic,             :dependent   => :delete
   has_one :zipcode,                :class_name  => "Patient::Zipcode",
