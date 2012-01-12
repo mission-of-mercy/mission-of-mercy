@@ -12,7 +12,8 @@
 
     %p
       - @areas.reject {|a| a.radiology? }.each do |area|
-        = f.radio_button :assigned_treatment_area_id, area.id
+        -# TODO kbl
+        -#= f.radio_button :patient_assigned_treatment_area_id, area.id
         = f.label :assigned_treatment_area_id, area.name, :value => area.id
         %br
     %p

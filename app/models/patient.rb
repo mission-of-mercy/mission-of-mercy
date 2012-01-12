@@ -27,8 +27,8 @@ class Patient < ActiveRecord::Base
                                    :dependent   => :delete_all
   has_many :previous_mom_clinics,  :class_name  => "PatientPreviousMomClinic",
                                    :dependent   => :delete_all
-  has_many :patient_assignments
-  has_many :treatment_areas,       :through     => :patient_assignments
+  has_many :assignments,           :class_name  => 'PatientAssignment'
+  has_many :treatment_areas,       :through     => :assignments
 
   has_one :prosthetic,             :dependent   => :delete
   has_one :zipcode,                :class_name  => "Patient::Zipcode",
@@ -59,6 +59,7 @@ class Patient < ActiveRecord::Base
                                 :with        => /^[\(\)0-9\- \+\.]{10,20}$/,
                                 :allow_blank => true
   validates_numericality_of :travel_time, :greater_than => 0
+
   attr_accessor :race_other
   attr_reader   :time_in_pain
 
@@ -72,8 +73,8 @@ class Patient < ActiveRecord::Base
       ["id = ?", -1]
     end
 
-		Patient.where(conditions).order('id').paginate(:per_page => 30, :page => page)
-	end
+    Patient.where(conditions).order('id').paginate(:per_page => 30, :page => page)
+  end
 
   def chart_number
     id
@@ -108,11 +109,10 @@ class Patient < ActiveRecord::Base
       self.flows.create(:area_id => ClinicArea::CHECKOUT,
                         :treatment_area_id => area.id)
 
-      # TODO_MAPI
-      self.update_attributes(:assigned_treatment_area_id => nil,
-                             :survey_id                  => nil,
-                             :radiology                  => false)
+      # TODO kbl
+      self.update_attributes(survey_id: nil, radiology: false)
     end
+    assignments.last.check_out
   end
 
   def export_to_dexis(path)

@@ -3,8 +3,8 @@ class TreatmentArea < ActiveRecord::Base
   has_many :procedures, :through => :procedure_treatment_area_mappings,
                         :order   => "code"
   # TODO_MAPI
-  has_many :patient_assigments
-  has_many :patients, :through => :patient_assigments
+  has_many :patient_assignments
+  has_many :patients, :through => :patient_assignments
 
   accepts_nested_attributes_for :procedure_treatment_area_mappings, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['assigned'] == "0" }
