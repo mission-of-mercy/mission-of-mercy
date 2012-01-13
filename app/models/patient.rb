@@ -27,7 +27,8 @@ class Patient < ActiveRecord::Base
                                    :dependent   => :delete_all
   has_many :previous_mom_clinics,  :class_name  => "PatientPreviousMomClinic",
                                    :dependent   => :delete_all
-  has_many :assignments,           :class_name  => 'PatientAssignment'
+  has_many :assignments,           :class_name  => 'PatientAssignment',
+                                   :dependent   => :delete_all
   has_many :treatment_areas,       :through     => :assignments
 
   has_one :prosthetic,             :dependent   => :delete
@@ -112,7 +113,12 @@ class Patient < ActiveRecord::Base
       # TODO kbl
       self.update_attributes(survey_id: nil, radiology: false)
     end
-    assignments.last.check_out
+    # assignments.last.check_out
+  end
+
+  def check_in(area)
+    assignment = assignments.create
+    assignment.treatment_area = area
   end
 
   def export_to_dexis(path)

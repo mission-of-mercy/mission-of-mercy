@@ -127,6 +127,16 @@ class PatientTest < ActiveSupport::TestCase
 
     assert !patient.save,
       "Saved patient with an invalid date_of_birth value"
-
   end
+
+  def test_shoould_properly_check_in
+    patient = Factory(:patient)
+    area = Factory(:treatment_area)
+
+    patient.check_in(area)
+    
+    assert patient.assignments.size == 1
+    assert patient.assignments[0] = area
+  end
+
 end
