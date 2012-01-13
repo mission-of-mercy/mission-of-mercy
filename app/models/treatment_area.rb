@@ -1,13 +1,15 @@
 class TreatmentArea < ActiveRecord::Base
   has_many :procedure_treatment_area_mappings
-  has_many :procedures, :through => :procedure_treatment_area_mappings,
-                        :order   => "code"
+  has_many :procedures, through: :procedure_treatment_area_mappings,
+                        order: 'code'
   # TODO kbl
   has_many :patient_assignments
-  has_many :patients, :through => :patient_assignments
+  has_many :patients, through: :patient_assignments, 
+                      conditions: 'checked_out_at IS NULL'
 
-  accepts_nested_attributes_for :procedure_treatment_area_mappings, :allow_destroy => true,
-                                :reject_if => proc { |attributes| attributes['assigned'] == "0" }
+  accepts_nested_attributes_for :procedure_treatment_area_mappings, 
+                                allow_destroy: true,
+                                reject_if: proc { |attributes| attributes['assigned'] == "0" }
 
   def self.radiology
     TreatmentArea.find(:first, :conditions => {:name => "Radiology"})
