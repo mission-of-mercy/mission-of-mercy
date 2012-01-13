@@ -117,8 +117,8 @@ class Patient < ActiveRecord::Base
   end
 
   def check_in(area)
-    assignment = assignments.create
-    assignment.treatment_area = area
+    raise 'Already checked in!' if checked_in_at
+    assignments.create(treatment_area: area)
   end
 
   def checked_in_at

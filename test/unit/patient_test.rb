@@ -149,6 +149,13 @@ class PatientTest < ActiveSupport::TestCase
   end
 
   def test_shouldnt_allow_for_check_in_to_multiple_areas
+    patient = Factory(:patient)
+    area = Factory(:treatment_area)
+
+    patient.check_in(area)
+    assert_raise RuntimeError do
+      patient.check_in(Factory(:treatment_area))
+    end
   end
 
 end
