@@ -1,1 +1,19 @@
-test
+%h3 Treatment areas
+
+%table
+  %thead
+    %tr
+      %th Treatment area
+      %th Checked in
+      %th Checked out
+  %tbody
+    = render @patient.assignments
+
+%h3 Flows
+
+%table
+  %thead
+    %tr
+      %th Treatment area
+  %tbody
+    = render 'patient_flow', collection: @patient.flows
