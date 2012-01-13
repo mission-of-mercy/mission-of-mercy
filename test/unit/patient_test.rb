@@ -158,4 +158,26 @@ class PatientTest < ActiveSupport::TestCase
     end
   end
 
+  def test_shouldnt_allow_for_checking_out_if_patient_didnt_checked_in_previously
+    area = Factory(:treatment_area)
+    second_area = Factory(:treatment_area)
+    patient = Factory(:patient)
+
+    patient.check_in(second_area)
+    assert_raise RuntimeError do
+      patient.check_out(area)
+    end
+  end
+
+  def test_should_allow_check_out
+    area = Factory(:treatment_area)
+    patient = Factory(:patient)
+
+    patient.check_in(area)
+    assert_equal area, patient.checked_in_at
+
+    patient.check_out(area)
+    assert_nil patient.checked_in_at
+  end
+
 end

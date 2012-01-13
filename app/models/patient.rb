@@ -106,14 +106,14 @@ class Patient < ActiveRecord::Base
   end
 
   def check_out(area)
-    unless area == TreatmentArea.radiology
-      self.flows.create(:area_id => ClinicArea::CHECKOUT,
-                        :treatment_area_id => area.id)
+    raise "Can't check out" if area != checked_in_at
+    assignments.last.update_attributes(checked_out_at: Time.now)
 
-      # TODO kbl
+    unless area == TreatmentArea.radiology
+      self.flows.create(area_id: ClinicArea::CHECKOUT, treatment_area: area)
+
       self.update_attributes(survey_id: nil, radiology: false)
     end
-    # assignments.last.check_out
   end
 
   def check_in(area)
