@@ -33,6 +33,7 @@ MissionOfMercy::Application.routes.draw do
   resources :assignment_desk
   match '/patients/:id/print' => 'patients#print', :as => :print_chart
   match '/patients/:patient_id/export' => 'patients#export_to_dexis_file', :as => :export_to_dexis_file
+  match '/patients/:patient_id/history' => 'admin/patient_assignments#show', :as => :patient_history
   match '/status' => 'status#index', :as => :status
 
   namespace :admin do
