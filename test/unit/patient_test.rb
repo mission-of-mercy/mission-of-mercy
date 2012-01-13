@@ -180,4 +180,15 @@ class PatientTest < ActiveSupport::TestCase
     assert_nil patient.checked_in_at
   end
 
+  def test_should_save_check_out_time
+    area = Factory(:treatment_area)
+    patient = Factory(:patient)
+
+    patient.check_in(area)
+    assert_nil patient.assignments.last.checked_out_at
+
+    patient.check_out(area)
+    assert_not_nil patient.assignments.last.checked_out_at
+  end
+
 end
