@@ -2,7 +2,6 @@ class TreatmentArea < ActiveRecord::Base
   has_many :procedure_treatment_area_mappings
   has_many :procedures, through: :procedure_treatment_area_mappings,
                         order: 'code'
-  # TODO kbl
   has_many :patient_assignments
   has_many :patients, through: :patient_assignments, 
                       conditions: 'checked_out_at IS NULL'
