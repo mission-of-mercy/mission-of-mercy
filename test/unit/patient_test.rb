@@ -139,4 +139,16 @@ class PatientTest < ActiveSupport::TestCase
     assert patient.assignments[0] = area
   end
 
+  def test_should_return_area_to_which_patient_is_checked_in
+    patient = Factory(:patient)
+    area = Factory(:treatment_area)
+
+    patient.check_in(area)
+
+    assert_equal area, patient.checked_in_at
+  end
+
+  def test_shouldnt_allow_for_check_in_to_multiple_areas
+  end
+
 end

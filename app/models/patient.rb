@@ -121,6 +121,11 @@ class Patient < ActiveRecord::Base
     assignment.treatment_area = area
   end
 
+  def checked_in_at
+    assignment = assignments.find { |a| a.checked_out_at.nil? }
+    assignment.treatment_area if assignment
+  end
+
   def export_to_dexis(path)
     f = File.new(path, "w")
     f.write(["PN=", "#{Date.today.year}#{id}", "\r\n"].join())
