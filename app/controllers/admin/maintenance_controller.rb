@@ -25,17 +25,6 @@ module Admin
       redirect_to admin_maintenance_path
     end
 
-    def reset_distribution
-      # TODO kbl
-      # what should be done in this case? checked_out_at should be set for all assignments?
-      # or maybe all assignments should be deleted?
-      # Patient.update_all(:assigned_treatment_area_id => nil, :radiology => false)
-      Patient.update_all(:radiology => false)
-
-      flash[:notice] = "Treatment Area Distribution Report Reset"
-      redirect_to admin_maintenance_path
-    end
-
     private
 
     def set_current_tab
