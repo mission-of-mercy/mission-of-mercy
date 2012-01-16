@@ -8,7 +8,7 @@ class TreatmentAreaTest < ActiveSupport::TestCase
     p2 = Factory(:patient)
     p3 = Factory(:patient)
 
-    [p1, p2, p3].each { |p| p.check_in(area) }
+    [p1, p2, p3].each { |p| p.assign(area) }
 
     assert_equal 3, area.patients.count
 
@@ -30,7 +30,7 @@ class TreatmentAreaTest < ActiveSupport::TestCase
     p2 = Factory(:patient)
     p3 = Factory(:patient)
 
-    [p1, p2, p3].each { |p| p.check_in(area) }
+    [p1, p2, p3].each { |p| p.assign(area) }
 
     assert_equal 2, area.patients
   end

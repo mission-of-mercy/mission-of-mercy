@@ -129,32 +129,32 @@ class PatientTest < ActiveSupport::TestCase
       "Saved patient with an invalid date_of_birth value"
   end
 
-  def test_shoould_properly_check_in
+  def test_shoould_properly_assign_treatment_area
     patient = Factory(:patient)
     area = Factory(:treatment_area)
 
-    patient.check_in(area)
+    patient.assign(area)
     
     assert patient.assignments.size == 1
     assert patient.assignments[0] = area
   end
 
-  def test_should_return_area_to_which_patient_is_checked_in
+  def test_should_return_area_to_which_patient_is_assigned
     patient = Factory(:patient)
     area = Factory(:treatment_area)
 
-    patient.check_in(area)
+    patient.assign(area)
 
     assert_equal area, patient.assigned_to
   end
 
-  def test_shouldnt_allow_for_check_in_to_multiple_areas
+  def test_shouldnt_allow_for_assigning_to_multiple_areas
     patient = Factory(:patient)
     area = Factory(:treatment_area)
 
-    patient.check_in(area)
+    patient.assign(area)
     assert_raise RuntimeError do
-      patient.check_in(Factory(:treatment_area))
+      patient.assign(Factory(:treatment_area))
     end
   end
 
@@ -163,7 +163,7 @@ class PatientTest < ActiveSupport::TestCase
     second_area = Factory(:treatment_area)
     patient = Factory(:patient)
 
-    patient.check_in(second_area)
+    patient.assign(second_area)
     assert_raise RuntimeError do
       patient.check_out(area)
     end
@@ -173,7 +173,7 @@ class PatientTest < ActiveSupport::TestCase
     area = Factory(:treatment_area)
     patient = Factory(:patient)
 
-    patient.check_in(area)
+    patient.assign(area)
     assert_equal area, patient.assigned_to
 
     patient.check_out(area)
@@ -184,7 +184,7 @@ class PatientTest < ActiveSupport::TestCase
     area = Factory(:treatment_area)
     patient = Factory(:patient)
 
-    patient.check_in(area)
+    patient.assign(area)
     assert_nil patient.assignments.last.checked_out_at
 
     patient.check_out(area)

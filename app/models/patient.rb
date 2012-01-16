@@ -105,9 +105,11 @@ class Patient < ActiveRecord::Base
     patient_procedures.group_by(&:procedure)
   end
 
-  def check_out(area)
-    raise "Can't check out" if area != assigned_to
-    assignments.last.update_attributes(checked_out_at: Time.now)
+  def check_out(area_id)
+    assigned_area = assignments.where(treatment_area_id: area_id)
+    assigned_area.update_all(checked_out_at: Time.now)
+
+    area = assigned_area.first.treatment_area
 
     unless area.radiology?
       self.flows.create(area_id: ClinicArea::CHECKOUT, treatment_area: area)
@@ -115,14 +117,13 @@ class Patient < ActiveRecord::Base
     end
   end
 
-  def check_in(area)
+  def assign(area)
     raise 'Already checked in!' if assigned_to
     assignments.create(treatment_area: area)
   end
 
   def assigned_to
-    assignment = assignments.find { |a| a.checked_out_at.nil? }
-    assignment.treatment_area if assignment
+    assignments.not_checked_out.map(&:treatment_area)
   end
 
   def export_to_dexis(path)
