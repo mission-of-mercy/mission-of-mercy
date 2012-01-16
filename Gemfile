@@ -23,7 +23,6 @@ group :development do
   gem 'highline',       :require => false
   gem 'faker',          :require => false
   gem 'rubyzip',        :require => false
-  gem 'spork-testunit', :require => false
 end
 
 group :test do
@@ -31,4 +30,5 @@ group :test do
   gem 'faker'
   gem 'colorific', '~> 1.0.0'
   gem 'factory_girl_rails'
+  gem 'spork-testunit', :require => false
 end
