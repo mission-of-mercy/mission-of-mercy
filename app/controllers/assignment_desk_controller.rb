@@ -9,9 +9,11 @@ class AssignmentDeskController < ApplicationController
 
   def update
     patient = Patient.find(params[:id])
-    patient.assign(params[:patient][:assigned_to], params[:patient][:radiology])
 
-    flash[:notice] = 'Patient was successfully assigned.'
+    if patient.assign(params[:patient][:assigned_to], params[:patient][:radiology])
+      flash[:notice] = 'Patient was successfully assigned.'
+    end
+
     redirect_to patients_path
   end
 

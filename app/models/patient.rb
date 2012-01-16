@@ -127,6 +127,8 @@ class Patient < ActiveRecord::Base
     areas << TreatmentArea.radiology if radiology
 
     areas.each { |a| assignments.create(treatment_area: a) }
+
+    not areas.empty?
   end
 
   def assigned_to
