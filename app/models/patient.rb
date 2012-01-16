@@ -106,20 +106,27 @@ class Patient < ActiveRecord::Base
   end
 
   def check_out(area_id)
-    assigned_area = assignments.where(treatment_area_id: area_id)
-    assigned_area.update_all(checked_out_at: Time.now)
+    assigned_area = assignments.not_checked_out.where(treatment_area_id: area_id)
+    if assigned_area.count != 0
+      assigned_area.update_all(checked_out_at: Time.now)
 
-    area = assigned_area.first.treatment_area
+      areas = assigned_area.map(&:treatment_area)
 
-    unless area.radiology?
-      self.flows.create(area_id: ClinicArea::CHECKOUT, treatment_area: area)
-      self.update_attributes(survey_id: nil)
+      areas.each do |area|
+        unless area.radiology?
+          self.flows.create(area_id: ClinicArea::CHECKOUT, treatment_area: area)
+          self.update_attributes(survey_id: nil)
+        end
+      end
     end
   end
 
-  def assign(area)
-    raise 'Already checked in!' if assigned_to
-    assignments.create(treatment_area: area)
+  def assign(area_id, radiology)
+    areas = []
+    areas << TreatmentArea.find(area_id) if area_id
+    areas << TreatmentArea.radiology if radiology
+
+    areas.each { |a| assignments.create(treatment_area: a) }
   end
 
   def assigned_to

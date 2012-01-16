@@ -9,13 +9,9 @@ class AssignmentDeskController < ApplicationController
 
   def update
     patient = Patient.find(params[:id])
-    # TODO kbl
-    # pass this to patient and then assign
-    patient.update_attributes({ radiology: params[:patient][:radiology] })
-    patient.assign(params[:patient][:assigned_to])
+    patient.assign(params[:patient][:assigned_to], params[:patient][:radiology])
 
     flash[:notice] = 'Patient was successfully assigned.'
-
     redirect_to patients_path
   end
 

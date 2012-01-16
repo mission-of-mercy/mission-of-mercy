@@ -133,58 +133,56 @@ class PatientTest < ActiveSupport::TestCase
     patient = Factory(:patient)
     area = Factory(:treatment_area)
 
-    patient.assign(area)
+    patient.assign(area.id, false)
     
-    assert patient.assignments.size == 1
-    assert patient.assignments[0] = area
+    assert_equal 1, patient.assignments.count
+    assert_equal area, patient.assignments[0].treatment_area
   end
 
   def test_should_return_area_to_which_patient_is_assigned
     patient = Factory(:patient)
     area = Factory(:treatment_area)
 
-    patient.assign(area)
+    patient.assign(area.id, :do_not_assign_to_radiology)
 
-    assert_equal area, patient.assigned_to
+    assert_equal area, patient.assigned_to[0]
   end
 
-  def test_shouldnt_allow_for_assigning_to_multiple_areas
+  def test_shoud_allow_for_assigning_to_multiple_areas
     patient = Factory(:patient)
     area = Factory(:treatment_area)
+    area_radiology = Factory(:treatment_area, name: TreatmentArea::RADIOLOGY_NAME)
 
-    patient.assign(area)
-    assert_raise RuntimeError do
-      patient.assign(Factory(:treatment_area))
-    end
+    patient.assign(area.id, true)
+
+    assert_equal [area, area_radiology], patient.assigned_to 
   end
 
-  def test_shouldnt_allow_for_checking_out_if_patient_didnt_checked_in_previously
-    area = Factory(:treatment_area)
-    second_area = Factory(:treatment_area)
+  def test_shoud_allow_for_assigning_to_radiology_only
     patient = Factory(:patient)
+    area_radiology = Factory(:treatment_area, name: TreatmentArea::RADIOLOGY_NAME)
 
-    patient.assign(second_area)
-    assert_raise RuntimeError do
-      patient.check_out(area)
-    end
+    patient.assign(nil, true)
+
+    assert_equal [area_radiology], patient.assigned_to 
   end
 
   def test_should_allow_check_out
     area = Factory(:treatment_area)
     patient = Factory(:patient)
 
-    patient.assign(area)
-    assert_equal area, patient.assigned_to
+    patient.assign(area, false)
+    assert_equal area, patient.assigned_to[0]
 
     patient.check_out(area)
-    assert_nil patient.assigned_to
+    assert patient.assigned_to.empty?
   end
 
   def test_should_save_check_out_time
     area = Factory(:treatment_area)
     patient = Factory(:patient)
 
-    patient.assign(area)
+    patient.assign(area, false)
     assert_nil patient.assignments.last.checked_out_at
 
     patient.check_out(area)
