@@ -37,7 +37,9 @@ class Reports::ClinicSummary
     else
       # Parse time with current date to make sure any timezone offsets are correct
 
-      @span_time = Time.parse([@day.strftime('%Y-%m-%d'),span].join(' ')).utc.strftime("%H:%M:00")
+      @span_time = Time.zone.parse(
+        [@day.strftime('%Y-%m-%d'),span].join(' ')
+      ).utc.strftime("%H:%M:00")
     end
 
     @patient_count = load_patient_count

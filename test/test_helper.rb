@@ -11,7 +11,7 @@ module TestHelper
 
     if time
       m, d, y = date.split('/')
-      Time.parse "#{[y, m, d] * '-'} #{time}"
+      Time.zone.parse("#{[y, m, d] * '-'} #{time}")
     else
       Date.strptime(date, "%m/%d/%Y")
     end
@@ -23,7 +23,7 @@ module TestHelper
 
   def create_test_patients(date=Date.today)
     (6..17).map { |i| date + i.hours }.each do |datetime|
-      Factory.create(:patient, :created_at => datetime.utc, :updated_at => datetime.utc)
+      Factory.create(:patient, :created_at => datetime, :updated_at => datetime)
     end
   end
 
@@ -51,6 +51,6 @@ module TestHelper
     Factory(:patient_flow,
             :area_id    => ::ClinicArea::XRAY,
             :patient    => patient,
-            :created_at => time.utc)
+            :created_at => time)
   end
 end
