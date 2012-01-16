@@ -4,8 +4,7 @@ class PatientAssignment < ActiveRecord::Base
   belongs_to :treatment_area
 
   def check_out
-    self[:checked_out_at] = Time.now
-    save
+    update_attribute(:checked_out_at, Time.new)
   end
 
 end

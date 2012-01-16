@@ -4,12 +4,7 @@ class AssignmentDeskController < ApplicationController
   def edit
     @patient = Patient.find(params[:id])
     @areas   = TreatmentArea.all(:order => "name")
-
-    @current_capacity = @areas.map do |a|
-      count = a.patients.count || 0
-      count = Patient.count(:conditions => {:radiology => true}) if a.radiology?
-      [a.name, count]
-    end
+    @current_capacity = TreatmentArea.current_capacity
   end
 
   def update
@@ -25,7 +20,7 @@ class AssignmentDeskController < ApplicationController
   private
 
   def check_in(patient)
-    area_id = params[:patient][:checked_in_at]
+    area_id = params[:patient][:assigned_to]
     if area_id
       area = TreatmentArea.find(area_id)
       patient.check_in(area)

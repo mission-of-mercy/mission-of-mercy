@@ -12,7 +12,7 @@
 
     %p
       - @areas.reject {|ar| ar.radiology? }.each do |area|
-        = radio_button :patient, :checked_in_at, area.id, checked: area == @patient.checked_in_at
+        = radio_button :patient, :assigned_to, area.id, checked: area == @patient.assigned_to
         = label :assigned_treatment_area_id, area.name
         %br
     %p

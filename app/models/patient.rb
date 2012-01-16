@@ -106,22 +106,21 @@ class Patient < ActiveRecord::Base
   end
 
   def check_out(area)
-    raise "Can't check out" if area != checked_in_at
+    raise "Can't check out" if area != assigned_to
     assignments.last.update_attributes(checked_out_at: Time.now)
 
-    unless area == TreatmentArea.radiology
+    unless area.radiology?
       self.flows.create(area_id: ClinicArea::CHECKOUT, treatment_area: area)
-
-      self.update_attributes(survey_id: nil, radiology: false)
+      self.update_attributes(survey_id: nil)
     end
   end
 
   def check_in(area)
-    raise 'Already checked in!' if checked_in_at
+    raise 'Already checked in!' if assigned_to
     assignments.create(treatment_area: area)
   end
 
-  def checked_in_at
+  def assigned_to
     assignment = assignments.find { |a| a.checked_out_at.nil? }
     assignment.treatment_area if assignment
   end

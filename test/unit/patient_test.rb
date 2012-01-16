@@ -145,7 +145,7 @@ class PatientTest < ActiveSupport::TestCase
 
     patient.check_in(area)
 
-    assert_equal area, patient.checked_in_at
+    assert_equal area, patient.assigned_to
   end
 
   def test_shouldnt_allow_for_check_in_to_multiple_areas
@@ -174,10 +174,10 @@ class PatientTest < ActiveSupport::TestCase
     patient = Factory(:patient)
 
     patient.check_in(area)
-    assert_equal area, patient.checked_in_at
+    assert_equal area, patient.assigned_to
 
     patient.check_out(area)
-    assert_nil patient.checked_in_at
+    assert_nil patient.assigned_to
   end
 
   def test_should_save_check_out_time

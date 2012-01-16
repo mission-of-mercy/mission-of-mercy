@@ -1,4 +1,7 @@
 class TreatmentArea < ActiveRecord::Base
+
+  RADIOLOGY_NAME = 'Radiology'
+
   has_many :procedure_treatment_area_mappings
   has_many :procedures, through: :procedure_treatment_area_mappings,
                         order: 'code'
@@ -10,12 +13,10 @@ class TreatmentArea < ActiveRecord::Base
                                 allow_destroy: true,
                                 reject_if: proc { |attributes| attributes['assigned'] == "0" }
 
-  def self.radiology
-    TreatmentArea.find(:first, :conditions => {:name => "Radiology"})
-  end
+  scope :radiology, where(name: RADIOLOGY_NAME).first
 
   def radiology?
-    name == "Radiology"
+    name == RADIOLOGY_NAME
   end
 
   def patients_treated
@@ -33,4 +34,12 @@ class TreatmentArea < ActiveRecord::Base
 
     patients.uniq
   end
+
+  def current_capacity
+    map do |area|
+      count = area.patients.count || 0
+      [area.name, count]
+    end
+  end
+
 end
