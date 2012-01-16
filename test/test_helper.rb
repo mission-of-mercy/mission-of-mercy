@@ -23,7 +23,7 @@ module TestHelper
 
   def create_test_patients(date=Date.today)
     (6..17).map { |i| date + i.hours }.each do |datetime|
-      Factory.create(:patient, :created_at => datetime, :updated_at => datetime)
+      Factory.create(:patient, :created_at => datetime.utc, :updated_at => datetime.utc)
     end
   end
 
@@ -51,6 +51,6 @@ module TestHelper
     Factory(:patient_flow,
             :area_id    => ::ClinicArea::XRAY,
             :patient    => patient,
-            :created_at => time)
+            :created_at => time.utc)
   end
 end
