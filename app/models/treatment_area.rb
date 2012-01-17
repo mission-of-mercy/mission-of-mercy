@@ -20,6 +20,13 @@ class TreatmentArea < ActiveRecord::Base
     where(name: RADIOLOGY_NAME).first
   end
 
+  def self.current_capacity
+    all.map do |area|
+      count = area.patients.count || 0
+      [area.name, count]
+    end
+  end
+
   def radiology?
     name == RADIOLOGY_NAME
   end
@@ -40,11 +47,5 @@ class TreatmentArea < ActiveRecord::Base
     patients.uniq
   end
 
-  def current_capacity
-    map do |area|
-      count = area.patients.count || 0
-      [area.name, count]
-    end
-  end
 
 end

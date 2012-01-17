@@ -35,4 +35,14 @@ class TreatmentAreaTest < ActiveSupport::TestCase
     assert_equal 2, area.patients.count
   end
 
+  def test_should_properly_count_current_capacity
+    area = Factory(:treatment_area)
+    second_area = Factory(:treatment_area)
+
+    3.times { Factory(:patient).assign(area.id, false) }
+    2.times { Factory(:patient).assign(second_area.id, false) }
+
+    assert_equal [[area.name, 3], [second_area.name, 2]], TreatmentArea.current_capacity
+  end
+
 end
