@@ -10,7 +10,7 @@
       %th Checked in
       %th Checked out
   %tbody
-    = render partial: 'patients/patient_assignment', collection: @patient.assignments, as: 'assignment'
+    = render partial: 'patient_assignment', collection: @patient.assignments, as: 'assignment'
 
 %h4 Flows
 
@@ -21,4 +21,4 @@
       %th Treatment area
       %th Action time
   %tbody
-    = render partial: 'patients/patient_flow', collection: @patient.flows, as: 'flow'
+    = render partial: 'patient_flow', collection: @patient.flows, as: 'flow'

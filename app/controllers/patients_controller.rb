@@ -3,7 +3,6 @@ class PatientsController < ApplicationController
   before_filter :admin_required, :only => [ :edit, :destroy, :history ]
   before_filter :date_input
   before_filter :find_last_patient, :only => [:new]
-  before_filter :set_current_tab
 
   def index
     if params[:commit] == "Clear"
@@ -29,13 +28,7 @@ class PatientsController < ApplicationController
     build_previous_mom_clinics
   end
 
-  def edit
-    @patient = Patient.find(params[:id])
-
-    build_previous_mom_clinics
-  end
-
-  def print
+    def print
     @patient = Patient.find(params[:id])
 
     render :action => "print", :layout => "print"
@@ -81,38 +74,6 @@ class PatientsController < ApplicationController
     redirect_to patients_path
   end
 
-  def update
-    if params[:id] == nil
-      params[:id] = params[:patient_id]
-    end
-
-    @patient = Patient.find(params[:id])
-
-    if @patient.update_attributes(params[:patient])
-
-      if params[:commit] == "Next"
-        redirect_to(:controller => 'exit_surveys', :action => 'new', :id => @patient.id)
-      else
-        flash[:notice] = 'Patient was successfully updated.'
-
-        redirect_to patients_path
-      end
-    else
-      render :action => "edit"
-    end
-  end
-
-  def destroy
-    @patient = Patient.find(params[:id])
-    @patient.destroy
-
-    redirect_to(patients_url)
-  end
-
-  def history
-    @patient = Patient.find(params[:patient_id])
-  end
-
   private
 
   def add_procedures_to_patient(patient)
@@ -133,7 +94,6 @@ class PatientsController < ApplicationController
         @patient.previous_mom_clinics.build(:clinic_year => y, :location => l)
       end
     end
-
   end
 
   def date_input
@@ -150,7 +110,4 @@ class PatientsController < ApplicationController
     end
   end
 
-  def set_current_tab
-    @current_tab = "patients" if current_user.user_type == UserType::ADMIN
-  end
 end
