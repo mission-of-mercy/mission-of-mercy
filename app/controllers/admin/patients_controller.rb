@@ -5,8 +5,7 @@ module Admin
 
     def edit
       @patient = Patient.find(params[:id])
-
-      build_previous_mom_clinics
+      @patient.build_previous_mom_clinics
     end
 
     def update
@@ -42,20 +41,6 @@ module Admin
     end
 
     private
-
-    # TODO kbl
-    # copy paste
-    def build_previous_mom_clinics
-      PatientPreviousMomClinic::CLINICS.each do |y, l|
-        existing = @patient.previous_mom_clinics.detect do |c|
-            c.clinic_year == y && c.location == l
-          end
-
-        unless existing
-          @patient.previous_mom_clinics.build(:clinic_year => y, :location => l)
-        end
-      end
-    end
 
     def set_current_tab
       @current_tab = 'patients'

@@ -212,6 +212,18 @@ class Patient < ActiveRecord::Base
     end
   end
 
+  def build_previous_mom_clinics
+    PatientPreviousMomClinic::CLINICS.each do |year, location|
+      existing = previous_mom_clinics.detect do |c|
+        c.clinic_year == year && c.location == location
+      end
+
+      unless existing
+        previous_mom_clinics.build(clinic_year: year, location: location)
+      end
+    end
+  end
+
   private
 
   def update_survey
