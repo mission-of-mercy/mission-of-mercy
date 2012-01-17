@@ -135,6 +135,10 @@ class Patient < ActiveRecord::Base
     assignments.not_checked_out.map(&:treatment_area)
   end
 
+  def assigned_to?(area)
+    assigned_to.include?(area)
+  end
+
   def export_to_dexis(path)
     f = File.new(path, "w")
     f.write(["PN=", "#{Date.today.year}#{id}", "\r\n"].join())

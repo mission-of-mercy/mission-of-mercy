@@ -12,11 +12,11 @@
 
     %p
       - @areas.reject {|ar| ar.radiology? }.each do |area|
-        = radio_button :patient, :assigned_to, area.id, checked: area == @patient.assigned_to
+        = radio_button :patient_params, :assigned_to, area.id, checked: @patient.assigned_to?(area)
         = label :assigned_treatment_area_id, area.name
         %br
     %p
-      = check_box :patient, :radiology
+      = check_box :patient_params, :radiology, checked: @patient.assigned_to?(TreatmentArea.radiology)
       = label :radiology, 'Radiology'
 
   .input-right.border

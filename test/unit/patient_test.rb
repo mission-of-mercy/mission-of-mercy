@@ -194,4 +194,14 @@ class PatientTest < ActiveSupport::TestCase
     assert_equal false, patient.assign(nil, false)
   end
 
+  def test_should_check_if_patient_is_assigned_to_area
+    patient = Factory(:patient)
+    area = Factory(:treatment_area)
+
+    patient.assign(area, false)
+
+    assert patient.assigned_to?(area)
+    assert_equal false, patient.assigned_to?(Factory(:treatment_area))
+  end
+
 end
