@@ -120,8 +120,17 @@ class Patient < ActiveRecord::Base
 
   def assign(area_id, radiology)
     areas = []
-    areas << TreatmentArea.find(area_id) if area_id
-    areas << TreatmentArea.radiology if radiology
+    assigned_areas = assigned_to
+
+    area_radiology = TreatmentArea.radiology 
+    if radiology
+      areas << area_radiology unless assigned_areas.include?(area_radiology)
+    end
+    assigned_areas.delete(area_radiology)
+
+    if area_id
+      areas << TreatmentArea.find(area_id) if assigned_areas.empty?
+    end
 
     areas.each { |a| assignments.create(treatment_area: a) }
 

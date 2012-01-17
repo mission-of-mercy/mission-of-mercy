@@ -143,7 +143,7 @@ class PatientTest < ActiveSupport::TestCase
     patient = Factory(:patient)
     area = Factory(:treatment_area)
 
-    patient.assign(area.id, :do_not_assign_to_radiology)
+    patient.assign(area.id, false)
 
     assert_equal area, patient.assigned_to[0]
   end
@@ -155,7 +155,7 @@ class PatientTest < ActiveSupport::TestCase
 
     patient.assign(area.id, true)
 
-    assert_equal [area, area_radiology], patient.assigned_to 
+    assert_equal [area_radiology, area], patient.assigned_to 
   end
 
   def test_shoud_allow_for_assigning_to_radiology_only
@@ -202,6 +202,20 @@ class PatientTest < ActiveSupport::TestCase
 
     assert patient.assigned_to?(area)
     assert_equal false, patient.assigned_to?(Factory(:treatment_area))
+  end
+
+  def test_shouldnt_create_assignments_for_previously_assigned_user
+    patient = Factory(:patient)
+    area = Factory(:treatment_area)
+    area_radiology = Factory(:treatment_area, name: TreatmentArea::RADIOLOGY_NAME)
+
+    assigned = patient.assign(area.id, true)
+    assert assigned
+    assert_equal 2, patient.assigned_to.size
+
+    assigned = patient.assign(area.id, true)
+    assert_equal false, assigned
+    assert_equal 2, patient.assigned_to.size
   end
 
 end
