@@ -106,17 +106,14 @@ class Patient < ActiveRecord::Base
   end
 
   def check_out(area_id)
-    current_assignments = assignments.not_checked_out.where(treatment_area_id: area_id)
-    if current_assignments.count != 0
-      current_assignments.update_all(checked_out_at: Time.now)
+    current_assignment = assignments.not_checked_out.where(treatment_area_id: area_id).first
+    if current_assignment
+      current_assignment.update_attribute(:checked_out_at, Time.now)
 
-      areas = current_assignments.map(&:treatment_area)
-
-      areas.each do |area|
-        unless area.radiology?
-          self.flows.create(area_id: ClinicArea::CHECKOUT, treatment_area: area)
-          self.update_attributes(survey_id: nil)
-        end
+      area = current_assignment.treatment_area
+      unless area.radiology?
+        self.flows.create(area_id: ClinicArea::CHECKOUT, treatment_area: area)
+        self.update_attributes(survey_id: nil)
       end
     end
   end

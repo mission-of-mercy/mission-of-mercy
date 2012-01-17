@@ -16,7 +16,7 @@
         = label :assigned_treatment_area_id, area.name
         %br
     %p
-      = check_box :patient_params, :radiology, checked: @patient.assigned_to?(TreatmentArea.radiology)
+      = check_box :patient_params, :radiology, checked: @is_assigned_to_radiology
       = label :radiology, 'Radiology'
 
   .input-right.border

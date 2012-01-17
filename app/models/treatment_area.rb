@@ -6,15 +6,14 @@ class TreatmentArea < ActiveRecord::Base
   has_many :procedures, through: :procedure_treatment_area_mappings,
                         order: 'code'
   has_many :patient_assignments
-  has_many :patients, through: :patient_assignments, 
+  has_many :patients, through: :patient_assignments,
                       conditions: [
-                        'checked_out_at IS NULL AND patient_assignments.created_at BETWEEN ? AND ?', 
-                        Time.now.beginning_of_day, 
+                        'checked_out_at IS NULL AND patient_assignments.created_at BETWEEN ? AND ?',
+                        Time.now.beginning_of_day,
                         Time.now.end_of_day]
 
-  accepts_nested_attributes_for :procedure_treatment_area_mappings, 
-                                allow_destroy: true,
-                                reject_if: proc { |attributes| attributes['assigned'] == "0" }
+  accepts_nested_attributes_for :procedure_treatment_area_mappings, :allow_destroy => true,
+                                :reject_if => proc { |attributes| attributes['assigned'] == "0" }
 
   def self.radiology
     where(name: RADIOLOGY_NAME).first
@@ -46,6 +45,5 @@ class TreatmentArea < ActiveRecord::Base
 
     patients.uniq
   end
-
 
 end

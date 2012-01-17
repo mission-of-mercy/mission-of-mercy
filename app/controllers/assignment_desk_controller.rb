@@ -3,7 +3,9 @@ class AssignmentDeskController < ApplicationController
 
   def edit
     @patient = Patient.find(params[:id])
-    @areas   = TreatmentArea.all(:order => "name")
+    @is_assigned_to_radiology = @patient.assigned_to?(TreatmentArea.radiology)
+
+    @areas = TreatmentArea.order('name')
     @current_capacity = TreatmentArea.current_capacity
   end
 

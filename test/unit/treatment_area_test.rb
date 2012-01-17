@@ -23,7 +23,7 @@ class TreatmentAreaTest < ActiveSupport::TestCase
 
   # TODO kbl
   # again time zone issue ):
-  # on rails console everything is ok, but here test fails
+  # on rails console everything is ok, but here with my setup test fails
   def test_should_count_only_patients_checked_in_in_the_same_day
     area = Factory(:treatment_area)
     p1 = Factory(:patient, created_at: Time.zone.now - 2.day)

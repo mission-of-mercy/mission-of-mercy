@@ -19,10 +19,10 @@ gem 'jquery-rails'
 
 group :development do
   gem 'rainbow'
-  gem 'progress_bar',   :require => false
-  gem 'highline',       :require => false
-  gem 'faker',          :require => false
-  gem 'rubyzip',        :require => false
+  gem 'progress_bar', :require => false
+  gem 'highline',     :require => false
+  gem 'faker',        :require => false
+  gem 'rubyzip',      :require => false
 end
 
 group :test do
