@@ -11,11 +11,17 @@ class AssignmentDeskController < ApplicationController
     patient = Patient.find(params[:id])
     patient_params = params[:patient_params]
 
-    if patient.assign(patient_params[:assigned_to], patient_params[:radiology])
+    if patient.assign(patient_params[:assigned_to], checked?(patient_params[:radiology]))
       flash[:notice] = 'Patient was successfully assigned.'
     end
 
     redirect_to patients_path
+  end
+
+  private
+
+  def checked?(checkbox_value)
+    checkbox_value != '0'
   end
 
 end
