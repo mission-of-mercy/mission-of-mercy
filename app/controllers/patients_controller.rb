@@ -11,7 +11,7 @@ class PatientsController < ApplicationController
       params[:name] = nil
     end
 
-    @patients = Patient.search(params[:chart_number], params[:name],params[:page])
+    @patients = Patient.search(params[:chart_number], params[:name], params[:page])
 
     @area = params[:treatment_area_id]
     @area ||= session[:treatment_area_id] if session[:treatment_area_id]
@@ -71,9 +71,7 @@ class PatientsController < ApplicationController
     respond_to do |format|
       format.html do
         @patient.flows.create(:area_id => ClinicArea::XRAY)
-        # TODO kbl
-        # patient shoudl be here checked out?
-        @patient.update_attribute(:radiology, false)
+        @patient.check_out(TreatmentArea.radiology)
 
         redirect_to treatment_area_patient_procedures_path(TreatmentArea.radiology, @patient.id)
       end
