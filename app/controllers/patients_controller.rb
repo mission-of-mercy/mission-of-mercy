@@ -1,6 +1,6 @@
 class PatientsController < ApplicationController
   before_filter :authenticate_user!, :except => [ :lookup_zip, :lookup_city ]
-  before_filter :admin_required, :only => [ :edit, :destroy ]
+  before_filter :admin_required, :only => [ :edit, :destroy, :history ]
   before_filter :date_input
   before_filter :find_last_patient, :only => [:new]
   before_filter :set_current_tab
@@ -109,6 +109,10 @@ class PatientsController < ApplicationController
     @patient.destroy
 
     redirect_to(patients_url)
+  end
+
+  def history
+    @patient = Patient.find(params[:patient_id])
   end
 
   private

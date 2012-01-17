@@ -1,0 +1,21 @@
+%h3 Treatment areas
+
+%table
+  %thead
+    %tr
+      %th Treatment area
+      %th Checked in
+      %th Checked out
+  %tbody
+    = render partial: 'patients/patient_assignment', collection: @patient.assignments, as: 'assignment'
+
+%h3 Flows
+
+%table
+  %thead
+    %tr
+      %th ?
+      %th Treatment area
+      %th Checked in
+  %tbody
+    = render partial: 'patients/patient_flow', collection: @patient.flows, as: 'flow'

@@ -106,11 +106,11 @@ class Patient < ActiveRecord::Base
   end
 
   def check_out(area_id)
-    assigned_area = assignments.not_checked_out.where(treatment_area_id: area_id)
-    if assigned_area.count != 0
-      assigned_area.update_all(checked_out_at: Time.now)
+    current_assignments = assignments.not_checked_out.where(treatment_area_id: area_id)
+    if current_assignments.count != 0
+      current_assignments.update_all(checked_out_at: Time.now)
 
-      areas = assigned_area.map(&:treatment_area)
+      areas = current_assignments.map(&:treatment_area)
 
       areas.each do |area|
         unless area.radiology?

@@ -53,6 +53,6 @@ MissionOfMercy::Application.routes.draw do
     match '/reports/export_patients' => 'reports#export_patients', :as => :export_patients
     match '/maintenance' => 'maintenance#index', :as => :maintenance
     match '/maintenance/reset' => 'maintenance#reset', :as => :maintenance_reset
-    match '/patients/:patient_id/history' => 'admin/patient_assignments#show', :as => :patient_history
+    match '/patients/:patient_id/history' => 'patients#history', :as => :patient_history
   end
 end
