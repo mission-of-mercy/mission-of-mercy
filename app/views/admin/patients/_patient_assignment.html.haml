@@ -1,0 +1,7 @@
+%tr{class: cycle('even', 'odd')}
+  %td
+    = assignment.treatment_area.name
+  %td
+    = l(assignment.created_at, format: :long)
+  %td
+    = l(assignment.checked_out_at, format: :long) if assignment.checked_out_at

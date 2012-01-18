@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111021224603) do
+ActiveRecord::Schema.define(:version => 20120116134201) do
+
+  create_table "patient_assignments", :force => true do |t|
+    t.integer  "patient_id"
+    t.integer  "treatment_area_id"
+    t.datetime "checked_out_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "patient_flows", :force => true do |t|
     t.integer  "treatment_area_id"
@@ -95,9 +103,7 @@ ActiveRecord::Schema.define(:version => 20111021224603) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "survey_id"
-    t.integer  "assigned_treatment_area_id"
     t.string   "phone"
-    t.boolean  "radiology",                                 :default => false
   end
 
   create_table "pre_meds", :force => true do |t|

@@ -5,27 +5,27 @@
   %br
   = "#{@patient.full_name} | Chart # #{@patient.id}"
 
-= form_for @patient, :url => assignment_desk_path(@patient) do |f|
-  %div.input-left.no_border{:style => "width: 200px;"}
+= form_tag assignment_desk_path(@patient), method: :put do
+  .input-left.no_border{:style => 'width: 200px;'}
 
     %h4 Treatment Areas
 
     %p
-      - @areas.reject {|a| a.radiology? }.each do |area|
-        = f.radio_button :assigned_treatment_area_id, area.id
-        = f.label :assigned_treatment_area_id, area.name, :value => area.id
+      - @areas.reject {|ar| ar.radiology? }.each do |area|
+        = radio_button :patient_params, :assigned_to, area.id, checked: @patient.assigned_to?(area)
+        = label :assigned_treatment_area_id, area.name
         %br
     %p
-      = f.check_box :radiology
-      = f.label :radiology, "Radiology"
+      = check_box :patient_params, :radiology, checked: @is_assigned_to_radiology
+      = label :radiology, 'Radiology'
 
-  %div.input-right.border
-    = bar_graph "treatment_area_graph",
+  .input-right.border
+    = bar_graph 'treatment_area_graph',
                 @current_capacity,
-                { :style => "width:590px;height:200px" }
+                { style: 'width: 590px; height: 200px' }
 
     %br
 
-  %div.input-bottom{:class => "check_out"}
-    = f.submit "Assign"
-    = link_to "Cancel", patients_path, :class => "warning"
+  .input-bottom{class: 'check_out'}
+    = submit_tag 'Assign'
+    = link_to 'Cancel', patients_path, class: 'warning'

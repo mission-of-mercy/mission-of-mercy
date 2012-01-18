@@ -1,0 +1,7 @@
+%tr{:class=> cycle('even', 'odd')}
+  %td
+    = ClinicArea[flow.area_id]
+  %td
+    = flow.treatment_area.name if flow.treatment_area
+  %td
+    = l(flow.created_at, format: :long)

@@ -2,6 +2,11 @@ require "test_helper"
 
 class PatientTest < ActiveSupport::TestCase
 
+  def setup
+    super
+    @radiology = Factory(:treatment_area, name: TreatmentArea::RADIOLOGY_NAME)
+  end
+
   def test_should_not_allow_more_than_2_digits_in_state_field
     patient = Factory.build(:patient, :state => "CTZ")
 
@@ -127,6 +132,126 @@ class PatientTest < ActiveSupport::TestCase
 
     assert !patient.save,
       "Saved patient with an invalid date_of_birth value"
-
   end
+
+  def test_should_properly_assign_treatment_area
+    patient = Factory(:patient)
+    area = Factory(:treatment_area)
+
+    patient.assign(area.id, false)
+    
+    assert_equal 1, patient.assignments.count
+    assert_equal area, patient.assignments[0].treatment_area
+  end
+
+  def test_should_return_area_to_which_patient_is_assigned
+    patient = Factory(:patient)
+    area = Factory(:treatment_area)
+
+    patient.assign(area.id, false)
+
+    assert_equal area, patient.assigned_to[0]
+  end
+
+  def test_shoud_allow_for_assigning_to_multiple_areas
+    patient = Factory(:patient)
+    area = Factory(:treatment_area)
+
+    patient.assign(area.id, true)
+
+    assert_equal [@radiology, area], patient.assigned_to 
+  end
+
+  def test_shoud_allow_for_assigning_to_radiology_only
+    patient = Factory(:patient)
+
+    patient.assign(nil, true)
+
+    assert_equal [@radiology], patient.assigned_to 
+  end
+
+  def test_should_allow_check_out
+    area = Factory(:treatment_area)
+    patient = Factory(:patient)
+
+    patient.assign(area.id, false)
+    assert_equal area, patient.assigned_to[0]
+
+    patient.check_out(area.id)
+    assert patient.assigned_to.empty?
+  end
+
+  def test_should_save_check_out_time
+    area = Factory(:treatment_area)
+    patient = Factory(:patient)
+
+    assert patient.assign(area.id, false)
+    assert_nil patient.assignments.last.checked_out_at
+
+    patient.check_out(area.id)
+    assert_not_nil patient.assignments.last.checked_out_at
+  end
+
+  def test_should_return_false_if_assignment_wasnt_successfull
+    patient = Factory(:patient)
+    assert_equal false, patient.assign(nil, false)
+  end
+
+  def test_should_check_if_patient_is_assigned_to_area
+    patient = Factory(:patient)
+    area = Factory(:treatment_area)
+
+    patient.assign(area.id, false)
+
+    assert patient.assigned_to?(area)
+    assert_equal false, patient.assigned_to?(Factory(:treatment_area))
+  end
+
+  def test_shoud_remove_radiology_assignment
+    patient = Factory(:patient)
+
+    patient.assign(nil, true)
+    assert_equal 1, patient.assigned_to.size
+
+    patient.assign(nil, false)
+    assert patient.assigned_to.empty?
+  end
+
+  def test_should_chenge_assigned_area
+    patient = Factory(:patient)
+    area1 = Factory(:treatment_area)
+    area2 = Factory(:treatment_area)
+
+    patient.assign(area1.id, false)
+    assert_equal area1, patient.assigned_to[0]
+
+    patient.assign(area2.id, false)
+    assert_equal area2, patient.assigned_to[0]
+  end
+
+  def test_reassinging_should_return_true
+    patient = Factory(:patient)
+    area1 = Factory(:treatment_area)
+    area2 = Factory(:treatment_area)
+
+    assert patient.assign(area1.id, false)
+    assert patient.assign(area1.id, true)
+    assert patient.assign(area2.id, true)
+    assert_equal false, patient.assign(area2.id, true)
+    assert patient.assign(area2.id, false)
+  end
+
+  def test_shouldnt_destroy_checked_out_assignments
+    patient = Factory(:patient)
+    area1 = Factory(:treatment_area)
+    area2 = Factory(:treatment_area)
+
+    patient.assign(area1.id, false)
+    patient.check_out(area1.id)
+    assert_equal 1, patient.assignments.count
+
+    patient.assign(area2.id, false)
+    assert_equal 2, patient.assignments.count
+  end
+
 end

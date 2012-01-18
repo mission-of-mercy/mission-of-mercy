@@ -56,9 +56,10 @@
             %th{:scope => "row"}= link_to "Assign", edit_assignment_desk_path(patient)
 
           - if current_user.user_type == UserType::ADMIN
-            %td= link_to 'Edit', edit_patient_path(patient)
+            %td= link_to 'History', admin_patient_history_path(patient_id: patient.id)
+            %td= link_to 'Edit', edit_admin_patient_path(patient)
             %td= link_to 'Print', {:controller => 'patients', :action => 'print', :id => patient.id}, :popup => true
-            %td= link_to 'Destroy', patient, :confirm => 'Are you sure?', :method => :delete
+            %td= link_to 'Destroy', admin_patient_path(patient), :confirm => 'Are you sure?', :method => :delete
 
   = will_paginate @patients
 

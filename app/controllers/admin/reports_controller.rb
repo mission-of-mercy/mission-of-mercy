@@ -17,13 +17,8 @@ class Admin::ReportsController < ApplicationController
   end
 
   def treatment_area_distribution
-    @areas            = TreatmentArea.all(:order => "name")
-
-    @current_capacity = @areas.map do |a|
-      count = a.patients.count || 0
-      count = Patient.count(:conditions => {:radiology => true}) if a.radiology?
-      [a.name, count]
-    end
+    @areas = TreatmentArea.order('name')
+    @current_capacity = TreatmentArea.current_capacity
   end
 
   def post_clinic
