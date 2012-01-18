@@ -1,6 +1,6 @@
 class PatientsController < ApplicationController
+
   before_filter :authenticate_user!, :except => [ :lookup_zip, :lookup_city ]
-  before_filter :admin_required, :only => [ :edit, :destroy, :history ]
   before_filter :date_input
   before_filter :find_last_patient, :only => [:new]
 
@@ -27,7 +27,7 @@ class PatientsController < ApplicationController
     @patient.build_previous_mom_clinics
   end
 
-    def print
+  def print
     @patient = Patient.find(params[:id])
 
     render :action => "print", :layout => "print"
