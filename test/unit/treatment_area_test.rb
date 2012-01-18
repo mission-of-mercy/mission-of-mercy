@@ -21,16 +21,15 @@ class TreatmentAreaTest < ActiveSupport::TestCase
     assert_equal area, TreatmentArea.radiology
   end
 
-  # TODO kbl
-  # again time zone issue ):
-  # on rails console everything is ok, but here with my setup test fails
-  def test_should_count_only_patients_checked_in_in_the_same_day
+  def test_should_count_only_patients_assigned_today
     area = Factory(:treatment_area)
-    p1 = Factory(:patient, created_at: Time.zone.now - 2.day)
+    p1 = Factory(:patient)
     p2 = Factory(:patient)
     p3 = Factory(:patient)
 
     [p1, p2, p3].each { |p| p.assign(area.id, false) }
+
+    p1.assignments.first.update_attribute(:created_at, Time.now - 2.days)
 
     assert_equal 2, area.patients.count
   end
