@@ -2,6 +2,6 @@
   %td
     = assignment.treatment_area.name
   %td
-    = l(assignment.created_at, format: :long)
+    = assignment.created_at.to_s(:time)
   %td
-    = l(assignment.checked_out_at, format: :long) if assignment.checked_out_at
+    = assignment.checked_out_at.to_s(:time) if assignment.checked_out_at

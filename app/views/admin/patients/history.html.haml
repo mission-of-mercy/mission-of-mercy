@@ -9,7 +9,7 @@
   %thead
     %tr
       %th Treatment area
-      %th Checked in
+      %th Assigned at
       %th Checked out
   %tbody
     = render partial: 'patient_assignment', collection: @patient.assignments, as: 'assignment'
@@ -19,8 +19,7 @@
 %table
   %thead
     %tr
-      %th Action
-      %th Treatment area
+      %th Area
       %th Action time
   %tbody
     = render partial: 'patient_flow', collection: @patient.flows, as: 'flow'
