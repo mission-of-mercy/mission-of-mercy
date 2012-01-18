@@ -13,11 +13,11 @@
     %p
       - @areas.reject {|ar| ar.radiology? }.each do |area|
         = radio_button :patient_params, :assigned_to, area.id, checked: @patient.assigned_to?(area)
-        = label :assigned_treatment_area_id, area.name
+        %label{:for => "patient_params_assigned_to_#{area.id}"}= area.name
         %br
     %p
       = check_box :patient_params, :radiology, checked: @is_assigned_to_radiology
-      = label :radiology, 'Radiology'
+      %label{:for => "patient_params_radiology"}= TreatmentArea::RADIOLOGY_NAME
 
   .input-right.border
     = bar_graph 'treatment_area_graph',
