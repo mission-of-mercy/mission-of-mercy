@@ -283,7 +283,6 @@ class Patient < ActiveRecord::Base
             assignment.delete
             destroyed = true
           end
-          break
         when false
           area = assignment.treatment_area
           is_reassigned = assigned_to_area_id && assigned_to_area_id != area.id
