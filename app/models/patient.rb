@@ -275,7 +275,7 @@ class Patient < ActiveRecord::Base
 
   def destroy_previous_assignments(assigned_to_area_id, assigned_to_radiology)
     destroyed = false
-    assignments.all.each do |assignment|
+    assignments.not_checked_out.all.each do |assignment|
 
       case assignment.radiology? 
         when true
