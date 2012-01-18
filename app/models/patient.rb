@@ -28,7 +28,6 @@ class Patient < ActiveRecord::Base
   has_many :previous_mom_clinics,  :class_name  => "PatientPreviousMomClinic",
                                    :dependent   => :delete_all
 
-  has_one :prosthetic,             :dependent   => :delete
   has_one :zipcode,                :class_name  => "Patient::Zipcode",
                                    :foreign_key => "zip",
                                    :primary_key => "zip"
@@ -37,7 +36,6 @@ class Patient < ActiveRecord::Base
   belongs_to :assigned_treatment_area, :class_name => "TreatmentArea"
 
   accepts_nested_attributes_for :survey
-  accepts_nested_attributes_for :prosthetic
   accepts_nested_attributes_for :patient_prescriptions, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['prescribed'] == "0" }
 
