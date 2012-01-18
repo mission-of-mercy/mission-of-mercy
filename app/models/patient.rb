@@ -106,16 +106,19 @@ class Patient < ActiveRecord::Base
     patient_procedures.group_by(&:procedure)
   end
 
-  def check_out(area_id)
-    current_assignment = assignments.not_checked_out.where(treatment_area_id: area_id).first
-    if current_assignment
-      current_assignment.check_out
+  def check_out(area)
+    return unless area
 
-      unless current_assignment.radiology?
-        self.flows.create(area_id: ClinicArea::CHECKOUT, treatment_area_id: area_id)
-        self.update_attributes(survey_id: nil)
-      end
+    assignment = assignments.not_checked_out.where(treatment_area_id: area.id).first
+
+    if area.radiology?
+      self.flows.create(area_id: ClinicArea::XRAY)
+    else
+      self.flows.create(area_id: ClinicArea::CHECKOUT, treatment_area_id: area.id)
+      self.update_attributes(survey_id: nil)
     end
+
+    assignment.check_out if assignment
   end
 
   def assign(assigned_to_area_id, assigned_to_radiology)
@@ -277,7 +280,7 @@ class Patient < ActiveRecord::Base
     destroyed = false
     assignments.not_checked_out.all.each do |assignment|
 
-      case assignment.radiology? 
+      case assignment.radiology?
         when true
           unless assigned_to_radiology
             assignment.delete
@@ -297,13 +300,13 @@ class Patient < ActiveRecord::Base
 
     destroyed
   end
-    
+
   def create_new_assignments(assigned_to_area_id, assigned_to_radiology)
     areas_to_assign = []
     assigned_areas = assigned_to
 
     if assigned_to_radiology
-      area_radiology = TreatmentArea.radiology 
+      area_radiology = TreatmentArea.radiology
       areas_to_assign << area_radiology unless assigned_areas.include?(area_radiology)
     end
     assigned_areas.delete(area_radiology)

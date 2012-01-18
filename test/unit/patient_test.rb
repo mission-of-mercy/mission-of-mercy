@@ -139,7 +139,7 @@ class PatientTest < ActiveSupport::TestCase
     area = Factory(:treatment_area)
 
     patient.assign(area.id, false)
-    
+
     assert_equal 1, patient.assignments.count
     assert_equal area, patient.assignments[0].treatment_area
   end
@@ -159,7 +159,7 @@ class PatientTest < ActiveSupport::TestCase
 
     patient.assign(area.id, true)
 
-    assert_equal [@radiology, area], patient.assigned_to 
+    assert_equal [@radiology, area], patient.assigned_to
   end
 
   def test_shoud_allow_for_assigning_to_radiology_only
@@ -167,7 +167,7 @@ class PatientTest < ActiveSupport::TestCase
 
     patient.assign(nil, true)
 
-    assert_equal [@radiology], patient.assigned_to 
+    assert_equal [@radiology], patient.assigned_to
   end
 
   def test_should_allow_check_out
@@ -177,7 +177,7 @@ class PatientTest < ActiveSupport::TestCase
     patient.assign(area.id, false)
     assert_equal area, patient.assigned_to[0]
 
-    patient.check_out(area.id)
+    patient.check_out(area)
     assert patient.assigned_to.empty?
   end
 
@@ -185,10 +185,10 @@ class PatientTest < ActiveSupport::TestCase
     area = Factory(:treatment_area)
     patient = Factory(:patient)
 
-    assert patient.assign(area.id, false)
+    assert patient.assign(area, false)
     assert_nil patient.assignments.last.checked_out_at
 
-    patient.check_out(area.id)
+    patient.check_out(area)
     assert_not_nil patient.assignments.last.checked_out_at
   end
 
@@ -201,7 +201,7 @@ class PatientTest < ActiveSupport::TestCase
     patient = Factory(:patient)
     area = Factory(:treatment_area)
 
-    patient.assign(area.id, false)
+    patient.assign(area, false)
 
     assert patient.assigned_to?(area)
     assert_equal false, patient.assigned_to?(Factory(:treatment_area))
@@ -247,7 +247,7 @@ class PatientTest < ActiveSupport::TestCase
     area2 = Factory(:treatment_area)
 
     patient.assign(area1.id, false)
-    patient.check_out(area1.id)
+    patient.check_out(area1)
     assert_equal 1, patient.assignments.count
 
     patient.assign(area2.id, false)

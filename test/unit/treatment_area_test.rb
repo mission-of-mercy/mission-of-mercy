@@ -12,7 +12,7 @@ class TreatmentAreaTest < ActiveSupport::TestCase
 
     assert_equal 3, area.patients.count
 
-    p3.check_out(area.id)
+    p3.check_out(area)
     assert_equal 2, area.patients.count
   end
 

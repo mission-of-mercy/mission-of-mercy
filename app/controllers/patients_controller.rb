@@ -62,7 +62,6 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @patient.flows.create(:area_id => ClinicArea::XRAY)
         @patient.check_out(TreatmentArea.radiology)
 
         redirect_to treatment_area_patient_procedures_path(TreatmentArea.radiology, @patient.id)
