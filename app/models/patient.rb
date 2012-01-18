@@ -32,7 +32,6 @@ class Patient < ActiveRecord::Base
                                    :dependent   => :delete_all
   has_many :treatment_areas,       :through     => :assignments
 
-  has_one :prosthetic,             :dependent   => :delete
   has_one :zipcode,                :class_name  => "Patient::Zipcode",
                                    :foreign_key => "zip",
                                    :primary_key => "zip"
@@ -40,7 +39,6 @@ class Patient < ActiveRecord::Base
   belongs_to :survey,              :dependent  => :delete
 
   accepts_nested_attributes_for :survey
-  accepts_nested_attributes_for :prosthetic
   accepts_nested_attributes_for :patient_prescriptions, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['prescribed'] == "0" }
 
