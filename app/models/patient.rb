@@ -1,4 +1,5 @@
 class Patient < ActiveRecord::Base
+
   REGEXP = {
     :time_in_pain   => /\A(\d*\.?\d*)\s*(.+)\Z/,
     :number_only    => /\A(\d*\.?\d*)\Z/,
@@ -108,33 +109,20 @@ class Patient < ActiveRecord::Base
   def check_out(area_id)
     current_assignment = assignments.not_checked_out.where(treatment_area_id: area_id).first
     if current_assignment
-      current_assignment.update_attribute(:checked_out_at, Time.now)
+      current_assignment.check_out
 
-      area = current_assignment.treatment_area
-      unless area.radiology?
-        self.flows.create(area_id: ClinicArea::CHECKOUT, treatment_area: area)
+      unless current_assignment.radiology?
+        self.flows.create(area_id: ClinicArea::CHECKOUT, treatment_area_id: area_id)
         self.update_attributes(survey_id: nil)
       end
     end
   end
 
-  def assign(area_id, radiology)
-    areas = []
-    assigned_areas = assigned_to
+  def assign(assigned_to_area_id, assigned_to_radiology)
+    destroyed = destroy_previous_assignments(assigned_to_area_id, assigned_to_radiology)
+    created = create_new_assignments(assigned_to_area_id, assigned_to_radiology)
 
-    area_radiology = TreatmentArea.radiology 
-    if radiology
-      areas << area_radiology unless assigned_areas.include?(area_radiology)
-    end
-    assigned_areas.delete(area_radiology)
-
-    if area_id
-      areas << TreatmentArea.find(area_id) if assigned_areas.empty?
-    end
-
-    areas.each { |a| assignments.create(treatment_area: a) }
-
-    not areas.empty?
+    destroyed || created
   end
 
   def assigned_to
@@ -284,4 +272,50 @@ class Patient < ActiveRecord::Base
 
     return true
   end
+
+  def destroy_previous_assignments(assigned_to_area_id, assigned_to_radiology)
+    destroyed = false
+    assignments.all.each do |assignment|
+
+      case assignment.radiology? 
+        when true
+          unless assigned_to_radiology
+            assignment.delete
+            destroyed = true
+          end
+          break
+        when false
+          area = assignment.treatment_area
+          is_reassigned = assigned_to_area_id && assigned_to_area_id != area.id
+
+          if is_reassigned
+            assignment.delete
+            destroyed = true
+          end
+        end
+
+    end
+
+    destroyed
+  end
+    
+  def create_new_assignments(assigned_to_area_id, assigned_to_radiology)
+    areas_to_assign = []
+    assigned_areas = assigned_to
+
+    if assigned_to_radiology
+      area_radiology = TreatmentArea.radiology 
+      areas_to_assign << area_radiology unless assigned_areas.include?(area_radiology)
+    end
+    assigned_areas.delete(area_radiology)
+
+    if assigned_to_area_id && assigned_areas.empty?
+      areas_to_assign << TreatmentArea.find(assigned_to_area_id)
+    end
+
+    areas_to_assign.each { |a| assignments.create(treatment_area: a) }
+
+    not areas_to_assign.empty?
+  end
+
 end

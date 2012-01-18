@@ -129,7 +129,7 @@ class PatientTest < ActiveSupport::TestCase
       "Saved patient with an invalid date_of_birth value"
   end
 
-  def test_shoould_properly_assign_treatment_area
+  def test_should_properly_assign_treatment_area
     patient = Factory(:patient)
     area = Factory(:treatment_area)
 
@@ -171,10 +171,10 @@ class PatientTest < ActiveSupport::TestCase
     area = Factory(:treatment_area)
     patient = Factory(:patient)
 
-    patient.assign(area, false)
+    patient.assign(area.id, false)
     assert_equal area, patient.assigned_to[0]
 
-    patient.check_out(area)
+    patient.check_out(area.id)
     assert patient.assigned_to.empty?
   end
 
@@ -182,10 +182,10 @@ class PatientTest < ActiveSupport::TestCase
     area = Factory(:treatment_area)
     patient = Factory(:patient)
 
-    assert patient.assign(area, false)
+    assert patient.assign(area.id, false)
     assert_nil patient.assignments.last.checked_out_at
 
-    patient.check_out(area)
+    patient.check_out(area.id)
     assert_not_nil patient.assignments.last.checked_out_at
   end
 
@@ -198,24 +198,46 @@ class PatientTest < ActiveSupport::TestCase
     patient = Factory(:patient)
     area = Factory(:treatment_area)
 
-    patient.assign(area, false)
+    patient.assign(area.id, false)
 
     assert patient.assigned_to?(area)
     assert_equal false, patient.assigned_to?(Factory(:treatment_area))
   end
 
-  def test_shouldnt_create_assignments_for_previously_assigned_user
+  def test_shoud_remove_radiology_assignment
     patient = Factory(:patient)
-    area = Factory(:treatment_area)
     area_radiology = Factory(:treatment_area, name: TreatmentArea::RADIOLOGY_NAME)
 
-    assigned = patient.assign(area.id, true)
-    assert assigned
-    assert_equal 2, patient.assigned_to.size
+    patient.assign(nil, true)
+    assert_equal 1, patient.assigned_to.size
 
-    assigned = patient.assign(area.id, true)
-    assert_equal false, assigned
-    assert_equal 2, patient.assigned_to.size
+    patient.assign(nil, false)
+    assert patient.assigned_to.empty?
+  end
+
+  def test_should_chenge_assigned_area
+    patient = Factory(:patient)
+    area1 = Factory(:treatment_area)
+    area2 = Factory(:treatment_area)
+
+    patient.assign(area1.id, false)
+    assert_equal area1, patient.assigned_to[0]
+
+    patient.assign(area2.id, false)
+    assert_equal area2, patient.assigned_to[0]
+  end
+
+  def test_reassinging_should_return_true
+    patient = Factory(:patient)
+    area1 = Factory(:treatment_area)
+    area2 = Factory(:treatment_area, name: TreatmentArea::RADIOLOGY_NAME)
+    area3 = Factory(:treatment_area)
+
+    assert patient.assign(area1.id, false)
+    assert patient.assign(area1.id, true)
+    assert patient.assign(area3.id, true)
+    assert_equal false, patient.assign(area3.id, true)
+    assert patient.assign(area3.id, false)
   end
 
 end

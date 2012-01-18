@@ -6,7 +6,11 @@ class PatientAssignment < ActiveRecord::Base
   scope :not_checked_out, where('checked_out_at IS NULL')
 
   def check_out
-    update_attribute(:checked_out_at, Time.new)
+    update_attributes(checked_out_at: Time.new)
+  end
+
+  def radiology?
+    treatment_area.radiology?
   end
 
 end
