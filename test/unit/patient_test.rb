@@ -192,11 +192,6 @@ class PatientTest < ActiveSupport::TestCase
     assert_not_nil patient.assignments.last.checked_out_at
   end
 
-  def test_should_return_false_if_assignment_wasnt_successfull
-    patient = Factory(:patient)
-    assert_equal false, patient.assign(nil, false)
-  end
-
   def test_should_check_if_patient_is_assigned_to_area
     patient = Factory(:patient)
     area = Factory(:treatment_area)
@@ -237,7 +232,7 @@ class PatientTest < ActiveSupport::TestCase
     assert patient.assign(area1.id, false)
     assert patient.assign(area1.id, true)
     assert patient.assign(area2.id, true)
-    assert_equal false, patient.assign(area2.id, true)
+    assert patient.assign(area2.id, true)
     assert patient.assign(area2.id, false)
   end
 

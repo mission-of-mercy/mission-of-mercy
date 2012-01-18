@@ -3,6 +3,8 @@ require 'test_helper'
 class TreatmentAreaTest < ActiveSupport::TestCase
 
   def test_should_count_only_checked_in_patients
+    radiology = Factory(:treatment_area, name: TreatmentArea::RADIOLOGY_NAME)
+
     area = Factory(:treatment_area)
     p1 = Factory(:patient)
     p2 = Factory(:patient)
@@ -22,6 +24,8 @@ class TreatmentAreaTest < ActiveSupport::TestCase
   end
 
   def test_should_count_only_patients_assigned_today
+    radiology = Factory(:treatment_area, name: TreatmentArea::RADIOLOGY_NAME)
+
     area = Factory(:treatment_area)
     p1 = Factory(:patient)
     p2 = Factory(:patient)
@@ -35,13 +39,16 @@ class TreatmentAreaTest < ActiveSupport::TestCase
   end
 
   def test_should_properly_count_current_capacity
+    radiology = Factory(:treatment_area, name: TreatmentArea::RADIOLOGY_NAME)
+
     area = Factory(:treatment_area)
     second_area = Factory(:treatment_area)
 
     3.times { Factory(:patient).assign(area.id, false) }
     2.times { Factory(:patient).assign(second_area.id, false) }
 
-    assert_equal [[area.name, 3], [second_area.name, 2]], TreatmentArea.current_capacity
+    assert_equal [[radiology.name, 0], [area.name, 3], [second_area.name, 2]],
+                 TreatmentArea.current_capacity
   end
 
 end

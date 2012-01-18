@@ -121,11 +121,30 @@ class Patient < ActiveRecord::Base
     assignment.check_out if assignment
   end
 
-  def assign(assigned_to_area_id, assigned_to_radiology)
-    destroyed = destroy_previous_assignments(assigned_to_area_id, assigned_to_radiology)
-    created = create_new_assignments(assigned_to_area_id, assigned_to_radiology)
+  def assign(area_id, radiology)
+    radiology_assignment = assignments.not_checked_out.radiology
 
-    destroyed || created
+    if radiology
+      unless radiology_assignment.any?
+        radiology_assignment.create(:treatment_area_id => TreatmentArea.radiology.id)
+      end
+    else
+      radiology_assignment.first.destroy if radiology_assignment.first
+    end
+
+    assigned_treatment_area = TreatmentArea.find_by_id(area_id)
+
+    current_assignment = assignments.not_checked_out.radiology(false).first
+
+    if assigned_treatment_area &&
+      ( current_assignment.nil? ||
+        current_assignment.treatment_area != assigned_treatment_area )
+
+      current_assignment.destroy if current_assignment
+      assignments.create(:treatment_area_id => assigned_treatment_area.id)
+    end
+
+    true # Everything is just fine
   end
 
   def assigned_to
@@ -274,50 +293,6 @@ class Patient < ActiveRecord::Base
     end
 
     return true
-  end
-
-  def destroy_previous_assignments(assigned_to_area_id, assigned_to_radiology)
-    destroyed = false
-    assignments.not_checked_out.all.each do |assignment|
-
-      case assignment.radiology?
-        when true
-          unless assigned_to_radiology
-            assignment.delete
-            destroyed = true
-          end
-        when false
-          area = assignment.treatment_area
-          is_reassigned = assigned_to_area_id && assigned_to_area_id != area.id
-
-          if is_reassigned
-            assignment.delete
-            destroyed = true
-          end
-        end
-
-    end
-
-    destroyed
-  end
-
-  def create_new_assignments(assigned_to_area_id, assigned_to_radiology)
-    areas_to_assign = []
-    assigned_areas = assigned_to
-
-    if assigned_to_radiology
-      area_radiology = TreatmentArea.radiology
-      areas_to_assign << area_radiology unless assigned_areas.include?(area_radiology)
-    end
-    assigned_areas.delete(area_radiology)
-
-    if assigned_to_area_id && assigned_areas.empty?
-      areas_to_assign << TreatmentArea.find(assigned_to_area_id)
-    end
-
-    areas_to_assign.each { |a| assignments.create(treatment_area: a) }
-
-    not areas_to_assign.empty?
   end
 
 end
