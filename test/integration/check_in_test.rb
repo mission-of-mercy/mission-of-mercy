@@ -51,4 +51,13 @@ class CheckInTest < ActionDispatch::IntegrationTest
     assert_equal find_field('City').value, city
     assert_equal find_field('State').value, state
   end
+
+  test "previous patient chart number is displayed after sucessful checkin" do
+    patient = Factory(:patient)
+    sign_in_as "Check in"
+
+    visit("/patients/new?last_patient_id=" + patient.id.to_s)
+
+    assert_equal patient.id.to_s, find("#facebox div.top h1").text
+  end
 end
