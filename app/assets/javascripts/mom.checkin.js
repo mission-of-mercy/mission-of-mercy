@@ -81,6 +81,8 @@ MoM.Checkin.init = function(options){
     $('div.last-patient a').click(function(e){
       jQuery(document).trigger('close.facebox');
       e.preventDefault();
+
+      $('#waiver_agree_button').focus();
     });
   }
 
@@ -214,7 +216,7 @@ MoM.Checkin.hidePreviousContactInformationButton = function() {
 
 MoM.Checkin.waiverConfirmed = function() {
   MoM.Checkin.enableAllFields();
-  $('.waiver_confirmation').hide();
+  $('.waiver_confirmation').fadeOut();
   $('form.new_patient input[type=text]').first().focus();
 }
 
