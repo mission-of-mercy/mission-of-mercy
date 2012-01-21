@@ -8,16 +8,27 @@ class CheckInTest < ActionDispatch::IntegrationTest
     assert_equal find_field('First name')[:disabled], "true"
     assert_equal find_button('Next')[:disabled], "true"
 
-    check "Agree"
+    click_button "Agree"
     assert_equal find_field('First name')[:disabled], "false"
     assert_equal find_button('Next')[:disabled], "false"
+  end
+
+  test "previous patients chart should be printed when there is one" do
+    Capybara.current_driver = :selenium
+
+    patient = Factory(:patient)
+    sign_in_as "Check in"
+    visit("/patients/new?last_patient_id=" + patient.id.to_s)
+
+    assert find(".popup").has_content?("Patient's Chart Number")
+    assert find(".popup").has_content?(patient.id.to_s)
   end
 
   test "the button should not be visible if there is no previous patient information" do
     Capybara.current_driver = :selenium
 
     sign_in_as "Check in"
-    check "Agree"
+    click_button "Agree"
     refute find(".same_as_previous_patient_button").visible?,
       "'Same as previous patient' button should be hidden"
   end
@@ -27,7 +38,7 @@ class CheckInTest < ActionDispatch::IntegrationTest
 
     patient = Factory(:patient)
     sign_in_as "Check in"
-    check "Agree"
+    click_button "Agree"
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
 
     assert find(".same_as_previous_patient_button").visible?,
@@ -45,7 +56,8 @@ class CheckInTest < ActionDispatch::IntegrationTest
 
     sign_in_as "Check in"
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
-    check "Agree"
+    click_link "Check In Next Patient"
+    click_button "Agree"
 
     click_button 'Same as previous patient'
 
