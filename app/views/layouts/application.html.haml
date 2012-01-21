@@ -10,7 +10,7 @@
     = csrf_meta_tag
 
     :javascript
-      $(function() { MoM.init(); });
+      $(function() { MoM.init(); MoM.Environment = "#{Rails.env}"; });
       #{yield(:header_js)}
 
     = yield(:header)

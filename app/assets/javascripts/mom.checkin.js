@@ -9,8 +9,8 @@ MoM.Checkin.init = function(options){
     MoM.Checkin.hidePreviousContactInformationButton();
   }
 
-  $("#waiver_checkbox").change(function() {
-    MoM.Checkin.toggleFields();
+  $("#waiver_agree_button").click(function() {
+    MoM.Checkin.waiverConfirmed();
   });
 
   $('#patient_survey_attributes_heard_about_clinic').change(function(e){
@@ -72,18 +72,19 @@ MoM.Checkin.init = function(options){
   MoM.Checkin.toggleOtherRace(false);
 
   if(options.lastPatient.id){
-    MoM.Checkin.printChart(options.lastPatient.id);
+    if(MoM.Environment != "test") {
+      MoM.Checkin.printChart(options.lastPatient.id);
+    }
 
     jQuery.facebox({ div: '#last_patient' }, 'last-patient');
 
     $('div.last-patient a').click(function(e){
       jQuery(document).trigger('close.facebox');
-      $('#patient_first_name').focus();
       e.preventDefault();
     });
   }
 
-  $('#patient_first_name').focus();
+  $('#waiver_agree_button').focus();
 }
 
 MoM.Checkin.printChart = function(patientId){
@@ -211,15 +212,10 @@ MoM.Checkin.hidePreviousContactInformationButton = function() {
   $(".same_as_previous_patient_button").hide();
 }
 
-MoM.Checkin.toggleFields = function() {
-  if($('#waiver_checkbox').attr('checked') == 'checked') {
-    MoM.Checkin.enableAllFields();
-    $('.waiver_confirmation').addClass('confirmed');
-    $('form.new_patient input[type=text]').first().focus();
-  } else {
-    MoM.Checkin.disableAllFields();
-    $('.waiver_confirmation').removeClass('confirmed');
-  }
+MoM.Checkin.waiverConfirmed = function() {
+  MoM.Checkin.enableAllFields();
+  $('.waiver_confirmation').hide();
+  $('form.new_patient input[type=text]').first().focus();
 }
 
 MoM.Checkin.enableAllFields = function() {
