@@ -1,5 +1,20 @@
 @import compass/css3/border-radius
 
+.waiver_confirmation
+  padding: 5px 10px 10px 15px
+  margin-bottom: 10px
+  &.unconfirmed
+    background-color: #70120B
+    color: #FFF
+  &.confirmed
+    background-color: #C5EEB8
+    color: #517147
+  .waiver_confirmation_description
+    font-weight: bold
+  .waiver_confirmation_checkbox
+    .waiver_confirmation_agree_label
+      padding-left: 10px
+
 form.new_patient, form.edit_patient
   img.spinner
     display: none

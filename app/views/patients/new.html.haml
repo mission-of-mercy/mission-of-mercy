@@ -3,6 +3,13 @@
 = header do
   %h1 Patient Check In
 
+.waiver_confirmation.unconfirmed
+  %p.waiver_confirmation_description
+    Patient or legal guardian (if under 18) has read, understood, and
+    signed the waiver.
+  %input.waiver_confirmation_checkbox{:type => "checkbox"}
+    %span.waiver_confirmation_agree_label Agree
+
 = form_for @patient, :html => { :autocomplete => "off" } do |f|
   = render :partial => 'form', :locals => {:f => f}
 
