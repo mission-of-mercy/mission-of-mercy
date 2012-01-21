@@ -3,19 +3,19 @@
 .waiver_confirmation
   padding: 5px 10px 10px 15px
   margin-bottom: 10px
-  &.unconfirmed
-    background-color: #70120B
-    color: #FFF
+  background-color: #70120B
+  color: #FFF
   &.confirmed
     background-color: #C5EEB8
     color: #517147
-  .waiver_confirmation_description
+  .waiver_description
     font-weight: bold
-  .waiver_confirmation_checkbox
-    .waiver_confirmation_agree_label
-      padding-left: 10px
 
 form.new_patient, form.edit_patient
+  &.disabled
+    color: #CCC
+    a, a:hover, a:visited
+      color: #CCC
   img.spinner
     display: none
 

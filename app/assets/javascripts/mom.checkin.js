@@ -3,10 +3,15 @@ MoM.setupNamespace("Checkin");
 MoM.Checkin.init = function(options){
 
   MoM.disableEnterKey();
+  MoM.Checkin.disableAllFields();
 
   if(options.lastPatient == null) {
     MoM.Checkin.hidePreviousContactInformationButton();
   }
+
+  $("#waiver_checkbox").change(function() {
+    MoM.Checkin.toggleFields();
+  });
 
   $('#patient_survey_attributes_heard_about_clinic').change(function(e){
     MoM.Checkin.toggleOtherHeardAbout();
@@ -215,4 +220,25 @@ MoM.Checkin.usePreviousContactInformation = function(lastPatient) {
 
 MoM.Checkin.hidePreviousContactInformationButton = function() {
   $(".same_as_previous_patient_button").hide();
+}
+
+MoM.Checkin.toggleFields = function() {
+  if($('#waiver_checkbox').attr('checked') == 'checked') {
+    MoM.Checkin.enableAllFields();
+    $('.waiver_confirmation').addClass('confirmed');
+    $('form.new_patient input[type=text]').first().focus();
+  } else {
+    MoM.Checkin.disableAllFields();
+    $('.waiver_confirmation').removeClass('confirmed');
+  }
+}
+
+MoM.Checkin.enableAllFields = function() {
+  $('form.new_patient').find('input, button, select').attr('disabled', false);
+  $('form.new_patient').removeClass('disabled');
+}
+
+MoM.Checkin.disableAllFields = function() {
+  $('form.new_patient').find('input, button, select').attr('disabled', true);
+  $('form.new_patient').addClass('disabled');
 }
