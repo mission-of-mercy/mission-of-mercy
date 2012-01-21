@@ -17,7 +17,9 @@ class CheckInTest < ActionDispatch::IntegrationTest
 
   test "the button should not be visible if there is no previous patient information" do
     sign_in_as "Check in"
-    check "Agree"
+
+    assert_current_path new_patient_path
+
     refute find(".same_as_previous_patient_button").visible?,
       "'Same as previous patient' button should be hidden"
   end
@@ -25,7 +27,7 @@ class CheckInTest < ActionDispatch::IntegrationTest
   test "should display the button if previous patient information is available" do
     patient = Factory(:patient)
     sign_in_as "Check in"
-    check "Agree"
+
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
 
     assert find(".same_as_previous_patient_button").visible?,
@@ -45,11 +47,11 @@ class CheckInTest < ActionDispatch::IntegrationTest
 
     click_button 'Same as previous patient'
 
-    assert_equal find_field('Phone').value, phone
-    assert_equal find_field('Street').value, street
-    assert_equal find_field('Zip').value, zip
-    assert_equal find_field('City').value, city
-    assert_equal find_field('State').value, state
+    assert_field_value 'Phone',  phone
+    assert_field_value 'Street', street
+    assert_field_value 'Zip',    zip
+    assert_field_value 'City',   city
+    assert_field_value 'State',  state
   end
 
   test "previous patient chart number is displayed after sucessful checkin" do

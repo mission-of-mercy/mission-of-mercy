@@ -38,6 +38,10 @@ module Support
         "Field #{label.inspect} with options #{options.inspect} exists"
     end
 
+    def assert_field_value(field, value)
+      assert_equal value, find_field(field).value
+    end
+
     def assert_flash(message)
       assert has_css?('#flash', :text => message),
         "Flash #{message.inspect} does not exist in the page"
