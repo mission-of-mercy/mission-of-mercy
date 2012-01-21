@@ -13,6 +13,18 @@ class CheckInTest < ActionDispatch::IntegrationTest
     assert_equal find_button('Next')[:disabled], "false"
   end
 
+  test "does not show the waiver confirmation when returning to form for errors" do
+    Capybara.current_driver = :selenium
+
+    sign_in_as "Check in"
+    click_button "Agree"
+    click_button "Next"
+    click_button "Check In"
+
+    refute find('.waiver_confirmation').visible?, "waiver confirmation should not be visible"
+    assert_equal find_button('Next')[:disabled], "false", "form should be enabled"
+  end
+
   test "previous patients chart should be printed when there is one" do
     Capybara.current_driver = :selenium
 
