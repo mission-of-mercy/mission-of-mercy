@@ -3,15 +3,14 @@ MoM.setupNamespace("Checkin");
 MoM.Checkin.init = function(options){
 
   MoM.disableEnterKey();
-  if (options.requireWaiverConfirmation == true) {
-    MoM.Checkin.disableAllFields();
-  } else {
-    MoM.Checkin.waiverConfirmed();
-  }
 
-  if(options.lastPatient.contactInformation == null) {
+  if (options.requireWaiverConfirmation)
+    MoM.Checkin.disableAllFields();
+  else
+    MoM.Checkin.waiverConfirmed();
+
+  if(options.lastPatient.contactInformation == null)
     MoM.Checkin.hidePreviousContactInformationButton();
-  }
 
   $("#waiver_agree_button").click(function() {
     MoM.Checkin.waiverConfirmed();
@@ -76,9 +75,7 @@ MoM.Checkin.init = function(options){
   MoM.Checkin.toggleOtherRace(false);
 
   if(options.lastPatient.id){
-    if(MoM.Environment != "test") {
-      MoM.Checkin.printChart(options.lastPatient.id);
-    }
+    MoM.Checkin.printChart(options.lastPatient.id);
 
     jQuery.facebox({ div: '#last_patient' }, 'last-patient');
 
@@ -219,7 +216,7 @@ MoM.Checkin.hidePreviousContactInformationButton = function() {
 
 MoM.Checkin.waiverConfirmed = function() {
   MoM.Checkin.enableAllFields();
-  $('.waiver_confirmation').fadeOut();
+  $('.waiver_confirmation').hide();
   $('form.new_patient input[type=text]').first().focus();
 }
 

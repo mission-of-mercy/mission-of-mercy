@@ -17,9 +17,8 @@ class CheckInTest < ActionDispatch::IntegrationTest
   end
 
   test "does not show the waiver confirmation when returning to form for errors" do
-    Capybara.current_driver = :selenium
-
     sign_in_as "Check in"
+
     click_button "Agree"
     click_button "Next"
     click_button "Check In"
