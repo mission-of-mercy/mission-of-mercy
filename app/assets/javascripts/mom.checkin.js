@@ -104,7 +104,6 @@ MoM.Checkin.togglePatientPain = function(focus){
 }
 
 MoM.Checkin.toggleDateInput = function(){
-
   if($('#date-select').is(":visible"))
     MoM.Checkin.useTextDate();
   else
@@ -112,28 +111,18 @@ MoM.Checkin.toggleDateInput = function(){
 }
 
 MoM.Checkin.useTextDate = function(){
-
   $('#date-select').hide();
-
-  $('body').append($('#date-select'));
-  $('#date-input-container').append($('#date-text'));
   $('#date-text').show();
 
   $('#date_input').val('text');
-
   $('#date-format').slideDown();
 }
 
 MoM.Checkin.useSelectDate = function(){
-
   $('#date-text').hide();
-
-  $('body').append($('#date-text'));
-  $('#date-input-container').append($('#date-select'));
   $('#date-select').show();
 
   $('#date_input').val('select');
-
   $('#date-format').slideUp();
 }
 
