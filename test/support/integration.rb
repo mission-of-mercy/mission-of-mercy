@@ -1,8 +1,6 @@
 module Support
   module Integration
     def sign_in_as(user_type)
-      create_sample_users
-
       visit login_path
       select user_type, :from => 'Login'
       fill_in 'Password', :with => 'temp123'
@@ -78,28 +76,6 @@ module Support
     def within(scope, prefix=nil)
       scope = '#' << ActionController::RecordIdentifier.dom_id(scope, prefix) if scope.is_a?(ActiveRecord::Base)
       super(scope)
-    end
-
-    def create_sample_users
-      users = [ { :login => "admin",           :user_type => UserType::ADMIN },
-                { :login => "check_in",        :user_type => UserType::CHECKIN },
-                { :login => "check_out",       :user_type => UserType::CHECKOUT },
-                { :login => "assignment_desk", :user_type => UserType::ASSIGNMENT },
-                { :login => "pharmacy",        :user_type => UserType::PHARMACY } ]
-
-      (1..5).each do |id|
-        users << { :login      => "xray_#{id}",
-                   :user_type  => UserType::XRAY,
-                   :station_id => id }
-      end
-
-      users.each do |user|
-        User.create( :login                  => user[:login],
-                     :user_type              => user[:user_type],
-                     :password               => "temp123",
-                     :password_confirmation  => "temp123",
-                     :x_ray_station_id       => user[:station_id] )
-      end
     end
   end
 end

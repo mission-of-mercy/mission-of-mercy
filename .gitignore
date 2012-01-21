@@ -2,6 +2,7 @@
 log/*.log
 tmp/**/*
 tmp/*
+.sass-cache
 doc/api
 doc/app
 db/*.sqlite3

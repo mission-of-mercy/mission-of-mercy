@@ -31,4 +31,5 @@ group :test do
   gem 'colorific', '~> 1.0.0'
   gem 'factory_girl_rails'
   gem 'capybara',  '~> 1.1.1'
+  gem 'database_cleaner', '~> 0.7.1'
 end

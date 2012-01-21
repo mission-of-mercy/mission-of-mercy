@@ -2,6 +2,7 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'capybara/rails'
+require 'database_cleaner'
 require 'support/integration'
 
 module TestHelper
@@ -57,17 +58,45 @@ module TestHelper
   end
 end
 
+DatabaseCleaner.strategy = :truncation
+
 class ActionDispatch::IntegrationTest
   include Capybara::DSL
   include Support::Integration
 
-  # setup do
-  #   OmniAuth.config.test_mode = true
-  #   OmniAuth.config.mock_auth[:github] = {
-  #     'provider'  => "github",
-  #     'uid'       => '12345',
-  #     'user_info' => { 'nickname' => 'PN User' }
-  #   }
-  # end
-  teardown { Capybara.reset_sessions! }
+  # Stop ActiveRecord from wrapping tests in transactions
+  self.use_transactional_fixtures = false
+
+  setup do
+    create_default_users
+  end
+
+  teardown do
+    DatabaseCleaner.clean
+    Capybara.reset_sessions!
+    Capybara.use_default_driver
+  end
+
+
+  def create_default_users
+    users = [ { :login => "admin",           :user_type => UserType::ADMIN },
+              { :login => "check_in",        :user_type => UserType::CHECKIN },
+              { :login => "check_out",       :user_type => UserType::CHECKOUT },
+              { :login => "assignment_desk", :user_type => UserType::ASSIGNMENT },
+              { :login => "pharmacy",        :user_type => UserType::PHARMACY } ]
+
+    (1..5).each do |id|
+      users << { :login      => "xray_#{id}",
+                 :user_type  => UserType::XRAY,
+                 :station_id => id }
+    end
+
+    users.each do |user|
+      User.create( :login                  => user[:login],
+                   :user_type              => user[:user_type],
+                   :password               => "temp123",
+                   :password_confirmation  => "temp123",
+                   :x_ray_station_id       => user[:station_id] )
+    end
+  end
 end

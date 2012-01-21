@@ -49,6 +49,7 @@ GEM
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
+    database_cleaner (0.7.1)
     devise (1.4.9)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -157,6 +158,7 @@ DEPENDENCIES
   capybara (~> 1.1.1)
   colorific (~> 1.0.0)
   compass (~> 0.12.alpha)
+  database_cleaner (~> 0.7.1)
   devise
   dynamic_form
   factory_girl_rails

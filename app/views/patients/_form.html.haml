@@ -2,8 +2,15 @@
   :plain
     $(function(){
       var options = {
-        lastPatientId: #{@last_patient.try(:id) || 'null'},
-        dateInput:     '#{@date_input}'
+        lastPatient: {
+          id:       #{@last_patient.try(:id)     || 'null'},
+          phone:   '#{@last_patient.try(:phone)  || ''}',
+          street:  '#{@last_patient.try(:street) || ''}',
+          zip:     '#{@last_patient.try(:zip)    || ''}',
+          city:    '#{@last_patient.try(:city)   || ''}',
+          state:   '#{@last_patient.try(:state)  || ''}'
+        },
+        dateInput: '#{@date_input}'
       };
 
       MoM.Checkin.init(options);
@@ -41,6 +48,18 @@
         %span.label= f.label :sex
         %span.formw= f.select :sex, *sex_select_options
       %div.row
+        %span.label= f.label :race
+        %span.formw= f.select :race, *race_select_options
+      #race_other_div.row
+        %span.label= f.label :race_other, 'Specify race'
+        %span.formw= f.text_field :race_other
+
+    %div.contact_information_header
+      %h4 2: Contact Information
+      %button.same_as_previous_patient_button Same as previous patient
+
+    %div.input
+      %div.row
         %span.label= f.label :phone
         %span.formw= f.text_field :phone
       %div.row
@@ -56,19 +75,13 @@
       %div.row
         %span.label= f.label :state
         %span.formw= f.text_field :state
-      %div.row
-        %span.label= f.label :race
-        %span.formw= f.select :race, *race_select_options
-      #race_other_div.row
-        %span.label= f.label :race_other, 'Specify race'
-        %span.formw= f.text_field :race_other
     %br
 
   / End Demographics & Left Column
 
   %div.input-right
 
-    %h4 2: Visit Details
+    %h4 3: Visit Details
 
     %div.input
       %div.row
@@ -91,7 +104,7 @@
 
     / End Visit Details
 
-    %h4 3: Additional Information
+    %h4 4: Additional Information
 
     %div.input
       %div.row

@@ -4,6 +4,10 @@ MoM.Checkin.init = function(options){
 
   MoM.disableEnterKey();
 
+  if(options.lastPatient.id == null) {
+    MoM.Checkin.hidePreviousContactInformationButton();
+  }
+
   $('#patient_survey_attributes_heard_about_clinic').change(function(e){
     MoM.Checkin.toggleOtherHeardAbout();
   });
@@ -24,6 +28,11 @@ MoM.Checkin.init = function(options){
   $('#date-input-toggle').click(function(){
     MoM.Checkin.toggleDateInput();
   });
+
+  $('.same_as_previous_patient_button').click(function(e) {
+    e.preventDefault();
+    MoM.Checkin.usePreviousContactInformation(options.lastPatient);
+  })
 
   $('input[name="patient[attended_previous_mom_event]"]').change(function(e){
     MoM.Checkin.togglePreviousMoM();
@@ -196,3 +205,14 @@ MoM.Checkin.showPatientSurvey = function (){
   $('#bottom_survey').show();
 }
 
+MoM.Checkin.usePreviousContactInformation = function(lastPatient) {
+  $("#patient_phone").val(lastPatient.phone);
+  $("#patient_street").val(lastPatient.street);
+  $("#patient_zip").val(lastPatient.zip);
+  $("#patient_city").val(lastPatient.city);
+  $("#patient_state").val(lastPatient.state);
+}
+
+MoM.Checkin.hidePreviousContactInformationButton = function() {
+  $(".same_as_previous_patient_button").hide();
+}
