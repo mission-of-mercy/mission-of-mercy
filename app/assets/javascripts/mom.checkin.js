@@ -3,7 +3,11 @@ MoM.setupNamespace("Checkin");
 MoM.Checkin.init = function(options){
 
   MoM.disableEnterKey();
-  MoM.Checkin.disableAllFields();
+  if (options.requireWaiverConfirmation == true) {
+    MoM.Checkin.disableAllFields();
+  } else {
+    MoM.Checkin.waiverConfirmed();
+  }
 
   if(options.lastPatient.contactInformation == null) {
     MoM.Checkin.hidePreviousContactInformationButton();
@@ -81,7 +85,6 @@ MoM.Checkin.init = function(options){
     $('div.last-patient a').click(function(e){
       jQuery(document).trigger('close.facebox');
       e.preventDefault();
-
       $('#waiver_agree_button').focus();
     });
   }
