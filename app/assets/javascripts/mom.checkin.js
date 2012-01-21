@@ -5,7 +5,7 @@ MoM.Checkin.init = function(options){
   MoM.disableEnterKey();
   MoM.Checkin.disableAllFields();
 
-  if(options.lastPatient == null) {
+  if(options.lastPatient.contactInformation == null) {
     MoM.Checkin.hidePreviousContactInformationButton();
   }
 
@@ -36,7 +36,7 @@ MoM.Checkin.init = function(options){
 
   $('.same_as_previous_patient_button').click(function(e) {
     e.preventDefault();
-    MoM.Checkin.usePreviousContactInformation(options.lastPatient);
+    MoM.Checkin.fillContactInformation(options.lastPatient.contactInformation);
   })
 
   $('input[name="patient[attended_previous_mom_event]"]').change(function(e){
@@ -71,8 +71,8 @@ MoM.Checkin.init = function(options){
   MoM.Checkin.togglePatientPain(false);
   MoM.Checkin.toggleOtherRace(false);
 
-  if(options.lastPatientId){
-    MoM.Checkin.printChart(options.lastPatientId);
+  if(options.lastPatient.id){
+    MoM.Checkin.printChart(options.lastPatient.id);
 
     jQuery.facebox({ div: '#last_patient' }, 'last-patient');
 
@@ -199,12 +199,12 @@ MoM.Checkin.showPatientSurvey = function (){
   $('#bottom_survey').show();
 }
 
-MoM.Checkin.usePreviousContactInformation = function(lastPatient) {
-  $("#patient_phone").val(lastPatient.phone);
-  $("#patient_street").val(lastPatient.street);
-  $("#patient_zip").val(lastPatient.zip);
-  $("#patient_city").val(lastPatient.city);
-  $("#patient_state").val(lastPatient.state);
+MoM.Checkin.fillContactInformation = function(contact) {
+  $("#patient_phone").val(contact.phone);
+  $("#patient_street").val(contact.street);
+  $("#patient_zip").val(contact.zip);
+  $("#patient_city").val(contact.city);
+  $("#patient_state").val(contact.state);
 }
 
 MoM.Checkin.hidePreviousContactInformationButton = function() {
