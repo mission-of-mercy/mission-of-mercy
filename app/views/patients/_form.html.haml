@@ -2,14 +2,7 @@
   :plain
     $(function(){
       var options = {
-        lastPatient: {
-          id:       #{@last_patient.try(:id)     || 'null'},
-          phone:   '#{@last_patient.try(:phone)  || ''}',
-          street:  '#{@last_patient.try(:street) || ''}',
-          zip:     '#{@last_patient.try(:zip)    || ''}',
-          city:    '#{@last_patient.try(:city)   || ''}',
-          state:   '#{@last_patient.try(:state)  || ''}'
-        },
+        lastPatient: #{@last_patient.try(:contact_information).to_json || 'null'},
         dateInput: '#{@date_input}'
       };
 

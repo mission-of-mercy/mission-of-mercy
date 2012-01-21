@@ -4,7 +4,7 @@ MoM.Checkin.init = function(options){
 
   MoM.disableEnterKey();
 
-  if(options.lastPatient.id == null) {
+  if(options.lastPatient == null) {
     MoM.Checkin.hidePreviousContactInformationButton();
   }
 

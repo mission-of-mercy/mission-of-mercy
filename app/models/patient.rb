@@ -92,6 +92,11 @@ class Patient < ActiveRecord::Base
     nil
   end
 
+  def contact_information
+    { :phone => phone, :street => street, :zip => zip,
+      :city => city,   :state => state }
+  end
+
   def dob
     date_of_birth.strftime("%m/%d/%Y") if date_of_birth
   end
