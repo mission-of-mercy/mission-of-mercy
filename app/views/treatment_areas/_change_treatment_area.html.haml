@@ -6,3 +6,8 @@
   = select_tag "treatment_area_id",
     options_for_select([["Change Treatment Area", nil]] + TreatmentArea.all(:order => [:name]).map {|a| [a.name, a.id]}, :include_blank => true),
     :class => "change_treatment_area"
+
+:javascript
+  $('#change_form select.change_treatment_area').change(function(e){
+    $(this).parent().submit();
+  });

@@ -28,10 +28,6 @@ MoM.Checkout.init = function(options){
     MoM.Checkout.addProcedure(tooth, surface, code, type);
   });
 
-  $('#change_form select.change_treatment_area').change(function(e){
-    $(this).parent().submit();
-  });
-
   MoM.Checkout.adjustColumnHeight();
   MoM.Checkout.procedureWarnings();
 }

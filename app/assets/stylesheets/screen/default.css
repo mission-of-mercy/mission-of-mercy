@@ -462,32 +462,6 @@ div.check_out{
 	border-top: 1px solid gray;
 }
 
-div.slider {
-	width: 275px;
-	height: 5px;
-	margin-top:5px;
-	margin-bottom:5px;
-	background: #ddd;
-	position: relative;
-}
-div.slider div {
-	position:absolute;
-	width:8px;
-	height:15px;
-	margin-top:-5px;
-	background: #4b7399;
-	border:1px outset white;
-}
-
-div.slider_desc{
-	width: 91px;
-	margin-left: .5px;
-	margin-right: .5px;
-	display: inline-block;
-	text-align: center;
-	margin-bottom: 20px;
-}
-
 select.change_treatment_area{
   padding: 2px 5px;
   display: inline-block;
