@@ -1,1 +1,0 @@
-MoM.setupNamespace('Helpers');
