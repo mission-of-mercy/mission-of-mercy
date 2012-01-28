@@ -33,11 +33,11 @@ class PatientProcedure < ActiveRecord::Base
   def procedure_requirements
     if procedure != nil
       if procedure.requires_tooth_number && (tooth_number == nil || tooth_number.blank?)
-        errors.add_to_base("Tooth number can't be blank")
+        errors[:base] << "Tooth number can't be blank"
       end
 
       if procedure.requires_surface_code && (surface_code == nil || surface_code.blank?)
-        errors.add_to_base("Surface code can't be blank")
+        errors[:base] << "Surface code can't be blank"
       end
     end
   end
