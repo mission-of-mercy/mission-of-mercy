@@ -1,0 +1,36 @@
+@import compass/css3/border-radius
+
+#facebox
+  div.top
+    text-align: center
+    h1
+      font-size: 3em
+  div.bottom
+    text-align: right
+    +border-bottom-radius(5px)
+    background-color: #eee
+    padding: 10px
+    margin:
+      left: -10px
+      bottom: -10px
+      right: -10px
+    form, div
+      display: inline-block
+    input, a
+      margin-left: 1em
+    a:hover
+      color: #333
+
+  div.warning
+    width: 600px
+    div.top
+      +border-top-radius(5px)
+      background-color: #B60C0E
+      color: #fff
+      font-weight: bold
+      font-size: 1.25em
+      padding: 10px
+      margin:
+        left: -10px
+        top: -10px
+        right: -10px

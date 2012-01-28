@@ -117,7 +117,7 @@ module TreatmentAreasHelper
 
     button_to text, path,
               :method => :get,
-              :onclick => "return procedure_not_added(#{@procedure_added});"
+              :id     => "next-button"
   end
 
 end

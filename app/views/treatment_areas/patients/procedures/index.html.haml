@@ -2,7 +2,11 @@
 
 - content_for :header_js do
   :plain
-    $(function(){ MoM.Checkout.init({}); });
+    $(function(){
+      MoM.Checkout.init({
+        procedureAdded: #{params.has_key?(:procedure_added)}
+      });
+    });
 
 = header do
   %h1 Checkout - Procedures
@@ -13,33 +17,29 @@
 
   -# Dialog boxes
   #no_procedure
-    %h2 Warning!
-    %p You have checked out a patient without adding any procedures.
+    .top You have checked out a patient without adding any procedures.
     %p
       If this is correct you may
       %b continue
       otherwise click
       %b go back
-      and add the patients procedures.
-    %hr
-    %p
+      to add the patient's procedures.
+    .bottom
       = continue_button @treatment_area, @patient, :text => "Continue without entering any procedures"
-      = link_to_function "Go back and enter a procedure", "Modalbox.hide();"
+      %a.go-back{:href=>'#'} Go back and enter a procedure
 
   #incomplete_procedure
-    %h2 Warning!
-    %p A procedure has been selected but not added.
+    .top A procedure has been selected but not added.
     %p
       To finish without adding the procedure click
       %b continue.
     %p
       To add the procedure click
-      %b cancel
+      %b go back
       and then Add Procedure.
-    %hr
-    %p
+    .bottom
       = continue_button @treatment_area, @patient, :text => "Continue without adding"
-      = button_to_function "Cancel and add procedure", "Modalbox.hide();"
+      %a.go-back{:href=>'#'} Go back and finish adding procedure
 
 
   = render :partial => "new"

@@ -1,6 +1,8 @@
 MoM.setupNamespace("Checkout");
 
 MoM.Checkout.init = function(options){
+  this.procedureAdded = options.procedureAdded;
+
   $('a.delete-procedure').bind('ajax:beforeSend', function(e){
     $(this).hide();
     $(this).siblings('img').show();
@@ -31,6 +33,7 @@ MoM.Checkout.init = function(options){
   });
 
   MoM.Checkout.adjustColumnHeight();
+  MoM.Checkout.procedureWarnings();
 }
 
 MoM.Checkout.addProcedure = function (tooth, surface, code, type){
@@ -83,6 +86,26 @@ MoM.Checkout.addProcedure = function (tooth, surface, code, type){
   }
 
   MoM.Checkout.adjustColumnHeight();
+}
+
+MoM.Checkout.procedureWarnings = function(){
+  $('#next-button').click(function(e){
+    if($('input[type=radio]').is(':checked')){
+      jQuery.facebox({ div: '#incomplete_procedure' }, 'warning');
+
+      e.preventDefault();
+    }
+    else if(MoM.Checkout.procedureAdded == false){
+      jQuery.facebox({ div: '#no_procedure' }, 'warning');
+
+      e.preventDefault();
+    }
+  });
+
+  $('a.go-back').live('click', function(e){
+    jQuery(document).trigger('close.facebox');
+    e.preventDefault();
+  });
 }
 
 MoM.Checkout.adjustColumnHeight = function(){
