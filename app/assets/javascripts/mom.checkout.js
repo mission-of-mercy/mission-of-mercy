@@ -29,6 +29,8 @@ MoM.Checkout.init = function(options){
   $('#change_form select.change_treatment_area').change(function(e){
     $(this).parent().submit();
   });
+
+  MoM.Checkout.adjustColumnHeight();
 }
 
 MoM.Checkout.addProcedure = function (tooth, surface, code, type){
@@ -78,5 +80,16 @@ MoM.Checkout.addProcedure = function (tooth, surface, code, type){
   }else{
     $('#amcomp_dt').hide();
     $('#amcomp_dd').hide();
+  }
+
+  MoM.Checkout.adjustColumnHeight();
+}
+
+MoM.Checkout.adjustColumnHeight = function(){
+  var left  = $('div.input-left');
+  var right = $('div.input-right');
+
+  if(left.height() > right.height()){
+    right.css('min-height', left.height());
   }
 }
