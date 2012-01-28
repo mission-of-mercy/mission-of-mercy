@@ -20,7 +20,7 @@ module ApplicationHelper
   end
 
   def app_version
-    '4.0 Alpha'
+    '4.0 Beta 1'
   end
 
   def clinic_state
