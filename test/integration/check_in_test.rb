@@ -10,7 +10,7 @@ class CheckInTest < ActionDispatch::IntegrationTest
     assert_equal find_field('First name')[:disabled], "true"
     assert_equal find_button('Next')[:disabled], "true"
 
-    click_button "Agree"
+    agree_to_waver
 
     assert_equal find_field('First name')[:disabled], "false"
     assert_equal find_button('Next')[:disabled], "false"
@@ -19,7 +19,7 @@ class CheckInTest < ActionDispatch::IntegrationTest
   test "does not show the waiver confirmation when returning to form for errors" do
     sign_in_as "Check in"
 
-    click_button "Agree"
+    agree_to_waver
     click_button "Next"
     click_button "Check In"
 
@@ -39,7 +39,7 @@ class CheckInTest < ActionDispatch::IntegrationTest
   test "the button should not be visible if there is no previous patient information" do
     sign_in_as "Check in"
 
-    click_button "Agree"
+    agree_to_waver
 
     refute find(".same_as_previous_patient_button").visible?,
       "'Same as previous patient' button should be hidden"
@@ -65,7 +65,8 @@ class CheckInTest < ActionDispatch::IntegrationTest
     sign_in_as "Check in"
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
     click_link "Check In Next Patient"
-    click_button "Agree"
+
+    agree_to_waver
 
     click_button 'Same as previous patient'
 
@@ -74,5 +75,11 @@ class CheckInTest < ActionDispatch::IntegrationTest
     assert_field_value 'Zip',    zip
     assert_field_value 'City',   city
     assert_field_value 'State',  state
+  end
+
+  private
+
+  def agree_to_waver
+    click_button "waiver_agree_button"
   end
 end
