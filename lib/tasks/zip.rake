@@ -2,7 +2,6 @@ require "active_support"
 require "csv"
 require "open-uri"
 require "zip/zip"
-require "progress_bar"
 
 namespace :zip do
 
@@ -19,26 +18,31 @@ namespace :zip do
       end
     end
 
-    puts "Importing zipcodes (This may take a while)"
+    puts "Importing zipcodes ..."
 
-    zip_count = File.foreach(zip_file).inject(0) {|c, line| c + 1 }
-
-    bar = ProgressBar.new(zip_count, :bar, :percentage)
+    conn = ActiveRecord::Base.connection
+    all_values = []
 
     CSV.foreach(zip_file, :headers => true) do |row|
-      Patient::Zipcode.create(
-        :zip       => row["zip"],
-        :city      => row["city"].try(:titlecase),
-        :state     => row["state"].try(:upcase),
-        :latitude  => row["latitude"],
-        :longitude => row["longitude"],
-        :county    => row["county"].try(:titlecase)
-      )
+      # Trivial validation - discard lines which don't start with a number
+      next unless row['zip'].to_i > 0
 
-      bar.increment!
+      values = [
+        row["zip"],
+        row["city"].try(:titlecase),
+        row["state"].try(:upcase),
+        row["latitude"],
+        row["longitude"],
+        row["county"].try(:titlecase)
+      ].map{ |field| conn.quote(field) }.join(', ')
+
+      all_values << "(#{values})"
     end
-
-    bar.increment!(bar.remaining) # The total is approximate
+    
+    conn.execute %Q{
+      INSERT INTO patient_zipcodes (zip, city, state, latitude, longitude, county)
+      VALUES #{all_values.join(',')}
+    }
 
     puts "#{Patient::Zipcode.count} zipcodes sucessfully imported"
   end
@@ -63,3 +67,4 @@ namespace :zip do
     puts "Zipcode CSV downloaded"
   end
 end
+
