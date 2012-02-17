@@ -41,7 +41,7 @@ class Admin::TreatmentAreasController < ApplicationController
       flash[:notice] = 'Treatment Area was successfully updated.'
       redirect_to admin_treatment_areas_path
     else
-      render :action => "edit"
+      render :action => :edit
     end
   end
 

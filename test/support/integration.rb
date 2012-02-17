@@ -7,6 +7,34 @@ module Support
       click_button 'Log in'
     end
 
+    def press_okay_in_dialog
+      handle_js_confirm
+    end
+
+    def press_cancel_in_dialog
+      handle_js_confirm(false)
+    end
+
+    def handle_js_confirm(accept=true)
+      page.evaluate_script "window.original_confirm_function = window.confirm"
+      page.evaluate_script "window.confirm = function(msg) { return #{!!accept}; }"
+    ensure
+      page.evaluate_script "window.confirm = window.original_confirm_function"
+    end
+
+    def admin_navigation
+      find("#tabnav")
+    end
+
+    def admin_current_tab_is?(tab_name)
+      admin_navigation.has_css?('li', :text => tab_name,
+                                      :class => 'current')
+    end
+
+    def page_header_text
+      find('h1').text
+    end
+
     def sign_out
       visit logout_path
     end

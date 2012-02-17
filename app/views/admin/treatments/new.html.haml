@@ -1,0 +1,7 @@
+- title "New Treatment"
+
+= header do
+  %h1 New Treatment
+
+= form_for @treatment, :url => admin_treatments_path do |f|
+  = render :partial => "form", :locals => {:f => f}

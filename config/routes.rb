@@ -36,6 +36,7 @@ MissionOfMercy::Application.routes.draw do
   match '/status' => 'status#index', :as => :status
 
   namespace :admin do
+    resources :treatments
     resources :treatment_areas
     resources :procedures
     resources :pre_meds

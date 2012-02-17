@@ -1,0 +1,18 @@
+- title 'Treatments'
+
+= header do
+  %h1 Treatments
+
+%table
+  %tr
+    %th Name
+    %th{:colspan=>2} Controls
+
+  - @treatments.each do |treatment|
+    %tr{:class=>cycle('even', 'odd')}
+      %td= treatment.name
+      %td= link_to 'Edit', edit_admin_treatment_path(treatment)
+      %td= link_to 'Destroy', admin_treatment_path(treatment), :method=>:delete, :confirm=>"Are you sure?"
+
+%p
+  = link_to 'New', new_admin_treatment_path
