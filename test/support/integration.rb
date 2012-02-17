@@ -27,8 +27,7 @@ module Support
     end
 
     def admin_current_tab_is?(tab_name)
-      admin_navigation.has_css?('li', :text => tab_name,
-                                      :class => 'current')
+      admin_navigation.find(:xpath, "//li[@class='current']").text == tab_name
     end
 
     def page_header_text

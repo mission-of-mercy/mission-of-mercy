@@ -43,6 +43,6 @@ class Admin::TreatmentsController < ApplicationController
   private
 
   def set_current_tab
-    @current_tab = "treatment-area"
+    @current_tab = "treatments"
   end
 end
