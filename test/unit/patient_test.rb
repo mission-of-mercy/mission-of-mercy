@@ -7,7 +7,7 @@ class PatientTest < ActiveSupport::TestCase
     @radiology = Factory(:treatment_area, name: TreatmentArea::RADIOLOGY_NAME)
   end
 
-  def test_should_not_allow_more_than_2_digits_in_state_field
+  test "should not allow more than two digits in the state field" do
     patient = Factory.build(:patient, :state => "CTZ")
 
     patient.save
@@ -21,7 +21,7 @@ class PatientTest < ActiveSupport::TestCase
     assert patient.errors[:state].none?
   end
 
-  def test_should_not_allow_more_than_10_digits_in_zip_field
+  test "should not allow more than 10 digits in the zip field" do
     patient = Factory.build(:patient, :zip => "1234567890!")
 
     patient.save
@@ -37,7 +37,7 @@ class PatientTest < ActiveSupport::TestCase
            "10 or less digits are causing validation problems"
   end
 
-  def test_time_in_pain_should_set_the_pain_length_in_days_attribute
+  test "time in pain should set the pain length in the days attribute" do
     valid_formats = {
       "12d"      => 12,
       "1m"       => 30,
@@ -64,7 +64,7 @@ class PatientTest < ActiveSupport::TestCase
     end
   end
 
-  def test_invalid_time_in_pain_values_should_cause_validation_errors
+  test "invalid time in pain values should cause validation errors" do
     invalid_formats = ["12dd", "1.5.1m", "45 weeks months", "about a year",
       "15 minutes", "aaa", "123z"]
 
@@ -79,7 +79,7 @@ class PatientTest < ActiveSupport::TestCase
     end
   end
 
-  def test_time_in_pain_validations_should_only_be_run_if_time_in_pain_is_set
+  test "time in pain validations should only be run if time in pain is set" do
     patient = TestHelper.valid_patient
 
     assert patient.save
@@ -87,7 +87,7 @@ class PatientTest < ActiveSupport::TestCase
     assert patient.errors[:time_in_pain].none?
   end
 
-  def test_travel_time_is_calculated
+  test "travel time is calculated correctly" do
     patient = TestHelper.valid_patient
 
     patient.travel_time_minutes = 15
@@ -107,7 +107,7 @@ class PatientTest < ActiveSupport::TestCase
     assert patient.save
   end
 
-  def test_text_entry_for_date_of_birth_should_accept_reasonable_date_formats
+  test "text entry for date of birth should accept reasonable date formats" do
     valid_formats = {
       "05/23/2008"    => Date.civil(2008, 5, 23),
       "05-23-2008"    => Date.civil(2008, 5, 23),
@@ -125,7 +125,7 @@ class PatientTest < ActiveSupport::TestCase
     end
   end
 
-  def test_text_entry_for_date_of_birth_should_not_accept_invalid_date_formats
+  test "text entry for date of birth should not accept invalid date formats" do
     patient = TestHelper.valid_patient
 
     patient.date_of_birth = "23/1/1"
@@ -134,7 +134,7 @@ class PatientTest < ActiveSupport::TestCase
       "Saved patient with an invalid date_of_birth value"
   end
 
-  def test_should_properly_assign_treatment_area
+  test "should properly assign treatment area" do
     patient = Factory(:patient)
     area = Factory(:treatment_area)
 
@@ -144,7 +144,7 @@ class PatientTest < ActiveSupport::TestCase
     assert_equal area, patient.assignments[0].treatment_area
   end
 
-  def test_should_return_area_to_which_patient_is_assigned
+  test "should return area to which patient is assigned" do
     patient = Factory(:patient)
     area = Factory(:treatment_area)
 
@@ -153,7 +153,7 @@ class PatientTest < ActiveSupport::TestCase
     assert_equal area, patient.assigned_to[0]
   end
 
-  def test_shoud_allow_for_assigning_to_multiple_areas
+  test "should allow for assigning to multiple areas" do
     patient = Factory(:patient)
     area = Factory(:treatment_area)
 
@@ -162,7 +162,7 @@ class PatientTest < ActiveSupport::TestCase
     assert_equal [@radiology, area], patient.assigned_to
   end
 
-  def test_shoud_allow_for_assigning_to_radiology_only
+  test "should allow for assigning to radiology only" do
     patient = Factory(:patient)
 
     patient.assign(nil, true)
@@ -170,7 +170,7 @@ class PatientTest < ActiveSupport::TestCase
     assert_equal [@radiology], patient.assigned_to
   end
 
-  def test_should_allow_check_out
+  test "should allow check out" do
     area = Factory(:treatment_area)
     patient = Factory(:patient)
 
@@ -181,7 +181,7 @@ class PatientTest < ActiveSupport::TestCase
     assert patient.assigned_to.empty?
   end
 
-  def test_should_save_check_out_time
+  test "should save check out time" do
     area = Factory(:treatment_area)
     patient = Factory(:patient)
 
@@ -192,7 +192,7 @@ class PatientTest < ActiveSupport::TestCase
     assert_not_nil patient.assignments.last.checked_out_at
   end
 
-  def test_should_check_if_patient_is_assigned_to_area
+  test "should check if patient is assigned to area" do
     patient = Factory(:patient)
     area = Factory(:treatment_area)
 
@@ -202,7 +202,7 @@ class PatientTest < ActiveSupport::TestCase
     assert_equal false, patient.assigned_to?(Factory(:treatment_area))
   end
 
-  def test_shoud_remove_radiology_assignment
+  test "should remove radiology assignment" do
     patient = Factory(:patient)
 
     patient.assign(nil, true)
@@ -212,7 +212,7 @@ class PatientTest < ActiveSupport::TestCase
     assert patient.assigned_to.empty?
   end
 
-  def test_should_chenge_assigned_area
+  test "should change assigned area" do
     patient = Factory(:patient)
     area1 = Factory(:treatment_area)
     area2 = Factory(:treatment_area)
@@ -224,7 +224,7 @@ class PatientTest < ActiveSupport::TestCase
     assert_equal area2, patient.assigned_to[0]
   end
 
-  def test_reassinging_should_return_true
+  test "reassigning should return true" do
     patient = Factory(:patient)
     area1 = Factory(:treatment_area)
     area2 = Factory(:treatment_area)
@@ -236,7 +236,7 @@ class PatientTest < ActiveSupport::TestCase
     assert patient.assign(area2.id, false)
   end
 
-  def test_shouldnt_destroy_checked_out_assignments
+  test "shouldn't destroy checked out assignments" do
     patient = Factory(:patient)
     area1 = Factory(:treatment_area)
     area2 = Factory(:treatment_area)
