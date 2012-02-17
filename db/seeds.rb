@@ -23,6 +23,16 @@ else
   puts "Skip: #{User.count} users already exist"
 end
 
+if Treatment.count.zero?
+  treatments = [ { :name => "Filling" },
+                 { :name => "Cleaning" },
+                 { :name => "Extraction" } ]
+
+  treatments.each do |treatment|
+    Treatment.create(treatment)
+  end
+end
+
 if TreatmentArea.count.zero?
 
   areas = [ { :name => "Radiology",   :capacity => 50 },

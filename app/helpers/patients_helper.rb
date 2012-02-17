@@ -45,7 +45,7 @@ module PatientsHelper
   end
 
   def chief_complaint_options
-     [["Filling",  "Cleaning", "Extraction"], {:include_blank => true}]
+    [Treatment.all_names, {:include_blank => true}]
   end
 
   def last_dental_visit_options

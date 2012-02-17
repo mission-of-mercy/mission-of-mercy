@@ -77,6 +77,18 @@ class CheckInTest < ActionDispatch::IntegrationTest
     assert_field_value 'State',  state
   end
 
+  test "lists treatments dynamically from the treatment model" do
+    t1 = Factory(:treatment, :name => 'treatment 1')
+    t2 = Factory(:treatment, :name => 'treatment 2')
+    t3 = Factory(:treatment, :name => 'treatment 3')
+
+    sign_in_as "Check in"
+    select = find('#patient_chief_complaint')
+    assert select.has_content? t1.name
+    assert select.has_content? t2.name
+    assert select.has_content? t3.name
+  end
+
   private
 
   def agree_to_waver
