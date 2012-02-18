@@ -1,4 +1,7 @@
 class Procedure < ActiveRecord::Base
+  require 'time_scope'
+  extend TimeScope
+
   has_many :patient_procedures
   has_many :patients, :through => :patient_procedures
 
@@ -9,6 +12,6 @@ class Procedure < ActiveRecord::Base
   validates_presence_of   :code
 
   def full_description
-    "#{code}: #{description}"
+    "#{code}: #{description.titleize}"
   end
 end

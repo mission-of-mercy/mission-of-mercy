@@ -1,4 +1,6 @@
 class Patient < ActiveRecord::Base
+  require 'time_scope'
+  extend TimeScope
 
   REGEXP = {
     :time_in_pain   => /\A(\d*\.?\d*)\s*(.+)\Z/,
