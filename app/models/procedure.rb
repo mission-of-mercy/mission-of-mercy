@@ -1,5 +1,4 @@
 class Procedure < ActiveRecord::Base
-  require 'time_scope'
   extend TimeScope
 
   has_many :patient_procedures

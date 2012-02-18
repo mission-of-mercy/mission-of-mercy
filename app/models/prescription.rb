@@ -1,5 +1,4 @@
 class Prescription < ActiveRecord::Base
-  require 'time_scope'
   extend TimeScope
 
   has_many :patient_prescriptions
