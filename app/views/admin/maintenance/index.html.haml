@@ -9,9 +9,10 @@
   %b Backup Path:
   = @backup
 
-%p
-  %b X-Ray Paths:
-  = @xray
+- if dexis?
+  %p
+    %b X-Ray Paths:
+    = @xray
 
 %p
   %b X-Ray Solution:
