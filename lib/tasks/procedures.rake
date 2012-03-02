@@ -13,7 +13,7 @@ namespace :procedures do
     CSV.foreach(import_file, :headers => true) do |row|
       procedure = Procedure.create(
         :code                  => row["Procedure Code"],
-        :description           => row["Description"],
+        :description           => row["Description"].gsub(/\b('?[a-z])/) { $1.capitalize },
         :requires_tooth_number => row["Requires Tooth Number"],
         :requires_surface_code => row["Requires Surface Code"],
         :procedure_type        => row["Procedure Type"],
