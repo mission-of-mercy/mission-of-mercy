@@ -3,6 +3,7 @@ require 'highline'
 
 desc 'runs the tasks necessary to setup MoM'
 task :setup do
+  console = HighLine.new
 
   section "Configuration Files" do
 
@@ -21,7 +22,6 @@ task :setup do
 
     unless File.exists?(mom_file)
       template     = ERB.new(File.read(mom_file + '.erb'))
-      console      = HighLine.new
       default_path = Rails.root.join("tmp").to_s
 
       puts # Empty Line
@@ -60,10 +60,16 @@ task :setup do
   Rake::Task["environment"].invoke
 
   section "Seed Data" do
-    Rake::Task["procedures:import"].invoke
-    puts # Empty Line
     Rake::Task["db:seed"].invoke
     puts # Empty Line
+    Rake::Task["procedures:import"].invoke
+    puts # Empty Line
+
+    if console.agree(%{Would you like to create sample data (Patients, Prescriptions, etc)?})
+      Rake::Task["db:sample"].invoke
+      puts # Empty Line
+    end
+
     Rake::Task["zip:import"].invoke
   end
 
