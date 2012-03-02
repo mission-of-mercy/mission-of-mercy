@@ -51,13 +51,15 @@ class PatientsController < ApplicationController
     end
   end
 
-  def export_to_dexis_file
+  def radiology
     @patient = Patient.find(params[:patient_id])
 
-    app_config["dexis_paths"].each do |root_path|
-      path = [root_path, "passtodex", current_user.x_ray_station_id, ".dat"].join()
+    if dexis?
+      app_config["dexis_paths"].each do |root_path|
+        path = [root_path, "passtodex", current_user.x_ray_station_id, ".dat"].join
 
-      @patient.export_to_dexis(path)
+        @patient.export_to_dexis(path)
+      end
     end
 
     respond_to do |format|

@@ -1,4 +1,7 @@
-- title "Checkout - Procedures"
+- if current_user.user_type == UserType::XRAY && cdr?
+  - title "#{@patient.full_name} - #{@patient.id}"
+- else
+  - title "Checkout - Procedures"
 
 - content_for :header_js do
   :plain
@@ -65,9 +68,9 @@
           %b Finish
 
   %div.input-bottom.check_out
-    - if current_user.user_type == UserType::XRAY
+    - if current_user.user_type == UserType::XRAY && dexis?
       %span{:style => "float:left;"}
-        = link_to_export_to_dexis @patient
+        = radiology_link @patient, true
         = image_tag "loading.gif", :style => "display:none;"
 
     = button_to_next_checkout(@treatment_area, @patient)

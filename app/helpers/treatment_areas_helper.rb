@@ -91,11 +91,19 @@ module TreatmentAreasHelper
     button_to text, path, :method => :get
   end
 
-  def link_to_export_to_dexis(patient)
-    link_to "Export to Dexis",
-            export_to_dexis_file_path(:patient_id => patient.id),
-            :remote => true,
-            :id     => "export_to_dexis"
+  def radiology_link(patient, remote=false)
+    text = "Select Patient"
+    
+    if dexis?
+      text = "Export to Dexis"
+    elsif cdr?
+      text = "Export to CDR"
+    end
+    
+    link_to text,
+            patient_radiology_path(:patient_id => patient.id),
+            :remote => remote,
+            :id     => "export_to_xray"
   end
 
   def checkout_path(area, patient)

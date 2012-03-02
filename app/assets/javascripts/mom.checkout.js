@@ -8,7 +8,7 @@ MoM.Checkout.init = function(options){
     $(this).siblings('img').show();
   });
 
-  $('#export_to_dexis').bind('ajax:beforeSend', function(e){
+  $('#export_to_xray').bind('ajax:beforeSend', function(e){
     $(this).siblings('img').show();
   }).bind('ajax:complete', function(e){
     $(this).siblings('img').hide();

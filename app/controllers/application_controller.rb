@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper_method :app_config, :stats
+  helper_method :app_config, :stats, :dexis?, :cdr?
 
   protect_from_forgery
 
@@ -43,5 +43,13 @@ class ApplicationController < ActionController::Base
     yield
 
     session[:stats] = @stats.data
+  end
+
+  def dexis?
+    app_config['xray'] == "dexis"
+  end
+
+  def cdr?
+    app_config['xray'] == "cdr"
   end
 end
