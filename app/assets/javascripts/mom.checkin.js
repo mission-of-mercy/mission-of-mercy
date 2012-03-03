@@ -85,8 +85,8 @@ MoM.Checkin.init = function(options){
       $('#waiver_agree_button').focus();
     });
   }
-
-  $('#waiver_agree_button').focus();
+  else
+    $('#waiver_agree_button').focus();
 }
 
 MoM.Checkin.printChart = function(patientId){
