@@ -127,7 +127,7 @@
         %span.label
           Clinic(s) attended
           %br
-        - f.fields_for :previous_mom_clinics, @patient.previous_mom_clinics.sort_by(&:clinic_year) do |p|
+        = f.fields_for :previous_mom_clinics, @patient.previous_mom_clinics.sort_by(&:clinic_year) do |p|
           %span.formw
             = p.hidden_field :location
             = p.hidden_field :clinic_year

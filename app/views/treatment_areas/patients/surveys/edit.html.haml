@@ -23,7 +23,7 @@
     = image_tag "help/pre-meds.png", :class => "help-example"
 
   %p
-    - f.fields_for :patient_pre_meds do |p|
+    = f.fields_for :patient_pre_meds do |p|
       = p.hidden_field :pre_med_id
       = p.check_box :prescribed
       = p.label :prescribed, p.object.pre_med.description
