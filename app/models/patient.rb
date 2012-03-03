@@ -220,7 +220,7 @@ class Patient < ActiveRecord::Base
     if date_of_birth.is_a?(String)
       @date_string = date_of_birth
       self[:date_of_birth] = Date.strptime(date_of_birth.tr("-.", "/"), "%m/%d/%Y") rescue nil
-    else
+    elsif @date_string.blank?
       super
     end
   end
