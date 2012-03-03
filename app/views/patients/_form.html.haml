@@ -4,7 +4,7 @@
       var options = {
         lastPatient: {
           id: #{@last_patient.try(:id) || 'null'},
-          contactInformation: #{@last_patient.try(:contact_information).to_json || 'null'},
+          contactInformation: #{@last_patient.try(:contact_information).to_json || 'null'}
         },
         requireWaiverConfirmation: #{@patient.errors.empty?},
         dateInput: '#{@date_input}'
