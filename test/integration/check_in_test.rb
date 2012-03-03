@@ -3,6 +3,8 @@ require 'test_helper'
 class CheckInTest < ActionDispatch::IntegrationTest
   def setup
     Capybara.current_driver = :webkit
+
+    Factory(:treatment, :name => 'Cleaning')
   end
 
   test "must agree that the waiver has been signed before filling out form" do
@@ -89,9 +91,35 @@ class CheckInTest < ActionDispatch::IntegrationTest
     assert select.has_content? t3.name
   end
 
+  test "date of birth can be entered via free form text box" do
+    sign_in_as "Check in"
+
+    agree_to_waver
+
+    fill_out_form
+
+    click_button 'Next'
+    click_button 'Check In'
+
+    assert_current_path new_patient_path
+  end
+
   private
 
   def agree_to_waver
     click_button "waiver_agree_button"
+  end
+
+  def fill_out_form
+    fill_in 'First name',                :with => "Jordan"
+    fill_in 'Last name',                 :with => "Byron"
+    fill_in 'Date of birth',             :with => "12/26/1985"
+    select  "M",                         :from => 'Sex'
+    select  "Caucasian/White",           :from => 'Race'
+    fill_in 'City',                      :with => "Norwalk"
+    fill_in 'State',                     :with => "CT"
+    select  'Cleaning',                  :from => "Reason for today's visit"
+    select  "First Time",                :from => 'Last dental visit'
+    fill_in 'patient_travel_time_hours', :with => "1"
   end
 end
