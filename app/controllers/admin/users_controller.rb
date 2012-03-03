@@ -3,7 +3,7 @@ class Admin::UsersController < ApplicationController
   before_filter :set_current_tab
 
   def index
-    @users = User.find(:all)
+    @users = User.order(:login)
   end
 
   def new
