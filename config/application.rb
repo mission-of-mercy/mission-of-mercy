@@ -45,6 +45,8 @@ module MissionOfMercy
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    config.assets.precompile += ['print/default.css', 'print/report.css']
+
     Date::DATE_FORMATS.merge!(:default => '%m/%d/%Y')
 
     # Default uses divs which cause rendering issues
