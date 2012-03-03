@@ -12,6 +12,7 @@ class Admin::UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
+
     if @user.save
       flash[:notice] = "User Created"
       redirect_to admin_users_path
@@ -27,11 +28,9 @@ class Admin::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
 
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-          flash[:notice] = 'User was successfully updated.'
-          format.html { redirect_to(admin_users_path) }
-      end
+    if @user.update_attributes(params[:user])
+      flash[:notice] = 'User was successfully updated.'
+      redirect_to admin_users_path
     end
   end
 
