@@ -14,7 +14,7 @@
     %h4 Prescriptions
 
     %p
-      - f.fields_for :patient_prescriptions, @prescriptions do |s|
+      = f.fields_for :patient_prescriptions, @prescriptions do |s|
         = s.hidden_field :prescription_id
         = s.check_box :prescribed
         = s.label :prescribed, s.object.prescription.full_description

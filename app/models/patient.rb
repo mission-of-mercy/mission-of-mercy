@@ -227,12 +227,12 @@ class Patient < ActiveRecord::Base
 
   def build_previous_mom_clinics
     PatientPreviousMomClinic::CLINICS.each do |year, location|
-      existing = previous_mom_clinics.detect do |c|
+      existing = self.previous_mom_clinics.detect do |c|
         c.clinic_year == year && c.location == location
       end
 
       unless existing
-        previous_mom_clinics.build(clinic_year: year, location: location)
+        self.previous_mom_clinics.build(clinic_year: year, location: location)
       end
     end
   end

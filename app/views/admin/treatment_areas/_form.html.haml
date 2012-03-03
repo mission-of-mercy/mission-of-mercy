@@ -22,7 +22,7 @@
 
   %h4 Procedures
 
-  - f.fields_for :procedure_treatment_area_mappings do |p|
+  = f.fields_for :procedure_treatment_area_mappings do |p|
     = p.hidden_field :procedure_id
     = p.check_box :assigned
     = p.label :assigned, p.object.procedure.full_description
