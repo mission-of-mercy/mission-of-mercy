@@ -60,6 +60,9 @@
       %br
       %span.information= @patient.pain? ? 'Yes' : 'No'
     %td
-      %span.label Days in pain:
+      %span.label In pain for:
       %br
-      %span.information= @patient.pain_length_in_days
+      %span.information
+        - if @patient.pain? && @patient.pain_length_in_days
+          = distance_of_time_in_words @patient.pain_length_in_days.days.ago,
+            Date.today

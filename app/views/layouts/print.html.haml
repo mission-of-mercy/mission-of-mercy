@@ -6,11 +6,12 @@
     = javascript_include_tag 'application'
     = stylesheet_link_tag 'print/default', :media => :all
 
-    :javascript
-      $(function(){
-        window.print();
-        window.close(); // We don't mess around. In and out.
-      });
+    - if Rails.env.production?
+      :javascript
+        $(function(){
+          window.print();
+          window.close(); // We don't mess around. In and out.
+        });
 
   %body
     = yield
