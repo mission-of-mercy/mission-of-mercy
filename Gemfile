@@ -17,12 +17,10 @@ gem 'dynamic_form'
 
 gem 'jquery-rails'
 
-group :development do
-  gem 'rainbow'
-  gem 'highline',     :require => false
-  gem 'faker',        :require => false
-  gem 'rubyzip',      :require => false
-end
+gem 'rainbow'
+gem 'highline',     :require => false
+gem 'faker',        :require => false
+gem 'rubyzip',      :require => false
 
 group :test do
   gem 'minitest',  '~> 2.3.1'
