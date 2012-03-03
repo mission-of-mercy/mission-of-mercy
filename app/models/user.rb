@@ -3,8 +3,6 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :login
 
-  attr_accessible :password, :password_confirmation, :login, :user_type, :station_id
-
   def name
     if user_type == UserType::XRAY
       if login[/\Axray/]
