@@ -1,7 +1,8 @@
-- if flash.any?
+- if flash.select {|k, v| !v.blank? }.any?
   #flash
     - flash.each do |flashtype, message|
-      %div{:class => "flash #{flashtype}", :id => "flash-#{flashtype}"}
-        = message
+      - unless message.blank?
+        %div{:class => "flash #{flashtype}", :id => "flash-#{flashtype}"}
+          = message
     :javascript
       setTimeout("$('#flash').slideUp()", 4000);
