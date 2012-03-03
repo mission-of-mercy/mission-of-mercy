@@ -12,9 +12,9 @@ module Seeds
               { :login => "pharmacy",        :user_type => UserType::PHARMACY } ]
 
     (1..total_xray_stations).each do |id|
-      users << { :login      => "xray_#{id}",
-                 :user_type  => UserType::XRAY,
-                 :station_id => id }
+      users << { :login            => "xray_#{id}",
+                 :user_type        => UserType::XRAY,
+                 :x_ray_station_id => id }
     end
 
     users.each do |user|
