@@ -15,5 +15,14 @@ FactoryGirl.define do
 
     # Faker::PhoneNumber includes invalid formats like "###-###-#### x###"
     phone             { Faker::PhoneNumber.phone_number.split(" ").first }
+
+    survey
+  end
+
+  factory :survey do
+    told_needed_more_dental_treatment     true
+    heard_about_clinic                    "Social Media"
+    has_place_to_be_seen_for_dental_care  false
+    no_insurance                          true
   end
 end
