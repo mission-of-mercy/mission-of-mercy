@@ -14,7 +14,7 @@ class CheckOutTest < ActionDispatch::IntegrationTest
     sign_in_as "Check out"
   end
 
-  test "survey questions are asked when present" do
+  test "survey questions are asked when first checked out" do
     check_out @patient
 
     path = edit_treatment_area_patient_survey_path(@treatment_area, @patient)
@@ -22,7 +22,7 @@ class CheckOutTest < ActionDispatch::IntegrationTest
     assert_current_path path
   end
 
-  test "survey questions not asked after a patient has been fully checked out" do
+  test "survey questions are not asked after a patient has been  checked out" do
     @patient.update_attribute(:survey_id, nil)
 
     check_out @patient
@@ -32,7 +32,7 @@ class CheckOutTest < ActionDispatch::IntegrationTest
     assert_current_path path
   end
 
-  test "procedures can been added without warnings" do
+  test "procedures can be added without warnings" do
     check_out @patient
 
     click_button "Next"
@@ -59,7 +59,7 @@ class CheckOutTest < ActionDispatch::IntegrationTest
     assert_current_path path
   end
 
-  test "warnings are shown if no procedure was been added" do
+  test "warnings are shown if no procedure has been added" do
     check_out @patient
 
     click_button "Next"
@@ -69,7 +69,7 @@ class CheckOutTest < ActionDispatch::IntegrationTest
     assert_content "You have checked out a patient without adding any procedures."
   end
 
-  test "warnings are show if a procedure is entered but not added" do
+  test "warnings are shown if a procedure is entered but not added" do
     check_out @patient
 
     click_button "Next"
