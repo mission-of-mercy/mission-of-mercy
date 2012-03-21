@@ -7,15 +7,11 @@
   %tr
     %th Description
     %th Cost
-    %th Count
-    %th Prescription
 
   - @pre_meds.each do |pre_med|
     %tr
       %td= pre_med.description
       %td= pre_med.cost
-      %td= pre_med.count
-      %td= pre_med.prescription_id
       %td= link_to 'Edit', edit_admin_pre_med_path(pre_med)
       %td= link_to 'Destroy', admin_pre_med_path(pre_med), :confirm => 'Are you sure?', :method => :delete
 
