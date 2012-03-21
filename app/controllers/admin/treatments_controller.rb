@@ -3,7 +3,7 @@ class Admin::TreatmentsController < ApplicationController
   before_filter :set_current_tab
 
   def index
-    @treatments = Treatment.all
+    @treatments = Treatment.order("name")
   end
 
   def new
