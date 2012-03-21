@@ -4,7 +4,7 @@ class Admin::PreMedsController < ApplicationController
   before_filter :set_current_tab
 
   def index
-    @pre_meds = PreMed.all
+    @pre_meds = PreMed.order("description")
   end
 
   def new
