@@ -4,7 +4,7 @@ class Admin::PrescriptionsController < ApplicationController
   before_filter :set_current_tab
 
   def index
-    @prescriptions = Prescription.find(:all, :order => "position")
+    @prescriptions = Prescription.order("position")
   end
 
   def new

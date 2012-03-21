@@ -5,7 +5,7 @@ class Admin::TreatmentAreasController < ApplicationController
   before_filter :set_current_tab
 
   def index
-    @treatment_areas = TreatmentArea.all
+    @treatment_areas = TreatmentArea.order("name")
   end
 
   def show
@@ -72,6 +72,10 @@ class Admin::TreatmentAreasController < ApplicationController
         @treatment_area.procedure_treatment_area_mappings.build(:procedure_id => pro.id)
       end
     end
+
+    @procedures = @treatment_area.procedure_treatment_area_mappings.sort_by {|p|
+      p.procedure.code
+    }
   end
 
   def set_current_tab
