@@ -4,9 +4,9 @@ class SupportRequestsController < ApplicationController
   def active_requests
     respond_to do |format|
       format.json do
-        @requests = SupportRequest.find_all_by_resolved(false)
+        @requests = SupportRequest.where(:resolved => false)
 
-        requested = @requests.find {|r| r.ip_address == request.remote_ip }
+        requested = @requests.where(:ip_address => request.remote_ip).first
 
         @requests.map! {|request| request.station_description }
 
