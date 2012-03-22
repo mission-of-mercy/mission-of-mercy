@@ -70,7 +70,7 @@ MoM.Support.processRequests = function(data){
   }
   else
   {
-    if($.fn.activebar && ($('#help_link') && $('#help_link').is(':visible')) || $('#help_link') == null)
+    if($('#activebar-container').is(":visible"))
       $.fn.activebar.hide();
   }
 }
