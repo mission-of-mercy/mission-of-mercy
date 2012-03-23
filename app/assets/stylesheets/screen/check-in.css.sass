@@ -46,6 +46,24 @@ form.new_patient, form.edit_patient
 .last-patient a
   text-decoration: none
 
+ul#check-in-options
+  font-size: 1.25em
+  text-align: center
+  list-style: none outside none
+  li
+    display: inline
+    list-style-image: none
+    list-style-type: none
+    margin-right: 1em
+    white-space: nowrap
+
+#previous-patient, #reprint
+  margin: 0 20px
+  text-align: center
+  input[type=text]
+    margin: 0 0.5em
+    width: 200px
+
 // Hidden / Optional Fields
 
 #pain_length_div,
@@ -53,6 +71,8 @@ form.new_patient, form.edit_patient
 #previous_mom_location_div,
 #pain_length_div,
 #race_other_div,
-#last_patient
+#last_patient,
+#reprint,
+#previous-patient
   display: none
 

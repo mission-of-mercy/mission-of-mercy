@@ -31,6 +31,7 @@ MissionOfMercy::Application.routes.draw do
 
   resources :patient_procedures
   resources :assignment_desk
+
   match '/patients/:id/print' => 'patients#print', :as => :print_chart
   match '/patients/:patient_id/radiology' => 'patients#radiology', :as => :patient_radiology
   match '/status' => 'status#index', :as => :status

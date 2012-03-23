@@ -19,8 +19,8 @@ MoM.init = function(){
   MoM.Support.init(true);
 }
 
-MoM.disableEnterKey = function(){
-  $(document).keypress(function(e) {
+MoM.disableEnterKey = function(form){
+  $(form).keypress(function(e) {
     if(e.keyCode == 13) e.preventDefault();
   });
 }

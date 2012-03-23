@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120321013549) do
+ActiveRecord::Schema.define(:version => 20120323181330) do
 
   create_table "patient_assignments", :force => true do |t|
     t.integer  "patient_id"
@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(:version => 20120321013549) do
     t.datetime "updated_at"
     t.integer  "survey_id"
     t.string   "phone"
+    t.integer  "previous_chart_number"
   end
 
   create_table "pre_meds", :force => true do |t|
@@ -173,7 +174,6 @@ ActiveRecord::Schema.define(:version => 20120321013549) do
     t.boolean  "has_place_to_be_seen_for_dental_care"
     t.boolean  "no_insurance"
     t.boolean  "insurance_from_job"
-    t.boolean  "medicaid_or_chp_plus"
     t.boolean  "self_purchase_insurance"
     t.string   "other_insurance"
     t.boolean  "tobacco_use"

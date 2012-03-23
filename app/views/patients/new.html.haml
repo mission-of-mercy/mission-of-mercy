@@ -1,15 +1,31 @@
 - title 'Patient Check In'
 
+- content_for :top_layout do
+  %ul#tabnav
+    %li.current= link_to "New patient", '#', :'data-tab' => "new"
+    %li= link_to "Previous patient", '#', :'data-tab' => "previous"
+    %li= link_to "Print chart", '#', :'data-tab' => "print"
+
 = header do
   %h1 Patient Check In
 
-.waiver_confirmation.unconfirmed
-  %p.waiver_description
-    Patient or legal guardian (if under 18) has read, understood, and
-    signed the waiver.
-    %button#waiver_agree_button Yes &rarr;
+%form#previous-patient
+  = label_tag :chart_number, "Chart number:"
+  = text_field_tag :chart_number
+  = submit_tag "Next"
+
+%form#reprint
+  = label_tag :chart_number, "Chart number:"
+  = text_field_tag :chart_number
+  = submit_tag "Print"
 
 = form_for @patient, :html => { :autocomplete => "off" } do |f|
+  .waiver_confirmation.unconfirmed
+    %p.waiver_description
+      Patient or legal guardian (if under 18) has read, understood, and
+      signed the waiver.
+      %button#waiver_agree_button Yes &rarr;
+
   = render :partial => 'form', :locals => {:f => f}
 
   #survey{:style=>"display:none; clear:both;"}
@@ -20,7 +36,8 @@
       = render :partial => 'surveys/check_in', :locals => {:f => f}
 
   %div.input-bottom.check_out
-    %span.left= link_to_reset new_patient_path
+    %span.left
+      = link_to_reset new_patient_path
     #bottom_demographics
       %button Next
     #bottom_survey{:style=>"display:none;"}

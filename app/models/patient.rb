@@ -256,6 +256,8 @@ class Patient < ActiveRecord::Base
   private
 
   def update_survey
+    self.survey = nil if !self.previous_chart_number.blank?
+
     if self.survey
       self.survey.city                = city
       self.survey.state               = state

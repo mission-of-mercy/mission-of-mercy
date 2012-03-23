@@ -28,9 +28,26 @@ class PatientsController < ApplicationController
   end
 
   def print
-    @patient = Patient.find(params[:id])
+    @patient = Patient.find_by_id(params[:id])
 
-    render :action => "print", :layout => "print"
+    if @patient
+      render :action => "print", :layout => "print"
+    else
+      render :text => "Patient #{params[:id]} not found"
+    end
+  end
+
+  def show
+    @patient = Patient.find_by_id(params[:id])
+
+    respond_to do |format|
+      format.json do
+        attributes = @patient.try(:attributes)
+        attributes[:date_of_birth] = @patient.dob if @patient
+
+        render :json => { :patient => attributes }.to_json
+      end
+    end
   end
 
   def create
