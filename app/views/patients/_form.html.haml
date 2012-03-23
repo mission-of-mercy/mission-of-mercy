@@ -38,7 +38,7 @@
           %span#date-select
             = f.date_select :date_of_birth, dob_select_options
           %span#date-text
-            = f.text_field :date_of_birth
+            = f.text_field :date_of_birth, :value => @patient.dob
         #date-format.formexample
           Format: mm/dd/yyyy
       %div.row

@@ -3,8 +3,6 @@ require 'test_helper'
 class CheckInTest < ActionDispatch::IntegrationTest
   def setup
     Capybara.current_driver = :webkit
-
-    Factory(:treatment, :name => 'Cleaning')
   end
 
   test "must agree that the waiver has been signed before filling out form" do

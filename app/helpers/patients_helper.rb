@@ -32,16 +32,7 @@ module PatientsHelper
   end
 
   def race_select_options
-    races = [
-              "African American/Black",
-              "American Indian/Alaska Native",
-              "Asian/Pacific Islander",
-              "Caucasian/White",
-              "Hispanic",
-              "Indian",
-              "Other"
-            ]
-    [ races, { :include_blank => true} ]
+    [ Patient::RACES, { :include_blank => true} ]
   end
 
   def chief_complaint_options

@@ -1,5 +1,15 @@
 class Patient < ActiveRecord::Base
 
+  RACES = [
+    "African American/Black",
+    "American Indian/Alaska Native",
+    "Asian/Pacific Islander",
+    "Caucasian/White",
+    "Hispanic",
+    "Indian",
+    "Other"
+  ]
+
   REGEXP = {
     :time_in_pain   => /\A(\d*\.?\d*)\s*(.+)\Z/,
     :number_only    => /\A(\d*\.?\d*)\Z/,

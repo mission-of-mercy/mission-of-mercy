@@ -70,6 +70,7 @@ class ActionDispatch::IntegrationTest
 
   setup do
     Seeds.create_users(:password => "temp123", :xray_stations => 5)
+    Factory(:treatment, :name => 'Cleaning')
   end
 
   teardown do
