@@ -229,7 +229,13 @@ class Patient < ActiveRecord::Base
   def date_of_birth=(date_of_birth)
     if date_of_birth.is_a?(String)
       @date_string = date_of_birth
-      self[:date_of_birth] = Date.strptime(date_of_birth.tr("-.", "/"), "%m/%d/%Y") rescue nil
+
+      month, day, year = @date_string.split(/[-.\/]/).map(&:to_i)
+
+      year = nil if year.to_s.length != 4
+
+      self[:date_of_birth] = Date.civil(year, month, day) rescue nil
+
     elsif @date_string.blank?
       super
     end

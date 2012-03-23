@@ -119,7 +119,7 @@ class PatientTest < ActiveSupport::TestCase
     valid_formats.each do |format, result|
       patient.date_of_birth = format
 
-      assert patient.save, "Couldn't save Patient with date_of_birth value = #{ format }"
+      assert patient.save, "Couldn't save Patient with date_of_birth value #{ format }"
 
       assert_equal result, patient.date_of_birth
     end
@@ -128,10 +128,13 @@ class PatientTest < ActiveSupport::TestCase
   test "text entry for date of birth should not accept invalid date formats" do
     patient = TestHelper.valid_patient
 
-    patient.date_of_birth = "23/1/1"
+    invalid_formats = %w{23/1/1 1/1/98}
 
-    assert !patient.save,
-      "Saved patient with an invalid date_of_birth value"
+    invalid_formats.each do |format|
+      patient.date_of_birth = format
+
+      refute patient.save, "Saving an invalid date format: #{format}"
+    end
   end
 
   test "should properly assign treatment area" do
