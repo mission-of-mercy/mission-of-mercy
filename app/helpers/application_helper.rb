@@ -20,7 +20,7 @@ module ApplicationHelper
   end
 
   def app_version
-    '4.0 RC 2'
+    '4.0'
   end
 
   def clinic_state
