@@ -33,7 +33,7 @@ class PatientsController < ApplicationController
     if @patient
       render :action => "print", :layout => "print"
     else
-      render :text => "Patient #{params[:id]} not found"
+      raise ActionController::RoutingError.new('Not Found')
     end
   end
 
