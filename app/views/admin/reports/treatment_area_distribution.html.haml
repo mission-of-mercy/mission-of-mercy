@@ -3,7 +3,7 @@
 = header do
   %h1 Treatment Area Distribution
   #controls
-    = form_tag admin_treatment_area_distribution_report_path do
+    = form_tag admin_treatment_area_distribution_report_path, :method => "GET" do
       = submit_tag "Refresh"
 
 
