@@ -5,6 +5,12 @@ module ReportsHelper
     Reports::ClinicSummary::TIME_SPANS
   end
 
+  def readable_days(number_of_days)
+    number_of_days ||= 0
+
+    distance_of_time_in_words_to_now number_of_days.to_i.days.ago
+  end
+
   def days(report)
     existing_dates = Patient.all(
       :select => "patients.created_at::Date as created_at_date",

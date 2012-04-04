@@ -268,26 +268,30 @@
   %tbody
     - @report.ratings.each do |rate|
       %tr
-        %td= rate["rating_of_services"]
+        %td= rate["rating_of_services"] || "No rate"
         %td= rate["patient_count"]
         %td= rate["percent"]
+  %tfoot
+    %tr
+      %td{:colspan => 2} Average rating
+      %td
+        = sprintf('%.2f', @report.average_rating || 0)
 %p
 
 %table
   %thead
     %tr
-      %th{:colspan => 2}
-        Days in pain
+      %th{:colspan => 2} Patients in pain
   %tbody
     %tr
       %th Average
-      %td= sprintf('%.2f', @report.time_in_pain["avg_length"] || 0)
+      %td= readable_days @report.time_in_pain["avg_length"]
     %tr
-      %th Minimum
-      %td= @report.time_in_pain["min_length"]
+      %th Shortest
+      %td= readable_days @report.time_in_pain["min_length"]
     %tr
-      %th Maximum
-      %td= @report.time_in_pain["max_length"]
+      %th Longest
+      %td= readable_days @report.time_in_pain["max_length"]
     %tr
       %th Patients
       %td= @report.time_in_pain["patient_count"]

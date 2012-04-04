@@ -4,7 +4,8 @@ class Reports::PostClinic
               :tobacco_use, :ratings, :areas, :time_in_pain, :counties,
               :distinct_previous_moms, :heard_about_clinic, :patient_count,
               :told_needed_more_dental_treatment, :tobacco_use_ages,
-              :has_place_to_be_seen_for_dental_care, :last_dental_visit
+              :has_place_to_be_seen_for_dental_care, :last_dental_visit,
+              :average_rating
 
   def initialize
     @patient_count = Patient.count
@@ -269,6 +270,9 @@ class Reports::PostClinic
 
     @ratings = Patient.connection.select_all(sql)
 
+    @average_rating = Survey.where("rating_of_services is not null").
+      average(:rating_of_services)
+
     calculate_percentage @ratings
   end
 
@@ -278,7 +282,7 @@ class Reports::PostClinic
                    avg(pain_length_in_days) AS avg_length,
                    count(*) AS patient_count
             FROM surveys
-            WHERE pain = 't'}
+            WHERE pain = 't' and pain_length_in_days > 0}
 
     @time_in_pain = Patient.connection.select_all(sql).first
   end
