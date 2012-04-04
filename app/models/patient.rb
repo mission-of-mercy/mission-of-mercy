@@ -275,6 +275,7 @@ class Patient < ActiveRecord::Base
 
     self.first_name.capitalize!
     self.last_name.capitalize!
+    self.state.upcase!
   end
 
   def check_in_flow
@@ -309,8 +310,14 @@ class Patient < ActiveRecord::Base
         errors.add(:date_of_birth, "can't be blank")
       else
         errors.add(:date_of_birth, "must be in a valid format (mm/dd/yyyy, mm-dd-yyyy)")
+        self[:date_of_birth] = @date_string
       end
       return false
+    else
+      if age < 0 || age > 122 # Oldest person alive
+        errors.add(:date_of_birth, "is invalid. Patient can't be #{age} years old")
+        return false
+      end
     end
 
     return true
