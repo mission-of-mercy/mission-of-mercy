@@ -15,7 +15,7 @@ class CheckOutTest < ActionDispatch::IntegrationTest
   end
 
   test "survey questions are asked when first checked out" do
-    check_out @patient
+    check_out @patient, false # Don't skip the survey
 
     path = edit_treatment_area_patient_survey_path(@treatment_area, @patient)
 
@@ -25,7 +25,7 @@ class CheckOutTest < ActionDispatch::IntegrationTest
   test "survey questions are not asked after a patient has been  checked out" do
     @patient.update_attribute(:survey_id, nil)
 
-    check_out @patient
+    check_out @patient, false # Don't skip the survey
 
     path = treatment_area_patient_procedures_path(@treatment_area, @patient)
 
@@ -34,8 +34,6 @@ class CheckOutTest < ActionDispatch::IntegrationTest
 
   test "procedures can be added without warnings" do
     check_out @patient
-
-    click_button "Next"
 
     procedure = @treatment_area.procedures.sample
 
@@ -64,15 +62,11 @@ class CheckOutTest < ActionDispatch::IntegrationTest
 
     click_button "Next"
 
-    click_button "Next"
-
     assert_content "You have checked out a patient without adding any procedures."
   end
 
   test "warnings are shown if a procedure is entered but not added" do
     check_out @patient
-
-    click_button "Next"
 
     procedure = @treatment_area.procedures.sample
 
@@ -92,8 +86,6 @@ class CheckOutTest < ActionDispatch::IntegrationTest
 
     check_out @patient
 
-    click_button "Next"
-
     assert_content patient_procedure.full_description
 
     find("div.procedure").find("a").click
@@ -105,13 +97,18 @@ class CheckOutTest < ActionDispatch::IntegrationTest
 
   private
 
-  def check_out(patient)
-    visit treatment_area_patients_path(@treatment_area)
+  def check_out(patient, skip_survey=true)
 
-    fill_in 'Chart number:', :with => patient.id
+    if skip_survey
+      visit treatment_area_patient_procedures_path(@treatment_area, patient)
+    else
+      visit treatment_area_patients_path(@treatment_area)
 
-    click_button "Search"
+      fill_in 'Chart number:', :with => patient.id
 
-    click_link "#{@treatment_area.name} Checkout"
+      click_button "Search"
+
+      click_link "#{@treatment_area.name} Checkout"
+    end
   end
 end
