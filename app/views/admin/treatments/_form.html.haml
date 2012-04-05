@@ -8,6 +8,9 @@
     = f.label :name
     %br
     = f.text_field :name
+  %p
+    = f.check_box :provided
+    = f.label :provided, 'Currently providing this treatment?'
 
 %div.input-bottom.check_out
   %p
