@@ -35,8 +35,19 @@ module PatientsHelper
     [ Patient::RACES, { :include_blank => true} ]
   end
 
-  def chief_complaint_options
-    [Treatment.all_names, {:include_blank => true}]
+  def chief_complaint_options(f)
+    # This was the easiest way to do this with minimal changes
+    # to existing code (though a bit hacky)
+    #
+    # Just take the form builder instance as a parameter. if it's
+    # a post (new patient), it only shows the currently provided
+    # Treatment names. In all other cases, it shows all the
+    # Treatement names.
+    treatments = case f.options[:html][:method]
+                 when :post then Treatment.provided_names
+                 else Treatment.all_names
+                 end
+    [treatments, {:include_blank => true}]
   end
 
   def last_dental_visit_options
