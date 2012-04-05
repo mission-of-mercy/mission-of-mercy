@@ -44,8 +44,13 @@ module PatientsHelper
     [ races, { :include_blank => true} ]
   end
 
-  def chief_complaint_options
-    [Treatment.all_names, {:include_blank => true}]
+  def chief_complaint_options(f)
+    treatments = if @patient.new_record?
+      Treatment.provided_names
+    else
+      Treatment.all_names
+    end
+    [treatments, {:include_blank => true}]
   end
 
   def last_dental_visit_options
