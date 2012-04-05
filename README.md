@@ -43,6 +43,7 @@ It's easy to work on a software project and never see the impact it makes on peo
 
 **Videos**
 
+- [2012 Connecticut Mission of Mercy clinic](http://youtu.be/i3QQ0G-xcqc)
 - [2011 Connecticut Mission of Mercy clinic](http://youtu.be/aGAEtleugnk)
 - [2011 Georgia Mission of Mercy clinic](http://youtu.be/u4jvLU3RGfU)
 
