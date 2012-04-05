@@ -22,40 +22,40 @@ module TestHelper
   end
 
   def valid_patient
-    Factory.build(:patient)
+    FactoryGirl.build(:patient)
   end
 
   def create_test_patients(date=Date.today)
     (6..17).map { |i| date + i.hours }.each do |datetime|
-      Factory.create(:patient, :created_at => datetime, :updated_at => datetime)
+      FactoryGirl.create(:patient, :created_at => datetime, :updated_at => datetime)
     end
   end
 
   def create_test_prescriptions
-    Factory(:prescription,
-            :name     => "Amoxicillin",
-            :quantity => 21,
-            :dosage   => "500mg",
-            :cost     => 12.99,
-            :strength => "1 YID x 7days")
+    FactoryGirl.create(:prescription,
+                       :name     => "Amoxicillin",
+                       :quantity => 21,
+                       :dosage   => "500mg",
+                       :cost     => 12.99,
+                       :strength => "1 YID x 7days")
   end
 
   def create_test_procedures
-    Factory.create(:procedure,
-            :description => "Comp. Oral Exam",
-            :code        => 150,
-            :cost        => 90)
-    Factory.create(:procedure,
-            :description => "Panoramic film",
-            :code        => 330,
-            :cost        => 125)
+    FactoryGirl.create(:procedure,
+                       :description => "Comp. Oral Exam",
+                       :code        => 150,
+                       :cost        => 90)
+    FactoryGirl.create(:procedure,
+                       :description => "Panoramic film",
+                       :code        => 330,
+                       :cost        => 125)
   end
 
   def create_test_xray(time, patient)
-    Factory(:patient_flow,
-            :area_id    => ::ClinicArea::XRAY,
-            :patient    => patient,
-            :created_at => time)
+    FactoryGirl.create(:patient_flow,
+                       :area_id    => ::ClinicArea::XRAY,
+                       :patient    => patient,
+                       :created_at => time)
   end
 end
 

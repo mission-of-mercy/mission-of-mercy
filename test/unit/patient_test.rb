@@ -4,11 +4,11 @@ class PatientTest < ActiveSupport::TestCase
 
   def setup
     super
-    @radiology = Factory(:treatment_area, name: TreatmentArea::RADIOLOGY_NAME)
+    @radiology = FactoryGirl.create(:treatment_area, name: TreatmentArea::RADIOLOGY_NAME)
   end
 
   test "should not allow more than two digits in the state field" do
-    patient = Factory.build(:patient, :state => "CTZ")
+    patient = FactoryGirl.build(:patient, :state => "CTZ")
 
     patient.save
 
@@ -22,7 +22,7 @@ class PatientTest < ActiveSupport::TestCase
   end
 
   test "should not allow more than 10 digits in the zip field" do
-    patient = Factory.build(:patient, :zip => "1234567890!")
+    patient = FactoryGirl.build(:patient, :zip => "1234567890!")
 
     patient.save
 
@@ -135,8 +135,8 @@ class PatientTest < ActiveSupport::TestCase
   end
 
   test "should properly assign treatment area" do
-    patient = Factory(:patient)
-    area = Factory(:treatment_area)
+    patient = FactoryGirl.create(:patient)
+    area = FactoryGirl.create(:treatment_area)
 
     patient.assign(area.id, false)
 
@@ -145,8 +145,8 @@ class PatientTest < ActiveSupport::TestCase
   end
 
   test "should return area to which patient is assigned" do
-    patient = Factory(:patient)
-    area = Factory(:treatment_area)
+    patient = FactoryGirl.create(:patient)
+    area = FactoryGirl.create(:treatment_area)
 
     patient.assign(area.id, false)
 
@@ -154,8 +154,8 @@ class PatientTest < ActiveSupport::TestCase
   end
 
   test "should allow for assigning to multiple areas" do
-    patient = Factory(:patient)
-    area = Factory(:treatment_area)
+    patient = FactoryGirl.create(:patient)
+    area = FactoryGirl.create(:treatment_area)
 
     patient.assign(area.id, true)
 
@@ -163,7 +163,7 @@ class PatientTest < ActiveSupport::TestCase
   end
 
   test "should allow for assigning to radiology only" do
-    patient = Factory(:patient)
+    patient = FactoryGirl.create(:patient)
 
     patient.assign(nil, true)
 
@@ -171,8 +171,8 @@ class PatientTest < ActiveSupport::TestCase
   end
 
   test "should allow check out" do
-    area = Factory(:treatment_area)
-    patient = Factory(:patient)
+    area = FactoryGirl.create(:treatment_area)
+    patient = FactoryGirl.create(:patient)
 
     patient.assign(area.id, false)
     assert_equal area, patient.assigned_to[0]
@@ -182,8 +182,8 @@ class PatientTest < ActiveSupport::TestCase
   end
 
   test "should save check out time" do
-    area = Factory(:treatment_area)
-    patient = Factory(:patient)
+    area = FactoryGirl.create(:treatment_area)
+    patient = FactoryGirl.create(:patient)
 
     assert patient.assign(area, false)
     assert_nil patient.assignments.last.checked_out_at
@@ -193,17 +193,17 @@ class PatientTest < ActiveSupport::TestCase
   end
 
   test "should check if patient is assigned to area" do
-    patient = Factory(:patient)
-    area = Factory(:treatment_area)
+    patient = FactoryGirl.create(:patient)
+    area = FactoryGirl.create(:treatment_area)
 
     patient.assign(area, false)
 
     assert patient.assigned_to?(area)
-    assert_equal false, patient.assigned_to?(Factory(:treatment_area))
+    assert_equal false, patient.assigned_to?(FactoryGirl.create(:treatment_area))
   end
 
   test "should remove radiology assignment" do
-    patient = Factory(:patient)
+    patient = FactoryGirl.create(:patient)
 
     patient.assign(nil, true)
     assert_equal 1, patient.assigned_to.size
@@ -213,9 +213,9 @@ class PatientTest < ActiveSupport::TestCase
   end
 
   test "should change assigned area" do
-    patient = Factory(:patient)
-    area1 = Factory(:treatment_area)
-    area2 = Factory(:treatment_area)
+    patient = FactoryGirl.create(:patient)
+    area1 = FactoryGirl.create(:treatment_area)
+    area2 = FactoryGirl.create(:treatment_area)
 
     patient.assign(area1.id, false)
     assert_equal area1, patient.assigned_to[0]
@@ -225,9 +225,9 @@ class PatientTest < ActiveSupport::TestCase
   end
 
   test "reassigning should return true" do
-    patient = Factory(:patient)
-    area1 = Factory(:treatment_area)
-    area2 = Factory(:treatment_area)
+    patient = FactoryGirl.create(:patient)
+    area1 = FactoryGirl.create(:treatment_area)
+    area2 = FactoryGirl.create(:treatment_area)
 
     assert patient.assign(area1.id, false)
     assert patient.assign(area1.id, true)
@@ -237,9 +237,9 @@ class PatientTest < ActiveSupport::TestCase
   end
 
   test "shouldn't destroy checked out assignments" do
-    patient = Factory(:patient)
-    area1 = Factory(:treatment_area)
-    area2 = Factory(:treatment_area)
+    patient = FactoryGirl.create(:patient)
+    area1 = FactoryGirl.create(:treatment_area)
+    area2 = FactoryGirl.create(:treatment_area)
 
     patient.assign(area1.id, false)
     patient.check_out(area1)

@@ -16,8 +16,8 @@ class AdminTreatmentsTest < ActionDispatch::IntegrationTest
   end
 
   test "the treatments page lists all treatments" do
-    t1 = Factory(:treatment, :name => 'Cleaning')
-    t2 = Factory(:treatment, :name => 'Extraction')
+    t1 = FactoryGirl.create(:treatment, :name => 'Cleaning')
+    t2 = FactoryGirl.create(:treatment, :name => 'Extraction')
 
     admin_navigation.click_link 'Treatments'
 
@@ -40,7 +40,7 @@ class AdminTreatmentsTest < ActionDispatch::IntegrationTest
   end
 
   test "updates existing treatments" do
-    Factory(:treatment, :name => 'Cleaning')
+    FactoryGirl.create(:treatment, :name => 'Cleaning')
     admin_navigation.click_link 'Treatments'
     assert page.has_content?('Cleaning')
     refute page.has_content?('Root canal')
@@ -58,7 +58,7 @@ class AdminTreatmentsTest < ActionDispatch::IntegrationTest
   end
 
   test "deletes existing treatments" do
-    Factory(:treatment, :name => 'Cleaning')
+    FactoryGirl.create(:treatment, :name => 'Cleaning')
     admin_navigation.click_link 'Treatments'
     assert page.has_content?('Cleaning')
 
