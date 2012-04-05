@@ -83,7 +83,7 @@
     %div.input
       %div.row
         %span.label= f.label :chief_complaint, "Reason for today's visit"
-        %span.formw= f.select :chief_complaint, *chief_complaint_options
+        %span.formw= f.select :chief_complaint, *chief_complaint_options(f)
       %div.row
         %span.label= f.label :last_dental_visit
         %span.formw= f.select :last_dental_visit, *last_dental_visit_options
