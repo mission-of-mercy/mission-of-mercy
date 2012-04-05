@@ -4,11 +4,11 @@ class CheckOutTest < ActionDispatch::IntegrationTest
   def setup
     Capybara.current_driver = :webkit
 
-    @patient        = Factory(:patient)
-    @treatment_area = Factory(:treatment_area)
+    @patient        = FactoryGirl.create(:patient)
+    @treatment_area = FactoryGirl.create(:treatment_area)
 
     5.times do
-      Factory(:procedure_treatment_area_mapping, :treatment_area => @treatment_area)
+      FactoryGirl.create(:procedure_treatment_area_mapping, :treatment_area => @treatment_area)
     end
 
     sign_in_as "Check out"

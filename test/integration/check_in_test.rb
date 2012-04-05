@@ -3,6 +3,8 @@ require 'test_helper'
 class CheckInTest < ActionDispatch::IntegrationTest
   def setup
     Capybara.current_driver = :webkit
+
+    FactoryGirl.create(:treatment, :name => 'Cleaning')
   end
 
   test "must agree that the waiver has been signed before filling out form" do
@@ -28,7 +30,7 @@ class CheckInTest < ActionDispatch::IntegrationTest
   end
 
   test "previous patients chart should be printed when there is one" do
-    patient = Factory(:patient)
+    patient = FactoryGirl.create(:patient)
     sign_in_as "Check in"
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
 
@@ -46,7 +48,7 @@ class CheckInTest < ActionDispatch::IntegrationTest
   end
 
   test "should display the button if previous patient information is available" do
-    patient = Factory(:patient)
+    patient = FactoryGirl.create(:patient)
     sign_in_as "Check in"
 
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
@@ -59,8 +61,8 @@ class CheckInTest < ActionDispatch::IntegrationTest
     phone = "230-111-1111"; street = "12 St."; zip = "90210"
     city = "Beverley Hills"; state = "CA"
 
-    patient = Factory(:patient, :phone => phone, :street => street, :zip => zip,
-                      :city => city, :state => state)
+    patient = FactoryGirl.create(:patient, :phone => phone, :street => street, :zip => zip,
+                                 :city => city, :state => state)
 
     sign_in_as "Check in"
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
@@ -78,9 +80,9 @@ class CheckInTest < ActionDispatch::IntegrationTest
   end
 
   test "lists treatments dynamically from the treatment model" do
-    t1 = Factory(:treatment, :name => 'treatment 1')
-    t2 = Factory(:treatment, :name => 'treatment 2')
-    t3 = Factory(:treatment, :name => 'treatment 3')
+    t1 = FactoryGirl.create(:treatment, :name => 'treatment 1')
+    t2 = FactoryGirl.create(:treatment, :name => 'treatment 2')
+    t3 = FactoryGirl.create(:treatment, :name => 'treatment 3')
 
     sign_in_as "Check in"
     select = find('#patient_chief_complaint')
