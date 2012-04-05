@@ -13,4 +13,10 @@ class TreatmentTest < ActiveSupport::TestCase
 
     refute treatment.valid?
   end
+
+  test "#provided? defaults to true" do
+    treatment = FactoryGirl.build(:treatment)
+
+    assert treatment.provided?
+  end
 end
