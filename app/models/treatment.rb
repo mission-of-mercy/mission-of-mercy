@@ -6,4 +6,8 @@ class Treatment < ActiveRecord::Base
     all.map(&:name)
   end
 
+  def self.provided_names
+    where(:provided => true).map(&:name)
+  end
+
 end
