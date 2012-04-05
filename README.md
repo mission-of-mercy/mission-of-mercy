@@ -17,8 +17,9 @@ To install a development version of Mission of Mercy, follow these steps:
 1. Fork our GitHub repository: <http://github.com/jordanbyron/mission_of_mercy>
 2. Clone the fork to your computer
 3. If you don't already have bundler installed, get it by running `gem install bundler`
-4. Run `bundle install` to install all of the project's dependencies
-5. Finally, run `rake setup` to create the required config files, create the database, and seed it with data
+4. Install Qt libraries for capybara-webkit: <https://github.com/thoughtbot/capybara-webkit#readme>
+5. Run `bundle install` to install all of the project's dependencies
+6. Finally, run `rake setup` to create the required config files, create the database, and seed it with data
 
 To make things even easier, you can copy and paste this into your terminal once you've got the project cloned to your computer
 
