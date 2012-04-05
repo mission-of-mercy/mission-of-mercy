@@ -32,10 +32,5 @@ group :test do
   gem 'capybara',  '~> 1.1.1'
   gem 'launchy'
   gem 'database_cleaner', '~> 0.7.1'
-
-  # capybara-webkit requires the Qt libraries. If you have trouble installing
-  # this gem refer to the capybara-webkit README:
-  # https://github.com/thoughtbot/capybara-webkit#readme
-  #
   gem 'capybara-webkit'
 end
