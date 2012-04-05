@@ -6,11 +6,13 @@
 %table
   %tr
     %th Name
+    %th Provided
     %th{:colspan=>2} Controls
 
   - @treatments.each do |treatment|
     %tr{:class=>cycle('even', 'odd')}
       %td= treatment.name
+      %td= treatment.provided?
       %td= link_to 'Edit', edit_admin_treatment_path(treatment)
       %td= link_to 'Destroy', admin_treatment_path(treatment), :method=>:delete, :confirm=>"Are you sure?"
 
