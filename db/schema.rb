@@ -174,9 +174,17 @@ ActiveRecord::Schema.define(:version => 20120405205706) do
     t.boolean  "has_place_to_be_seen_for_dental_care"
     t.boolean  "no_insurance"
     t.boolean  "insurance_from_job"
+    t.boolean  "medicaid_or_chp_plus"
     t.boolean  "self_purchase_insurance"
     t.string   "other_insurance"
     t.boolean  "tobacco_use"
+    t.boolean  "saga_insurance"
+    t.boolean  "husky_insurance_a"
+    t.boolean  "husky_insurance_b"
+    t.boolean  "husky_insurance_c"
+    t.boolean  "husky_insurance_d"
+    t.boolean  "husky_insurance_unknown"
+    t.boolean  "charter_oak"
   end
 
   create_table "treatment_areas", :force => true do |t|

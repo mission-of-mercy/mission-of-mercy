@@ -7,12 +7,7 @@
   %p
     = f.label :login
     %br
-<<<<<<< HEAD
     = f.select :login, user_list
-=======
-    = f.select :login, User.order(:login).map {|u| [u.name, u.login] }
->>>>>>> 1a9cbbd2f39a898676fdf463bd67565622ffe894
-
   %p
     = f.label :password
     %br
