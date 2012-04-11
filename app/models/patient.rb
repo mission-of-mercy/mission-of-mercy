@@ -235,7 +235,6 @@ class Patient < ActiveRecord::Base
       year = nil if year.to_s.length != 4
 
       self[:date_of_birth] = Date.civil(year, month, day) rescue nil
-
     elsif @date_string.blank?
       super
     end
