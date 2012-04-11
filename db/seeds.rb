@@ -51,3 +51,21 @@ if TreatmentArea.count.zero?
 else
   puts "Skip: #{TreatmentArea.count} treatment areas already exist"
 end
+
+if Race.count.zero?
+  categories = [ { :category => "African American/Black" },
+                 { :category => "American Indian/Alaska Native" },
+                 { :category => "Asian/Pacific Islander" },
+                 { :category => "Caucasian/White" },
+                 { :category => "Hispanic" },
+                 { :category => "Indian" },
+                 { :category => "Other" } ]
+
+  categories.each do |category|
+    Race.create(category)
+  end
+
+  puts "#{Race.count} race categories created"
+else
+  puts "Skip: #{Race.count} race categories already exist"
+end
