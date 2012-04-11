@@ -1,8 +1,8 @@
-![Mission of Mercy Logo](https://github.com/jordanbyron/mission_of_mercy/raw/master/doc/mom.png)
+![Mission of Mercy Logo](https://github.com/mission-of-mercy/mission-of-mercy/raw/master/doc/mom.png)
 
 Clinic management software for Mission of Mercy free dental clinics. Created to streamline patient intake, digital x-ray, and check-out processes during the clinic’s operating hours. Since its creation in 2009 it has been used in Mission of Mercy clinics throughout the United States.
 
-For the latest information about the software check out [this project's wiki](http://wiki.github.com/jordanbyron/mission_of_mercy)
+For the latest information about the software check out [this project's wiki](http://wiki.github.com/mission-of-mercy/mission-of-mercy)
 
 ## Installation
 
@@ -14,7 +14,7 @@ or SQLite are not officially supported.
 
 To install a development version of Mission of Mercy, follow these steps:
 
-1. Fork our GitHub repository: <http://github.com/jordanbyron/mission_of_mercy>
+1. Fork our GitHub repository: <http://github.com/mission-of-mercy/mission-of-mercy>
 2. Clone the fork to your computer
 3. If you don't already have bundler installed, get it by running `gem install bundler`
 4. Install Qt libraries for capybara-webkit: <https://github.com/thoughtbot/capybara-webkit#readme>
@@ -33,7 +33,7 @@ bundle exec rake setup
 
 While there are other Missions of Mercy around the country, the mission this project supports is a one or two-day clinic in which portable dental stations are set up in a large public arena and dental screenings and services are provided at no charge to those who attend. Historically, demand for these clinics has been so intense that individuals often stand in line, as early as midnight, to receive the services. In the USA half of the states run Mission of Mercy clinics.
 
-![Georgia Clinic](https://github.com/jordanbyron/mission_of_mercy/raw/master/doc/ga_clinic.png)
+![Georgia Clinic](https://github.com/mission-of-mercy/mission-of-mercy/raw/master/doc/ga_clinic.png)
 
 It's easy to work on a software project and never see the impact it makes on people. For Mission of Mercy, it' hard NOT to see the amazing impact your contributions make on people's lives. Below is a collection of photos and videos from various clinics throughout the country which use this software.
 
@@ -50,7 +50,7 @@ It's easy to work on a software project and never see the impact it makes on peo
 
 ## Contributing
 
-Features and bugs are tracked through [Github Issues](https://github.com/jordanbyron/mission_of_mercy/issues).
+Features and bugs are tracked through [Github Issues](https://github.com/mission-of-mercy/mission-of-mercy/issues).
 
 Contributors retain copyright to their work but must agree to release their
 contributions under the same terms as this project. For details, please see the LICENSE file.
@@ -78,7 +78,7 @@ Mission of Mercy was originally written by Jordan Byron for the 2009 Connecticut
 
 Over the years many people have contributed to Mission of Mercy through writing patches, performing QA tests, and helping out with the design. Without the help of Christopher Mitchell and Josephine Bicknell this project would not exist.
 
-A full list of folks who have contributed patches to Mission of Mercy can be found on github at <https://github.com/jordanbyron/mission_of_mercy/contributors>
+A full list of folks who have contributed patches to Mission of Mercy can be found on github at <https://github.com/mission-of-mercy/mission-of-mercy/contributors>
 
 ## License
 
