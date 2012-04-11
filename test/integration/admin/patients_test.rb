@@ -5,7 +5,7 @@ class AdminPatientsTest < ActionDispatch::IntegrationTest
   def setup
     Capybara.current_driver = :webkit
     sign_in_as 'Admin'
-    @patient = Factory(:patient)
+    @patient = FactoryGirl.create(:patient)
   end
 
   test "date of birth field is properly parsed when editing patients" do
