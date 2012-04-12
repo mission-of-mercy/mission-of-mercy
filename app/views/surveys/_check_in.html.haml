@@ -3,9 +3,7 @@
     = s.label :heard_about_clinic, 'How did you hear about the clinic?', :class => 'question'
     %br
     .input
-      = s.select :heard_about_clinic,
-        ['Friend or Family','Media: Newspaper/TV/Radio','Flyer or Poster','Other'],
-        {:include_blank => true}
+      = s.select :heard_about_clinic, *heard_about_clinic_options
     #heard_about_other_div
       %p
         = s.label :heard_about_other, "Please describe:"
