@@ -27,6 +27,10 @@ MoM.Checkin.init = function(options){
     MoM.Checkin.toggleOtherRace();
   });
 
+  $('#patient_survey_attributes_heard_about_other').autocomplete({
+    source: "/autocomplete/heard_about_clinic.json"
+  });
+
   $('input[name="patient[pain]"]').change(function(e){
     MoM.Checkin.togglePatientPain();
   });
