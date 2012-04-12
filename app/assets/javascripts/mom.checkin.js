@@ -58,6 +58,10 @@ MoM.Checkin.init = function(options){
     source: "/autocomplete/city.json"
   });
 
+  $('#patient_race_other').autocomplete({
+    source: "/autocomplete/race.json"
+  });
+
   $('#bottom_survey a.back').click(function(e){
     MoM.Checkin.showPatientDemographics();
 

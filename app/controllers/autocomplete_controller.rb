@@ -28,4 +28,13 @@ class AutocompleteController < ApplicationController
     end
   end
 
+  def race
+    races = Patient.where("race ILIKE ?", "#{params[:term]}%").
+      select("DISTINCT race").map(&:race)
+
+    respond_to do |format|
+      format.json { render :json => races.to_json }
+    end
+  end
+
 end
