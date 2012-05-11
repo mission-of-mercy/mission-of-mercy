@@ -1,4 +1,6 @@
 class Patient < ActiveRecord::Base
+  require 'time_scope'
+  extend TimeScope
 
   RACES = [
     "African American/Black",
