@@ -22,10 +22,5 @@ CONFIG
     # Load the schema
     #
     Rake::Task["db:test:load"].invoke
-
-    # Setup the display for capybara-webkit
-    #
-    `export DISPLAY=:99.0`
-    `sh -e /etc/init.d/xvfb start`
   end
 end
