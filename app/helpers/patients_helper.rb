@@ -32,7 +32,7 @@ module PatientsHelper
   end
 
   def race_select_options
-    [ Patient::RACES, { :include_blank => true} ]
+    [ Race.all_categories, { :include_blank => true} ]
   end
 
   def chief_complaint_options(f)

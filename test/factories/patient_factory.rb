@@ -4,9 +4,9 @@ FactoryGirl.define do
     last_name         { Faker::Name.last_name }
     date_of_birth     { Date.today - rand(100).years }
     sex               { %w( M F ).shuffle.first }
-    race              { Patient::RACES.sample }
+    race              { "Caucasian/White" }
     chief_complaint   { "Cleaning" }
-    last_dental_visit "First Time"
+    last_dental_visit { "First Time" }
     travel_time       { 1 + rand(90) }
     street            { Faker::Address.street_address }
     city              { Faker::Address.city }

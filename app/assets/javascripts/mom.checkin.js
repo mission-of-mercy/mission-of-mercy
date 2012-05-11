@@ -27,6 +27,10 @@ MoM.Checkin.init = function(options){
     MoM.Checkin.toggleOtherRace();
   });
 
+  $('#patient_survey_attributes_heard_about_other').autocomplete({
+    source: "/autocomplete/heard_about_clinic.json"
+  });
+
   $('input[name="patient[pain]"]').change(function(e){
     MoM.Checkin.togglePatientPain();
   });
@@ -56,6 +60,10 @@ MoM.Checkin.init = function(options){
 
   $('#patient_city').autocomplete({
     source: "/autocomplete/city.json"
+  });
+
+  $('#patient_race_other').autocomplete({
+    source: "/autocomplete/race.json"
   });
 
   $('#bottom_survey a.back').click(function(e){

@@ -51,3 +51,36 @@ if TreatmentArea.count.zero?
 else
   puts "Skip: #{TreatmentArea.count} treatment areas already exist"
 end
+
+if Race.count.zero?
+  categories = [ { :category => "African American/Black" },
+                 { :category => "American Indian/Alaska Native" },
+                 { :category => "Asian/Pacific Islander" },
+                 { :category => "Caucasian/White" },
+                 { :category => "Hispanic" },
+                 { :category => "Indian" },
+                 { :category => "Other" } ]
+
+  categories.each do |category|
+    Race.create(category)
+  end
+
+  puts "#{Race.count} race categories created"
+else
+  puts "Skip: #{Race.count} race categories already exist"
+end
+
+if HeardAboutClinic.count.zero?
+  reasons = [ { :reason =>"Friend or Family" },
+              { :reason => "Media: Newspaper/TV/Radio" },
+              { :reason => "Flyer or Poster" },
+              { :reason => "Other" } ]
+  
+  reasons.each do |reason|
+    HeardAboutClinic.create(reason)
+  end
+
+  puts "#{HeardAboutClinic.count} heard about clinic categories created"
+else
+  puts "Skip: #{HeardAboutClinic.count} heard about clinic categories already exist"
+end
