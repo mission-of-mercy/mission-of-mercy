@@ -3,7 +3,7 @@ namespace :travis do
   task :setup do
     File.open(Rails.root.join("config", "database.yml"), 'w') do |f|
       f << <<-CONFIG
-postgres:
+test:
   adapter: postgresql
   database: myapp_test
   username: postgres
