@@ -12,6 +12,6 @@ CONFIG
 
     `psql -c 'create database mom_test;' -U postgres`
 
-    Rake::Task["db:test:prepare"].invoke
+    Rake::Task["db:test:load"].invoke
   end
 end
