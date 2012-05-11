@@ -11,5 +11,7 @@ CONFIG
     end
 
     `psql -c 'create database myapp_test;' -U postgres`
+
+    Rake::Task["db:schema:load"]
   end
 end
