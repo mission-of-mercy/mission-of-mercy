@@ -1,5 +1,3 @@
-ENV["RAILS_ENV"] = "test"
-
 namespace :travis do
   desc 'Create database.yml for testing'
   task :setup do
@@ -14,7 +12,6 @@ CONFIG
 
     `psql -c 'create database mom_test;' -U postgres`
 
-    Rake::Task["db:test:prepare"]
-    Rake::Task["db:migrate"]
+    Rake::Task["db:test:prepare"].invoke
   end
 end
