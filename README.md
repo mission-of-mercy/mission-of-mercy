@@ -3,7 +3,7 @@
 Clinic management software for Mission of Mercy free dental clinics. Created to streamline patient intake, digital x-ray, and check-out processes during the clinic’s operating hours. Since its creation in 2009 it has been used in Mission of Mercy clinics throughout the United States.
 
 For the latest information about the software check out [this project's wiki](http://wiki.github.com/mission-of-mercy/mission-of-mercy).
-Or if you'd like to contribute be sure to read the [contribution](#contribute) section below.
+Or if you'd like to contribute be sure to read the [contribution](#contributing) section below.
 
 ## What is Mission of Mercy?
 
@@ -24,7 +24,7 @@ It's easy to work on a software project and never see the impact it makes on peo
 - [2011 Connecticut Mission of Mercy clinic](http://youtu.be/aGAEtleugnk)
 - [2011 Georgia Mission of Mercy clinic](http://youtu.be/u4jvLU3RGfU)
 
-## Contributing <a href="#contribute" id="contribute" name="contribute">&raquo;</a>
+## Contributing
 
 Features and bugs are tracked through [Github Issues](https://github.com/mission-of-mercy/mission-of-mercy/issues).
 
@@ -38,7 +38,7 @@ Contact Jordan through [GitHub (@jordanbyron)](https://github.com/jordanbyron) o
 
 1. If a ticket doesn't exist for your bug or feature, create one on GitHub.
     - **NOTE:** Don't be afraid to get feedback on your idea before you begin development work. In fact it is encouraged. I promise I don't bite ;)
-2. Follow the [Installation](#install) instructions below.
+2. Follow the [Installation](#installation) instructions below.
 3. Create a topic branch.
 4. Implement your feature or bug fix.
 5. Add documentation for your feature or bug fix.
@@ -48,7 +48,7 @@ Contact Jordan through [GitHub (@jordanbyron)](https://github.com/jordanbyron) o
 9. Commit and push your changes.
 10. Submit a pull request.
 
-## Installation <a href="#install" id="install" name="install">&raquo;</a>
+## Installation
 
 Mission of Mercy Software is a Ruby on Rails 3.1 application which runs on Ruby 1.9.2 and
 [PostgreSQL](http://www.postgresql.org) databases. Other databases like MySQL
