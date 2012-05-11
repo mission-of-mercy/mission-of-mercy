@@ -12,6 +12,6 @@ CONFIG
 
     `psql -c 'create database myapp_test;' -U postgres`
 
-    Rake::Task["db:schema:load"]
+    Rake::Task["db:test:prepare"]
   end
 end
