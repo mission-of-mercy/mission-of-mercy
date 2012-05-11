@@ -5,6 +5,8 @@ Clinic management software for Mission of Mercy free dental clinics. Created to 
 For the latest information about the software check out [this project's wiki](http://wiki.github.com/mission-of-mercy/mission-of-mercy).
 Or if you'd like to contribute be sure to read the [contribution](#contributing) section below.
 
+[![Build Status](https://secure.travis-ci.org/mission-of-mercy/mission-of-mercy.png?branch=master)](http://travis-ci.org/mission-of-mercy/mission-of-mercy)
+
 ## What is Mission of Mercy?
 
 While there are other Missions of Mercy around the country, the mission this project supports is a one or two-day clinic in which portable dental stations are set up in a large public arena and dental screenings and services are provided at no charge to those who attend. Historically, demand for these clinics has been so intense that individuals often stand in line, as early as midnight, to receive the services. In the USA half of the states run Mission of Mercy clinics.
