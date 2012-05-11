@@ -1,6 +1,4 @@
 class Procedure < ActiveRecord::Base
-  extend TimeScope
-
   has_many :patient_procedures
   has_many :patients, :through => :patient_procedures
 

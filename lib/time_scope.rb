@@ -6,7 +6,7 @@ module TimeScope
     ).utc.strftime("%H:%M:00")
   end
 
-  def scope_by_time(table, day, span)
+  def for_time(table, day, span)
     query = self
     unless day == 'All'
       query = query.where("#{table}.created_at::Date = ?", day)

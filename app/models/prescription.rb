@@ -1,6 +1,4 @@
 class Prescription < ActiveRecord::Base
-  extend TimeScope
-
   has_many :patient_prescriptions
 
   validates_uniqueness_of :name, :scope => :dosage

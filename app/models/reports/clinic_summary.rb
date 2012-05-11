@@ -1,3 +1,5 @@
+require 'time_scope'
+
 class Reports::ClinicSummary
   attr_accessor :day, :span
   attr_reader   :patient_count, :procedures, :procedure_count, :procedure_value,
@@ -10,26 +12,13 @@ class Reports::ClinicSummary
                  "4:00 PM", "5:00 PM" ]
 
   def initialize(day=Date.today, span="All")
-    reload(day,span)
-  end
-
-  def day_and_span
-    return "Every day" if @day == "All" and @span == "All"
-
-    if @span == "All"
-      @day
-    elsif @day == "All"
-      ["Every day", @span].join(" at ")
-    else
-      [@day, @span].join(" at ")
+    [Patient, Prescription, PatientFlow, PreMed, Procedure].each do |model|
+      model.extend(TimeScope)
     end
-  end
 
-  def reload(day, span)
     @day, @span = day, span
-    @procedures, @prescriptions, @pre_meds = [], [], []
 
-    @day = Date.strptime(day, "%m/%d/%Y") if day.kind_of?(String) && day != "All"
+    @day  = Date.strptime(day, "%m/%d/%Y") if day.kind_of?(String) && day != "All"
     @span = "All" if span == "All" || @day == "All"
 
     @patient_count = load_patient_count
@@ -46,10 +35,22 @@ class Reports::ClinicSummary
     @next_chart_number += 1
   end
 
+  def day_and_span
+    return "Every day" if @day == "All" and @span == "All"
+
+    if @span == "All"
+      @day
+    elsif @day == "All"
+      ["Every day", @span].join(" at ")
+    else
+      [@day, @span].join(" at ")
+    end
+  end
+
   private
 
   def load_patient_count
-    @patient_count = Patient.scope_by_time('patients', @day, @span).count.to_i 
+    @patient_count = Patient.for_time('patients', @day, @span).count.to_i
   end
 
   def load_xray_count
@@ -61,12 +62,12 @@ class Reports::ClinicSummary
   end
 
   def load_area_count(area_id)
-    PatientFlow.scope_by_time('patient_flows', @day, @span)
+    PatientFlow.for_time('patient_flows', @day, @span)
       .where('area_id = ?', area_id).count.to_i
   end
 
   def collect_procedures
-    query = Procedure.scope_by_time('patient_procedures', @day, @span)
+    query = Procedure.for_time('patient_procedures', @day, @span)
 
     summary = query.select(
       "count(*) as total_count, sum(procedures.cost) as total_cost")
@@ -84,7 +85,7 @@ class Reports::ClinicSummary
   end
 
   def collect_prescriptions
-    query = Prescription.scope_by_time('patient_prescriptions', @day, @span)
+    query = Prescription.for_time('patient_prescriptions', @day, @span)
 
     summary = query.select(
       "count(*) as total_count, sum(cost) as total_cost")
@@ -102,7 +103,7 @@ class Reports::ClinicSummary
   end
 
   def collect_pre_meds
-    query = PreMed.scope_by_time('patient_pre_meds', @day, @span)
+    query = PreMed.for_time('patient_pre_meds', @day, @span)
 
     summary = query.select(
       "count(*) as total_count, sum(cost) as total_cost")
