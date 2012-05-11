@@ -1,6 +1,5 @@
 module ReportsHelper
 
-
   def time_spans
     Reports::ClinicSummary::TIME_SPANS
   end
@@ -14,7 +13,7 @@ module ReportsHelper
   def days(report)
     existing_dates = Patient.all(
       :select => "patients.created_at::Date as created_at_date",
-      :group => report.date_sql("patients"),
+      :group => "patients.created_at::Date",
       :order => "patients.created_at::Date"
     ).map {|p| p.created_at_date.to_date }
 

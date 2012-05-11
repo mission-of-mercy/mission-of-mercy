@@ -30,17 +30,7 @@ class Reports::ClinicSummary
     @procedures, @prescriptions, @pre_meds = [], [], []
 
     @day = Date.strptime(day, "%m/%d/%Y") if day.kind_of?(String) && day != "All"
-
-    if span == "All" || @day == "All"
-      @span_time = "All"
-      @span      = "All"
-    else
-      # Parse time with current date to make sure any timezone offsets are correct
-
-      @span_time = Time.zone.parse(
-        [@day.strftime('%Y-%m-%d'),span].join(' ')
-      ).utc.strftime("%H:%M:00")
-    end
+    @span = "All" if span == "All" || @day == "All"
 
     @patient_count = load_patient_count
     @xrays         = load_xray_count
@@ -56,48 +46,10 @@ class Reports::ClinicSummary
     @next_chart_number += 1
   end
 
-  def date_sql(table)
-    date_time_sql "Date", table
-  end
-
-  def time_sql(table)
-    date_time_sql "Time", table
-  end
-
-  def date_time_sql(datetime, table)
-    "#{table}.created_at::#{datetime}"
-  end
-
-  def date_time_where(sql, table)
-    if sql.include? "WHERE"
-      start = "AND"
-    else
-      start = "WHERE"
-    end
-
-    unless @day == "All"
-      sql += %{ #{start} #{date_sql(table)} = :report_date}
-      sql += %{ AND #{time_sql(table)} <= :report_time} unless @span == "All"
-    end
-
-    sql
-  end
-
   private
 
   def load_patient_count
-    sql = %{SELECT count(patients.id) as "patient_count"
-      FROM patients}
-
-    sql = date_time_where(sql, 'patients')
-
-    @patient_count = Patient.connection.select_value(
-                      Patient.send(:sanitize_sql_array,
-                      [sql, {:report_date => @day.to_s,
-                             :report_time => @span_time}]))
-
-    @patient_count ||= 0
-    @patient_count = @patient_count.to_i
+    @patient_count = Patient.scope_by_time('patients', @day, @span).count.to_i 
   end
 
   def load_xray_count
@@ -109,103 +61,62 @@ class Reports::ClinicSummary
   end
 
   def load_area_count(area_id)
-    sql = %{SELECT count(*)
-      FROM patient_flows
-      WHERE patient_flows.area_id = :area_id}
-
-    sql = date_time_where(sql, 'patient_flows')
-
-    sql += %{ GROUP BY patient_flows.patient_id }
-
-    count = Patient.connection.select_all(
-              Patient.send(:sanitize_sql_array,
-              [sql, {:report_date => @day.to_s,
-                     :report_time => @span_time,
-                     :area_id     => area_id }])).length
-
-    count ||= 0
-    count.to_i
+    PatientFlow.scope_by_time('patient_flows', @day, @span)
+      .where('area_id = ?', area_id).count.to_i
   end
 
   def collect_procedures
-    sql = %{SELECT
-      procedures.code,
-      initcap(procedures.description) AS description,
-      count(patient_procedures.procedure_id) AS procedure_count,
-      count(patient_procedures.procedure_id) * procedures.cost AS procedure_value
-      FROM procedures
-        LEFT JOIN patient_procedures ON procedures.id = patient_procedures.procedure_id}
+    query = Procedure.scope_by_time('patient_procedures', @day, @span)
 
-    sql = date_time_where(sql, "patient_procedures")
+    summary = query.select(
+      "count(*) as total_count, sum(procedures.cost) as total_cost")
+      .joins(:patient_procedures).first
 
-    sql += %{ GROUP BY procedures.code, initcap(procedures.description), procedures.cost
-      HAVING count(patient_procedures.procedure_id) > 0
-      ORDER BY procedures.code;}
+    @procedure_count = summary.total_count.to_i
+    @procedure_value = summary.total_cost.to_f
 
-    @procedures = Procedure.connection.select_all(
-                      Procedure.send(:sanitize_sql_array,
-                      [sql, {:report_date => @day.to_s,
-                             :report_time => @span_time}]))
-
-    @procedures.map! {|p| [p["code"] + ": " + p["description"],p["procedure_count"].to_i,p["procedure_value"].to_f ] }
-
-    @procedure_count = @procedures.sum {|p| p[1] }
-    @procedure_value = @procedures.sum {|p| p.last }
+    @procedures = query.select(%q{
+      code, description,
+      count(*) as subtotal_count,
+      count(*) * cost as subtotal_value})
+      .joins(:patient_procedures)
+      .group('procedures.code, procedures.description, procedures.cost')
   end
 
   def collect_prescriptions
-    sql = %{SELECT
+    query = Prescription.scope_by_time('patient_prescriptions', @day, @span)
+
+    summary = query.select(
+      "count(*) as total_count, sum(cost) as total_cost")
+      .joins(:patient_prescriptions).first
+
+    @prescription_count = summary.total_count.to_i
+    @prescription_value = summary.total_cost.to_f
+
+    @prescriptions = query.select(%q{
       prescriptions.id, prescriptions.name,
-      count(patient_prescriptions.prescription_id) AS prescription_count,
-      count(patient_prescriptions.prescription_id) * prescriptions.cost AS prescription_value
-      FROM prescriptions
-        LEFT JOIN patient_prescriptions ON prescriptions.id = patient_prescriptions.prescription_id}
-
-    sql = date_time_where(sql, "patient_prescriptions")
-
-    sql += %{ GROUP BY prescriptions.id, prescriptions.name, prescriptions.cost
-      HAVING count(patient_prescriptions.prescription_id) > 0
-      ORDER BY prescriptions.name;}
-
-    @prescriptions = Prescription.connection.select_all(
-                      Prescription.send(:sanitize_sql_array,
-                      [sql, {:report_date => @day.to_s,
-                             :report_time => @span_time}]))
-
-    @prescriptions.map! do |p|
-      desc = Prescription.find(p["id"]).full_description
-      [desc, p["prescription_count"].to_i, p["prescription_value"].to_f ]
-    end
-
-    @prescription_count = @prescriptions.sum {|p| p[1] }
-    @prescription_value = @prescriptions.sum {|p| p.last }
+      count(*) as prescription_count,
+      count(*) * cost as prescription_value})
+      .joins(:patient_prescriptions)
+      .group('prescriptions.id, name, cost')
   end
 
   def collect_pre_meds
-    sql = %{SELECT
-      pre_meds.description,
-      count(patient_pre_meds.pre_med_id) AS pre_med_count,
-      count(patient_pre_meds.pre_med_id) * pre_meds.cost AS pre_med_value
-      FROM pre_meds
-        LEFT JOIN patient_pre_meds ON pre_meds.id = patient_pre_meds.pre_med_id}
+    query = PreMed.scope_by_time('patient_pre_meds', @day, @span)
 
-    sql = date_time_where(sql, "patient_pre_meds")
+    summary = query.select(
+      "count(*) as total_count, sum(cost) as total_cost")
+      .joins(:patient_pre_meds).first
 
-    sql += %{ GROUP BY pre_meds.description, pre_meds.cost
-      HAVING count(patient_pre_meds.pre_med_id) > 0
-      ORDER BY pre_meds.description;}
+    @pre_med_count = summary.total_count.to_i
+    @pre_med_value = summary.total_cost.to_f
 
-    @pre_meds = PreMed.connection.select_all(
-                      PreMed.send(:sanitize_sql_array,
-                      [sql, {:report_date => @day.to_s,
-                             :report_time => @span_time}]))
-
-    @pre_meds.map! do |p|
-      [p["description"],p["pre_med_count"].to_i,p["pre_med_value"].to_f ]
-    end
-
-    @pre_med_count = @pre_meds.sum {|p| p[1] }
-    @pre_med_value = @pre_meds.sum {|p| p.last }
+    @pre_meds = query.select(%q{
+      description,
+      count(*) as pre_med_count,
+      count(*) * cost as pre_med_value})
+      .joins(:patient_pre_meds)
+      .group('description, cost')
   end
 
 end
