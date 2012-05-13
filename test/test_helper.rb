@@ -6,6 +6,8 @@ require 'database_cleaner'
 require 'support/integration'
 require_relative '../db/seeds/users'
 
+Turn.config.natural = true
+
 module TestHelper
   extend self
 

@@ -23,12 +23,12 @@ gem 'faker',        :require => false
 gem 'rubyzip',      :require => false
 
 group :test do
-  gem 'minitest',  '~> 2.3.1'
+  gem 'minitest',  '~> 2.12.1'
   gem 'faker'
-  gem 'colorific', '~> 1.0.0'
   gem 'factory_girl_rails'
   gem 'capybara',  '~> 1.1.1'
   gem 'launchy'
   gem 'database_cleaner', '~> 0.7.1'
   gem 'capybara-webkit'
+  gem 'turn'
 end
