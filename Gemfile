@@ -14,6 +14,7 @@ end
 gem 'will_paginate', '~> 3.0.2'
 gem 'devise'
 gem 'dynamic_form'
+gem 'draper'
 
 gem 'jquery-rails'
 

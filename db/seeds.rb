@@ -67,20 +67,20 @@ if Race.count.zero?
 
   puts "#{Race.count} race categories created"
 else
-  puts "Skip: #{Race.count} race categories already exist"
+  puts "Skip: #{Race.count} races already exist"
 end
 
 if HeardAboutClinic.count.zero?
-  reasons = [ { :reason =>"Friend or Family" },
+  reasons = [ { :reason => "Friend or Family" },
               { :reason => "Media: Newspaper/TV/Radio" },
               { :reason => "Flyer or Poster" },
               { :reason => "Other" } ]
-  
+
   reasons.each do |reason|
     HeardAboutClinic.create(reason)
   end
 
-  puts "#{HeardAboutClinic.count} heard about clinic categories created"
+  puts "#{HeardAboutClinic.count} heard about clinic methods created"
 else
-  puts "Skip: #{HeardAboutClinic.count} heard about clinic categories already exist"
+  puts "Skip: #{HeardAboutClinic.count} heard about clinic methods already exist"
 end

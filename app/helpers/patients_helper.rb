@@ -31,10 +31,6 @@ module PatientsHelper
     [[["M", "M"], ["F","F"]], {:include_blank => true}]
   end
 
-  def race_select_options
-    [ Race.all_categories, { :include_blank => true} ]
-  end
-
   def chief_complaint_options(f)
     treatments = if @patient.new_record?
       Treatment.provided_names

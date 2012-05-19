@@ -188,7 +188,6 @@ ActiveRecord::Schema.define(:version => 20120412154254) do
     t.boolean  "insurance_from_job"
     t.boolean  "medicaid_or_chp_plus"
     t.boolean  "self_purchase_insurance"
-    t.boolean  "medicaid_or_chp_plus"
     t.string   "other_insurance"
     t.boolean  "tobacco_use"
     t.boolean  "saga_insurance"

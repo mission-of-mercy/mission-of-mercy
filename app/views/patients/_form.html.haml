@@ -47,7 +47,7 @@
         %span.formw= f.select :sex, *sex_select_options
       %div.row
         %span.label= f.label :race
-        %span.formw= f.select :race, *race_select_options
+        %span.formw= f.select :race, *RaceDecorator.options_for_select
       #race_other_div.row
         %span.label= f.label :race_other, 'Specify race'
         %span.formw= f.text_field :race_other
