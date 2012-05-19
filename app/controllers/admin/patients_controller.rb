@@ -4,7 +4,7 @@ module Admin
     before_filter :admin_required, :set_current_tab
 
     def edit
-      @patient = Patient.find(params[:id])
+      @patient = PatientDecorator.find(params[:id])
       @patient.build_previous_mom_clinics
     end
 
@@ -16,15 +16,11 @@ module Admin
       @patient = Patient.find(params[:id])
 
       if @patient.update_attributes(params[:patient])
+        flash[:notice] = 'Patient was successfully updated.'
 
-        if params[:commit] == "Next"
-          redirect_to(:controller => 'exit_surveys', :action => 'new', :id => @patient.id)
-        else
-          flash[:notice] = 'Patient was successfully updated.'
-
-          redirect_to patients_path
-        end
+        redirect_to patients_path
       else
+        @patient = PatientDecorator.new(@patient)
         render :action => "edit"
       end
     end

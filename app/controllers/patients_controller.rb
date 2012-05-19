@@ -22,7 +22,7 @@ class PatientsController < ApplicationController
   end
 
   def new
-    @patient        = Patient.new
+    @patient        = PatientDecorator.new(Patient.new)
     @patient.survey = Survey.new
     @patient.build_previous_mom_clinics
   end
@@ -63,6 +63,8 @@ class PatientsController < ApplicationController
       @patient_travel_time_hours   = params[:patient_travel_time_hours]
 
       @patient.build_previous_mom_clinics
+
+      @patient = PatientDecorator.new(@patient)
 
       render :action => "new"
     end
