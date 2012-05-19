@@ -28,6 +28,8 @@ MissionOfMercy::Application.routes.draw do
 
   match '/autocomplete/city.json' => 'autocomplete#city', :as => :autocomplete_city
   match '/autocomplete/zip.json'  => 'autocomplete#zip',  :as => :autocomplete_zip
+  match '/autocomplete/race.json'  => 'autocomplete#race',  :as => :autocomplete_race
+  match '/autocomplete/heard_about_clinic.json'  => 'autocomplete#heard_about_clinic',  :as => :autocomplete_heard_about_clinic
 
   resources :patient_procedures
   resources :assignment_desk

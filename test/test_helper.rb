@@ -73,6 +73,7 @@ class ActionDispatch::IntegrationTest
   setup do
     Seeds.create_users(:password => "temp123", :xray_stations => 5)
     FactoryGirl.create(:treatment, :name => 'Cleaning')
+    FactoryGirl.create(:race, :category => 'Caucasian/White')
   end
 
   teardown do

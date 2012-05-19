@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120405205706) do
+ActiveRecord::Schema.define(:version => 20120412154254) do
+
+  create_table "heard_about_clinics", :force => true do |t|
+    t.string   "reason"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "patient_assignments", :force => true do |t|
     t.integer  "patient_id"
@@ -142,6 +148,12 @@ ActiveRecord::Schema.define(:version => 20120405205706) do
     t.boolean  "auto_add"
     t.float    "cost"
     t.integer  "number_of_surfaces"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "races", :force => true do |t|
+    t.string   "category"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

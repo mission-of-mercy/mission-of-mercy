@@ -5,6 +5,7 @@ class CheckInTest < ActionDispatch::IntegrationTest
     Capybara.current_driver = :webkit
 
     FactoryGirl.create(:treatment, :name => 'Cleaning')
+    FactoryGirl.create(:race, :category => 'Caucasian/White')
   end
 
   test "must agree that the waiver has been signed before filling out form" do
