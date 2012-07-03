@@ -22,7 +22,7 @@ module Seeds
                    :user_type              => user[:user_type],
                    :password               => password,
                    :password_confirmation  => password,
-                   :x_ray_station_id       => user[:station_id] )
+                   :x_ray_station_id       => user[:x_ray_station_id] )
     end
   end
 end
