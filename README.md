@@ -17,14 +17,16 @@ It's easy to work on a software project and never see the impact it makes on peo
 
 **Photos**
 
-- [CT Mission of Mercy](http://www.flickr.com/photos/ctmissionofmercy)
-- [GA Mission of Mercy](http://www.flickr.com/photos/29180323@N06/)
+- [Connecticut](http://www.flickr.com/photos/ctmissionofmercy)
+- [Georgia](http://www.flickr.com/photos/29180323@N06/)
+- [Minnesota](http://flic.kr/s/aHsjBtmHtb)
 
 **Videos**
 
-- [2012 Connecticut Mission of Mercy clinic](http://youtu.be/i3QQ0G-xcqc)
-- [2011 Connecticut Mission of Mercy clinic](http://youtu.be/aGAEtleugnk)
-- [2011 Georgia Mission of Mercy clinic](http://youtu.be/u4jvLU3RGfU)
+- [2012 Minnesota](http://bcove.me/6bv0v1x3)
+- [2012 Connecticut](http://youtu.be/i3QQ0G-xcqc)
+- [2011 Connecticut](http://youtu.be/aGAEtleugnk)
+- [2011 Georgia](http://youtu.be/u4jvLU3RGfU)
 
 ## Contributing
 
