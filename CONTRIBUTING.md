@@ -16,7 +16,7 @@ Contact Jordan through [GitHub (@jordanbyron)](https://github.com/jordanbyron) o
 1. If a ticket doesn't exist for your bug or feature, create one on GitHub.
     - **NOTE:** Don't be afraid to get feedback on your idea before you begin
       development work. In fact it is encouraged. I promise I don't bite :wink:
-2. Follow the [Installation](#installation) instructions below.
+2. Follow the [Installation](/mission-of-mercy/mission-of-mercy/blob/master/README.md#installation) instructions in the README.
 3. Create a topic branch.
 4. Implement your feature or bug fix.
 5. Add documentation for your feature or bug fix.
