@@ -18,8 +18,7 @@ gem 'draper'
 
 gem 'jquery-rails'
 
-gem 'rainbow'
-gem 'highline',     :require => false
+gem 'rails_setup'
 gem 'faker',        :require => false
 gem 'rubyzip',      :require => false
 

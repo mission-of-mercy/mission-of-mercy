@@ -6,7 +6,7 @@ require "zip/zip"
 namespace :zip do
 
   desc 'import zips from zipcode.csv'
-  task :import => :environment do
+  setup_task :import => :environment do
     zip_file = File.join(Rails.root, "zipcode.csv")
 
     unless File.exists?(zip_file)
@@ -38,13 +38,13 @@ namespace :zip do
 
       all_values << "(#{values})"
     end
-    
+
     conn.execute %Q{
       INSERT INTO patient_zipcodes (zip, city, state, latitude, longitude, county)
       VALUES #{all_values.join(',')}
     }
 
-    puts "#{Patient::Zipcode.count} zipcodes sucessfully imported"
+    done "#{Patient::Zipcode.count} zipcodes sucessfully imported"
   end
 
   task :download do
@@ -64,7 +64,7 @@ namespace :zip do
 
     FileUtils.rm(zip_file_path)
 
-    puts "Zipcode CSV downloaded"
+    done "Zipcode CSV downloaded"
   end
 end
 

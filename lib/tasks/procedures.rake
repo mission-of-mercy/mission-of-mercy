@@ -3,7 +3,7 @@ require 'csv'
 namespace :procedures do
 
   desc 'import procedures from ./procedures.csv if present, otherwise use ./data/procedures.csv'
-  task :import => :environment do
+  setup_task :import => :environment do
     Procedure.destroy_all
 
     custom_file   = File.join(Rails.root, "procedures.csv")
@@ -31,6 +31,6 @@ namespace :procedures do
       end
     end
 
-    puts "#{Procedure.count} procedures sucessfully imported"
+    done "#{Procedure.count} procedures sucessfully imported"
   end
 end

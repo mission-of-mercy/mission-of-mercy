@@ -3,7 +3,7 @@ require 'faker'
 namespace :db do
 
   desc 'generates sample clinic data'
-  task :sample => :environment do
+  setup_task :sample => :environment do
 
     Prescription.create(:name => "Amoxicillin", :strength => "500mg",
       :quantity => 21, :dosage => "1 q8h x7d")
@@ -14,7 +14,7 @@ namespace :db do
     Prescription.create(:name => "Pen VK", :strength => "500mg",
       :quantity => 28, :dosage => "1 q6h x 7d")
 
-    puts "#{Prescription.count} prescriptions created"
+    done "#{Prescription.count} prescriptions created"
 
     patients = []
 
@@ -41,13 +41,13 @@ namespace :db do
       patients << patient
     end
 
-    puts "#{Patient.count} patients created"
+    done "#{Patient.count} patients created"
 
     patients.sample(60).each do |patient|
       patient.flows.create(:area_id => ClinicArea::XRAY)
     end
 
-    puts "60 patients visited Radiology"
+    done "60 patients visited Radiology"
 
     treatment_areas = TreatmentArea.where("name <> 'Radiology'").all
     procedures      = Procedure.all
@@ -61,7 +61,7 @@ namespace :db do
       patient.check_out(treatment_areas.sample)
     end
 
-    puts "50 patients checked out of the clinic"
+    done "50 patients checked out of the clinic"
 
     prescriptions = Prescription.all
 
@@ -72,7 +72,7 @@ namespace :db do
       patient.flows.create(:area_id => ClinicArea::PHARMACY)
     end
 
-    puts "40 patients were given prescriptions"
+    done "40 patients were given prescriptions"
 
   end
 
