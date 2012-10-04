@@ -154,6 +154,8 @@ MoM.Checkin.hacks = function(){
         MoM.Checkin.useTextDate();
 
         $('form.new_patient').show();
+        $('#bottom_demographics_next').hide();
+        $('#bottom_demographics_submit').show();
         $('#reprint').hide();
         $('#previous-patient').hide();
         $('#waiver_agree_button').focus();
