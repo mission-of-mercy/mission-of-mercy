@@ -207,6 +207,7 @@ MoM.Checkin.toggleDateInput = function(){
 MoM.Checkin.useTextDate = function(){
   $('#date-select').hide();
   $('#date-text').show();
+  $('#date-text input').focus();
 
   $('#date_input').val('text');
   $('#date-format').slideDown();
@@ -215,6 +216,7 @@ MoM.Checkin.useTextDate = function(){
 MoM.Checkin.useSelectDate = function(){
   $('#date-text').hide();
   $('#date-select').show();
+  $('#date-select select').first().focus();
 
   $('#date_input').val('select');
   $('#date-format').slideUp();

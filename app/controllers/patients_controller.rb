@@ -108,7 +108,7 @@ class PatientsController < ApplicationController
       session[:date_input] = params[:date_input]
     end
 
-    @date_input = session[:date_input] || 'select'
+    @date_input = session[:date_input] || 'text'
   end
 
   def find_last_patient
