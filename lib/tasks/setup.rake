@@ -68,6 +68,7 @@ setup_task :setup do
   puts # Empty Line
 
   if console.agree("Would you like to run the test suite? (y/n)")
+    silence { Rake::Task["db:test:prepare"].invoke }
     Rake::Task["test"].invoke
   end
 
