@@ -7,10 +7,9 @@ class TreatmentArea < ActiveRecord::Base
                         order: 'code'
   has_many :patient_assignments
   has_many :patients, through: :patient_assignments,
-                      conditions: [
-                        'checked_out_at IS NULL AND patient_assignments.created_at BETWEEN ? AND ?',
-                        Time.now.beginning_of_day,
-                        Time.now.end_of_day]
+    conditions: proc { ["checked_out_at IS NULL AND patient_assignments.created_at BETWEEN ? AND ?",
+                        Time.now.beginning_of_day.utc,
+                        Time.now.end_of_day.utc] }
 
   accepts_nested_attributes_for :procedure_treatment_area_mappings, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['assigned'] == "0" }
@@ -21,7 +20,7 @@ class TreatmentArea < ActiveRecord::Base
 
   def self.current_capacity
     all.map do |area|
-      count = area.patients.count || 0
+      count = area.patients(true).count || 0
       [area.name, count]
     end
   end
