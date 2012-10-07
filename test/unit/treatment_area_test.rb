@@ -29,13 +29,17 @@ class TreatmentAreaTest < ActiveSupport::TestCase
     area = FactoryGirl.create(:treatment_area)
     p1 = FactoryGirl.create(:patient)
     p2 = FactoryGirl.create(:patient)
-    p3 = FactoryGirl.create(:patient)
 
-    [p1, p2, p3].each { |p| p.assign(area.id, false) }
-
-    p1.assignments.first.update_attribute(:created_at, Time.now - 2.days)
+    [p1, p2].each { |p| p.assign(area.id, false) }
 
     assert_equal 2, area.patients.count
+
+    Timecop.travel(2.days.from_now) do
+      p3 = FactoryGirl.create(:patient)
+      p3.assign(area.id, false)
+
+      assert_equal 1, area.patients(true).count
+    end
   end
 
   def test_should_properly_count_current_capacity

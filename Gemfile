@@ -31,4 +31,5 @@ group :test do
   gem 'database_cleaner', '~> 0.7.1'
   gem 'capybara-webkit'
   gem 'turn'
+  gem 'timecop'
 end
