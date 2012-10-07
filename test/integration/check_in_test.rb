@@ -30,6 +30,17 @@ class CheckInTest < ActionDispatch::IntegrationTest
     assert_equal find_button('Next')[:disabled], "false", "form should be enabled"
   end
 
+  test "date of birth visible field should be text by default" do
+    sign_in_as "Check in"
+
+    assert find('#date-text').visible?,
+      "date of birth text input should be visible"
+
+    refute find('#date-select').visible?,
+      "date of birth selects should be hidden"
+  end
+
+
   test "previous patients chart should be printed when there is one" do
     patient = FactoryGirl.create(:patient)
     sign_in_as "Check in"
