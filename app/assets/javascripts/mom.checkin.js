@@ -53,6 +53,10 @@ MoM.Checkin.init = function(options){
     MoM.Checkin.togglePreviousMoM();
   });
 
+  $('input[name="has_emergency_contact"]').change(function(e) {
+    MoM.Checkin.toggleEmergencyContact();
+  });
+
   $('#patient_zip').keyup(function(){
     if($('#patient_zip').val().length >= 5)
       MoM.Checkin.lookupZip();
@@ -82,6 +86,7 @@ MoM.Checkin.init = function(options){
 
   MoM.Checkin.toggleOtherHeardAbout(false);
   MoM.Checkin.togglePreviousMoM(false);
+  MoM.Checkin.toggleEmergencyContact(false);
   MoM.Checkin.togglePatientPain(false);
   MoM.Checkin.toggleOtherRace(false);
 
@@ -229,8 +234,16 @@ MoM.Checkin.togglePreviousMoM = function(animate){
     previousMoM.slideUp();
 }
 
-MoM.Checkin.lookupZip = function(){
+MoM.Checkin.toggleEmergencyContact = function(animate){
+  var emergencyContact = $('#emergency_contact_form');
 
+  if($('#has_emergency_contact_true').is(':checked') == true)
+    emergencyContact.slideDown();
+  else
+    emergencyContact.slideUp();
+}
+
+MoM.Checkin.lookupZip = function(){
   $('#zip-spinner').show();
   $.getJSON("/autocomplete/zip.json", {
     zip: $('#patient_zip').val()

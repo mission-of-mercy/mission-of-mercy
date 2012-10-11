@@ -1,5 +1,6 @@
 %h4 4: Additional Information
 %div.input
+
   %div.row
     %span.label= f.label :travel_time
     %span.formw
@@ -10,6 +11,7 @@
         = f.text_field :travel_time_minutes, :size => 2
       - else
         = f.text_field :travel_time
+
   %div.row
     %span.label
       %label Attended previous clinic?
@@ -22,11 +24,37 @@
   #previous_mom_location_div.row
     %span.label
       Clinic(s) attended
-      %br
-    = f.fields_for :previous_mom_clinics, patient.previous_mom_clinics.sort_by(&:clinic_year) do |p|
-      %span.formw
-        = p.hidden_field :location
-        = p.hidden_field :clinic_year
-        = p.check_box :attended
-        = p.label :attended, p.object.description
-      %br
+    .previous_mom_clinics_wrapper
+      = f.fields_for :previous_mom_clinics,
+          patient.previous_mom_clinics.sort_by(&:clinic_year) do |p|
+        %span.formw
+          = p.hidden_field :location
+          = p.hidden_field :clinic_year
+          = p.check_box :attended
+          = p.label :attended, p.object.description
+        %br
+
+  %div.row
+    %span.label
+      %label Has emergency contact?
+    %span.formw
+      = radio_button_tag :has_emergency_contact, true
+      = label_tag :has_emergency_contact, "Yes", :value => true
+      = radio_button_tag :has_emergency_contact, false
+      = label_tag :has_emergency_contact, "No", :value => false
+
+  #emergency_contact_form.row
+    %span.label
+      Emergency contact
+    .emergency_contact_wrapper
+      = f.fields_for :emergency_contact do |ec|
+        .row.first_row
+          = ec.label :full_name
+          = ec.text_field :full_name
+        .row
+          = ec.label :relationship
+          = ec.text_field :relationship
+        .row
+          = ec.label :phone
+          = ec.text_field :phone
+        %br

@@ -19,14 +19,14 @@
   = f.error_messages
   = f.hidden_field :previous_chart_number
 
-  %div.input-left
+  %div.input-left.check-in-left-side
     = render :partial => 'demographics',
              :locals  => { :f => f, :patient => @patient }
 
     = render :partial => 'contact_information',
              :locals  => { :f => f, :patient => @patient }
 
-  %div.input-right
+  %div.input-right.check-in-right-side
     = render :partial => 'visit_details',
              :locals  => { :f => f, :patient => @patient }
 
