@@ -1,0 +1,23 @@
+%div.contact_information_header
+  %h4 2: Contact Information
+  %button.same_as_previous_patient_button Same as previous patient
+
+%div.input
+  %div.row
+    %span.label= f.label :phone
+    %span.formw= f.text_field :phone
+  %div.row
+    %span.label= f.label :street
+    %span.formw= f.text_field :street
+  %div.row
+    %span.label= f.label :zip
+    %span.formw= f.text_field :zip
+    = image_tag "spinner.gif", :id => "zip-spinner", :class => "spinner"
+  %div.row
+    %span.label= f.label :city
+    %span.formw= f.text_field :city
+  %div.row
+    %span.label= f.label :state
+    %span.formw= f.text_field :state
+%br
+

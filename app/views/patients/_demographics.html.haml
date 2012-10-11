@@ -1,0 +1,30 @@
+%h4 1: Demographics
+
+%div.input
+  %div.row
+    %span.label= f.label :first_name
+    %span.formw= f.text_field :first_name
+  %div.row
+    %span.label= f.label :last_name
+    %span.formw= f.text_field :last_name
+  %div.row
+    %span.label= f.label :date_of_birth
+    = image_tag "cog.png", :id => "date-input-toggle",
+    :title => "Toggle date input method"
+    %span#date-input-container.formw
+      %span#date-select
+        = f.date_select :date_of_birth, @patient.dob_select_options
+      %span#date-text
+        = f.text_field :date_of_birth, :value => @patient.dob
+    #date-format.formexample
+      Format: mm/dd/yyyy
+  %div.row
+    %span.label= f.label :sex
+    %span.formw= f.select :sex, *@patient.sex_select_options
+  %div.row
+    %span.label= f.label :race
+    %span.formw= f.select :race, *RaceDecorator.options_for_select
+  #race_other_div.row
+    %span.label= f.label :race_other, 'Specify race'
+    %span.formw= f.text_field :race_other
+
