@@ -35,6 +35,7 @@ class Patient < ActiveRecord::Base
                                    :foreign_key => "zip",
                                    :primary_key => "zip"
 
+  has_one :emergency_contact,      :dependent  => :delete
   belongs_to :survey,              :dependent  => :delete
 
   accepts_nested_attributes_for :survey
