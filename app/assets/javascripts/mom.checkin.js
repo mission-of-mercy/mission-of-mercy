@@ -86,7 +86,7 @@ MoM.Checkin.init = function(options){
 
   MoM.Checkin.toggleOtherHeardAbout(false);
   MoM.Checkin.togglePreviousMoM(false);
-  MoM.Checkin.toggleEmergencyContact(false);
+  MoM.Checkin.toggleEmergencyContact(options.hasEmergencyContact);
   MoM.Checkin.togglePatientPain(false);
   MoM.Checkin.toggleOtherRace(false);
 
@@ -234,13 +234,20 @@ MoM.Checkin.togglePreviousMoM = function(animate){
     previousMoM.slideUp();
 }
 
-MoM.Checkin.toggleEmergencyContact = function(animate){
+MoM.Checkin.toggleEmergencyContact = function(forceEnable){
   var $emergencyContact = $('#emergency_contact_form');
 
-  if($('#has_emergency_contact').is(':checked') == true) {
+  if (forceEnable) {
+    $('#has_emergency_contact').attr('checked', true);
+  }
+
+  if ($('#has_emergency_contact').is(':checked') == true) {
     $emergencyContact.slideDown();
     $emergencyContact.find('input').removeAttr('disabled');
-    $emergencyContact.find('input').first().focus();
+    // Don't focus if we're forcing the enabling of it, this happens on
+    // page load
+    if (!forceEnable)
+      $emergencyContact.find('input').first().focus();
   } else {
     $emergencyContact.slideUp();
     $emergencyContact.find('input').attr('disabled', true);

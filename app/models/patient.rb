@@ -242,6 +242,10 @@ class Patient < ActiveRecord::Base
     end
   end
 
+  def has_emergency_contact?
+    emergency_contact && emergency_contact.try(:persisted?)
+  end
+
   private
 
   def update_survey

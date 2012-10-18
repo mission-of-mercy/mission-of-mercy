@@ -7,7 +7,8 @@
           contactInformation: #{@last_patient.try(:contact_information).to_json || 'null'}
         },
         requireWaiverConfirmation: #{@patient.errors.empty?},
-        dateInput: '#{@date_input}'
+        dateInput: '#{@date_input}',
+        hasEmergencyContact: #{@patient.has_emergency_contact?}
       };
 
       MoM.Checkin.init(options);
@@ -20,15 +21,15 @@
   = f.hidden_field :previous_chart_number
 
   %div.input-left.check-in-left-side
-    = render :partial => 'demographics',
+    = render :partial => 'patients/demographics',
              :locals  => { :f => f, :patient => @patient }
 
-    = render :partial => 'contact_information',
+    = render :partial => 'patients/contact_information',
              :locals  => { :f => f, :patient => @patient }
 
   %div.input-right.check-in-right-side
-    = render :partial => 'visit_details',
+    = render :partial => 'patients/visit_details',
              :locals  => { :f => f, :patient => @patient }
 
-    = render :partial => 'additional_information',
+    = render :partial => 'patients/additional_information',
              :locals => { :f => f, :patient => @patient }
