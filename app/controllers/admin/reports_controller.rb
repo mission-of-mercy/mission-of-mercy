@@ -19,6 +19,8 @@ class Admin::ReportsController < ApplicationController
   def treatment_area_distribution
     @areas = TreatmentArea.order('name')
     @current_capacity = TreatmentArea.current_capacity
+
+    @areas_with_patients = TreatmentArea.with_patients
   end
 
   def post_clinic

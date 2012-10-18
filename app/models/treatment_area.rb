@@ -25,6 +25,10 @@ class TreatmentArea < ActiveRecord::Base
     end
   end
 
+  def self.with_patients
+    joins(:patients).includes(:patients).all
+  end
+
   def radiology?
     name == RADIOLOGY_NAME
   end
