@@ -32,7 +32,8 @@
 %p
   Total Procedures:
   = @report.procedure_count
-  = bar_graph('procedures_per_hour_graph', procedures_per_hour(@report.procedures_per_hour), {style: "width: 800px; height: 300px;"})
+  - if params[:day] != 'All'
+    = bar_graph('procedures_per_hour_graph', procedures_per_hour(@report.procedures_per_hour), {style: "width: 800px; height: 300px;"})
 
   %br
   Total Procedures Value:
