@@ -6,7 +6,7 @@ class Reports::ClinicSummary
                 :prescriptions, :prescription_count, :prescription_value,
                 :grand_total, :next_chart_number, :xrays, :checkouts,
                 :pre_med_count, :pre_meds, :pre_med_value,
-                :procedures_per_hour
+                :procedures_per_hour, :patients_per_hour, :checkouts_per_hour
 
   TIME_SPANS = [ "All", "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM",
                  "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM",
@@ -27,9 +27,10 @@ class Reports::ClinicSummary
     @day  = Date.strptime(day, "%m/%d/%Y") if day.kind_of?(String) && day != "All"
     @span = "All" if span == "All" || @day == "All"
 
-    @patient_count = load_patient_count
+    collect_patients
+
     @xrays         = load_xray_count
-    @checkouts     = load_checkout_count
+    collect_checkouts
 
     collect_procedures
     collect_prescriptions
@@ -55,21 +56,45 @@ class Reports::ClinicSummary
 
   private
 
+  def collect_patients
+    load_patient_count
+    load_patients_per_hour
+  end
+
   def load_patient_count
     @patient_count = Patient.for_time('patients', @day, @span).count.to_i
   end
 
+  def load_patients_per_hour
+    query = Patient.for_time('patients', @day, @span)
+    @patients_per_hour = records_per_hour(query)
+  end
   def load_xray_count
-    load_area_count(ClinicArea::XRAY)
+    area_count(ClinicArea::XRAY)
+  end
+
+  def collect_checkouts
+    load_checkout_count
+    load_checkouts_per_hour
   end
 
   def load_checkout_count
-    load_area_count(ClinicArea::CHECKOUT)
+    @checkouts = area_count(ClinicArea::CHECKOUT)
   end
 
-  def load_area_count(area_id)
-    PatientFlow.for_time('patient_flows', @day, @span)
-      .where('area_id = ?', area_id).count.to_i
+  def load_checkouts_per_hour
+    query = patient_flows(ClinicArea::CHECKOUT)
+    @checkouts_per_hour = records_per_hour(query)
+  end
+
+  def area_count(area_id)
+    patient_flows(area_id).count.to_i
+  end
+
+  def patient_flows(area_id)
+    PatientFlow.
+      for_time('patient_flows', @day, @span).
+      where('area_id = ?', area_id)
   end
 
   def collect_procedures
@@ -97,19 +122,23 @@ class Reports::ClinicSummary
 
   def collect_procedures_per_hour
     query = PatientProcedure.for_time('patient_procedures', @day, @span)
+    @procedures_per_hour = records_per_hour(query)
+  end
 
-    @procedures_per_hour = query.
+  def records_per_hour(query)
+    records = query.
       select("TO_TIMESTAMP(TO_CHAR(created_at, 'YYYYMMDDHH2400'),'YYYYMMDDHH24MI') AS hour, COUNT(*) AS total").
       group('hour').
       order('hour')
 
     # Not sure why Postgres is returning the hour as a String instead of DateTime
     # and the total as a string. This loop normalizes to sensible classes
-    @procedures_per_hour.each do |p|
+    records.each do |p|
       p.hour = Time.zone.parse(p.hour)
       p.total = p.total.to_i
     end
   end
+
 
   def collect_prescriptions
     query = Prescription.for_time('patient_prescriptions', @day, @span)

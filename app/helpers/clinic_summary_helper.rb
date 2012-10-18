@@ -1,5 +1,5 @@
 module ClinicSummaryHelper
-  def procedures_per_hour(procedures)
+  def per_hour(procedures)
     return [] if procedures.empty?
 
     start_time = procedures.first.hour
