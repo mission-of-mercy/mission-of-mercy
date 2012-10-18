@@ -22,18 +22,22 @@
 %p
   Total Patients Checked In:
   = @report.patient_count
+  - if params[:day] != 'All'
+    = bar_graph('checkins_per_hour_graph', per_hour(@report.patients_per_hour), {style: "width: 800px; height: 300px;"})
   %br
   Total Patients Given X-Rays:
   = @report.xrays
   %br
   Total Patients Checked Out:
   = @report.checkouts
+  - if params[:day] != 'All'
+    = bar_graph('checkouts_per_hour_graph', per_hour(@report.checkouts_per_hour), {style: "width: 800px; height: 300px;"})
 
 %p
   Total Procedures:
   = @report.procedure_count
   - if params[:day] != 'All'
-    = bar_graph('procedures_per_hour_graph', procedures_per_hour(@report.procedures_per_hour), {style: "width: 800px; height: 300px;"})
+    = bar_graph('procedures_per_hour_graph', per_hour(@report.procedures_per_hour), {style: "width: 800px; height: 300px;"})
 
   %br
   Total Procedures Value:
