@@ -19,7 +19,7 @@
 %h2
   %u Summary
 
-%p
+%div
   Total Patients Checked In:
   = @report.patient_count
   - if params[:day] != 'All'
@@ -33,13 +33,13 @@
   - if params[:day] != 'All'
     = bar_graph('checkouts_per_hour_graph', per_hour(@report.checkouts_per_hour), {style: "width: 800px; height: 300px;"})
 
-%p
-  Total Procedures:
-  = @report.procedure_count
+%div
+  #total_procedures
+    Total Procedures: #{@report.procedure_count}
+    %a#procedure_graph_link{href: '#'} View Graph
   - if params[:day] != 'All'
-    = bar_graph('procedures_per_hour_graph', per_hour(@report.procedures_per_hour), {style: "width: 800px; height: 300px;"})
+    = bar_graph('procedures_per_hour_graph', per_hour(@report.procedures_per_hour), {style: "width: 800px; height: 300px; display: none"})
 
-  %br
   Total Procedures Value:
   = real_currency @report.procedure_value
   %br
@@ -58,7 +58,7 @@
   Grand Total Value:
   = real_currency @report.grand_total
 
-%p
+%div
   Next Chart Number:
   = @report.next_chart_number
 
@@ -128,5 +128,14 @@
   Grand Total Value:
   = real_currency @report.grand_total
 
-%p
+%div
   = link_to "Back", admin_reports_path, :class => "back"
+
+:javascript
+  $('#procedure_graph_link').click(function() {
+    if($('#procedures_per_hour_graph').is(":hidden")) {
+      $('#procedures_per_hour_graph').slideDown();
+    } else {
+      $('#procedures_per_hour_graph').slideUp();
+    }
+  });
