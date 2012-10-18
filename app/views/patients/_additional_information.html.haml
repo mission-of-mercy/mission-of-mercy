@@ -38,10 +38,8 @@
     %span.label
       %label Has emergency contact?
     %span.formw
-      = radio_button_tag :has_emergency_contact, true
-      = label_tag :has_emergency_contact, "Yes", :value => true
-      = radio_button_tag :has_emergency_contact, false
-      = label_tag :has_emergency_contact, "No", :value => false
+      = check_box_tag :has_emergency_contact, true
+      = label_tag :has_emergency_contact, 'Yes'
 
   #emergency_contact_form.row
     %span.label

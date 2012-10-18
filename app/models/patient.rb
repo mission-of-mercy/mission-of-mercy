@@ -30,13 +30,11 @@ class Patient < ActiveRecord::Base
   has_many :assignments,           :class_name  => 'PatientAssignment',
                                    :dependent   => :delete_all
   has_many :treatment_areas,       :through     => :assignments
-
-  has_one :zipcode,                :class_name  => "Patient::Zipcode",
+  has_one  :zipcode,               :class_name  => "Patient::Zipcode",
                                    :foreign_key => "zip",
                                    :primary_key => "zip"
-
-  has_one :emergency_contact,      :dependent  => :delete
   belongs_to :survey,              :dependent  => :delete
+  has_one :emergency_contact,      :dependent  => :delete
 
   accepts_nested_attributes_for :survey
   accepts_nested_attributes_for :patient_prescriptions, :allow_destroy => true,
@@ -47,6 +45,8 @@ class Patient < ActiveRecord::Base
 
   accepts_nested_attributes_for :previous_mom_clinics, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['attended'] == "0" }
+
+  accepts_nested_attributes_for :emergency_contact, :allow_destroy => true
 
   validate              :time_in_pain_format
   validate              :date_of_birth_entry

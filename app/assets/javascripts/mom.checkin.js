@@ -235,12 +235,16 @@ MoM.Checkin.togglePreviousMoM = function(animate){
 }
 
 MoM.Checkin.toggleEmergencyContact = function(animate){
-  var emergencyContact = $('#emergency_contact_form');
+  var $emergencyContact = $('#emergency_contact_form');
 
-  if($('#has_emergency_contact_true').is(':checked') == true)
-    emergencyContact.slideDown();
-  else
-    emergencyContact.slideUp();
+  if($('#has_emergency_contact').is(':checked') == true) {
+    $emergencyContact.slideDown();
+    $emergencyContact.find('input').removeAttr('disabled');
+    $emergencyContact.find('input').first().focus();
+  } else {
+    $emergencyContact.slideUp();
+    $emergencyContact.find('input').attr('disabled', true);
+  }
 }
 
 MoM.Checkin.lookupZip = function(){
