@@ -11,5 +11,11 @@
                 @current_capacity,
                 { :style => "width:845px; height:200px" }
 
+#treatment_area_details
+  - @areas_with_patients.each do |area|
+    %h3= area.name
+    %ul
+      - area.patients.each do |patient|
+        %li= patient.full_name
 %p
   = link_to "Back", admin_reports_path, :class => "back"

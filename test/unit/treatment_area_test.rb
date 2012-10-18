@@ -2,6 +2,21 @@ require 'test_helper'
 
 class TreatmentAreaTest < ActiveSupport::TestCase
 
+  def test_should_only_return_treatment_areas_with_patients
+    patients = (1 .. 3).map { FactoryGirl.create(:patient) }
+    treatment_area = FactoryGirl.create(:treatment_area)
+    patients.each do |patient|
+      FactoryGirl.create(:patient_assignment, patient: patient, treatment_area: treatment_area)
+    end
+
+    empty_treatment_area = FactoryGirl.create(:treatment_area)
+
+    areas_with_patients = TreatmentArea.with_patients
+
+    assert areas_with_patients.include?(treatment_area)
+    assert !areas_with_patients.include?(empty_treatment_area)
+  end
+
   def test_should_count_only_checked_in_patients
     radiology = FactoryGirl.create(:treatment_area, name: TreatmentArea::RADIOLOGY_NAME)
 
