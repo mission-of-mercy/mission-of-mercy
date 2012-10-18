@@ -5,14 +5,20 @@ class Reports::ClinicSummary
   attr_reader   :patient_count, :procedures, :procedure_count, :procedure_value,
                 :prescriptions, :prescription_count, :prescription_value,
                 :grand_total, :next_chart_number, :xrays, :checkouts,
-                :pre_med_count, :pre_meds, :pre_med_value
+                :pre_med_count, :pre_meds, :pre_med_value,
+                :procedures_per_hour
 
   TIME_SPANS = [ "All", "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM",
                  "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM",
                  "4:00 PM", "5:00 PM" ]
 
   def initialize(day=Date.today, span="All")
-    [Patient, Prescription, PatientFlow, PreMed, Procedure].each do |model|
+    [Patient,
+      Prescription,
+      PatientFlow,
+      PreMed,
+      Procedure,
+      PatientProcedure].each do |model|
       model.extend(TimeScope)
     end
 
@@ -67,6 +73,11 @@ class Reports::ClinicSummary
   end
 
   def collect_procedures
+    collect_total_procedures
+    collect_procedures_per_hour
+  end
+
+  def collect_total_procedures
     query = Procedure.for_time('patient_procedures', @day, @span)
 
     summary = query.select(
@@ -82,6 +93,22 @@ class Reports::ClinicSummary
       count(*) * cost as subtotal_value})
       .joins(:patient_procedures)
       .group('procedures.code, procedures.description, procedures.cost')
+  end
+
+  def collect_procedures_per_hour
+    query = PatientProcedure.for_time('patient_procedures', @day, @span)
+
+    @procedures_per_hour = query.
+      select("TO_TIMESTAMP(TO_CHAR(created_at, 'YYYYMMDDHH2400'),'YYYYMMDDHH24MI') AS hour, COUNT(*) AS total").
+      group('hour').
+      order('hour')
+
+    # Not sure why Postgres is returning the hour as a String instead of DateTime
+    # and the total as a string. This loop normalizes to sensible classes
+    @procedures_per_hour.each do |p|
+      p.hour = Time.zone.parse(p.hour)
+      p.total = p.total.to_i
+    end
   end
 
   def collect_prescriptions
