@@ -28,6 +28,9 @@
   %br
   Total Patients Given X-Rays:
   = @report.xrays
+  %a{href: '#', data: {toggle: 'collapse', target: '#xrays_per_hour_graph'}} View Graph
+  - if params.fetch(:day, 'All') != 'All'
+    = bar_graph('xrays_per_hour_graph', per_hour(@report.xrays_per_hour), {style: "width: 800px; height: 300px; display: none;"})
   %br
   Total Patients Checked Out:
   = @report.checkouts
