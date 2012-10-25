@@ -17,7 +17,7 @@ module ClinicSummaryHelper
     end
 
     data.collect do |k, v|
-      [k.strftime('%Y/%m/%d %H:%M'), v]
+      [k.strftime('%H:%M'), v]
     end
   end
 end
