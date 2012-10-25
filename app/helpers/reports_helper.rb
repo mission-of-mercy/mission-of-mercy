@@ -132,7 +132,9 @@ module ReportsHelper
 
   def pie_chart_data(original_data)
     original_data.
-      collect {|p| {:label => p.full_description, :data => p.subtotal_count.to_i}}.to_json
+      collect do |p|
+        {:label => p.full_description, :data => p.subtotal_count.to_i}
+      end.sort {|a,b| a[:data] <=> b[:data]}.to_json
   end
 
 end
