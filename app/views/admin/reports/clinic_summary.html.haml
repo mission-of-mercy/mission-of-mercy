@@ -22,22 +22,24 @@
 %div
   Total Patients Checked In:
   = @report.patient_count
-  - if params[:day] != 'All'
-    = bar_graph('checkins_per_hour_graph', per_hour(@report.patients_per_hour), {style: "width: 800px; height: 300px;"})
+  %a{href: '#', data: {toggle: 'collapse', target: '#checkins_per_hour_graph'}} View Graph
+  - if params.fetch(:day, 'All') != 'All'
+    = bar_graph('checkins_per_hour_graph', per_hour(@report.patients_per_hour), {style: "width: 800px; height: 300px; display: none;"})
   %br
   Total Patients Given X-Rays:
   = @report.xrays
   %br
   Total Patients Checked Out:
   = @report.checkouts
-  - if params[:day] != 'All'
-    = bar_graph('checkouts_per_hour_graph', per_hour(@report.checkouts_per_hour), {style: "width: 800px; height: 300px;"})
+  %a{href: '#', data: {toggle: 'collapse', target: '#checkouts_per_hour_graph'}} View Graph
+  - if params.fetch(:day, 'All') != 'All'
+    = bar_graph('checkouts_per_hour_graph', per_hour(@report.checkouts_per_hour), {style: "width: 800px; height: 300px; display: none;"})
 
 %div
   #total_procedures
     Total Procedures: #{@report.procedure_count}
-    %a#procedure_graph_link{href: '#'} View Graph
-  - if params[:day] != 'All'
+    %a{href: '#', data: {toggle: 'collapse', target: '#procedures_per_hour_graph'}} View Graph
+  - if params.fetch(:day, 'All') != 'All'
     = bar_graph('procedures_per_hour_graph', per_hour(@report.procedures_per_hour), {style: "width: 800px; height: 300px; display: none"})
 
   Total Procedures Value:
@@ -131,11 +133,3 @@
 %div
   = link_to "Back", admin_reports_path, :class => "back"
 
-:javascript
-  $('#procedure_graph_link').click(function() {
-    if($('#procedures_per_hour_graph').is(":hidden")) {
-      $('#procedures_per_hour_graph').slideDown();
-    } else {
-      $('#procedures_per_hour_graph').slideUp();
-    }
-  });
