@@ -3,17 +3,23 @@
 = header do
   %h1 Treatment Areas
 
-%table
-  %tr
-    %th Name
-    %th{:colspan=>2} Controls
-
-  - @treatment_areas.each do |area|
-    %tr{:class=>cycle('even', 'odd')}
-      %td= area.name
-      %td= link_to 'Edit', edit_admin_treatment_area_path(area)
-      %td= link_to 'Destroy', admin_treatment_area_path(area), :method=>:delete, :confirm=>"Are you sure?"
+%table.table.table-condensed.table-striped.table-hover
+  %thead
+    %tr
+      %th Name
+      %th Capacity
+  %tbody
+    - @treatment_areas.each do |area|
+      %tr
+        %td= area.name
+        %td= area.capacity
+        %td.controls
+          = link_to 'Edit', edit_admin_treatment_area_path(area), 
+            :class => 'btn btn-mini'
+          = link_to 'Destroy', admin_treatment_area_path(area),
+            :method => :delete, :'data-confirm' => "Are you sure?", 
+            :class  => 'btn btn-danger btn-mini'
 
 
 %p
-  = link_to 'New', new_admin_treatment_area_path
+  = link_to 'New', new_admin_treatment_area_path, :class => "btn"
