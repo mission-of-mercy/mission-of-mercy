@@ -1,7 +1,7 @@
 # Contributing to Mission of Mercy
 
 We :heart: pull requests! Features and bugs are tracked through
-[Github Issues](https://github.com/mission-of-mercy/mission-of-mercy/issues).
+[Trello](https://trello.com/b/6Gxls2uM).
 
 Contributors retain copyright to their work but must agree to release their
 contributions under the same terms as this project. For details, please see the
@@ -13,7 +13,7 @@ Contact Jordan through [GitHub (@jordanbyron)](https://github.com/jordanbyron) o
 
 ### Submitting a Pull Request
 
-1. If a ticket doesn't exist for your bug or feature, create one on GitHub.
+1. If a story doesn't exist for your bug or feature, create one on Trello.
     - **NOTE:** Don't be afraid to get feedback on your idea before you begin
       development work. In fact it is encouraged. I promise I don't bite :wink:
 2. Follow the [Installation](/mission-of-mercy/mission-of-mercy/blob/master/README.md#installation) instructions in the README.
