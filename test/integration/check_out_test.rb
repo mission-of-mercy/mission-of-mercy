@@ -17,7 +17,7 @@ class CheckOutTest < ActionDispatch::IntegrationTest
   test "survey questions are asked when first checked out" do
     check_out @patient, false # Don't skip the survey
 
-    path = edit_treatment_area_patient_survey_path(@treatment_area, @patient)
+    path = treatment_area_patient_survey_path(@treatment_area, @patient)
 
     assert_current_path path
   end
