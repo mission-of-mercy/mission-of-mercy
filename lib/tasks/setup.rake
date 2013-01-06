@@ -1,3 +1,21 @@
+require 'rails_setup'
+
+namespace :setup do
+  desc 'Generate a secret token file'
+  setup_task :secret_token do
+    secret_token = Rails.root.join('config', 'initializers', 'secret_token.rb').to_s
+
+    unless File.exists?(secret_token)
+      secret   = SecureRandom.hex(64)
+      template = ERB.new(File.read(secret_token + '.example'))
+
+      File.open(secret_token, 'w') {|f| f.write(template.result(binding)) }
+    end
+
+    done "secret_token.rb"
+  end
+end
+
 desc 'runs the tasks necessary to setup MoM'
 setup_task :setup do
 
@@ -30,6 +48,8 @@ setup_task :setup do
     end
 
     done "mom.yml"
+    
+    Rake::Task["setup:secret_token"].invoke
   end
 
   section "Database" do

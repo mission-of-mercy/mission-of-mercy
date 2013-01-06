@@ -1,6 +1,8 @@
 namespace :travis do
   desc 'Create database.yml for testing'
   task :setup do
+    
+    Rake::Task["setup:secret_token"].invoke
 
     # Setup our database.yml file
     #
