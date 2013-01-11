@@ -22,6 +22,6 @@
 
 %p
   = link_to 'Reset Clinic DB', admin_maintenance_reset_path,
-    :class   => "warning",
-    :confirm => "WARNING: This will destroy all patient information! Are you sure you want to proceed?",
+    :class   => "btn btn-danger",
+    :'data-confirm' => "WARNING: This will destroy all patient information! Are you sure you want to proceed?",
     :method  => :post
