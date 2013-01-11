@@ -3,18 +3,23 @@
 = header do
   %h1 Support Requests
   %br
-  = button_to "Destroy All", destroy_all_admin_support_requests_path, :confirm => 'Are you sure?', :method => :delete
+  = button_to "Destroy All", destroy_all_admin_support_requests_path, 
+  :'data-confirm' => 'Are you sure?', :method => :delete,
+  :class => 'btn btn-danger'
 
 %table
-  %tr
-    %th Station Name
-    %th Resolved
-    %th IP
-    %th Controls
+  %thead
+    %tr
+      %th Station Name
+      %th Resolved
+      %th IP
 
-  - @requests.each do |request|
-    %tr{:class=> cycle('even', 'odd')}
-      %td= request.station_description
-      %td= request.resolved
-      %td= request.ip_address
-      %td= link_to "Destroy", admin_support_request_path(request), :confirm => 'Are you sure?', :method => :delete
+  %tbody
+    - @requests.each do |request|
+      %tr
+        %td= request.station_description
+        %td= request.resolved
+        %td= request.ip_address
+        %td.controls
+          = link_to "Destroy", admin_support_request_path(request), 
+          :'data-confirm' => 'Are you sure?', :method => :delete
