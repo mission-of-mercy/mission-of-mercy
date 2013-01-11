@@ -4,18 +4,19 @@
   %h1 Pre-Meds
 
 %table
-  %tr
-    %th Description
-    %th Cost
-
-  - @pre_meds.each do |pre_med|
+  %thead
     %tr
-      %td= pre_med.description
-      %td= pre_med.cost
-      %td= link_to 'Edit', edit_admin_pre_med_path(pre_med)
-      %td= link_to 'Destroy', admin_pre_med_path(pre_med), :confirm => 'Are you sure?', :method => :delete
-
-%br
+      %th Description
+      %th Cost
+  %tbody
+    - @pre_meds.each do |pre_med|
+      %tr
+        %td= pre_med.description
+        %td= real_currency pre_med.cost
+        %td.controls
+          = link_to 'Edit', edit_admin_pre_med_path(pre_med)
+          = link_to 'Destroy', admin_pre_med_path(pre_med), 
+          :'data-confirm' => 'Are you sure?', :method => :delete
 
 %p
-  = link_to 'New Pre-Med', new_admin_pre_med_path
+  = link_to 'New Pre-Med', new_admin_pre_med_path, class: 'btn'
