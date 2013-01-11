@@ -3,6 +3,7 @@
 @import twitter/bootstrap/tables
 @import twitter/bootstrap/buttons
 @import twitter/bootstrap/sprites
+@import twitter/bootstrap/pagination
 
 a.btn
   text-decoration: none
@@ -16,4 +17,6 @@ table
       @extend .btn, .btn-mini
       &[data-confirm]
         @extend .btn-danger
-    
+        
+div.pagination ul
+  padding: 0

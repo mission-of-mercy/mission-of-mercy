@@ -12,6 +12,7 @@ gem 'dynamic_form'
 gem 'draper'
 
 gem 'jquery-rails'
+gem 'will_paginate-bootstrap'
 
 gem 'rails_setup'
 gem 'faker',        :require => false

@@ -472,12 +472,6 @@ select.change_treatment_area{
   margin-right: 20px;
 }
 
-/* Pagination */
-
-div.pagination {
-  margin: 1em 0;
-}
-
 /* Autocomplete */
 
 div.autocomplete {
