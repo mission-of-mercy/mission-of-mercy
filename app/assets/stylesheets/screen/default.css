@@ -225,7 +225,7 @@ table.hidden{
 }
 
 a { color: #000; }
-a:visited { color: #666; }
+a:visited { color: #000; }
 a:hover { color: #000; }
 
 .field_with_errors {

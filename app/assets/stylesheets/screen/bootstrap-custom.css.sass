@@ -1,0 +1,15 @@
+@import twitter/bootstrap/mixins
+@import twitter/bootstrap/variables
+@import twitter/bootstrap/tables
+@import twitter/bootstrap/buttons
+
+a.btn
+  text-decoration: none
+
+table
+  @extend .table, .table-condensed, .table-striped, .table-hover
+  td.controls
+    text-align: right
+    a
+      margin-left: 5px
+    
