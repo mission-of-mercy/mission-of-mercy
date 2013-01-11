@@ -2,6 +2,7 @@
 @import twitter/bootstrap/variables
 @import twitter/bootstrap/tables
 @import twitter/bootstrap/buttons
+@import twitter/bootstrap/sprites
 
 a.btn
   text-decoration: none
@@ -12,4 +13,7 @@ table
     text-align: right
     a
       margin-left: 5px
+      @extend .btn, .btn-mini
+      &[data-confirm]
+        @extend .btn-danger
     

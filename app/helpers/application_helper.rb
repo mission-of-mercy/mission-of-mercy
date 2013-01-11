@@ -30,6 +30,16 @@ module ApplicationHelper
   def real_currency(number)
     number_to_currency(number,:delimiter => ",", :unit => "$ ",:separator => ".")
   end
+  
+  def image_for_yes_no(value)
+    css_class = if value
+      'ok'
+    else
+      'remove'
+    end
+    
+    content_tag(:span, '', class: "icon-#{css_class}")
+  end
 
   def body_css
     if current_user.nil?

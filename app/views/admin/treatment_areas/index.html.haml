@@ -14,11 +14,9 @@
         %td= area.name
         %td= area.capacity
         %td.controls
-          = link_to 'Edit', edit_admin_treatment_area_path(area), 
-            :class => 'btn btn-mini'
+          = link_to 'Edit', edit_admin_treatment_area_path(area)
           = link_to 'Destroy', admin_treatment_area_path(area),
-            :method => :delete, :'data-confirm' => "Are you sure?", 
-            :class  => 'btn btn-danger btn-mini'
+            :method => :delete, :'data-confirm' => "Are you sure?"
 
 
 %p
