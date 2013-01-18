@@ -5,14 +5,20 @@ class Reports::ClinicSummary
   attr_reader   :patient_count, :procedures, :procedure_count, :procedure_value,
                 :prescriptions, :prescription_count, :prescription_value,
                 :grand_total, :next_chart_number, :xrays, :checkouts,
-                :pre_med_count, :pre_meds, :pre_med_value
+                :pre_med_count, :pre_meds, :pre_med_value,
+                :procedures_per_hour, :patients_per_hour, :checkouts_per_hour, :xrays_per_hour
 
   TIME_SPANS = [ "All", "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM",
                  "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM",
                  "4:00 PM", "5:00 PM" ]
 
   def initialize(day=Date.today, span="All")
-    [Patient, Prescription, PatientFlow, PreMed, Procedure].each do |model|
+    [Patient,
+      Prescription,
+      PatientFlow,
+      PreMed,
+      Procedure,
+      PatientProcedure].each do |model|
       model.extend(TimeScope)
     end
 
@@ -21,9 +27,10 @@ class Reports::ClinicSummary
     @day  = Date.strptime(day, "%m/%d/%Y") if day.kind_of?(String) && day != "All"
     @span = "All" if span == "All" || @day == "All"
 
-    @patient_count = load_patient_count
-    @xrays         = load_xray_count
-    @checkouts     = load_checkout_count
+    collect_patients
+
+    collect_xrays
+    collect_checkouts
 
     collect_procedures
     collect_prescriptions
@@ -49,24 +56,64 @@ class Reports::ClinicSummary
 
   private
 
+  def collect_patients
+    load_patient_count
+    load_patients_per_hour
+  end
+
   def load_patient_count
     @patient_count = Patient.for_time('patients', @day, @span).count.to_i
   end
 
+  def load_patients_per_hour
+    query = Patient.for_time('patients', @day, @span)
+    @patients_per_hour = records_per_hour(query)
+  end
+
+  def collect_xrays
+    load_xray_count
+    load_xrays_per_hour
+  end
+
   def load_xray_count
-    load_area_count(ClinicArea::XRAY)
+    @xrays = area_count(ClinicArea::XRAY)
+  end
+
+  def load_xrays_per_hour
+    query = patient_flows(ClinicArea::XRAY)
+    @xrays_per_hour = records_per_hour(query)
+  end
+
+  def collect_checkouts
+    load_checkout_count
+    load_checkouts_per_hour
   end
 
   def load_checkout_count
-    load_area_count(ClinicArea::CHECKOUT)
+    @checkouts = area_count(ClinicArea::CHECKOUT)
   end
 
-  def load_area_count(area_id)
-    PatientFlow.for_time('patient_flows', @day, @span)
-      .where('area_id = ?', area_id).count.to_i
+  def load_checkouts_per_hour
+    query = patient_flows(ClinicArea::CHECKOUT)
+    @checkouts_per_hour = records_per_hour(query)
+  end
+
+  def area_count(area_id)
+    patient_flows(area_id).count.to_i
+  end
+
+  def patient_flows(area_id)
+    PatientFlow.
+      for_time('patient_flows', @day, @span).
+      where('area_id = ?', area_id)
   end
 
   def collect_procedures
+    collect_total_procedures
+    collect_procedures_per_hour
+  end
+
+  def collect_total_procedures
     query = Procedure.for_time('patient_procedures', @day, @span)
 
     summary = query.select(
@@ -83,6 +130,26 @@ class Reports::ClinicSummary
       .joins(:patient_procedures)
       .group('procedures.code, procedures.description, procedures.cost')
   end
+
+  def collect_procedures_per_hour
+    query = PatientProcedure.for_time('patient_procedures', @day, @span)
+    @procedures_per_hour = records_per_hour(query)
+  end
+
+  def records_per_hour(query)
+    records = query.
+      select("TO_TIMESTAMP(TO_CHAR(created_at, 'YYYYMMDDHH2400'),'YYYYMMDDHH24MI') AS hour, COUNT(*) AS total").
+      group('hour').
+      order('hour')
+
+    # Not sure why Postgres is returning the hour as a String instead of DateTime
+    # and the total as a string. This loop normalizes to sensible classes
+    records.each do |p|
+      p.hour = Time.zone.parse(p.hour)
+      p.total = p.total.to_i
+    end
+  end
+
 
   def collect_prescriptions
     query = Prescription.for_time('patient_prescriptions', @day, @span)

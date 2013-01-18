@@ -100,4 +100,22 @@ class ClinicSummaryTest < ActiveSupport::TestCase
     assert_equal 2, report.prescription_count
     assert_equal @prescription.cost * 2.0, report.prescription_value
   end
+
+  def test_should_report_on_procedures_per_hour
+    Time.zone
+    ["8:30AM", "8:45 AM", "9:15 AM"].each do |time|
+      PatientProcedure.create(:patient => @patients.first,
+                              :procedure => Procedure.first,
+                              :created_at => TestHelper.clinic_date(time))
+    end
+    report = Reports::ClinicSummary.new(@report_date, "All")
+
+    first_entry = report.procedures_per_hour[0]
+    assert_equal Time.zone.parse('1985-12-26 08:00 AM'), first_entry.hour
+    assert_equal 2, first_entry.total
+
+    second_entry = report.procedures_per_hour[1]
+    assert_equal Time.zone.parse('1985-12-26 09:00 AM'), second_entry.hour
+    assert_equal 1, second_entry.total
+  end
 end
