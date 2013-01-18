@@ -66,8 +66,11 @@ class TreatmentAreaTest < ActiveSupport::TestCase
     3.times { FactoryGirl.create(:patient).assign(area.id, false) }
     2.times { FactoryGirl.create(:patient).assign(second_area.id, false) }
 
-    assert_equal [[radiology.name, 0], [area.name, 3], [second_area.name, 2]],
-                 TreatmentArea.current_capacity
+    [[radiology.name, 0], [area.name, 3], [second_area.name, 2]].each do |a|
+      assert TreatmentArea.current_capacity.include?(a),
+             "#{a.inspect} missing from #{TreatmentArea.current_capacity.inspect}"
+    end
+
   end
 
 end
