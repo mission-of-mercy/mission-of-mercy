@@ -84,4 +84,57 @@ module ReportsHelper
     }.to_json
   end
 
+  def pie_chart(name, data_series=[], div_options={}, graph_options={})
+
+    output = ""
+
+    div_options.merge!({ :id => name })
+    output << content_tag(:div, "", div_options)
+    output << content_tag(:div, "&nbsp;".html_safe, :id => "#{name}_label")
+    output << javascript_tag do
+      %{
+        $(function(){
+          var placeholder = jQuery('\##{ name }');
+          var data = #{ pie_chart_data(data_series) };
+          var options = #{ pie_chart_options(data_series) };
+          var plot = jQuery.plot(placeholder, data, options);
+          var label = $('\##{name}_label');
+          placeholder.on('plothover', function(e, pos, obj){
+            if (!obj) { return; }
+            percent = parseFloat(obj.series.percent).toFixed(2);
+            label.html(''+obj.series.label+': '+percent+'%');
+          });
+        });
+      }.html_safe
+    end
+
+    output.html_safe
+  end
+
+  def pie_chart_options(original_data)
+    {
+      :series => {
+        :pie=> {
+          label: {
+            show: false
+          },
+          :show => true
+        }
+      },
+      legend: {
+        show: false
+      },
+      grid: {
+        hoverable: true
+      }
+    }.to_json
+  end
+
+  def pie_chart_data(original_data)
+    original_data.
+      collect do |p|
+        {:label => p.full_description, :data => p.subtotal_count.to_i}
+      end.sort {|a,b| a[:data] <=> b[:data]}.to_json
+  end
+
 end

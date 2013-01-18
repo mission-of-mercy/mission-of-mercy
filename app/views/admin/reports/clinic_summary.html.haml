@@ -58,6 +58,9 @@
   %u Detail
 
 - if @report.procedure_count > 0
+  %a{href: '#', data: {toggle: 'collapse', target: '#procedures_chart'}} View Graph
+  = pie_chart('procedures_chart', @report.procedures, {style: "width: 400px; height: 400px; display: none;"})
+
   %table
     %thead
       %tr
