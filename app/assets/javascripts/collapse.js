@@ -1,11 +1,11 @@
 $(function(){
   $('[data-toggle=collapse]').click(function(e) {
     e.preventDefault();
-    $chart = $($(e.target).data('target'));
-    if($chart.is(":hidden")) {
-      $chart.slideDown();
+    $target = $($(e.target).data('target'));
+    if($target.is(":hidden")) {
+      $target.slideDown();
     } else {
-      $chart.slideUp();
+      $target.slideUp();
     }
   });
 });
