@@ -4,6 +4,7 @@
 @import twitter/bootstrap/buttons
 @import twitter/bootstrap/sprites
 @import twitter/bootstrap/pagination
+@import twitter/bootstrap/component-animations
 
 a.btn
   text-decoration: none
@@ -17,6 +18,13 @@ table
       @extend .btn, .btn-mini
       &[data-confirm]
         @extend .btn-danger
+      &.primary
+        @extend .btn-primary
         
 div.pagination ul
   padding: 0
+  
+form.bootstrap
+  @import twitter/bootstrap/forms
+  input, .add-on
+    vertical-align: bottom !important
