@@ -22,33 +22,16 @@
 %div
   Total Patients Checked In:
   = @report.patient_count
-  - if params[:day] != 'All'
-    %a{href: '#', data: { toggle: 'collapse',
-      target: '#checkins_per_hour_graph' }} per hour graph
-    = bar_graph('checkins_per_hour_graph', per_hour(@report.patients_per_hour), {style: "width: 800px; height: 300px; display: none;"})
   %br
   Total Patients Given X-Rays:
   = @report.xrays
-  - if params[:day] != 'All'
-    %a{href: '#', data: {toggle: 'collapse', target: '#xrays_per_hour_graph'}}
-      per hour graph
-    = bar_graph('xrays_per_hour_graph', per_hour(@report.xrays_per_hour), {style: "width: 800px; height: 300px; display: none;"})
   %br
   Total Patients Checked Out:
   = @report.checkouts
-  - if params[:day] != 'All'
-    %a{href: '#', data: {toggle: 'collapse',
-      target: '#checkouts_per_hour_graph'}} per hour graph
-    = bar_graph('checkouts_per_hour_graph', per_hour(@report.checkouts_per_hour), {style: "width: 800px; height: 300px; display: none;"})
 
 %div
-  #total_procedures
-    Total Procedures: #{@report.procedure_count}
-    - if params[:day] != 'All'
-      %a{href: '#', data: {toggle: 'collapse',
-        target: '#procedures_per_hour_graph'}} per hour graph
-      = bar_graph('procedures_per_hour_graph', per_hour(@report.procedures_per_hour), {style: "width: 800px; height: 300px; display: none"})
-
+  Total Procedures: #{@report.procedure_count}
+  %br
   Total Procedures Value:
   = real_currency @report.procedure_value
   %br
@@ -133,9 +116,38 @@
         %th= @report.pre_med_count
         %th= real_currency @report.pre_med_value
 
-%h2
+%h1
   Grand Total Value:
   = real_currency @report.grand_total
+
+- if params[:day] != 'All'
+
+  %h2
+    %u Clinic Throughput
+
+  %h3 Check-ins per hour
+
+  = bar_graph('checkins_per_hour_graph',
+    per_hour(@report.patients_per_hour),
+    {style: "width: 800px; height: 300px;"})
+
+  %h3 Radiology visits per hour
+
+  = bar_graph('xrays_per_hour_graph',
+    per_hour(@report.xrays_per_hour),
+    {style: "width: 800px; height: 300px;"})
+
+  %h3 Check-outs per hour
+
+  = bar_graph('checkouts_per_hour_graph',
+    per_hour(@report.checkouts_per_hour),
+    {style: "width: 800px; height: 300px;"})
+
+  %h3 Procedures per hour
+
+  = bar_graph('procedures_per_hour_graph',
+    per_hour(@report.procedures_per_hour),
+    {style: "width: 800px; height: 300px;"})
 
 %div
   = link_to "Back", admin_reports_path, :class => "back"
