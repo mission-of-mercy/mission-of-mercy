@@ -3,31 +3,37 @@ require 'test_helper'
 class CheckInTest < ActionDispatch::IntegrationTest
   def setup
     Capybara.current_driver = :webkit
-
-    FactoryGirl.create(:treatment, :name => 'Cleaning')
-    FactoryGirl.create(:race, :category => 'Caucasian/White')
   end
 
   test "must agree that the waiver has been signed before filling out form" do
     sign_in_as "Check in"
-    assert_equal find_field('First name')[:disabled], "true"
-    assert_equal find_button('Next')[:disabled], "true"
+
+    # For some reason capybara won't find this field via `field_labeled`
+    # while disabled. Instead we have to use the field's ID
+    #
+    assert find('#patient_first_name')['disabled']
+    assert find('#bottom_demographics_next')['disabled']
 
     agree_to_waver
 
-    assert_equal find_field('First name')[:disabled], "false"
-    assert_equal find_button('Next')[:disabled], "false"
+    refute field_labeled('First name')['disabled']
+    refute find('#bottom_demographics_next')['disabled']
   end
 
   test "does not show the waiver confirmation when returning to form for errors" do
     sign_in_as "Check in"
 
     agree_to_waver
-    click_button "Next"
-    click_button "Check In"
 
-    refute find('.waiver_confirmation').visible?, "waiver confirmation should not be visible"
-    assert_equal find_button('Next')[:disabled], "false", "form should be enabled"
+    within("#new_patient") do
+      click_button "Next"
+      click_button "Check In"
+
+      refute find('.waiver_confirmation').visible?,
+             "waiver confirmation should not be visible"
+      refute find_button('Next')['disabled']
+             "form should be enabled"
+    end
   end
 
   test "date of birth visible field should be text by default" do
@@ -78,7 +84,10 @@ class CheckInTest < ActionDispatch::IntegrationTest
 
     sign_in_as "Check in"
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
-    click_link "Check In Next Patient"
+
+    within("#facebox") do
+      click_link "Check In Next Patient"
+    end
 
     agree_to_waver
 
@@ -92,26 +101,27 @@ class CheckInTest < ActionDispatch::IntegrationTest
   end
 
   test "lists treatments dynamically from the treatment model" do
-    t1 = FactoryGirl.create(:treatment, :name => 'treatment 1')
-    t2 = FactoryGirl.create(:treatment, :name => 'treatment 2')
-    t3 = FactoryGirl.create(:treatment, :name => 'treatment 3')
+    options = %w[Extraction Prosthetic Bazinga]
+
+    options.each { |name| FactoryGirl.create(:treatment, name: name) }
 
     sign_in_as "Check in"
-    select = find('#patient_chief_complaint')
-    assert select.has_content? t1.name
-    assert select.has_content? t2.name
-    assert select.has_content? t3.name
+
+    agree_to_waver
+
+    assert has_select?("Reason for today's visit", :with_options => options)
   end
 
   test "date of birth can be entered via free form text box" do
     sign_in_as "Check in"
 
     agree_to_waver
-
     fill_out_form
 
-    click_button 'Next'
-    click_button 'Check In'
+    within("#new_patient") do
+      click_button 'Next'
+      click_button 'Check In'
+    end
 
     assert_current_path new_patient_path
   end

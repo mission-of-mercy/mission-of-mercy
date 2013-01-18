@@ -3,10 +3,6 @@ class TreatmentAreas::Patients::SurveysController < ApplicationController
   before_filter :find_treatment_area
   before_filter :find_patient
 
-  def show
-    redirect_to :action => "edit"
-  end
-
   def edit
     @survey = @patient.survey
 

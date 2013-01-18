@@ -93,13 +93,13 @@ module TreatmentAreasHelper
 
   def radiology_link(patient, remote=false)
     text = "Select Patient"
-    
+
     if dexis?
       text = "Export to Dexis"
     elsif cdr?
       text = "Export to CDR"
     end
-    
+
     link_to text,
             patient_radiology_path(:patient_id => patient.id),
             :remote => remote,
@@ -108,7 +108,7 @@ module TreatmentAreasHelper
 
   def checkout_path(area, patient)
     if patient.survey
-      treatment_area_patient_survey_path(area, patient)
+      edit_treatment_area_patient_survey_path(area, patient)
     else
       treatment_area_patient_procedures_path(area, patient)
     end
