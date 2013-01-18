@@ -19,14 +19,14 @@ class TreatmentArea < ActiveRecord::Base
   end
 
   def self.current_capacity
-    all.map do |area|
+    order("treatment_areas.name").map do |area|
       count = area.patients(true).count || 0
       [area.name, count]
     end
   end
 
   def self.with_patients
-    joins(:patients).includes(:patients).all
+    joins(:patients).includes(:patients).order("treatment_areas.name")
   end
 
   def radiology?
