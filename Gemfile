@@ -25,13 +25,14 @@ group :assets do
 end
 
 group :test do
-  gem 'minitest',  '~> 2.12.1'
+  gem 'minitest'
   gem 'faker'
   gem 'factory_girl_rails'
-  gem 'capybara',  '~> 1.1.1'
+  gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'capybara-screenshot'
   gem 'launchy'
-  gem 'database_cleaner', '~> 0.7.1'
-  gem 'capybara-webkit', '~> 0.10.1'
+  gem 'database_cleaner'
   gem 'turn'
   gem 'timecop'
 end

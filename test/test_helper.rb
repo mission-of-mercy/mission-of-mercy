@@ -4,6 +4,7 @@ require 'rails/test_help'
 require 'capybara/rails'
 require 'database_cleaner'
 require 'support/integration'
+require 'capybara-screenshot/minitest'
 require_relative '../db/seeds/users'
 
 Turn.config.natural = true
