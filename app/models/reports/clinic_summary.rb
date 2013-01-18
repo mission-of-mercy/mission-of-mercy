@@ -13,14 +13,10 @@ class Reports::ClinicSummary
                  "4:00 PM", "5:00 PM" ]
 
   def initialize(day=Date.today, span="All")
-    [Patient,
-      Prescription,
-      PatientFlow,
-      PreMed,
-      Procedure,
-      PatientProcedure].each do |model|
-      model.extend(TimeScope)
-    end
+    models = [ Patient, Prescription, PatientFlow, PreMed, Procedure,
+               PatientProcedure ]
+
+    models.each { |model| model.extend(TimeScope) }
 
     @day, @span = day, span
 
@@ -28,10 +24,8 @@ class Reports::ClinicSummary
     @span = "All" if span == "All" || @day == "All"
 
     collect_patients
-
     collect_xrays
     collect_checkouts
-
     collect_procedures
     collect_prescriptions
     collect_pre_meds
