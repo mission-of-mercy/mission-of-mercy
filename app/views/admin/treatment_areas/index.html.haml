@@ -4,16 +4,20 @@
   %h1 Treatment Areas
 
 %table
-  %tr
-    %th Name
-    %th{:colspan=>2} Controls
-
-  - @treatment_areas.each do |area|
-    %tr{:class=>cycle('even', 'odd')}
-      %td= area.name
-      %td= link_to 'Edit', edit_admin_treatment_area_path(area)
-      %td= link_to 'Destroy', admin_treatment_area_path(area), :method=>:delete, :confirm=>"Are you sure?"
+  %thead
+    %tr
+      %th Name
+      %th Capacity
+  %tbody
+    - @treatment_areas.each do |area|
+      %tr
+        %td= area.name
+        %td= area.capacity
+        %td.controls
+          = link_to 'Edit', edit_admin_treatment_area_path(area)
+          = link_to 'Destroy', admin_treatment_area_path(area),
+            :method => :delete, :'data-confirm' => "Are you sure?"
 
 
 %p
-  = link_to 'New', new_admin_treatment_area_path
+  = link_to 'New', new_admin_treatment_area_path, :class => "btn"

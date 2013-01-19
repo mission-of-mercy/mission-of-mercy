@@ -4,21 +4,23 @@
   %h1 Prescriptions
 
 %table
-  %tr
-    %th Name
-    %th Strength
-    %th Quantity
-    %th Dosage
-  - @prescriptions.each do |prescription|
+  %thead
     %tr
-      %td=  prescription.name
-      %td=  prescription.strength
-      %td=  prescription.quantity
-      %td=  prescription.dosage
-      %td=  link_to 'Edit', edit_admin_prescription_path(prescription)
-      %td=  link_to 'Destroy', admin_prescription_path(prescription), :confirm => 'Are you sure?', :method => :delete
-
-%br
+      %th Name
+      %th Strength
+      %th Quantity
+      %th Dosage
+  %tbody
+    - @prescriptions.each do |prescription|
+      %tr
+        %td=  prescription.name
+        %td=  prescription.strength
+        %td=  prescription.quantity
+        %td=  prescription.dosage
+        %td.controls
+          =  link_to 'Edit', edit_admin_prescription_path(prescription)
+          =  link_to 'Destroy', admin_prescription_path(prescription),
+           :'data-confirm' => 'Are you sure?', :method => :delete
 
 %p
-  = link_to 'New Prescription', new_admin_prescription_path
+  = link_to 'New Prescription', new_admin_prescription_path, class: 'btn'

@@ -102,8 +102,9 @@ module TreatmentAreasHelper
 
     link_to text,
             patient_radiology_path(:patient_id => patient.id),
-            :remote => remote,
-            :id     => "export_to_xray"
+            data: { remote: remote },
+            id:    "export_to_xray",
+            class: 'primary'
   end
 
   def checkout_path(area, patient)

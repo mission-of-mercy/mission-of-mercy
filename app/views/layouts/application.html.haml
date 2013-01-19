@@ -20,11 +20,11 @@
     #outer_container
       #container
         = render :partial => 'users/user_bar'
+        = render "shared/flash", :flash => flash 
         - if current_user.try(:user_type) == UserType::ADMIN
           = render :partial => "admin/nav"
         = yield(:top_layout)
         #contents
-          = render :partial => "shared/flash", :locals => { :flash => flash }
           = yield
         #footer
           - stats.messages.each do |message|

@@ -4,17 +4,19 @@
   %h1 Treatments
 
 %table
-  %tr
-    %th Name
-    %th Provided
-    %th{:colspan=>2} Controls
-
-  - @treatments.each do |treatment|
-    %tr{:class=>cycle('even', 'odd')}
-      %td= treatment.name
-      %td= treatment.provided?
-      %td= link_to 'Edit', edit_admin_treatment_path(treatment)
-      %td= link_to 'Destroy', admin_treatment_path(treatment), :method=>:delete, :confirm=>"Are you sure?"
+  %thead
+    %tr
+      %th Name
+      %th Being Provided?
+  %tbody
+    - @treatments.each do |treatment|
+      %tr
+        %td= treatment.name
+        %td= image_for_yes_no treatment.provided?
+        %td.controls
+          = link_to 'Edit', edit_admin_treatment_path(treatment)
+          = link_to 'Destroy', admin_treatment_path(treatment),
+           :method => :delete, :'data-confirm' => "Are you sure?"
 
 %p
-  = link_to 'New', new_admin_treatment_path
+  = link_to 'New', new_admin_treatment_path, class: 'btn'

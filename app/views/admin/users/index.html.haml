@@ -4,17 +4,19 @@
   %h1 Users
 
 %table
-  %tr
-    %th Login
-    %th Name
-    %th Controls
+  %thead
+    %tr
+      %th Login
+      %th Name
 
+  %tbody
     - @users.each do |user|
-      %tr{:class=>cycle('even', 'odd')}
+      %tr
         %td= user.login
         %td= user.name
-        %td= link_to 'Edit', edit_admin_user_path(user)
+        %td.controls
+          = link_to 'Edit', edit_admin_user_path(user)
 
 
 %p
-  = link_to 'New', new_admin_user_path
+  = link_to 'New', new_admin_user_path, class: 'btn'

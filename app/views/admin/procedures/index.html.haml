@@ -5,25 +5,26 @@
 
 
 %table
-  %tr
-    %th Code
-    %th Description
-    %th Requires tooth number
-    %th Requires surface code
-    %th Type
-    %th{:colspan=>2} Controls
-
-  - @procedures.each do |procedure|
+  %thead
     %tr
-      %td= procedure.code
-      %td= procedure.description
-      %td= procedure.requires_tooth_number
-      %td= procedure.requires_surface_code
-      %td= procedure.procedure_type
-      %td= link_to 'Edit', edit_admin_procedure_path(procedure)
-      %td= link_to 'Destroy', admin_procedure_path(procedure), :confirm => 'Are you sure?', :method => :delete
+      %th Code
+      %th Description
+      %th Requires tooth number
+      %th Requires surface code
+
+  %tbody
+    - @procedures.each do |procedure|
+      %tr
+        %td= procedure.code
+        %td= procedure.description
+        %td= image_for_yes_no procedure.requires_tooth_number
+        %td= image_for_yes_no procedure.requires_surface_code
+        %td.controls
+          = link_to 'Edit', edit_admin_procedure_path(procedure)
+          = link_to 'Destroy', admin_procedure_path(procedure), 
+            :'data-confirm' => 'Are you sure?', :method => :delete
 
 = will_paginate @procedures
 
 %p
-  = link_to 'New procedure', new_admin_procedure_path
+  = link_to 'New procedure', new_admin_procedure_path, class: 'btn'

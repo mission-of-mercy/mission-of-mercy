@@ -37,6 +37,8 @@ class Admin::PrescriptionsController < ApplicationController
 
   def destroy
     @prescription.destroy
+    
+    flash[:notice] = 'Prescription was successfully destroyed.'
 
     redirect_to admin_prescriptions_path
   end
