@@ -62,17 +62,19 @@ class Patient < ActiveRecord::Base
   attr_accessor :race_other
   attr_reader   :time_in_pain
 
-  # Old Pagination Method ...
-  def self.search(chart_number, name, page)
+  def self.search(params)
+    chart_number = params[:chart_number]
+    name         = params[:name]
+
     conditions = if chart_number.blank? && !name.blank?
       ['first_name ILIKE ? or last_name ILIKE ?', "%#{name}%","%#{name}%"]
     elsif !chart_number.blank? && chart_number.to_i != 0
-      ["id = ?", chart_number]
+      {id: chart_number}
     else
-      ["id = ?", -1]
+      {id: -1} # Don't return results for empty queries
     end
 
-    Patient.where(conditions).order('id').paginate(:per_page => 30, :page => page)
+    Patient.where(conditions).order('id').paginate(per_page: 30, page: params[:page])
   end
 
   def chart_number

@@ -3,12 +3,7 @@ class TreatmentAreas::PatientsController < ApplicationController
   before_filter :find_treatment_area
 
   def index
-    if params[:commit] == "Clear"
-      params[:chart_number] = ""
-      params[:name] = ""
-    end
-
-    @patients = Patient.search(params[:chart_number],params[:name],params[:page])
+    @patients = Patient.search(params)
   end
 
   private

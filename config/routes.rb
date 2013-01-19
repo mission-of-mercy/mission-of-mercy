@@ -24,7 +24,7 @@ MissionOfMercy::Application.routes.draw do
 
   match '/pharmacy/check_out/:patient_id' => 'pharmacy#check_out', :as => :pharmacy_check_out
   match '/pharmacy/finalize/:patient_id' => 'pharmacy#check_out_complete', :as => :pharmacy_finalize
-  resources :patients, except: [:edit, :update, :destroy]
+  resources :patients, except: [:edit, :update, :destroy, :index]
 
   match '/autocomplete/city.json' => 'autocomplete#city', :as => :autocomplete_city
   match '/autocomplete/zip.json'  => 'autocomplete#zip',  :as => :autocomplete_zip
@@ -45,7 +45,7 @@ MissionOfMercy::Application.routes.draw do
     resources :pre_meds
     resources :prescriptions
     resources :users
-    resources :patients, only: [:edit, :update, :destroy]
+    resources :patients
     resources :support_requests do
       collection do
         delete :destroy_all

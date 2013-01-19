@@ -1,25 +1,7 @@
 class PatientsController < ApplicationController
-
   before_filter :authenticate_user!, :except => [ :lookup_zip, :lookup_city ]
   before_filter :date_input
   before_filter :find_last_patient, :only => [:new]
-
-  def index
-    if params[:commit] == "Clear"
-      params[:chart_number] = nil
-      params[:name] = nil
-    end
-
-    @patients = Patient.search(params[:chart_number], params[:name], params[:page])
-
-    @area = params[:treatment_area_id]
-    @area ||= session[:treatment_area_id] if session[:treatment_area_id]
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.js { render :layout => false }
-    end
-  end
 
   def new
     @patient        = PatientDecorator.new(Patient.new)

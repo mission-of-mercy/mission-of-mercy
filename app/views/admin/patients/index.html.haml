@@ -1,0 +1,54 @@
+- title 'Patients'
+
+= header do
+  %h1 Patients
+  .export
+    = link_to "Export All Patients",
+      admin_export_patients_path(:filename => "patients"),
+      :target => "_blank", :class => 'btn btn-small'
+
+= form_tag admin_patients_path, method: 'get', class: "bootstrap" do
+  .input-append.input-prepend
+    %span.add-on
+      %i.icon-user
+    = text_field_tag :chart_number, params[:chart_number],
+      placeholder: "Chart number", class: "span2"
+    = text_field_tag :name, params[:name], placeholder: "Name", class: "span2"
+    = submit_tag "Search", class: 'btn'
+    = submit_tag "Clear", class: 'btn'
+
+- if @patients.any?
+  %table
+    %thead
+      %tr
+        %th Chart #
+        %th Last name
+        %th First name
+        %th Date of birth
+        %th Age
+        %th Sex
+    %tbody
+      - @patients.each do |patient|
+        %tr
+          %td= patient.id
+          %td= patient.last_name
+          %td= patient.first_name
+          %td= patient.dob
+          %td= patient.age
+          %td= patient.sex
+          %td.controls
+            = link_to 'History', admin_patient_history_path(patient)
+            = link_to 'Edit', edit_admin_patient_path(patient)
+            = link_to 'Print', print_chart_path(patient)
+            = link_to 'Destroy', admin_patient_path(patient),
+              data: {confirm: 'Are you sure?'}, method: :delete
+
+  = will_paginate @patients
+
+- elsif params[:chart_number].blank? && params[:name].blank?
+  %p
+    Enter the patient's chart number or name in the box above, then click
+    %strong Search
+- else
+  %p
+    %strong No results found

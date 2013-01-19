@@ -3,6 +3,10 @@ module Admin
 
     before_filter :admin_required, :set_current_tab
 
+    def index
+      @patients = Patient.search(params)
+    end
+
     def edit
       @patient = PatientDecorator.find(params[:id])
       @patient.build_previous_mom_clinics
