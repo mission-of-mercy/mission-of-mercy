@@ -12,13 +12,12 @@ MissionOfMercy::Application.routes.draw do
   match '/active_support_requests.:format' => 'support_requests#active_requests'
 
   resources :treatment_areas do
-    collection do
-      post :change
-    end
-    resources :patients, :controller => "TreatmentAreas::Patients" do
-      resources :prescriptions, :controller => "TreatmentAreas::Patients::Prescriptions"
-      resources :procedures, :controller => "TreatmentAreas::Patients::Procedures"
-      resource :survey, :controller => "TreatmentAreas::Patients::Surveys"
+    post :change, :on => :collection
+    resources :patients, :module => "TreatmentAreas" do
+      get :radiology, :on => :member
+      resources :prescriptions, :module => "Patients"
+      resources :procedures,    :module => "Patients"
+      resource :survey,         :module => "Patients"
     end
   end
 

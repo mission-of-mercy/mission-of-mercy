@@ -64,14 +64,11 @@ module TreatmentAreasHelper
 
   def link_to_previous(area, patient)
     if patient.survey and current_user.user_type != UserType::XRAY
-      path = treatment_area_patient_survey_path(area, patient)
+      path = edit_treatment_area_patient_survey_path(area, patient)
       text = "Back"
       css  = "back"
     else
       path = treatment_area_patients_path(area)
-      if current_user.user_type == UserType::XRAY
-        path = patients_path
-      end
       text = "Cancel"
       css  = "warning"
     end
@@ -81,7 +78,7 @@ module TreatmentAreasHelper
 
   def continue_button(area, patient, options={})
     if area == TreatmentArea.radiology
-      path = patients_path
+      path = treatment_area_patients_path(area)
     else
       path = treatment_area_patient_prescriptions_path(area, patient)
     end
@@ -92,7 +89,7 @@ module TreatmentAreasHelper
   end
 
   def radiology_link(patient, remote=false)
-    text = "Select Patient"
+    text = "Export"
 
     if dexis?
       text = "Export to Dexis"
@@ -100,15 +97,20 @@ module TreatmentAreasHelper
       text = "Export to CDR"
     end
 
+    options = { id: "export_to_xray", class: 'primary' }
+
+    options[:data] = {remote: true} if remote
+
     link_to text,
-            patient_radiology_path(:patient_id => patient.id),
-            data: { remote: remote },
-            id:    "export_to_xray",
-            class: 'primary'
+            radiology_treatment_area_patient_path(TreatmentArea.radiology, patient),
+            options
+
   end
 
   def checkout_path(area, patient)
-    if patient.survey
+    if area == TreatmentArea.radiology
+      radiology_treatment_area_patient_path(area, patient)
+    elsif patient.survey
       edit_treatment_area_patient_survey_path(area, patient)
     else
       treatment_area_patient_procedures_path(area, patient)
@@ -118,7 +120,7 @@ module TreatmentAreasHelper
   def button_to_next_checkout(area,patient)
     if area == TreatmentArea.radiology
       text = "Finish"
-      path = patients_path
+      path = treatment_area_patients_path(area)
     else
       text = "Next"
       path = treatment_area_patient_prescriptions_path(area, patient)
