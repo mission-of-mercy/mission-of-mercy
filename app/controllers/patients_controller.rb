@@ -22,8 +22,9 @@ class PatientsController < ApplicationController
   end
 
   def new
-    @patient        = PatientDecorator.new(Patient.new)
+    @patient = PatientDecorator.new(Patient.new)
     @patient.survey = Survey.new
+    @patient.emergency_contact = EmergencyContact.new
     @patient.build_previous_mom_clinics
   end
 

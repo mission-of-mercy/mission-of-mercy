@@ -4,20 +4,22 @@ MoM.Checkin.init = function(options){
 
   MoM.disableEnterKey($('form.new_patient'));
 
-  MoM.Checkin.hacks();
+  MoM.Checkin.hacks(options.editMode);
 
-  if (options.requireWaiverConfirmation)
+  if (options.requireWaiverConfirmation) {
     MoM.Checkin.disableAllFields();
-  else
-    MoM.Checkin.waiverConfirmed();
 
-  if(options.lastPatient.contactInformation == null)
+    $("#waiver_agree_button").click(function(e) {
+      MoM.Checkin.waiverConfirmed();
+      e.preventDefault();
+    });
+  } else {
+    MoM.Checkin.waiverConfirmed();
+  }
+
+  if(options.lastPatient.contactInformation == null) {
     MoM.Checkin.hidePreviousContactInformationButton();
-
-  $("#waiver_agree_button").click(function(e) {
-    MoM.Checkin.waiverConfirmed();
-    e.preventDefault();
-  });
+  }
 
   $('#patient_survey_attributes_heard_about_clinic').change(function(e){
     MoM.Checkin.toggleOtherHeardAbout();
@@ -53,6 +55,10 @@ MoM.Checkin.init = function(options){
     MoM.Checkin.togglePreviousMoM();
   });
 
+  $('input[name="has_emergency_contact"]').change(function(e) {
+    MoM.Checkin.toggleEmergencyContact();
+  });
+
   $('#patient_zip').keyup(function(){
     if($('#patient_zip').val().length >= 5)
       MoM.Checkin.lookupZip();
@@ -82,6 +88,7 @@ MoM.Checkin.init = function(options){
 
   MoM.Checkin.toggleOtherHeardAbout(false);
   MoM.Checkin.togglePreviousMoM(false);
+  MoM.Checkin.toggleEmergencyContact(options.hasEmergencyContact);
   MoM.Checkin.togglePatientPain(false);
   MoM.Checkin.toggleOtherRace(false);
 
@@ -100,34 +107,36 @@ MoM.Checkin.init = function(options){
     $('#waiver_agree_button').focus();
 }
 
-MoM.Checkin.hacks = function(){
-  $('#tabnav a').on('click', function(e){
-    var input = $(this)
-    var tab   = input.attr('data-tab');
+MoM.Checkin.hacks = function(editMode){
+  if (editMode == false) {
+    $('#tabnav a').on('click', function(e){
+      var input = $(this)
+      var tab   = input.attr('data-tab');
 
-    $('#tabnav li').removeClass('current');
+      $('#tabnav li').removeClass('current');
 
-    if(tab == "new"){
-      $('form.new_patient').show();
-      $('#reprint').hide();
-      $('#previous-patient').hide();
-      $('#waiver_agree_button').focus();
-    } else if(tab == "previous"){
-      $('form.new_patient').hide();
-      $('#previous-patient').show();
-      $('#reprint').hide();
-      $('#previous-patient input:first').focus();
-    } else if(tab == "print"){
-      $('form.new_patient').hide();
-      $('#previous-patient').hide();
-      $('#reprint').show();
-      $('#reprint input:first').focus();
-    }
+      if(tab == "new"){
+        $('form.new_patient').show();
+        $('#reprint').hide();
+        $('#previous-patient').hide();
+        $('#waiver_agree_button').focus();
+      } else if(tab == "previous"){
+        $('form.new_patient').hide();
+        $('#previous-patient').show();
+        $('#reprint').hide();
+        $('#previous-patient input:first').focus();
+      } else if(tab == "print"){
+        $('form.new_patient').hide();
+        $('#previous-patient').hide();
+        $('#reprint').show();
+        $('#reprint input:first').focus();
+      }
 
-    input.parent().addClass("current");
+      input.parent().addClass("current");
 
-    e.preventDefault();
-  });
+      e.preventDefault();
+    });
+  }
 
   $('#reprint').on('submit', function(e){
     var chartNumber = $('#reprint #chart_number').val();
@@ -232,8 +241,27 @@ MoM.Checkin.togglePreviousMoM = function(animate){
     previousMoM.slideUp();
 }
 
-MoM.Checkin.lookupZip = function(){
+MoM.Checkin.toggleEmergencyContact = function(forceEnable){
+  var $emergencyContact = $('#emergency_contact_form');
 
+  if (forceEnable) {
+    $('#has_emergency_contact').attr('checked', true);
+  }
+
+  if ($('#has_emergency_contact').is(':checked') == true) {
+    $emergencyContact.slideDown();
+    $emergencyContact.find('input').removeAttr('disabled');
+    // Don't focus if we're forcing the enabling of it, this happens on
+    // page load
+    if (!forceEnable)
+      $emergencyContact.find('input').first().focus();
+  } else {
+    $emergencyContact.slideUp();
+    $emergencyContact.find('input').attr('disabled', true);
+  }
+}
+
+MoM.Checkin.lookupZip = function(){
   $('#zip-spinner').show();
   $.getJSON("/autocomplete/zip.json", {
     zip: $('#patient_zip').val()

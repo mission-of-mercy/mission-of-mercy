@@ -1,0 +1,19 @@
+%h4 3: Visit Details
+%div.input
+  %div.row
+    %span.label= f.label :chief_complaint, "Reason for today's visit"
+    %span.formw= f.select :chief_complaint, *@patient.chief_complaint_options
+  %div.row
+    %span.label= f.label :last_dental_visit
+    %span.formw= f.select :last_dental_visit, *@patient.last_dental_visit_options
+  %div.row
+    %span.label
+      %label Is the patient in pain?
+    %span.formw= yes_no_group f, :pain
+  #pain_length_div.row
+    %span.label= f.label :time_in_pain, "Time in pain"
+    - if @patient.new_record?
+      %span.formw= f.text_field :time_in_pain
+      %span.formexample Example: "1 month" or "2 years"
+    - else
+      %span.formw= f.text_field :pain_length_in_days

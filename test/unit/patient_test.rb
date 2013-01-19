@@ -7,6 +7,18 @@ class PatientTest < ActiveSupport::TestCase
     @radiology = FactoryGirl.create(:treatment_area, name: TreatmentArea::RADIOLOGY_NAME)
   end
 
+  test "has emergency contact information" do
+    patient = FactoryGirl.build(:patient)
+    emergency_contact = EmergencyContact.create(
+        full_name:    'Gabe',
+        relationship: 'Brah',
+        phone:        '778-777-7777'
+    )
+    patient.emergency_contact = emergency_contact
+    patient.save
+    assert_equal patient.emergency_contact, emergency_contact
+  end
+
   test "should not allow more than two digits in the state field" do
     patient = FactoryGirl.build(:patient, :state => "CTZ")
 

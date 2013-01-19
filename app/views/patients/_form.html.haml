@@ -6,8 +6,10 @@
           id: #{@last_patient.try(:id) || 'null'},
           contactInformation: #{@last_patient.try(:contact_information).to_json || 'null'}
         },
-        requireWaiverConfirmation: #{@patient.errors.empty?},
-        dateInput: '#{@date_input}'
+        requireWaiverConfirmation: #{@patient.errors.empty? && @patient.new_record?},
+        dateInput: '#{@date_input}',
+        hasEmergencyContact: #{@patient.has_emergency_contact?},
+        editMode: '#{params[:action] == 'edit'}'
       };
 
       MoM.Checkin.init(options);
@@ -16,122 +18,19 @@
 = hidden_field_tag :date_input
 
 #demographics
-
   = f.error_messages
   = f.hidden_field :previous_chart_number
 
-  %div.input-left
+  %div.input-left.check-in-left-side
+    = render :partial => 'patients/demographics',
+             :locals  => { :f => f, :patient => @patient }
 
-    %h4 1: Demographics
+    = render :partial => 'patients/contact_information',
+             :locals  => { :f => f, :patient => @patient }
 
-    %div.input
-      %div.row
-        %span.label= f.label :first_name
-        %span.formw= f.text_field :first_name
-      %div.row
-        %span.label= f.label :last_name
-        %span.formw= f.text_field :last_name
-      %div.row
-        %span.label= f.label :date_of_birth
-        = image_tag "cog.png", :id => "date-input-toggle",
-        :title => "Toggle date input method"
-        %span#date-input-container.formw
-          %span#date-select
-            = f.date_select :date_of_birth, @patient.dob_select_options
-          %span#date-text
-            = f.text_field :date_of_birth, :value => @patient.dob
-        #date-format.formexample
-          Format: mm/dd/yyyy
-      %div.row
-        %span.label= f.label :sex
-        %span.formw= f.select :sex, *@patient.sex_select_options
-      %div.row
-        %span.label= f.label :race
-        %span.formw= f.select :race, *RaceDecorator.options_for_select
-      #race_other_div.row
-        %span.label= f.label :race_other, 'Specify race'
-        %span.formw= f.text_field :race_other
+  %div.input-right.check-in-right-side
+    = render :partial => 'patients/visit_details',
+             :locals  => { :f => f, :patient => @patient }
 
-    %div.contact_information_header
-      %h4 2: Contact Information
-      %button.same_as_previous_patient_button Same as previous patient
-
-    %div.input
-      %div.row
-        %span.label= f.label :phone
-        %span.formw= f.text_field :phone
-      %div.row
-        %span.label= f.label :street
-        %span.formw= f.text_field :street
-      %div.row
-        %span.label= f.label :zip
-        %span.formw= f.text_field :zip
-        = image_tag "spinner.gif", :id => "zip-spinner", :class => "spinner"
-      %div.row
-        %span.label= f.label :city
-        %span.formw= f.text_field :city
-      %div.row
-        %span.label= f.label :state
-        %span.formw= f.text_field :state
-    %br
-
-  / End Demographics & Left Column
-
-  %div.input-right
-
-    %h4 3: Visit Details
-
-    %div.input
-      %div.row
-        %span.label= f.label :chief_complaint, "Reason for today's visit"
-        %span.formw= f.select :chief_complaint, *@patient.chief_complaint_options
-      %div.row
-        %span.label= f.label :last_dental_visit
-        %span.formw= f.select :last_dental_visit, *@patient.last_dental_visit_options
-      %div.row
-        %span.label
-          %label Is the patient in pain?
-        %span.formw= yes_no_group f, :pain
-      #pain_length_div.row
-        %span.label= f.label :time_in_pain, "Time in pain"
-        - if @patient.new_record?
-          %span.formw= f.text_field :time_in_pain
-          %span.formexample Example: "1 month" or "2 years"
-        - else
-          %span.formw= f.text_field :pain_length_in_days
-
-    / End Visit Details
-
-    %h4 4: Additional Information
-
-    %div.input
-      %div.row
-        %span.label= f.label :travel_time
-        %span.formw
-          - if @patient.new_record?
-            Hours:
-            = f.text_field :travel_time_hours, :size => 2
-            Minutes:
-            = f.text_field :travel_time_minutes, :size => 2
-          - else
-            = f.text_field :travel_time
-      %div.row
-        %span.label
-          %label Attended previous clinic?
-        %span.formw
-          = f.radio_button :attended_previous_mom_event, true
-          = f.label :attended_previous_mom_event, "Yes", :value => true
-          = f.radio_button :attended_previous_mom_event, false
-          = f.label :attended_previous_mom_event, "No", :value => false
-
-      #previous_mom_location_div.row
-        %span.label
-          Clinic(s) attended
-          %br
-        = f.fields_for :previous_mom_clinics, @patient.previous_mom_clinics.sort_by(&:clinic_year) do |p|
-          %span.formw
-            = p.hidden_field :location
-            = p.hidden_field :clinic_year
-            = p.check_box :attended
-            = p.label :attended, p.object.description
-          %br
+    = render :partial => 'patients/additional_information',
+             :locals => { :f => f, :patient => @patient }

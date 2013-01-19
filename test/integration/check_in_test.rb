@@ -5,6 +5,13 @@ class CheckInTest < ActionDispatch::IntegrationTest
     Capybara.current_driver = :webkit
   end
 
+  test "have emergency contact information" do
+    sign_in_as "Check in"
+    assert page.has_field?('Contact name')
+    assert page.has_field?('Contact phone')
+    assert page.has_field?('Relationship')
+  end
+
   test "must agree that the waiver has been signed before filling out form" do
     sign_in_as "Check in"
 
