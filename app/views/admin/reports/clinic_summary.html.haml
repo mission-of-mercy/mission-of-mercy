@@ -85,11 +85,11 @@
         %th Quantity
         %th Dollar Value
     %tbody
-      - @report.prescriptions.each do prescription
+      - @report.prescriptions.each do |prescription|
         %tr{:class => cycle('even', 'odd')}
-          %td= prescription.full_description
-          %td.integer= prescription.subtotal_count
-          %td.integer= real_currency prescription.subtotal_value
+          %td= prescription.name
+          %td.integer= prescription.prescription_count
+          %td.integer= real_currency prescription.prescription_value
     %tfoot
       %tr
         %th Total
@@ -105,11 +105,11 @@
         %th Quantity
         %th Dollar Value
     %tbody
-      - @report.pre_meds.each do pre_med
+      - @report.pre_meds.each do |pre_med|
         %tr{:class => cycle('even', 'odd')}
           %td= pre_med.description
-          %td.integer= pre_med.subtotal_count
-          %td.integer= real_currency pre_med.subtotal_value
+          %td.integer= pre_med.pre_med_count
+          %td.integer= real_currency pre_med.pre_med_value
     %tfoot
       %tr
         %th Total
