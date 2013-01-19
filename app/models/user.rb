@@ -24,8 +24,7 @@ class User < ActiveRecord::Base
     elsif user_type == UserType::XRAY
       Rails.application.routes.url_helpers.treatment_area_patients_path(TreatmentArea.radiology)
     elsif user_type == UserType::CHECKOUT
-      # FIXME route to treatment_areas#index
-      Rails.application.routes.url_helpers.root_path
+      Rails.application.routes.url_helpers.treatment_areas_path
     elsif user_type == UserType::PHARMACY
       # FIXME route to pharmacy#index
       Rails.application.routes.url_helpers.patients_path
