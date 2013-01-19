@@ -22,7 +22,7 @@ module Admin
       if @patient.update_attributes(params[:patient])
         flash[:notice] = 'Patient was successfully updated.'
 
-        redirect_to patients_path
+        redirect_to admin_patients_path
       else
         @patient = PatientDecorator.new(@patient)
         render :action => "edit"
@@ -33,7 +33,7 @@ module Admin
       @patient = Patient.find(params[:id])
       @patient.destroy
 
-      redirect_to(patients_url)
+      redirect_to admin_patients_path
     end
 
     def history
