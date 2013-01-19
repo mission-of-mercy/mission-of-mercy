@@ -1,8 +1,9 @@
-%form{method: 'get', autocomplete: 'off', class: 'bootstrap'}
-  .input-append.input-prepend
-    %span.add-on
-      %i.icon-user
-    = text_field_tag :chart_number, params[:chart_number],
-      placeholder: "Chart number", class: "span2"
-    = submit_tag "Search", class: 'btn'
-    = submit_tag "Clear", class: 'btn'
+.bootstrap-form
+  %form{method: 'get', autocomplete: 'off'}
+    .input-append.input-prepend
+      %span.add-on
+        %i.icon-user
+      = text_field_tag :chart_number, params[:chart_number],
+        placeholder: "Chart number", class: "span2"
+      = submit_tag "Search", class: 'btn'
+      = submit_tag "Clear", class: 'btn'

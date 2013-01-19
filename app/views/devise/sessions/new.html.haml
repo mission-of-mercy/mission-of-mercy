@@ -3,15 +3,14 @@
 = header do
   %h1 #{clinic_state} Mission of Mercy
 
-= form_for resource, :as => resource_name, :url => session_path(resource_name) do |f|
-  %p
-    = f.label :login
-    %br
-    = f.select :login, user_list
-  %p
-    = f.label :password
-    %br
-    = f.password_field :password
+.bootstrap-form
+  = form_for resource, :as => resource_name, :url => session_path(resource_name), html: {class: 'form-horizontal'} do |f|
+    .control-group
+      = f.label :login, "System type", class: 'control-label'
+      .controls= f.select :login, user_list
+    .control-group
+      = f.label :password, "Password", class: 'control-label'
+      .controls= f.password_field :password
 
-  %p
-    = f.submit 'Log in'
+    .control-group
+      .controls= f.submit 'Log in', class: 'btn btn-primary'
