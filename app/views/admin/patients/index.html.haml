@@ -7,17 +7,7 @@
       admin_export_patients_path(:filename => "patients"),
       :target => "_blank", :class => 'btn btn-small'
 
-.bootstrap-form
-  = form_tag admin_patients_path, method: 'get' do
-    .input-append.input-prepend
-      %span.add-on
-        %i.icon-user
-      = text_field_tag :chart_number, params[:chart_number],
-        placeholder: "Chart number", class: "span2"
-      = text_field_tag :name, params[:name], placeholder: "Name",
-        class: "span2"
-      = submit_tag "Search", class: 'btn'
-      = submit_tag "Clear", class: 'btn'
+= render "patients/search", name: true
 
 - if @patients.any?
   %table

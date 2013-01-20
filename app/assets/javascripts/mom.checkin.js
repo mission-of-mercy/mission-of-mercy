@@ -4,7 +4,7 @@ MoM.Checkin.init = function(options){
 
   MoM.disableEnterKey($('form.new_patient'));
 
-  MoM.Checkin.hacks();
+  $(document).pjax('#tabnav a', '[data-pjax-container]');
 
   if (options.requireWaiverConfirmation)
     MoM.Checkin.disableAllFields();
@@ -131,7 +131,7 @@ MoM.Checkin.hacks = function(){
 
   $('#reprint').on('submit', function(e){
     var chartNumber = $('#reprint #chart_number').val();
-    MoM.openInBackground('/patients/' + chartNumber + '/print');
+    MoM.openInBackground('/patients/' + chartNumber + '/chart');
 
     $('#reprint #chart_number').val(chartNumber + " printing ...").
       select().
@@ -182,7 +182,7 @@ MoM.Checkin.hacks = function(){
 }
 
 MoM.Checkin.printChart = function(patientId){
-  MoM.openInBackground('/patients/' + patientId + '/print');
+  MoM.openInBackground('/patients/' + patientId + '/chart');
 }
 
 MoM.Checkin.togglePatientPain = function(focus){

@@ -23,7 +23,14 @@ MissionOfMercy::Application.routes.draw do
 
   match '/pharmacy/check_out/:patient_id' => 'pharmacy#check_out', :as => :pharmacy_check_out
   match '/pharmacy/finalize/:patient_id' => 'pharmacy#check_out_complete', :as => :pharmacy_finalize
-  resources :patients, except: [:edit, :update, :destroy, :index]
+
+  resources :patients, except: [:edit, :update, :destroy, :index, :show] do
+    get :chart, :as => :print_chart, :on => :member
+    collection do
+      get :reprint
+      get :previous
+    end
+  end
 
   match '/autocomplete/city.json' => 'autocomplete#city', :as => :autocomplete_city
   match '/autocomplete/zip.json'  => 'autocomplete#zip',  :as => :autocomplete_zip
@@ -33,7 +40,6 @@ MissionOfMercy::Application.routes.draw do
   resources :patient_procedures
   resources :assignment_desk
 
-  match '/patients/:id/print' => 'patients#print', :as => :print_chart
   match '/patients/:patient_id/radiology' => 'patients#radiology', :as => :patient_radiology
   match '/status' => 'status#index', :as => :status
 

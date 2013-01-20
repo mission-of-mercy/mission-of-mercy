@@ -1,0 +1,41 @@
+- title 'Reprint Chart'
+
+= render "nav"
+
+= header do
+  %h1 Reprint Chart
+
+= render "search", name: true
+
+- if @patients.any?
+  %table
+    %thead
+      %tr
+        %th Chart #
+        %th Last name
+        %th First name
+        %th Date of birth
+        %th Age
+        %th Sex
+    %tbody
+      - @patients.each do |patient|
+        %tr
+          %td= patient.id
+          %td= patient.last_name
+          %td= patient.first_name
+          %td= patient.dob
+          %td= patient.age
+          %td= patient.sex
+          %td.controls
+            = link_to "Reprint", print_chart_path(patient), class: 'primary',
+              target: '_blank'
+
+  = will_paginate @patients
+
+- elsif params[:chart_number].blank?
+  %p
+    Enter the patient's chart number in the box above, then click
+    %strong Search
+- else
+  %p
+    %strong No results found

@@ -10,7 +10,9 @@ gem 'will_paginate', '~> 3.0.2'
 gem 'devise'
 gem 'dynamic_form'
 gem 'draper'
+gem "rack-pjax"
 
+gem 'quiet_assets', :group => :development
 gem 'jquery-rails'
 gem 'will_paginate-bootstrap'
 

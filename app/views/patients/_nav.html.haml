@@ -1,0 +1,8 @@
+- content_for :top_layout do
+  %ul#tabnav
+    %li{class: current_tab("new")}
+      = link_to "New patient", new_patient_path
+    %li{class: current_tab("previous")}
+      = link_to "Previous patient", previous_patients_path
+    %li{class: current_tab("reprint")}
+      = link_to "Reprint chart", reprint_patients_path

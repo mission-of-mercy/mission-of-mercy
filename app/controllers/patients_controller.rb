@@ -4,36 +4,15 @@ class PatientsController < ApplicationController
   before_filter :find_last_patient, :only => [:new]
 
   def new
+    @current_tab    = "new"
     @patient        = PatientDecorator.new(Patient.new)
     @patient.survey = Survey.new
     @patient.build_previous_mom_clinics
   end
 
-  def print
-    @patient = Patient.find_by_id(params[:id])
-
-    if @patient
-      render :action => "print", :layout => "print"
-    else
-      raise ActionController::RoutingError.new('Not Found')
-    end
-  end
-
-  def show
-    @patient = Patient.find_by_id(params[:id])
-
-    respond_to do |format|
-      format.json do
-        attributes = @patient.try(:attributes)
-        attributes[:date_of_birth] = @patient.dob if @patient
-
-        render :json => { :patient => attributes }.to_json
-      end
-    end
-  end
-
   def create
-    @patient = Patient.new(params[:patient])
+    @current_tab = "new"
+    @patient     = Patient.new(params[:patient])
 
     add_procedures_to_patient(@patient)
 
@@ -50,6 +29,26 @@ class PatientsController < ApplicationController
 
       render :action => "new"
     end
+  end
+
+  def chart
+    @patient = Patient.find_by_id(params[:id])
+
+    if @patient
+      render :layout => "print"
+    else
+      raise ActionController::RoutingError.new('Not Found')
+    end
+  end
+
+  def reprint
+    @current_tab = "reprint"
+    @patients = Patient.search(params)
+  end
+
+  def previous
+    @current_tab = "previous"
+    @patients = Patient.search(params)
   end
 
   private
