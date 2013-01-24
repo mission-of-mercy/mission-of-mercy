@@ -3,6 +3,7 @@ class PatientsController < ApplicationController
   before_filter :authenticate_user!, :except => [ :lookup_zip, :lookup_city ]
   before_filter :date_input
   before_filter :find_last_patient, :only => [:new]
+  before_filter :set_current_tab
 
   def index
     if params[:commit] == "Clear"
@@ -117,4 +118,7 @@ class PatientsController < ApplicationController
     end
   end
 
+  def set_current_tab
+    @current_tab = "patients"
+  end
 end

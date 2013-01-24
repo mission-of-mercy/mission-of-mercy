@@ -1,8 +1,8 @@
 - title 'Patient Check In'
 
 - content_for :top_layout do
-  %ul#tabnav
-    %li.current= link_to "New patient", '#', :'data-tab' => "new"
+  %ul#tabnav.nav.nav-tabs
+    %li.active= link_to "New patient", '#', :'data-tab' => "new"
     %li= link_to "Previous patient", '#', :'data-tab' => "previous"
     %li= link_to "Print chart", '#', :'data-tab' => "print"
 
