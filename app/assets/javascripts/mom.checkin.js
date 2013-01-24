@@ -105,7 +105,7 @@ MoM.Checkin.hacks = function(){
     var input = $(this)
     var tab   = input.attr('data-tab');
 
-    $('#tabnav li').removeClass('current');
+    $('#tabnav li').removeClass('active');
 
     if(tab == "new"){
       $('form.new_patient').show();
@@ -124,7 +124,7 @@ MoM.Checkin.hacks = function(){
       $('#reprint input:first').focus();
     }
 
-    input.parent().addClass("current");
+    input.parent().addClass("active");
 
     e.preventDefault();
   });
