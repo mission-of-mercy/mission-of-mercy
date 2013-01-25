@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_area_id
   around_filter :setup_stats
-  before_filter :clear_params
 
   attr_accessor :current_area_id, :current_treatment_area_id
 
@@ -52,11 +51,5 @@ class ApplicationController < ActionController::Base
 
   def cdr?
     app_config['xray'] == "cdr"
-  end
-
-  def clear_params
-    if params[:commit] == "Clear"
-      params.delete_if {|k, v| ['chart_number', 'name'].include?(k) }
-    end
   end
 end

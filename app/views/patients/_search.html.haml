@@ -3,10 +3,10 @@
     .input-append.input-prepend
       %span.add-on
         %i.icon-user
-      = text_field_tag :chart_number, params[:chart_number],
+      = text_field_tag :chart_number, patient_search[:chart_number],
         placeholder: "Chart number", class: "span2"
-      - if defined?(name) && name == true
-        = text_field_tag :name, params[:name], placeholder: "Name",
+      - if patient_search.show? :name
+        = text_field_tag :name, patient_search[:name], placeholder: "Name",
           class: "span2"
       = submit_tag "Search", class: 'btn'
       = submit_tag "Clear", class: 'btn'

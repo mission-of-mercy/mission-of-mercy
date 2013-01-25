@@ -1,0 +1,32 @@
+= render "search", patient_search: patient_search
+
+- if patient_search.any?
+  %table
+    %thead
+      %tr
+        %th Chart #
+        %th Last name
+        %th First name
+        %th Date of birth
+        %th Age
+        %th Sex
+    %tbody
+      - patient_search.each do |patient, controls|
+        %tr
+          %td= patient.id
+          %td= patient.last_name
+          %td= patient.first_name
+          %td= patient.dob
+          %td= patient.age
+          %td= patient.sex
+          %td.controls= controls
+          / = link_to "Check-in",
+          /               new_patient_path(patient: {previous_chart_number: patient}),
+          /               class: 'primary'
+
+  = will_paginate @patient_search
+
+- else
+  %p
+    Enter the patient's chart number in the box above, then click
+    %strong Search
