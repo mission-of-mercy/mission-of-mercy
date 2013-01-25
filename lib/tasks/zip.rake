@@ -7,6 +7,11 @@ namespace :zip do
 
   desc 'import zips from zipcode.csv'
   setup_task :import => :environment do
+    if Patient::Zipcode.any?
+      done "Skip: #{Patient::Zipcode.count} already imported"
+      next
+    end
+
     zip_file = File.join(Rails.root, "zipcode.csv")
 
     unless File.exists?(zip_file)
