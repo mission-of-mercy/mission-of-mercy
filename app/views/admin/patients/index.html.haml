@@ -29,7 +29,7 @@
           %td= patient.age
           %td= patient.sex
           %td.controls
-            = link_to 'History', admin_patient_history_path(patient)
+            = link_to 'History', history_admin_patient(patient)
             = link_to 'Edit', edit_admin_patient_path(patient)
             = link_to 'Print', chart_patient_path(patient)
             = link_to 'Destroy', admin_patient_path(patient),

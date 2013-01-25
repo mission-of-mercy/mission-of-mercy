@@ -29,8 +29,8 @@ class CheckInTest < ActionDispatch::IntegrationTest
       click_button "Next"
       click_button "Check In"
 
-      refute find('.waiver_confirmation').visible?,
-             "waiver confirmation should not be visible"
+      refute has_css?('.waiver_confirmation'),
+             "waiver confirmation should not be present"
       refute find_button('Next')['disabled']
              "form should be enabled"
     end
