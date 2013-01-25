@@ -8,7 +8,7 @@ module Admin
     end
 
     def edit
-      @patient = PatientDecorator.find(params[:id])
+      @patient = Patient.find(params[:id]).decorate
       @patient.build_previous_mom_clinics
     end
 

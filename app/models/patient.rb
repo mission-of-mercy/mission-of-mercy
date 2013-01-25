@@ -176,7 +176,9 @@ class Patient < ActiveRecord::Base
   end
 
   def travel_time_hours
-    @travel_time_hours ||= 0
+    @travel_time_hours ||= begin
+      (travel_time / 60).to_i if travel_time
+    end
   end
 
   def travel_time_minutes=(minutes)
@@ -186,7 +188,9 @@ class Patient < ActiveRecord::Base
   end
 
   def travel_time_minutes
-    @travel_time_minutes ||= 0
+    @travel_time_minutes ||= begin
+      (travel_time % 60).to_i if travel_time
+    end
   end
 
   def time_in_pain=(time_in_pain)
@@ -291,7 +295,10 @@ class Patient < ActiveRecord::Base
   end
 
   def calculate_travel_time
-    self.travel_time = travel_time_minutes + (travel_time_hours * 60)
+    minutes = travel_time_minutes || 0
+    hours   = travel_time_hours   || 0
+
+    self.travel_time = minutes + (hours * 60)
   end
 
   def date_of_birth_entry

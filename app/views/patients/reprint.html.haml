@@ -27,8 +27,8 @@
           %td= patient.age
           %td= patient.sex
           %td.controls
-            = link_to "Reprint", print_chart_path(patient), class: 'primary',
-              target: '_blank'
+            = link_to "Reprint", chart_patient_path(patient),
+              class: 'primary', target: '_blank'
 
   = will_paginate @patients
 

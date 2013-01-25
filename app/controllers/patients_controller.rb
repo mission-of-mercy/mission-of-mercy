@@ -5,27 +5,25 @@ class PatientsController < ApplicationController
 
   def new
     @current_tab    = "new"
-    @patient        = PatientDecorator.new(Patient.new)
-    @patient.survey = Survey.new
+    @registration   = Registration.new(params)
+    @patient        = @registration.patient
+    # TODO Move into Registration
     @patient.build_previous_mom_clinics
   end
 
   def create
-    @current_tab = "new"
-    @patient     = Patient.new(params[:patient])
+    @current_tab  = "new"
+    @registration = Registration.new(params)
+    @patient      = @registration.patient
 
+    # TODO Move into Registration
     add_procedures_to_patient(@patient)
 
     if @patient.errors.empty? && @patient.save
       stats.patient_checked_in
       redirect_to new_patient_path(:last_patient_id =>  @patient.id)
     else
-      @patient_travel_time_minutes = params[:patient_travel_time_minutes]
-      @patient_travel_time_hours   = params[:patient_travel_time_hours]
-
       @patient.build_previous_mom_clinics
-
-      @patient = PatientDecorator.new(@patient)
 
       render :action => "new"
     end
