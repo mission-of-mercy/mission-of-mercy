@@ -50,7 +50,9 @@ MissionOfMercy::Application.routes.draw do
     resources :pre_meds
     resources :prescriptions
     resources :users
-    resources :patients
+    resources :patients do
+      get 'history', :on => :member
+    end
     resources :support_requests do
       collection do
         delete :destroy_all
@@ -63,6 +65,5 @@ MissionOfMercy::Application.routes.draw do
     match '/reports/export_patients' => 'reports#export_patients', :as => :export_patients
     match '/maintenance' => 'maintenance#index', :as => :maintenance
     match '/maintenance/reset' => 'maintenance#reset', :as => :maintenance_reset
-    match '/patients/:patient_id/history' => 'patients#history', :as => :patient_history
   end
 end
