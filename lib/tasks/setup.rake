@@ -48,7 +48,7 @@ setup_task :setup do
     end
 
     done "mom.yml"
-    
+
     Rake::Task["setup:secret_token"].invoke
   end
 
@@ -86,10 +86,5 @@ setup_task :setup do
   puts # Empty Line
   puts %{#{'===='.color(:green)} Setup Complete #{'===='.color(:green)}}
   puts # Empty Line
-
-  if console.agree("Would you like to run the test suite? (y/n)")
-    silence { Rake::Task["db:test:prepare"].invoke }
-    Rake::Task["test"].invoke
-  end
 
 end

@@ -34,8 +34,8 @@ See [CONTRIBUTING.md](/mission-of-mercy/mission-of-mercy/blob/master/CONTRIBUTIN
 
 ## Installation
 
-Mission of Mercy Software is a Ruby on Rails 3.2 application which runs on 
-Ruby 1.9.3 and [PostgreSQL](http://www.postgresql.org) databases. 
+Mission of Mercy Software is a Ruby on Rails 3.2 application which runs on
+Ruby 1.9.3 and [PostgreSQL](http://www.postgresql.org) databases.
 Other databases like MySQL or SQLite are not officially supported.
 
 ### Setting Up a Development Copy: Step by Step
@@ -44,18 +44,7 @@ To install a development version of Mission of Mercy, follow these steps:
 
 1. Fork our GitHub repository: <http://github.com/mission-of-mercy/mission-of-mercy>
 2. Clone the fork to your computer
-3. If you don't already have bundler installed, get it by running `gem install bundler`
-4. Install Qt libraries for capybara-webkit: <https://github.com/thoughtbot/capybara-webkit#readme>
-5. Run `bundle install` to install all of the project's dependencies
-6. Finally, run `rake setup` to create the required config files, create the database, and seed it with data
-
-To make things even easier, you can copy and paste this into your terminal once you've got the project cloned to your computer
-
-```bash
-gem install bundler
-bundle install
-bundle exec rake setup
-```
+3. Run `./bin/setup` to install all of the project's dependencies
 
 ## Authorship
 
