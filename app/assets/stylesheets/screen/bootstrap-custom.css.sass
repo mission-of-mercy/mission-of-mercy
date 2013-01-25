@@ -4,6 +4,7 @@
 @import twitter/bootstrap/buttons
 @import twitter/bootstrap/sprites
 @import twitter/bootstrap/pagination
+@import twitter/bootstrap/tooltip
 @import twitter/bootstrap/component-animations
 
 a.btn
@@ -20,11 +21,14 @@ table
         @extend .btn-danger
       &.primary
         @extend .btn-primary
-        
+
 div.pagination ul
   padding: 0
-  
-form.bootstrap
+
+.alert a.close
+  text-decoration: none
+
+.bootstrap-form
   @import twitter/bootstrap/forms
   input, .add-on
     vertical-align: bottom !important

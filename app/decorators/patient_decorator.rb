@@ -15,7 +15,7 @@ class PatientDecorator < ApplicationDecorator
   end
 
   def chief_complaint_options
-    treatments = if patient.new_record?
+    treatments = if model.new_record?
       Treatment.provided
     else
       Treatment.all

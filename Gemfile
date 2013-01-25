@@ -10,6 +10,7 @@ gem 'will_paginate', '~> 3.0.2'
 gem 'devise'
 gem 'dynamic_form'
 gem 'draper'
+gem 'rack-pjax'
 
 gem 'jquery-rails'
 gem 'will_paginate-bootstrap'
@@ -24,6 +25,12 @@ group :assets do
   gem 'uglifier'
   gem 'compass-rails'
   gem 'bootstrap-sass-rails'
+end
+
+group :development do
+  gem 'quiet_assets'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test do

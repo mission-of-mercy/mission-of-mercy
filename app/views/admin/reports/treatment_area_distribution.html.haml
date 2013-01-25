@@ -16,7 +16,6 @@
     %h3= area.name
     %ul
       - area.patients.each do |patient|
-        %li= link_to patient.full_name,
-          admin_patient_history_path(patient_id: patient)
+        %li= link_to patient.full_name, history_admin_patient_path(patient)
 %p
   = link_to "Back", admin_reports_path, :class => "back"

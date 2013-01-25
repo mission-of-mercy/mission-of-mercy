@@ -82,44 +82,6 @@ body.red{
 	padding-top: 10px;
 }
 
-#top_navigation{
-	color: white;
-	margin-right: 20px;
-	margin-left: 20px;
-	padding-bottom: 3px;
-	text-align: right;
-}
-
-#top_navigation a, #top_navigation a:visited{
-	color: white;
-	text-decoration: underline;
-}
-
-#top_navigation a:hover{
-	color: silver;
-	text-decoration: underline;
-}
-
-#top_navigation form{
-  display:inline-block;
-}
-
-#top_left{
-	color: white;
-	float: left;
-	display: inline-block;
-	margin-left: 20px;
-}
-
-#top_left a, #top_left a:visited{
-	color: white;
-	text-decoration: none;
-}
-
-#top_left a:hover{
-	text-decoration: underline;
-}
-
 #contents{
 	background-color: #fff;
 	margin-top: 10px;

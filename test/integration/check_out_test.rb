@@ -104,7 +104,7 @@ class CheckOutTest < ActionDispatch::IntegrationTest
     else
       visit treatment_area_patients_path(@treatment_area)
 
-      fill_in 'Chart number:', :with => patient.id
+      fill_in 'Chart number', :with => patient.id
 
       click_button "Search"
 

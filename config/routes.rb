@@ -12,19 +12,25 @@ MissionOfMercy::Application.routes.draw do
   match '/active_support_requests.:format' => 'support_requests#active_requests'
 
   resources :treatment_areas do
-    collection do
-      post :change
-    end
-    resources :patients, :controller => "TreatmentAreas::Patients" do
-      resources :prescriptions, :controller => "TreatmentAreas::Patients::Prescriptions"
-      resources :procedures, :controller => "TreatmentAreas::Patients::Procedures"
-      resource :survey, :controller => "TreatmentAreas::Patients::Surveys"
+    post :change, :on => :collection
+    resources :patients, :module => "TreatmentAreas" do
+      get :radiology, :on => :member
+      resources :prescriptions, :module => "Patients"
+      resources :procedures,    :module => "Patients"
+      resource :survey,         :module => "Patients"
     end
   end
 
   match '/pharmacy/check_out/:patient_id' => 'pharmacy#check_out', :as => :pharmacy_check_out
   match '/pharmacy/finalize/:patient_id' => 'pharmacy#check_out_complete', :as => :pharmacy_finalize
-  resources :patients, except: [:edit, :update, :destroy]
+
+  resources :patients, except: [:edit, :update, :destroy, :index, :show] do
+    get :chart, :on => :member
+    collection do
+      get :reprint
+      get :previous
+    end
+  end
 
   match '/autocomplete/city.json' => 'autocomplete#city', :as => :autocomplete_city
   match '/autocomplete/zip.json'  => 'autocomplete#zip',  :as => :autocomplete_zip
@@ -34,7 +40,6 @@ MissionOfMercy::Application.routes.draw do
   resources :patient_procedures
   resources :assignment_desk
 
-  match '/patients/:id/print' => 'patients#print', :as => :print_chart
   match '/patients/:patient_id/radiology' => 'patients#radiology', :as => :patient_radiology
   match '/status' => 'status#index', :as => :status
 
@@ -45,7 +50,9 @@ MissionOfMercy::Application.routes.draw do
     resources :pre_meds
     resources :prescriptions
     resources :users
-    resources :patients, only: [:edit, :update, :destroy]
+    resources :patients do
+      get 'history', :on => :member
+    end
     resources :support_requests do
       collection do
         delete :destroy_all
@@ -58,6 +65,5 @@ MissionOfMercy::Application.routes.draw do
     match '/reports/export_patients' => 'reports#export_patients', :as => :export_patients
     match '/maintenance' => 'maintenance#index', :as => :maintenance
     match '/maintenance/reset' => 'maintenance#reset', :as => :maintenance_reset
-    match '/patients/:patient_id/history' => 'patients#history', :as => :patient_history
   end
 end

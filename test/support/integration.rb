@@ -2,7 +2,7 @@ module Support
   module Integration
     def sign_in_as(user_type)
       visit login_path
-      select user_type, :from => 'Login'
+      select user_type, :from => 'System type'
       fill_in 'Password', :with => 'temp123'
       click_button 'Log in'
     end

@@ -13,7 +13,7 @@ class AdminPatientsTest < ActionDispatch::IntegrationTest
 
     click_button "Update"
 
-    assert_current_path patients_path
+    assert_current_path admin_patients_path
   end
 
 end

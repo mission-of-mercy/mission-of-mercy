@@ -9,22 +9,15 @@
 
 = header do
   %h1 Patients
-  - if current_user.user_type == UserType::ADMIN
-    .pull-right
-      = link_to "Export All Patients",
-        admin_export_patients_path(:filename => "patients"),
-        :target => "_blank", :class => 'btn btn-small'
 
-= form_tag patients_path, :method => 'get', :autocomplete => "off", :class => "bootstrap" do
+= form_tag patients_path, method: 'get', autocomplete: "off",
+  class: "bootstrap" do
   = hidden_field_tag :treatment_area_id, @area
   .input-append.input-prepend
     %span.add-on
       %i.icon-user
     = text_field_tag :chart_number, params[:chart_number],
       :placeholder => "Chart number", :class => "span2"
-    - if current_user.user_type == UserType::ADMIN
-      = text_field_tag :name, params[:name],
-        :placeholder => "Name", :class => "span2"
     = submit_tag "Search", class: 'btn'
     = submit_tag "Clear", class: 'btn'
 
@@ -38,7 +31,6 @@
         %th Date of birth
         %th Age
         %th Sex
-        %th{:colspan => 4}
     %tbody
       - @patients.each do |patient|
         %tr{:class=> cycle('even', 'odd')}
@@ -65,12 +57,12 @@
               = link_to "Assign", edit_assignment_desk_path(patient),
                 class: 'primary'
 
-          - if current_user.user_type == UserType::ADMIN
-            %td.controls
-              = link_to 'History', admin_patient_history_path(patient_id: patient.id)
-              = link_to 'Edit', edit_admin_patient_path(patient)
-              = link_to 'Print', {:controller => 'patients', :action => 'print', :id => patient.id}, :popup => true
-              = link_to 'Destroy', admin_patient_path(patient),
-                :'data-confirm' => 'Are you sure?', :method => :delete
-
   = will_paginate @patients
+
+- elsif params[:chart_number].blank?
+  %p
+    Enter the patient's chart number in the box above, then click
+    %strong Search
+- else
+  %p
+    %strong No results found

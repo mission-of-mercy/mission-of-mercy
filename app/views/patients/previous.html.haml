@@ -1,15 +1,11 @@
-- content_for :header_js do
-  :plain
-    $(function(){
-      $('#chart_number').select().focus();
-    });
+- title 'Check-in Previous Patient'
 
-- title "#{@treatment_area.name} Checkout"
+= render "nav"
 
 = header do
-  %h1= "#{@treatment_area.name} Checkout"
+  %h1 Check-in Previous Patient
 
-= render "patients/search"
+= render "search", name: true
 
 - if @patients.any?
   %table
@@ -23,7 +19,7 @@
         %th Sex
     %tbody
       - @patients.each do |patient|
-        %tr{:class=> cycle('even', 'odd')}
+        %tr
           %td= patient.id
           %td= patient.last_name
           %td= patient.first_name
@@ -31,6 +27,15 @@
           %td= patient.age
           %td= patient.sex
           %td.controls
-            = link_to_checkout(@treatment_area, patient)
+            = link_to "Check-in", new_patient_path(patient: {previous_chart_number: patient.id}),
+             class: 'primary'
 
   = will_paginate @patients
+
+- elsif params[:chart_number].blank?
+  %p
+    Enter the patient's chart number in the box above, then click
+    %strong Search
+- else
+  %p
+    %strong No results found

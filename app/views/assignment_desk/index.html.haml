@@ -1,13 +1,14 @@
-- content_for :header_js do
-  :plain
+- title 'Assignment Desk'
+
+- content_for :header do
+  :javascript
     $(function(){
-      $('#chart_number').select().focus();
+      $('#chart_number').select();
+      $('#chart_number').focus();
     });
 
-- title "#{@treatment_area.name} Checkout"
-
 = header do
-  %h1= "#{@treatment_area.name} Checkout"
+  %h1 Assignment Desk
 
 = render "patients/search"
 
@@ -23,7 +24,7 @@
         %th Sex
     %tbody
       - @patients.each do |patient|
-        %tr{:class=> cycle('even', 'odd')}
+        %tr
           %td= patient.id
           %td= patient.last_name
           %td= patient.first_name
@@ -31,6 +32,5 @@
           %td= patient.age
           %td= patient.sex
           %td.controls
-            = link_to_checkout(@treatment_area, patient)
-
-  = will_paginate @patients
+            = link_to "Assign", edit_assignment_desk_path(patient),
+              class: 'primary'

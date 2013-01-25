@@ -1,17 +1,26 @@
 MoM.setupNamespace("Checkin");
 
-MoM.Checkin.init = function(options){
+$(document).on("pjax:success", function(){
+  MoM.Checkin.pjaxInit();
+});
+
+MoM.Checkin.pjaxInit = function(){
+  if($('form.new_patient').length == 1) MoM.Checkin.init(true);
+}
+
+MoM.Checkin.init = function(pjax){
+  var $form = $('form.new_patient');
 
   MoM.disableEnterKey($('form.new_patient'));
 
-  MoM.Checkin.hacks();
+  if(!pjax) $(document).pjax('#tabnav a', '[data-pjax-container]');
 
-  if (options.requireWaiverConfirmation)
+  if($form.data('require-waiver-confirmation'))
     MoM.Checkin.disableAllFields();
   else
     MoM.Checkin.waiverConfirmed();
 
-  if(options.lastPatient.contactInformation == null)
+  if($form.data('last-patient-contact') == null)
     MoM.Checkin.hidePreviousContactInformationButton();
 
   $("#waiver_agree_button").click(function(e) {
@@ -35,7 +44,7 @@ MoM.Checkin.init = function(options){
     MoM.Checkin.togglePatientPain();
   });
 
-  if(options.dateInput == "text")
+  if($form.data('date-input') == "text")
     MoM.Checkin.useTextDate();
   else
     MoM.Checkin.useSelectDate();
@@ -46,7 +55,7 @@ MoM.Checkin.init = function(options){
 
   $('.same_as_previous_patient_button').click(function(e) {
     e.preventDefault();
-    MoM.Checkin.fillContactInformation(options.lastPatient.contactInformation);
+    MoM.Checkin.fillContactInformation($form.data('last-patient-contact'));
   })
 
   $('input[name="patient[attended_previous_mom_event]"]').change(function(e){
@@ -85,8 +94,12 @@ MoM.Checkin.init = function(options){
   MoM.Checkin.togglePatientPain(false);
   MoM.Checkin.toggleOtherRace(false);
 
-  if(options.lastPatient.id){
-    MoM.Checkin.printChart(options.lastPatient.id);
+  var lastPatientId = $form.data('last-patient-id');
+
+  if(lastPatientId){
+    MoM.Checkin.printChart(lastPatientId);
+
+    $('#last_patient h1').text(lastPatientId);
 
     jQuery.facebox({ div: '#last_patient' }, 'last-patient');
 
@@ -98,91 +111,12 @@ MoM.Checkin.init = function(options){
   }
   else
     $('#waiver_agree_button').focus();
-}
 
-MoM.Checkin.hacks = function(){
-  $('#tabnav a').on('click', function(e){
-    var input = $(this)
-    var tab   = input.attr('data-tab');
-
-    $('#tabnav li').removeClass('current');
-
-    if(tab == "new"){
-      $('form.new_patient').show();
-      $('#reprint').hide();
-      $('#previous-patient').hide();
-      $('#waiver_agree_button').focus();
-    } else if(tab == "previous"){
-      $('form.new_patient').hide();
-      $('#previous-patient').show();
-      $('#reprint').hide();
-      $('#previous-patient input:first').focus();
-    } else if(tab == "print"){
-      $('form.new_patient').hide();
-      $('#previous-patient').hide();
-      $('#reprint').show();
-      $('#reprint input:first').focus();
-    }
-
-    input.parent().addClass("current");
-
-    e.preventDefault();
-  });
-
-  $('#reprint').on('submit', function(e){
-    var chartNumber = $('#reprint #chart_number').val();
-    MoM.openInBackground('/patients/' + chartNumber + '/print');
-
-    $('#reprint #chart_number').val(chartNumber + " printing ...").
-      select().
-      focus();
-
-    e.preventDefault();
-  });
-
-  $('#previous-patient').on('submit', function(e){
-    var chartNumber = $('#previous-patient #chart_number').val();
-    $.getJSON("/patients/" + chartNumber + ".json", function(data){
-      if(data.patient == null){
-        $('#previous-patient #chart_number').
-          val("Patient " + chartNumber + " not found").
-          select().
-          focus();
-      } else {
-        var patient = data.patient;
-
-        MoM.Checkin.useTextDate();
-
-        $('form.new_patient').show();
-        $('#bottom_demographics_next').hide();
-        $('#reprint').hide();
-        $('#previous-patient').hide();
-        $('#waiver_agree_button').focus();
-
-        $('#patient_first_name').val(patient.first_name);
-        $('#patient_last_name').val(patient.last_name);
-
-        $('#patient_date_of_birth').val(patient.date_of_birth);
-        $('#patient_sex').val(patient.sex);
-
-        $('#patient_phone').val(patient.phone);
-        $('#patient_street').val(patient.street);
-        $('#patient_city').val(patient.city);
-        $('#patient_state').val(patient.state);
-        $('#patient_zip').val(patient.zip);
-
-        $('#patient_race').val(patient.race);
-
-        $('#patient_previous_chart_number').val(patient.id);
-      }
-    });
-
-    e.preventDefault();
-  });
+  $('a[rel=tooltip]').tooltip();
 }
 
 MoM.Checkin.printChart = function(patientId){
-  MoM.openInBackground('/patients/' + patientId + '/print');
+  MoM.openInBackground('/patients/' + patientId + '/chart');
 }
 
 MoM.Checkin.togglePatientPain = function(focus){
