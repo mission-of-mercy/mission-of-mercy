@@ -298,7 +298,7 @@ class Patient < ActiveRecord::Base
     minutes = travel_time_minutes || 0
     hours   = travel_time_hours   || 0
 
-    self.travel_time = minutes + (hours * 60)
+    self.travel_time = (minutes + (hours * 60)).to_i
   end
 
   def date_of_birth_entry
