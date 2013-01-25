@@ -8,16 +8,19 @@
 - unless @patient.previous_chart_number.blank?
   .alert.alert-info
     = link_to "&times;".html_safe, new_patient_path, class: 'close',
-      data: {dismiss: 'alert'}
+      data: {dismiss: 'alert'}, rel: "tooltip",
+      title: "Clear previous patient association"
     This patient was previously registered using
     %strong Chart ##{@patient.previous_chart_number}
 
-= form_for @patient, :html => { :autocomplete => "off" } do |f|
-  .waiver_confirmation.unconfirmed
-    %p.waiver_description
-      Patient or legal guardian (if under 18) has read, understood, and
-      signed the waiver.
-      %button#waiver_agree_button.btn.btn-success Yes &rarr;
+= form_for @patient, :html => { :autocomplete => "off",
+  data: @registration.form_data } do |f|
+  - if @registration.show_waver?
+    .waiver_confirmation.unconfirmed
+      %p.waiver_description
+        Patient or legal guardian (if under 18) has read, understood, and
+        signed the waiver.
+        %button#waiver_agree_button.btn.btn-success Yes &rarr;
 
 
   = render :partial => 'form', :locals => {:f => f}
@@ -42,7 +45,8 @@
 #last_patient
   .top
     Patient's Chart Number
-    %h1= @last_patient.chart_number if @last_patient
+    %h1 Unknown ...
 
   .bottom
-    = link_to "Check In Next Patient &rarr;".html_safe, "#", :class => "back"
+    = link_to "Check In Next Patient &rarr;".html_safe, "#",
+      class: "btn btn-primary"

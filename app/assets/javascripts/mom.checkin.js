@@ -1,17 +1,26 @@
 MoM.setupNamespace("Checkin");
 
-MoM.Checkin.init = function(options){
+$(document).on("pjax:success", function(){
+  MoM.Checkin.pjaxInit();
+});
+
+MoM.Checkin.pjaxInit = function(){
+  if($('form.new_patient').length == 1) MoM.Checkin.init(true);
+}
+
+MoM.Checkin.init = function(pjax){
+  var $form = $('form.new_patient');
 
   MoM.disableEnterKey($('form.new_patient'));
 
-  $(document).pjax('#tabnav a', '[data-pjax-container]');
+  if(!pjax) $(document).pjax('#tabnav a', '[data-pjax-container]');
 
-  if (options.requireWaiverConfirmation)
+  if($form.data('require-waiver-confirmation'))
     MoM.Checkin.disableAllFields();
   else
     MoM.Checkin.waiverConfirmed();
 
-  if(options.lastPatient.contactInformation == null)
+  if($form.data('last-patient-contact') == null)
     MoM.Checkin.hidePreviousContactInformationButton();
 
   $("#waiver_agree_button").click(function(e) {
@@ -35,7 +44,7 @@ MoM.Checkin.init = function(options){
     MoM.Checkin.togglePatientPain();
   });
 
-  if(options.dateInput == "text")
+  if($form.data('date-input') == "text")
     MoM.Checkin.useTextDate();
   else
     MoM.Checkin.useSelectDate();
@@ -46,7 +55,7 @@ MoM.Checkin.init = function(options){
 
   $('.same_as_previous_patient_button').click(function(e) {
     e.preventDefault();
-    MoM.Checkin.fillContactInformation(options.lastPatient.contactInformation);
+    MoM.Checkin.fillContactInformation($form.data('last-patient-contact'));
   })
 
   $('input[name="patient[attended_previous_mom_event]"]').change(function(e){
@@ -85,8 +94,12 @@ MoM.Checkin.init = function(options){
   MoM.Checkin.togglePatientPain(false);
   MoM.Checkin.toggleOtherRace(false);
 
-  if(options.lastPatient.id){
-    MoM.Checkin.printChart(options.lastPatient.id);
+  var lastPatientId = $form.data('last-patient-id');
+
+  if(lastPatientId){
+    MoM.Checkin.printChart(lastPatientId);
+
+    $('#last_patient h1').text(lastPatientId);
 
     jQuery.facebox({ div: '#last_patient' }, 'last-patient');
 
@@ -98,6 +111,8 @@ MoM.Checkin.init = function(options){
   }
   else
     $('#waiver_agree_button').focus();
+
+  $('a[rel=tooltip]').tooltip();
 }
 
 MoM.Checkin.printChart = function(patientId){

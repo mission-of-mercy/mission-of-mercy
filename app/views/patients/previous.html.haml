@@ -27,7 +27,7 @@
           %td= patient.age
           %td= patient.sex
           %td.controls
-            = link_to "Check-in", new_patient_path(previous_patient: patient),
+            = link_to "Check-in", new_patient_path(patient: {previous_chart_number: patient.id}),
              class: 'primary'
 
   = will_paginate @patients
