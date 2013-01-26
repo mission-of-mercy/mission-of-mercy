@@ -1,15 +1,13 @@
 MoM.setupNamespace("Checkin");
 
 $(document).on("pjax:success", function(){
-  MoM.Checkin.pjaxInit();
+  MoM.Checkin.init();
 });
-
-MoM.Checkin.pjaxInit = function(){
-  if($('form.new_patient').length == 1) MoM.Checkin.init();
-}
 
 MoM.Checkin.init = function(){
   var $form = $('form.new_patient');
+
+  if($form.length == 0) return false;
 
   MoM.disableEnterKey($('form.new_patient'));
 
