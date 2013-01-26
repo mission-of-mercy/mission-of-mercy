@@ -18,6 +18,7 @@ MoM.setupNamespace = function(namespace){
 
 MoM.init = function(){
   MoM.Support.init(true);
+  $(document).pjax('#tabnav a', '[data-pjax-container]');
 }
 
 MoM.disableEnterKey = function(form){

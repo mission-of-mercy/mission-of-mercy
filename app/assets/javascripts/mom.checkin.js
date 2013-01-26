@@ -5,15 +5,13 @@ $(document).on("pjax:success", function(){
 });
 
 MoM.Checkin.pjaxInit = function(){
-  if($('form.new_patient').length == 1) MoM.Checkin.init(true);
+  if($('form.new_patient').length == 1) MoM.Checkin.init();
 }
 
-MoM.Checkin.init = function(pjax){
+MoM.Checkin.init = function(){
   var $form = $('form.new_patient');
 
   MoM.disableEnterKey($('form.new_patient'));
-
-  if(!pjax) $(document).pjax('#tabnav a', '[data-pjax-container]');
 
   if($form.data('require-waiver-confirmation'))
     MoM.Checkin.disableAllFields();
