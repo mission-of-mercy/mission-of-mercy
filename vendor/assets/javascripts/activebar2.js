@@ -175,30 +175,6 @@
         // Set the initial bar width
         $(window).trigger( 'resize' );
 
-        // The IE prior to version 7.0 does not support position fixed. However
-        // the correct behaviour can be emulated using a hook to the scroll
-        // event. This is a little choppy, but it works.
-        if ( $.browser.msie
-          && ( $.browser.version.substring( 0, 1 ) == '5'
-            || $.browser.version.substring( 0, 1 ) == '6' ) ) {
-            // Position needs to be changed to absolute, because IEs fallback
-            // for fixed is static, which is quite useless here.
-            container.css( 'position', 'absolute' );
-            $( window ).scroll(
-                function() {
-                    container.stop( true, true );
-                    if ( $.fn.activebar.state == 3 ) {
-                        // Activebar is visible
-                        container.css( 'top', $( window ).scrollTop() + 'px' );
-                    }
-                    else {
-                        // Activebar is hidden
-                        container.css( 'top', ( $( window ).scrollTop() - container.height() ) + 'px' );
-                    }
-                }
-            );
-        }
-
         // Add the icon container
         container.append(
             $( '<div></div>' ).attr( 'class', 'icon' )
