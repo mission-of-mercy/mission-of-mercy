@@ -48,6 +48,7 @@ module MissionOfMercy
     config.assets.version = '1.0'
 
     config.assets.precompile += ['print/default.css', 'print/report.css']
+    config.assets.paths << Rails.root.join("app", "assets", "mp3")
 
     Date::DATE_FORMATS.merge!(:default => '%m/%d/%Y')
 

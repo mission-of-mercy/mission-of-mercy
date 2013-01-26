@@ -4,7 +4,7 @@
 
 - if @requests.length > 0
   :plain
-    <embed id='alert' src='/mp3/alert.mp3' autostart='true' loop='false' width='100%' height='20px'></embed>
+    <embed id='alert' src='#{asset_path("alert.mp3")}' autostart='true' loop='false' width='100%' height='20px'></embed>
 - else
   %h2 No Support Requests
 
