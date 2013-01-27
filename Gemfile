@@ -11,6 +11,7 @@ gem 'devise'
 gem 'dynamic_form'
 gem 'draper'
 gem 'rack-pjax'
+gem 'virtus'
 
 gem 'jquery-rails'
 gem 'will_paginate-bootstrap'
