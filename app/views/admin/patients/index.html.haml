@@ -7,40 +7,11 @@
       admin_export_patients_path(:filename => "patients"),
       :target => "_blank", :class => 'btn btn-small'
 
-= render "patients/search", name: true
+- @patient_search.controls do |patient|
+  = link_to 'History', history_admin_patient_path(patient)
+  = link_to 'Edit',    edit_admin_patient_path(patient)
+  = link_to 'Print',   chart_patient_path(patient)
+  = link_to 'Destroy', admin_patient_path(patient),
+    data: {confirm: 'Are you sure?'}, method: :delete
 
-- if @patients.any?
-  %table
-    %thead
-      %tr
-        %th Chart #
-        %th Last name
-        %th First name
-        %th Date of birth
-        %th Age
-        %th Sex
-    %tbody
-      - @patients.each do |patient|
-        %tr
-          %td= patient.id
-          %td= patient.last_name
-          %td= patient.first_name
-          %td= patient.dob
-          %td= patient.age
-          %td= patient.sex
-          %td.controls
-            = link_to 'History', history_admin_patient(patient)
-            = link_to 'Edit', edit_admin_patient_path(patient)
-            = link_to 'Print', chart_patient_path(patient)
-            = link_to 'Destroy', admin_patient_path(patient),
-              data: {confirm: 'Are you sure?'}, method: :delete
-
-  = will_paginate @patients
-
-- elsif params[:chart_number].blank? && params[:name].blank?
-  %p
-    Enter the patient's chart number or name in the box above, then click
-    %strong Search
-- else
-  %p
-    %strong No results found
+= render "patients/patients", patient_search: @patient_search
