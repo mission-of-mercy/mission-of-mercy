@@ -2,7 +2,7 @@ class AssignmentDeskController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @patient_search = PatientSearch.new.search(params)
+    @patient_search = PatientsTable.new.search(params)
   end
 
   def edit

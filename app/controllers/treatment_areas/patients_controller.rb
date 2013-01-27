@@ -3,7 +3,7 @@ class TreatmentAreas::PatientsController < ApplicationController
   before_filter :find_treatment_area
 
   def index
-    @patient_search = PatientSearch.new.search(params)
+    @patient_search = PatientsTable.new.search(params)
   end
 
   def radiology
