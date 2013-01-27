@@ -23,11 +23,11 @@ class PatientsTable
   end
 
   def show?(field)
-    fields.include? field
+    fields.include?(field)
   end
 
   def [](param)
-    patient_search[param]
+    patient_search.send(param)
   end
 
   # Will Paginate methods
@@ -37,7 +37,7 @@ class PatientsTable
   end
 
   def current_page
-    (patient_search[:page] || 1).to_i
+    (patients.current_page || 1).to_i
   end
 
   private
