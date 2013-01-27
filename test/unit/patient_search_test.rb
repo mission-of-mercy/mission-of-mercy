@@ -40,8 +40,8 @@ class PatientSearchTest < ActiveSupport::TestCase
   end
 
   test 'search by age' do
-    # We probably want to have options like greater than, less than, equal to,
-    # but leaving this out for now.
+    # @jordan: We probably want to have options like greater than, less than,
+    # equal to, but leaving this out for now.
     @jordan_byron.update_attributes(date_of_birth: Date.today - 65.years)
     @michael_jordan.update_attributes(date_of_birth: Date.today - 23.years)
 
@@ -53,7 +53,18 @@ class PatientSearchTest < ActiveSupport::TestCase
   end
 
   test 'search by procedure' do
+    procedure = FactoryGirl.create(:procedure)
+    other_procedure = FactoryGirl.create(:procedure)
 
+    @jordan_byron.procedures << procedure
+    @jordan_byron.procedures << other_procedure
+    @michael_jordan.procedures << other_procedure
+
+    @patient_search.procedure_id = procedure.id
+    assert_equal [@jordan_byron], @patient_search.execute
+
+    @patient_search.procedure_id = other_procedure.id
+    assert_equal [@jordan_byron, @michael_jordan], @patient_search.execute
   end
 
   test 'combine search options (except chart number)' do
