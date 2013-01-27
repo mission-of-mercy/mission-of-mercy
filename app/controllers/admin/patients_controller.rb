@@ -4,7 +4,7 @@ module Admin
     before_filter :find_patient, :only => [:edit, :update, :destroy, :history]
 
     def index
-      @patients = Patient.search(params)
+      @patient_search = PatientSearch.new(:chart_number, :name).search(params)
     end
 
     def edit

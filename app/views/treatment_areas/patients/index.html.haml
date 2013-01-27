@@ -1,36 +1,9 @@
-- content_for :header_js do
-  :plain
-    $(function(){
-      $('#chart_number').select().focus();
-    });
-
 - title "#{@treatment_area.name} Checkout"
 
 = header do
   %h1= "#{@treatment_area.name} Checkout"
 
-= render "patients/search"
+- @patient_search.controls do |patient|
+  = link_to_checkout(@treatment_area, patient)
 
-- if @patients.any?
-  %table
-    %thead
-      %tr
-        %th Chart #
-        %th Last name
-        %th First name
-        %th Date of birth
-        %th Age
-        %th Sex
-    %tbody
-      - @patients.each do |patient|
-        %tr{:class=> cycle('even', 'odd')}
-          %td= patient.id
-          %td= patient.last_name
-          %td= patient.first_name
-          %td= patient.dob
-          %td= patient.age
-          %td= patient.sex
-          %td.controls
-            = link_to_checkout(@treatment_area, patient)
-
-  = will_paginate @patients
+= render "patients/patients", patient_search: @patient_search

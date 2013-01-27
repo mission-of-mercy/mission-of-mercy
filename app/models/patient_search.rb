@@ -2,7 +2,7 @@ class PatientSearch
   include Enumerable
 
   def initialize(*fields)
-    @fields        = fields || [:chart_number]
+    @fields        = fields.empty? ? [:chart_number] : fields
     @search_params = {}
   end
 
@@ -18,8 +18,8 @@ class PatientSearch
     patients.each {|patient| yield patient, controls_for(patient) }
   end
 
-  def controls_for(patient)
-    "Hi #{patient.full_name}!"
+  def controls(&block)
+    @patient_controls = block
   end
 
   def show?(field)
@@ -36,9 +36,17 @@ class PatientSearch
     patients.total_pages
   end
 
+  def current_page
+    (search_params[:page] || 1).to_i
+  end
+
   private
 
-  attr_reader :patients, :fields, :search_params
+  attr_reader :patients, :fields, :search_params, :patient_controls
+
+  def controls_for(patient)
+    h.capture(patient, &patient_controls) if patient_controls
+  end
 
   def find_patients
     if search_params[:commit] == "Clear"
@@ -55,10 +63,21 @@ class PatientSearch
       Patient.where(id: chart_number)
     else
       @search_params = {}
-      Patient.where(id: -1)
+      Patient.none
     end
 
     @patients = patients.order('id').
       paginate(per_page: 30, page: search_params[:page])
   end
+
+  # TODO Desc ...
+  #
+  def h
+    @h ||= begin
+      h = ActionController::Base.helpers.extend(Haml::Helpers)
+      h.init_haml_helpers
+      h
+    end
+  end
+
 end

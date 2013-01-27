@@ -62,19 +62,11 @@ class Patient < ActiveRecord::Base
   attr_accessor :race_other
   attr_reader   :time_in_pain
 
-  def self.search(params)
-    chart_number = params[:chart_number]
-    name         = params[:name]
-
-    conditions = if chart_number.blank? && !name.blank?
-      ['first_name ILIKE ? or last_name ILIKE ?', "%#{name}%","%#{name}%"]
-    elsif !chart_number.blank? && chart_number.to_i != 0
-      {id: chart_number}
-    else
-      {id: -1} # Don't return results for empty queries
-    end
-
-    Patient.where(conditions).order('id').paginate(per_page: 30, page: params[:page])
+  # TODO Remove this after Rails 4 upgrade
+  # https://github.com/rails/rails/commit/75de1ce131cd39f68dbe6b68eecf2617a720a8e4
+  #
+  def self.none
+    Patient.where(id: -1)
   end
 
   def chart_number

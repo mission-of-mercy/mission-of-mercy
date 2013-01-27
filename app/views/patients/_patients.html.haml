@@ -1,4 +1,15 @@
-= render "search", patient_search: patient_search
+.bootstrap-form
+  %form{method: 'get', autocomplete: 'off'}
+    .input-append.input-prepend
+      %span.add-on
+        %i.icon-user
+      = text_field_tag :chart_number, patient_search[:chart_number],
+        placeholder: "Chart number", class: "span2", autofocus: 'autofocus'
+      - if patient_search.show? :name
+        = text_field_tag :name, patient_search[:name], placeholder: "Name",
+          class: "span2"
+      = submit_tag "Search", class: 'btn'
+      = submit_tag "Clear", class: 'btn'
 
 - if patient_search.any?
   %table
@@ -20,11 +31,8 @@
           %td= patient.age
           %td= patient.sex
           %td.controls= controls
-          / = link_to "Check-in",
-          /               new_patient_path(patient: {previous_chart_number: patient}),
-          /               class: 'primary'
 
-  = will_paginate @patient_search
+  = will_paginate patient_search
 
 - else
   %p
