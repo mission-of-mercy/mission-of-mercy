@@ -1,4 +1,4 @@
-require "test_helper"
+require_relative "../test_helper"
 
 class PatientSearchTest < ActiveSupport::TestCase
 
@@ -31,14 +31,14 @@ class PatientSearchTest < ActiveSupport::TestCase
     assert ActiveRecord::Relation === @patient_search.execute
   end
 
-  test 'if the commit param is "Clear" then it returns an empty result set' do
+  test 'if the commit param is Clear then it returns an empty result set' do
     @patient_search[:chart_number] = @jordan_byron.id
     @patient_search[:commit]       = "Clear"
 
     assert_equal [], @patient_search.execute
   end
 
-  test 'if the commit param is "Clear" then clear out search params' do
+  test 'if the commit param is Clear then clear out search params' do
     @patient_search[:chart_number] = @jordan_byron.id
     @patient_search[:commit]       = "Clear"
 
@@ -46,5 +46,4 @@ class PatientSearchTest < ActiveSupport::TestCase
 
     refute @patient_search[:chart_number]
   end
-
 end

@@ -3,7 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'capybara/rails'
 require 'database_cleaner'
-require 'support/integration'
+require_relative 'support/integration'
 require 'capybara-screenshot/minitest'
 require_relative '../db/seeds/users'
 
