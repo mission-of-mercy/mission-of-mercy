@@ -40,6 +40,16 @@ class PatientSearchTest < ActiveSupport::TestCase
   end
 
   test 'search by age' do
+    # We probably want to have options like greater than, less than, equal to,
+    # but leaving this out for now.
+    @jordan_byron.update_attributes(date_of_birth: Date.today - 65.years)
+    @michael_jordan.update_attributes(date_of_birth: Date.today - 23.years)
+
+    @patient_search.age = 65
+    assert_equal [@jordan_byron], @patient_search.execute
+
+    @patient_search.age = 23
+    assert_equal [@michael_jordan], @patient_search.execute
   end
 
   test 'search by procedure' do

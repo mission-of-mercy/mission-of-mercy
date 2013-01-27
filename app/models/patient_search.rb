@@ -3,6 +3,7 @@ class PatientSearch
 
   attribute :chart_number,      Integer
   attribute :treatment_area_id, Integer
+  attribute :age,               Integer
   attribute :name,              String
   attribute :commit,            String
 
@@ -25,6 +26,10 @@ class PatientSearch
       patients = patients.joins(:treatment_areas).where(
         'treatment_areas.id = ?', treatment_area_id
       )
+    end
+
+    if age.present?
+      patients = patients.where("date_part('year', age(date_of_birth)) = ?", age)
     end
 
     patients.order('id')
