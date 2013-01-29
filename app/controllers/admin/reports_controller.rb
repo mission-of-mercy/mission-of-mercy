@@ -14,6 +14,7 @@ class Admin::ReportsController < ApplicationController
     else
       @report = Reports::ClinicSummary.new
     end
+    @procedures_decorator = ::ChartDecorator.new(@report.procedures)
   end
 
   def treatment_area_distribution

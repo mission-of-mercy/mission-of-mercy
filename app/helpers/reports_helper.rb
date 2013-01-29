@@ -56,7 +56,7 @@ module ReportsHelper
         $(function(){
           var placeholder = jQuery('\##{ name }');
           var data = #{ bar_graph_data(data_series) };
-          var options = #{ bar_graph_options(data_series) };
+          var options = #{ bar_graph_options(data_series).merge(graph_options).to_json };
           var plot = jQuery.plot(placeholder, data, options);
         });
       }.html_safe
@@ -81,7 +81,7 @@ module ReportsHelper
       },
       :yaxis => { :minTickSize => 1, :tickDecimals => 0 },
       :grid => { :tickColor => "#ffffff" }
-    }.to_json
+    }
   end
 
   def pie_chart(name, data_series=[], div_options={}, graph_options={})

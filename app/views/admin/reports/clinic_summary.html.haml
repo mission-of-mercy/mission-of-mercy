@@ -60,7 +60,13 @@
 
 - if @report.procedure_count > 0
   %a{href: '#', data: {toggle: 'collapse', target: '#procedures_chart'}} View Graph
-  = pie_chart('procedures_chart', @report.procedures, {style: "width: 400px; height: 400px; display: none;"})
+  #procedures_chart{style: 'display: none;'}
+    .chart
+      %h3 Top 10 procedures by dollar value
+      = bar_graph('procedures_chart_value', @procedures_decorator.top_by_value, {style: "width: 400px; height: 400px;"}, {bars: {horizontal: true}})
+    .chart
+      %h3 Top 10 procedures by quantity
+      = bar_graph('procedures_chart_count', @procedures_decorator.top_by_quantity, {style: "width: 400px; height: 400px; "})
 
   %table
     %thead
