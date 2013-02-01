@@ -52,9 +52,10 @@ class PatientsTable
   #
   def h
     @h ||= begin
-      h = ActionController::Base.helpers.extend(Haml::Helpers)
-      h.init_haml_helpers
-      h
+      ActionController::Base.helpers.clone.tap do |h|
+        h.extend(Haml::Helpers)
+        h.init_haml_helpers
+      end
     end
   end
 
