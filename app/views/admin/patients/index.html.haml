@@ -7,11 +7,11 @@
       admin_export_patients_path(:filename => "patients"),
       :target => "_blank", :class => 'btn btn-small'
 
-- @patient_search.controls do |patient|
+- @patients_table.controls do |patient|
   = link_to 'History', history_admin_patient_path(patient)
   = link_to 'Edit',    edit_admin_patient_path(patient)
   = link_to 'Print',   chart_patient_path(patient)
   = link_to 'Destroy', admin_patient_path(patient),
     data: {confirm: 'Are you sure?'}, method: :delete
 
-= render "patients/patients", patient_search: @patient_search
+= render "patients/patients"

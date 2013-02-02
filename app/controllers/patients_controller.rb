@@ -38,7 +38,8 @@ class PatientsController < ApplicationController
 
   def previous
     @current_tab = "previous"
-    @patient_search = PatientsTable.new(:chart_number, :name).search(params)
+    @patients_table = PatientsTable.new(:chart_number, :name)
+    @patient_search = @patients_table.search(params)
   end
 
   private

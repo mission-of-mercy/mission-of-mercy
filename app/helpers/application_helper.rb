@@ -27,6 +27,10 @@ module ApplicationHelper
     app_config["state"]
   end
 
+  def patient_searches_path(*args)
+    request.url
+  end
+
   def real_currency(number)
     number_to_currency(number,:delimiter => ",", :unit => "$ ",:separator => ".")
   end

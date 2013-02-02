@@ -4,7 +4,10 @@ module Admin
     before_filter :find_patient, :only => [:edit, :update, :destroy, :history]
 
     def index
-      @patient_search = PatientsTable.new(:chart_number, :name).search(params)
+      @patients_table = PatientsTable.new(:chart_number, :name,  :age,
+        :treatment_area_id, :procedure_id, :count
+      )
+      @patient_search = @patients_table.search(params)
     end
 
     def edit

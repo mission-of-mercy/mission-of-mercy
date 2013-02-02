@@ -3,7 +3,7 @@
 = header do
   %h1= "#{@treatment_area.name} Checkout"
 
-- @patient_search.controls do |patient|
+- @patients_table.controls do |patient|
   = link_to_checkout(@treatment_area, patient)
 
-= render "patients/patients", patient_search: @patient_search
+= render "patients/patients"

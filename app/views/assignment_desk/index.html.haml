@@ -3,8 +3,8 @@
 = header do
   %h1 Assignment Desk
 
-- @patient_search.controls do |patient|
+- @patients_table.controls do |patient|
   = link_to "Assign", edit_assignment_desk_path(patient),
     class: 'primary'
 
-= render "patients/patients", patient_search: @patient_search
+= render "patients/patients"

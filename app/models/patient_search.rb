@@ -1,17 +1,22 @@
 class PatientSearch
   include Virtus
+  include ActiveModel::Conversion
+  extend ActiveModel::Naming
 
   attribute :chart_number,      Integer
   attribute :treatment_area_id, Integer
   attribute :procedure_id,      Integer
   attribute :age,               Integer
   attribute :name,              String
-  attribute :commit,            String
 
-  def execute
-    # TODO We can move the commit check here into the PatientsTable
-    if blank_search? || commit == 'Clear'
-      return reset_attributes && Patient.none
+  def initialize(params)
+    super params[:patient_search]
+    reset_attributes if params[:commit] == 'Clear'
+  end
+
+  def patients
+    if blank_search?
+      return Patient.none
     elsif chart_number.present?
       return Patient.where(id: chart_number)
     end
@@ -55,4 +60,6 @@ class PatientSearch
   def blank_search?
     attributes.values.all?(&:blank?)
   end
+
+  def persisted?; false; end
 end
