@@ -1,6 +1,6 @@
 - title 'Check-in Previous Patient'
 
-- @patient_search.controls do |patient|
+- @patients_table.controls do |patient|
   = link_to "Check-in",
     new_patient_path(patient: {previous_chart_number: patient}),
     class: 'primary'
@@ -10,5 +10,5 @@
 = header do
   %h1 Check-in Previous Patient
 
-= render "patients", patient_search: @patient_search
+= render "patients"
 

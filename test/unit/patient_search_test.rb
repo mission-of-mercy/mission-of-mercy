@@ -11,19 +11,19 @@ class PatientSearchTest < ActiveSupport::TestCase
       first_name: 'Michael', last_name: 'Jordan'
     )
 
-    @patient_search = PatientSearch.new
+    @patient_search = PatientSearch.new({})
   end
 
   test 'search by chart number if it is given (even if name is given)' do
     @patient_search.chart_number = @jordan_byron.id
     @patient_search.name = 'Not the name'
-    assert_equal [@jordan_byron], @patient_search.execute
+    assert_equal [@jordan_byron], @patient_search.patients
   end
 
   test 'search by name if given and no chart number' do
     @patient_search.chart_number = nil
     @patient_search.name = 'Jordan'
-    assert_equal [@jordan_byron, @michael_jordan], @patient_search.execute
+    assert_equal [@jordan_byron, @michael_jordan], @patient_search.patients
   end
 
   test 'search by assigned treatment area' do
@@ -33,10 +33,10 @@ class PatientSearchTest < ActiveSupport::TestCase
     @michael_jordan.treatment_areas << @other_treatment_area
 
     @patient_search.treatment_area_id = @treatment_area.id
-    assert_equal [@jordan_byron], @patient_search.execute
+    assert_equal [@jordan_byron], @patient_search.patients
 
     @patient_search.treatment_area_id = @other_treatment_area.id
-    assert_equal [@michael_jordan], @patient_search.execute
+    assert_equal [@michael_jordan], @patient_search.patients
   end
 
   test 'search by age' do
@@ -46,10 +46,10 @@ class PatientSearchTest < ActiveSupport::TestCase
     @michael_jordan.update_attributes(date_of_birth: Date.today - 23.years)
 
     @patient_search.age = 65
-    assert_equal [@jordan_byron], @patient_search.execute
+    assert_equal [@jordan_byron], @patient_search.patients
 
     @patient_search.age = 23
-    assert_equal [@michael_jordan], @patient_search.execute
+    assert_equal [@michael_jordan], @patient_search.patients
   end
 
   test 'search by procedure' do
@@ -61,10 +61,10 @@ class PatientSearchTest < ActiveSupport::TestCase
     @michael_jordan.procedures << other_procedure
 
     @patient_search.procedure_id = procedure.id
-    assert_equal [@jordan_byron], @patient_search.execute
+    assert_equal [@jordan_byron], @patient_search.patients
 
     @patient_search.procedure_id = other_procedure.id
-    assert_equal [@jordan_byron, @michael_jordan], @patient_search.execute
+    assert_equal [@jordan_byron, @michael_jordan], @patient_search.patients
   end
 
   test 'combine search options (except chart number)' do
@@ -72,24 +72,22 @@ class PatientSearchTest < ActiveSupport::TestCase
   end
 
   test 'if no search parameters, returns an empty active record result set' do
-    assert_equal [], @patient_search.execute
-    assert ActiveRecord::Relation === @patient_search.execute
+    assert_equal [], @patient_search.patients
+    assert ActiveRecord::Relation === @patient_search.patients
   end
 
   test 'if the commit param is Clear then it returns an empty result set' do
-    @patient_search.chart_number = @jordan_byron.id
-    @patient_search.commit       = 'Clear'
+    @patient_search = PatientSearch.new(commit: 'Clear', patient_search: {
+      chart_number: @jordan_byron.id
+    })
 
-    puts @patient_search.commit
-
-    assert_equal [], @patient_search.execute
+    assert_equal [], @patient_search.patients
   end
 
   test 'if the commit param is Clear then clear out search params' do
-    @patient_search.chart_number = @jordan_byron.id
-    @patient_search.commit       = "Clear"
-
-    @patient_search.execute
+    @patient_search = PatientSearch.new(commit: 'Clear', patient_search: {
+      chart_number: @jordan_byron.id
+    })
 
     refute @patient_search.chart_number
   end

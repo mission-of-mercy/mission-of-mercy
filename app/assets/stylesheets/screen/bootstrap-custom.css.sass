@@ -5,6 +5,7 @@
 @import twitter/bootstrap/sprites
 @import twitter/bootstrap/pagination
 @import twitter/bootstrap/tooltip
+@import twitter/bootstrap/labels-badges
 @import twitter/bootstrap/component-animations
 
 a.btn
@@ -30,5 +31,7 @@ div.pagination ul
 
 .bootstrap-form
   @import twitter/bootstrap/forms
-  input, .add-on
+  input, .add-on, select
     vertical-align: bottom !important
+  .input-append select
+    width: 175px

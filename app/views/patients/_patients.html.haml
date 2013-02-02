@@ -1,17 +1,29 @@
 .bootstrap-form
-  %form{method: 'get', autocomplete: 'off'}
+  = form_for @patient_search, method: :get, html: {autocomplete: 'off'} do |f|
     .input-append.input-prepend
       %span.add-on
-        %i.icon-user
-      = text_field_tag :chart_number, patient_search[:chart_number],
+        - if @patients_table.show?(:count) && @patients_table.count > 0
+          = @patients_table.count
+        - else
+          %i.icon-user
+      = f.text_field :chart_number,
         placeholder: "Chart number", class: "span2", autofocus: 'autofocus'
-      - if patient_search.show? :name
-        = text_field_tag :name, patient_search[:name], placeholder: "Name",
-          class: "span2"
-      = submit_tag "Search", class: 'btn'
-      = submit_tag "Clear", class: 'btn'
+      - if @patients_table.show? :name
+        = f.text_field :name, placeholder: "Name", class: "span2"
+      - if @patients_table.show? :age
+        = f.text_field :age, placeholder: "Age", class: "span1"
+      - if @patients_table.show? :treatment_area_id
+        = f.select :treatment_area_id,
+          TreatmentArea.order('name').map {|t| [t.name, t.id] },
+          include_blank: 'Treatment Area'
+      - if @patients_table.show? :procedure_id
+        = f.select :procedure_id,
+          Procedure.order('code').map {|t| [t.full_description, t.id] },
+          include_blank: 'Procedure'
+      = f.submit "Search", class: 'btn'
+      = f.submit "Clear", class: 'btn'
 
-- if patient_search.any?
+- if @patients_table.any?
   %table
     %thead
       %tr
@@ -22,7 +34,7 @@
         %th Age
         %th Sex
     %tbody
-      - patient_search.each do |patient, controls|
+      - @patients_table.each do |patient, controls|
         %tr
           %td= patient.id
           %td= patient.last_name
@@ -32,7 +44,7 @@
           %td= patient.sex
           %td.controls= controls
 
-  = will_paginate patient_search
+  = will_paginate @patients_table
 
 - else
   %p

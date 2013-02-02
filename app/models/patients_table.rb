@@ -8,10 +8,10 @@ class PatientsTable
   def search(params)
     @patient_search = PatientSearch.new(params)
 
-    @patients = patient_search.execute.
+    @patients = patient_search.patients.
       paginate(per_page: 30, page: params[:page])
 
-    self
+    @patient_search
   end
 
   def each
@@ -26,10 +26,6 @@ class PatientsTable
     fields.include?(field)
   end
 
-  def [](param)
-    patient_search.send(param)
-  end
-
   # Will Paginate methods
 
   def total_pages
@@ -40,23 +36,16 @@ class PatientsTable
     (patients.current_page || 1).to_i
   end
 
+  def count
+    patients.total_entries
+  end
+
   private
 
   attr_reader :patients, :fields, :patient_search, :patient_controls
 
   def controls_for(patient)
-    h.capture(patient, &patient_controls) if patient_controls
-  end
-
-  # TODO Desc ...
-  #
-  def h
-    @h ||= begin
-      ActionController::Base.helpers.clone.tap do |h|
-        h.extend(Haml::Helpers)
-        h.init_haml_helpers
-      end
-    end
+    CaptureHelper.helpers.capture(patient, &patient_controls) if patient_controls
   end
 
 end
