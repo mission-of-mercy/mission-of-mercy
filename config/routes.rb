@@ -68,4 +68,5 @@ MissionOfMercy::Application.routes.draw do
   end
 
   match '/dashboard/patients' => 'dashboard#patients'
+  match '/dashboard/summary'  => 'dashboard#summary'
 end
