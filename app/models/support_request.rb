@@ -2,6 +2,8 @@ class SupportRequest < ActiveRecord::Base
   belongs_to :user
   belongs_to :treatment_area
 
+  scope :active, SupportRequest.where(resolved: false)
+
   def station_description
     des = []
     des << treatment_area.name if treatment_area
