@@ -5,11 +5,15 @@ class SupportRequest < ActiveRecord::Base
   scope :active, SupportRequest.where(resolved: false)
 
   def station_description
-    des = []
-    des << treatment_area.name if treatment_area
-    des << user.name if user
+    description = []
 
-    des.compact.join(" ")
+    if treatment_area && treatment_area != TreatmentArea.radiology
+      description << treatment_area.name
+    end
+
+    description << user.name if user
+
+    description.compact.join(" ")
   end
 
   def to_hash

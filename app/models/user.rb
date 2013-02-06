@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :login
 
   def name
+    return read_attribute(:name) if read_attribute(:name).present?
+
     if user_type == UserType::XRAY
       if login[/\Axray/]
         "X-Ray Station #{x_ray_station_id}"
