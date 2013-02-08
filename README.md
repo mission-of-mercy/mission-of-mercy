@@ -5,6 +5,8 @@ Clinic management software for Mission of Mercy free dental clinics. Created to 
 For the latest information about the software check out [this project's wiki](http://wiki.github.com/mission-of-mercy/mission-of-mercy).
 Or if you'd like to contribute be sure to read the [contribution](#contributing) section below.
 
+We've also created a shiny new [dashboard project](https://github.com/mission-of-mercy/momma_dashboard#readme) specifically designed for this project.
+
 [![Build Status](https://secure.travis-ci.org/mission-of-mercy/mission-of-mercy.png?branch=master)](http://travis-ci.org/mission-of-mercy/mission-of-mercy)
 
 ## What is Mission of Mercy?
