@@ -1,8 +1,0 @@
-page["requests"].replace_html :partial => "requests"
-page["patients"].update @patients
-
-if @requests.length > 0
-  page << "$(document.body).addClassName('red')"
-else
-  page << "$(document.body).removeClassName('red');"
-end
