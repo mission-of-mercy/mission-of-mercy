@@ -18,6 +18,10 @@ class PatientProcedure < ActiveRecord::Base
 
   attr_accessor :code, :procedure_type
 
+  def self.created_today
+    where("patient_procedures.created_at::Date = ?", Date.today)
+  end
+
   def full_description
     if procedure != nil
       desc = ["%04d" % procedure.code.to_s,": ",procedure.description].join()

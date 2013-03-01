@@ -2,42 +2,25 @@ require 'digest/md5'
 
 class DashboardController < ApplicationController
   before_filter :authenticate
+  before_filter :load_dashboard
 
   def patients
-    today     = Patient.where("patients.created_at::Date = ?", Date.today).count
-    in_clinic = Patient.where("ID NOT IN (?)", PatientFlow.
-      where(area_id: ClinicArea::CHECKOUT).select("patient_id").
-      map(&:patient_id)
-    ).count
-    render json: {
-      today: today,
-      total: Patient.count,
-      per_hour: Patient.where("created_at between ? and ?",
-        Time.now - 1.hour, Time.now).count,
-      in_clinic: in_clinic,
-      check_outs_per_hour: PatientFlow.where(area_id: ClinicArea::CHECKOUT).
-        where("created_at between ? and ?", Time.now - 1.hour, Time.now).count
-    }
+    render json: @dashboard.patients_summary
   end
 
   def summary
-    summary = Reports::ClinicSummary.new("All")
-
-    render json: {
-      total_donated: summary.grand_total,
-      registrations: summary.patient_count, # Should be unique patients
-      checkouts:     summary.checkouts,     # Should be unique patients
-      procedures:    summary.procedure_count,
-      top_procedures: summary.procedures.limit(10).order("subtotal_count DESC").
-        map {|p| { label: p.description, value: p.subtotal_count }}
-    }
+    render json: @dashboard.clinic_summary
   end
 
   def support
-    render json: SupportRequest.active.map {|s| s.station_description }
+    render json: @dashboard.support_requests
   end
 
   private
+
+  def load_dashboard
+    @dashboard = Dashboard.new
+  end
 
   def authenticate
     authenticate_or_request_with_http_digest("MOMMA") do |username|
