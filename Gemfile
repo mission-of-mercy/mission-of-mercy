@@ -1,13 +1,15 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2.10'
-
+gem 'rails', '~> 3.2.12'
+gem 'rack',  '~> 1.4.5'
+gem 'rdoc',  '~> 3.12.1'
+gem 'json',  '~> 1.7.7'
 gem 'pg'
 gem 'haml'
 gem 'sass'
 
 gem 'will_paginate', '~> 3.0.2'
-gem 'devise'
+gem 'devise',        '~> 2.2.3'
 gem 'dynamic_form'
 gem 'draper'
 gem 'rack-pjax'
