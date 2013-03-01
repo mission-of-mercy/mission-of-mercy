@@ -8,7 +8,7 @@ namespace :zip do
   desc 'import zips from zipcode.csv'
   setup_task :import => :environment do
     if Patient::Zipcode.any?
-      done "Skip: #{Patient::Zipcode.count} already imported"
+      done "Skip: #{Patient::Zipcode.count} zip codes already imported"
       next
     end
 
