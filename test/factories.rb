@@ -33,6 +33,7 @@ FactoryGirl.define do
     heard_about_clinic                    "Social Media"
     has_place_to_be_seen_for_dental_care  false
     no_insurance                          true
+    race                                  "Caucasian/White"
   end
 
   factory :patient_flow do |pf|
@@ -83,5 +84,12 @@ FactoryGirl.define do
     user_type UserType::CHECKIN
     password 'temp123'
     password_confirmation 'temp123'
+  end
+
+  factory :patient_previous_mom_clinic do
+    clinic_year 2009
+    location    'New Haven'
+    attended    true
+    patient
   end
 end

@@ -1,5 +1,7 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
+require 'minitest/autorun'
+require 'minitest/spec'
 require 'rails/test_help'
 require 'capybara/rails'
 require 'database_cleaner'
@@ -62,11 +64,11 @@ module TestHelper
   end
 end
 
-DatabaseCleaner.strategy = :truncation
-
 class ActionDispatch::IntegrationTest
   include Capybara::DSL
   include Support::Integration
+
+  DatabaseCleaner.strategy = :truncation
 
   # Stop ActiveRecord from wrapping tests in transactions
   self.use_transactional_fixtures = false
@@ -81,5 +83,17 @@ class ActionDispatch::IntegrationTest
     DatabaseCleaner.clean
     Capybara.reset_sessions!
     Capybara.use_default_driver
+  end
+end
+
+class MiniTest::Spec
+  DatabaseCleaner.strategy = :transaction
+
+  before :each do
+    DatabaseCleaner.start
+  end
+
+  after :each do
+    DatabaseCleaner.clean
   end
 end
