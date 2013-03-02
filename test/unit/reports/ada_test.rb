@@ -1,5 +1,7 @@
 require 'test_helper'
-require_relative '../support/excel_helpers'
+require_relative '../../support/excel_helpers'
+
+DatabaseCleaner.strategy = :transaction
 
 describe Reports::Ada do
   include ExcelHelpers
@@ -7,6 +9,14 @@ describe Reports::Ada do
   let(:tempfile)   { File.join(Dir.mktmpdir, "ada_report#{Time.now.to_i}.xlsx") }
   let(:report_xls) { Reports::Ada.new.render_to_path(tempfile) }
   let(:book)       { report_xls; Roor::Excelx.new(tempfile) }
+
+  before :each do
+    DatabaseCleaner.start
+  end
+
+  after :each do
+    DatabaseCleaner.clean
+  end
 
   before do
     5.times do
