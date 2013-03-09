@@ -14,6 +14,7 @@ gem 'dynamic_form'
 gem 'draper'
 gem 'rack-pjax'
 gem 'virtus'
+gem 'axlsx'
 
 gem 'jquery-rails'
 gem 'will_paginate-bootstrap'

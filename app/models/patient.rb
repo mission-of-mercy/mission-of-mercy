@@ -69,6 +69,10 @@ class Patient < ActiveRecord::Base
     Patient.where(id: -1)
   end
 
+  def self.unique
+    Patient.where(previous_chart_number: nil)
+  end
+
   def chart_number
     id
   end
