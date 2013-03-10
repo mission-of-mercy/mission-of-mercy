@@ -36,10 +36,10 @@ describe Reports::Ada do
     row(1).must_include "Age"
   end
 
-  describe Reports::Ada::AdaPresenter do
+  describe 'SurveyPresenter' do
     before do
       @survey = Survey.first
-      @survey_presenter = Reports::Ada::AdaPresenter.new(@survey)
+      @survey_presenter = Reports::Ada::SurveyPresenter.new(@survey)
     end
 
     it "is vaild when a patient can be found" do
@@ -49,7 +49,7 @@ describe Reports::Ada do
     it "is invalid when a patient does not exist" do
       survey = FactoryGirl.create(:survey)
 
-      survey_presenter = Reports::Ada::AdaPresenter.new(survey)
+      survey_presenter = Reports::Ada::SurveyPresenter.new(survey)
 
       survey_presenter.valid?.must_equal false
     end

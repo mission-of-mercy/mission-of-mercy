@@ -24,7 +24,7 @@ module Reports
       @xls.serialize(path)
     end
 
-    class AdaPresenter
+    class SurveyPresenter
       def initialize(survey)
         @survey  = survey
         @patient = Patient.where(id: survey.id).first
@@ -81,7 +81,7 @@ module Reports
           Reports::Ada.insurances.map(&:titleize)
 
         Survey.find_each do |survey|
-          survey_presenter = AdaPresenter.new(survey)
+          survey_presenter = SurveyPresenter.new(survey)
           sheet.add_row survey_presenter.to_a if survey_presenter.valid?
         end
       end
