@@ -39,9 +39,6 @@ class CheckOutTest < ActionDispatch::IntegrationTest
 
     choose procedure.full_description
 
-    fill_in 'Tooth Number:', :with => "1" if procedure.requires_tooth_number
-    fill_in 'Surface Code:', :with => "F" if procedure.requires_surface_code
-
     click_button "Add Procedure"
 
     pat_proc = @patient.patient_procedures.where(:procedure_id => procedure.id)
@@ -55,6 +52,52 @@ class CheckOutTest < ActionDispatch::IntegrationTest
     path = treatment_area_patient_prescriptions_path(@treatment_area, @patient)
 
     assert_current_path path
+  end
+
+  test "multiple procedures get added when adding a comma separated list of tooth numbers" do
+    procedure = FactoryGirl.create(:procedure, :requires_tooth_number => true)
+    FactoryGirl.create(:procedure_treatment_area_mapping, :procedure => procedure, :treatment_area => @treatment_area)
+
+    check_out @patient
+
+    choose procedure.full_description
+
+    fill_in 'Tooth Number:', :with => "1, 2"
+
+    click_button "Add Procedure"
+
+    within "div.input-right" do
+      assert_content procedure.full_description + " (1)"
+      assert_content procedure.full_description + " (2)"
+    end
+
+    click_button "Next"
+
+    path = treatment_area_patient_prescriptions_path(@treatment_area, @patient)
+
+    assert_current_path path
+  end
+
+  test "no procedures get added when any of the teeth are invalid" do
+    procedure = FactoryGirl.create(:procedure, :requires_tooth_number => true)
+    FactoryGirl.create(:procedure_treatment_area_mapping, :procedure => procedure, :treatment_area => @treatment_area)
+
+    check_out @patient
+
+    choose procedure.full_description
+
+    fill_in 'Tooth Number:', :with => "1, 100"
+
+    click_button "Add Procedure"
+
+    within "div.input-right" do
+      assert_no_content procedure.full_description + " (1)"
+      assert_no_content procedure.full_description + " (100)"
+    end
+
+    within "div.errorExplanation" do
+      assert_content "Tooth number"
+    end
   end
 
   test "warnings are shown if no procedure has been added" do
