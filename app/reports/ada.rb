@@ -43,6 +43,7 @@ module Reports
           *clinics,
           survey.told_needed_more_dental_treatment,
           survey.has_place_to_be_seen_for_dental_care,
+          patient.last_dental_visit,
           survey.pain,
           survey.pain_length_in_days,
           survey.tobacco_use,
@@ -76,8 +77,8 @@ module Reports
       book.add_worksheet(:name => "Mission of Mercy") do |sheet|
         sheet.add_row ["Age", "Gender", "Race", "Travel Time"] +
           PatientPreviousMomClinic::CLINICS.map {|n,y| [n,y].join(' ') } +
-          ["Needs More Dental Care", "Has a Dentist", "In Pain?",
-           "Pain Length in days", "Uses Tobacco?" ] +
+          ["Needs More Dental Care", "Has a Dentist", "Last Dental Visit",
+           "In Pain?", "Pain Length in days", "Uses Tobacco?" ] +
           Reports::Ada.insurances.map(&:titleize)
 
         Survey.find_each do |survey|
