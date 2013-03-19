@@ -33,7 +33,8 @@ class PatientsController < ApplicationController
 
   def reprint
     @current_tab = "reprint"
-    @patients = Patient.search(params)
+    @patients_table = PatientsTable.new
+    @patient_search = @patients_table.search(params)
   end
 
   def previous
