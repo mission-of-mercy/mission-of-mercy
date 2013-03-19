@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2.12'
+gem 'rails', '~> 3.2.13'
 gem 'rack',  '~> 1.4.5'
 gem 'rdoc',  '~> 3.12.1'
 gem 'json',  '~> 1.7.7'
