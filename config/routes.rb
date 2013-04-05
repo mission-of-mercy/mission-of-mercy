@@ -41,7 +41,6 @@ MissionOfMercy::Application.routes.draw do
   resources :assignment_desk
 
   match '/patients/:patient_id/radiology' => 'patients#radiology', :as => :patient_radiology
-  match '/status' => 'status#index', :as => :status
 
   namespace :admin do
     resources :treatments
@@ -66,4 +65,8 @@ MissionOfMercy::Application.routes.draw do
     match '/maintenance' => 'maintenance#index', :as => :maintenance
     match '/maintenance/reset' => 'maintenance#reset', :as => :maintenance_reset
   end
+
+  match '/dashboard/patients' => 'dashboard#patients'
+  match '/dashboard/summary'  => 'dashboard#summary'
+  match '/dashboard/support'  => 'dashboard#support'
 end

@@ -7,11 +7,15 @@
         Requesting Help ...
     - if current_user.user_type == UserType::CHECKOUT && @treatment_area
       = render :partial => "treatment_areas/change_treatment_area"
-      = link_to "#{@treatment_area.name} #{current_user.name}", current_user.start_path, :class => 'user-name'
+      = link_to "#{@treatment_area.name} #{current_user.name}",
+        current_user.start_path, :class => 'user-name'
     - else
-      = link_to current_user.name, current_user.start_path, :class => 'user-name'
+      = link_to current_user.name, current_user.start_path,
+        :class => 'user-name'
     |
     = link_to 'Log out', logout_path
   - else
-    %span.left= link_to 'System status', status_path
+    %span.left
+      = link_to 'System Dashboard',
+        app_config['dashboard']['url']
     Not Logged In

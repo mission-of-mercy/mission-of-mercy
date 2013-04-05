@@ -113,20 +113,3 @@ MoM.Support.showSupportRequested = function(id){
     $('<div></div>').html(text).activebar(options);
   }
 }
-
-MoM.Support.startStatusPolling = function(){
-  var interval = 15 * 1000;
-  setInterval(MoM.Support.checkForStatusRequests, interval);
-}
-
-MoM.Support.checkForStatusRequests = function (){
-  $.ajax({
-    url: '/status',
-    timeout: 2000,
-    dataType: "script",
-    error: function(){
-      $(document.body).addClass('red')
-      $('#requests').html("<h1>Error connecting to server</h1>");
-    }
-  });
-}

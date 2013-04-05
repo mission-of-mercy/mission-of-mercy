@@ -66,7 +66,15 @@ class Patient < ActiveRecord::Base
   # https://github.com/rails/rails/commit/75de1ce131cd39f68dbe6b68eecf2617a720a8e4
   #
   def self.none
-    Patient.where(id: -1)
+    where(id: -1)
+  end
+
+  def self.unique
+    where(:previous_chart_number => nil)
+  end
+
+  def self.created_today
+    where("patients.created_at::Date = ?", Date.today)
   end
 
   def self.unique

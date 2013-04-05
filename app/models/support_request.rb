@@ -2,12 +2,18 @@ class SupportRequest < ActiveRecord::Base
   belongs_to :user
   belongs_to :treatment_area
 
-  def station_description
-    des = []
-    des << treatment_area.name if treatment_area
-    des << user.name if user
+  scope :active, SupportRequest.where(resolved: false)
 
-    des.compact.join(" ")
+  def station_description
+    description = []
+
+    if treatment_area && treatment_area != TreatmentArea.radiology
+      description << treatment_area.name
+    end
+
+    description << user.name if user
+
+    description.compact.join(" ")
   end
 
   def to_hash

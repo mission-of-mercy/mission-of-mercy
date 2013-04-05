@@ -11,6 +11,11 @@
   = f.select :user_type, UserType.each  {|k,v| [k,v] }
 
 %p
+  = f.label :name, "Custom Name"
+  %br
+  = f.text_field :name, value: @user.read_attribute(:name)
+
+%p
   = f.label :password
   %br
   = f.password_field :password
