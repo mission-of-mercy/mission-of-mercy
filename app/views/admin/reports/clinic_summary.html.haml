@@ -57,6 +57,18 @@
 %h2
   %u Detail
 
+- if @report.patients_per_treatment_area.any?
+  %table
+    %thead
+      %tr
+        %th Treatment Area
+        %th Number of Patients
+    %tbody
+      - @report.patients_per_treatment_area.each do |ta_summary|
+        %tr
+          %td= ta_summary.treatment_area.name
+          %td= ta_summary.patient_count
+
 - if @report.procedure_count > 0
   %table
     %thead

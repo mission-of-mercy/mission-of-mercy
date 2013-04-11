@@ -118,4 +118,47 @@ class ClinicSummaryTest < ActiveSupport::TestCase
     assert_equal Time.zone.parse('1985-12-26 09:00 AM'), second_entry.hour
     assert_equal 1, second_entry.total
   end
+
+  def test_should_report_patients_per_treatment_area
+    report = Reports::ClinicSummary.new(@report_date, "All")
+
+    pedo = FactoryGirl.create(:treatment_area, name: "Pediatrics")
+
+    5.times do
+      FactoryGirl.create(:patient_flow,
+        created_at: TestHelper.clinic_date("8:30 AM"),
+        treatment_area_id: pedo.id,
+        area_id: ClinicArea::CHECKOUT
+      )
+    end
+
+    surgery = FactoryGirl.create(:treatment_area, name: "Survery")
+
+    4.times do
+      FactoryGirl.create(:patient_flow,
+        created_at: TestHelper.clinic_date("8:30 AM"),
+        treatment_area_id: surgery.id,
+        area_id: ClinicArea::CHECKOUT
+      )
+    end
+
+    # These do not fall within the parameters of the report
+    #
+    FactoryGirl.create(:patient_flow,
+      created_at: TestHelper.clinic_date("8:30 AM"),
+      treatment_area_id: surgery.id,
+      area_id: ClinicArea::CHECKIN
+    )
+
+    FactoryGirl.create(:patient_flow,
+      created_at: TestHelper.clinic_date("8:30 AM") + 5.days,
+      treatment_area_id: surgery.id,
+      area_id: ClinicArea::CHECKOUT
+    )
+
+    results = report.patients_per_treatment_area
+
+    assert_equal "5", results.where(treatment_area_id: pedo.id).first.patient_count
+    assert_equal "4", results.where(treatment_area_id: surgery.id).first.patient_count
+  end
 end

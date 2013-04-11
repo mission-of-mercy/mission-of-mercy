@@ -48,6 +48,14 @@ class Reports::ClinicSummary
     end
   end
 
+  def patients_per_treatment_area
+    @patients_per_treatment_area ||= begin
+      patient_flows(ClinicArea::CHECKOUT).
+        select("treatment_area_id, count(*) as patient_count").
+        group("treatment_area_id")
+    end
+  end
+
   private
 
   def collect_patients
@@ -56,7 +64,7 @@ class Reports::ClinicSummary
   end
 
   def load_patient_count
-    @patient_count = Patient.for_time('patients', @day, @span).count.to_i
+    @patient_count = Patient.unique.for_time('patients', @day, @span).count.to_i
   end
 
   def load_patients_per_hour
@@ -143,7 +151,6 @@ class Reports::ClinicSummary
       p.total = p.total.to_i
     end
   end
-
 
   def collect_prescriptions
     query = Prescription.for_time('patient_prescriptions', @day, @span)
