@@ -6,7 +6,8 @@ class Reports::ClinicSummary
                 :prescriptions, :prescription_count, :prescription_value,
                 :grand_total, :next_chart_number, :xrays, :checkouts,
                 :pre_med_count, :pre_meds, :pre_med_value,
-                :procedures_per_hour, :patients_per_hour, :checkouts_per_hour, :xrays_per_hour
+                :procedures_per_hour, :patients_per_hour, :checkouts_per_hour,
+                :xrays_per_hour
 
   TIME_SPANS = [ "All", "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM",
                  "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM",
@@ -48,6 +49,21 @@ class Reports::ClinicSummary
     end
   end
 
+  def patients_per_treatment_area
+    @patients_per_treatment_area ||= begin
+      patient_flows(ClinicArea::CHECKOUT).
+        select("treatment_area_id, count(*) as patient_count").
+        group("treatment_area_id")
+    end
+  end
+
+  def multivisit_patents
+    @multivisit_patents ||= begin
+      Patient.for_time('patients', day, span).
+        where('previous_chart_number IS NOT NULL')
+    end
+  end
+
   private
 
   def collect_patients
@@ -56,7 +72,7 @@ class Reports::ClinicSummary
   end
 
   def load_patient_count
-    @patient_count = Patient.for_time('patients', @day, @span).count.to_i
+    @patient_count = Patient.unique.for_time('patients', @day, @span).count.to_i
   end
 
   def load_patients_per_hour
@@ -123,6 +139,7 @@ class Reports::ClinicSummary
       count(*) * cost as subtotal_value})
       .joins(:patient_procedures)
       .group('procedures.code, procedures.description, procedures.cost')
+      .order('subtotal_count')
   end
 
   def collect_procedures_per_hour
@@ -144,7 +161,6 @@ class Reports::ClinicSummary
     end
   end
 
-
   def collect_prescriptions
     query = Prescription.for_time('patient_prescriptions', @day, @span)
 
@@ -161,6 +177,7 @@ class Reports::ClinicSummary
       count(*) * cost as prescription_value})
       .joins(:patient_prescriptions)
       .group('prescriptions.id, name, cost')
+      .order('prescription_count')
   end
 
   def collect_pre_meds
@@ -179,6 +196,7 @@ class Reports::ClinicSummary
       count(*) * cost as pre_med_value})
       .joins(:patient_pre_meds)
       .group('description, cost')
+      .order('pre_med_count')
   end
 
 end
