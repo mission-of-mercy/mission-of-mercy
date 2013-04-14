@@ -24,16 +24,8 @@ MoM.Checkin.init = function(){
     e.preventDefault();
   });
 
-  $('#patient_survey_attributes_heard_about_clinic').change(function(e){
-    MoM.Checkin.toggleOtherHeardAbout();
-  });
-
   $('#patient_race').change(function(){
     MoM.Checkin.toggleOtherRace();
-  });
-
-  $('#patient_survey_attributes_heard_about_other').autocomplete({
-    source: "/autocomplete/heard_about_clinic.json"
   });
 
   $('input[name="patient[pain]"]').change(function(e){
@@ -71,21 +63,8 @@ MoM.Checkin.init = function(){
     source: "/autocomplete/race.json"
   });
 
-  $('#bottom_survey a.back').click(function(e){
-    MoM.Checkin.showPatientDemographics();
-
-    e.preventDefault();
-  });
-
-  $('#bottom_demographics button').click(function(e){
-     MoM.Checkin.showPatientSurvey();
-
-     e.preventDefault();
-  });
-
   // Toggle Fields
 
-  MoM.Checkin.toggleOtherHeardAbout(false);
   MoM.Checkin.togglePreviousMoM(false);
   MoM.Checkin.togglePatientPain(false);
   MoM.Checkin.toggleOtherRace(false);
@@ -93,7 +72,8 @@ MoM.Checkin.init = function(){
   var lastPatientId = $form.data('last-patient-id');
 
   if(lastPatientId){
-    MoM.Checkin.printChart(lastPatientId);
+    if(!$form.data('last-patient-chart-printed'))
+      MoM.Checkin.printChart(lastPatientId);
 
     $('#last_patient h1').text(lastPatientId);
 
@@ -189,41 +169,6 @@ MoM.Checkin.toggleOtherRace = function(focus){
     $('#race_other_div').slideUp();
     $('#patient_race_other').val("");
   }
-}
-
-MoM.Checkin.toggleOtherHeardAbout = function(focus){
-  var heardAbout = $('#patient_survey_attributes_heard_about_clinic').val();
-  if(focus == undefined) var focus = true;
-
-  if(heardAbout == "Other")
-  {
-    $('#heard_about_other_div').slideDown(function(){
-      if(focus){
-        $('#patient_survey_attributes_heard_about_other').focus();
-      }
-    });
-  }
-  else
-  {
-    $('#heard_about_other_div').slideUp();
-    $('#patient_survey_attributes_heard_about_other').val("");
-  }
-}
-
-MoM.Checkin.showPatientDemographics = function(){
-  $('#demographics').show();
-  $('#bottom_demographics').show();
-
-  $('#survey').hide();
-  $('#bottom_survey').hide();
-}
-
-MoM.Checkin.showPatientSurvey = function (){
-  $('#demographics').hide();
-  $('#bottom_demographics').hide();
-
-  $('#survey').show();
-  $('#bottom_survey').show();
 }
 
 MoM.Checkin.fillContactInformation = function(contact) {

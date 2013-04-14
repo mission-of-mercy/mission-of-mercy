@@ -1,11 +1,13 @@
 class Survey < ActiveRecord::Base
-  before_save :heard_about_save
+  attr_reader :heard_about_other
 
-  attr_accessor :heard_about_other
+  def update_patient_information(patient)
+    %w[city state zip age sex race pain pain_length_in_days].each do |attr|
+      self[attr] = patient[attr]
+    end
+  end
 
-  private
-
-  def heard_about_save
-    self.heard_about_clinic = heard_about_other unless heard_about_other.blank?
+  def heard_about_other=(other)
+    self.heard_about_clinic = other unless other.blank?
   end
 end

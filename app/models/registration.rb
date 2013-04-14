@@ -25,7 +25,8 @@ class Registration
       last_patient_id: last_patient.try(:id),
       last_patient_contact: last_patient.try(:contact_information),
       require_waiver_confirmation: show_waver?,
-      date_input: date_input
+      date_input: date_input,
+      last_patient_chart_printed: last_patient.try(:chart_printed)
     }
   end
 
@@ -42,11 +43,13 @@ class Registration
   end
 
   def next_button
-    if previous_patient
-      h.submit_tag("Check In")
+    text = if previous_patient
+      "Check In"
     else
-      h.content_tag('button', 'Next', id: 'bottom_demographics_next' )
+      "Next"
     end
+
+    h.submit_tag(text, class: 'btn btn-primary')
   end
 
   private

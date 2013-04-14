@@ -13,8 +13,8 @@ class Patient < ActiveRecord::Base
                                           REGEXP[:months],
                                           REGEXP[:years] )
 
-  before_save  :update_survey
   before_save  :normalize_data
+  before_save  :update_survey
   after_create :check_in_flow
 
   has_many :patient_prescriptions, :dependent   => :delete_all
@@ -123,7 +123,6 @@ class Patient < ActiveRecord::Base
       self.flows.create(area_id: ClinicArea::XRAY)
     else
       self.flows.create(area_id: ClinicArea::CHECKOUT, treatment_area_id: area.id)
-      self.update_attributes(survey_id: nil)
     end
 
     assignment.check_out if assignment
@@ -254,18 +253,9 @@ class Patient < ActiveRecord::Base
   private
 
   def update_survey
-    self.survey = nil if !self.previous_chart_number.blank?
+    return if !previous_chart_number.blank?
 
-    if self.survey
-      self.survey.city                = city
-      self.survey.state               = state
-      self.survey.zip                 = zip
-      self.survey.age                 = age
-      self.survey.sex                 = sex
-      self.survey.race                = race
-      self.survey.pain                = pain
-      self.survey.pain_length_in_days = pain_length_in_days
-    end
+    survey.update_patient_information(self) if survey
   end
 
   def normalize_data

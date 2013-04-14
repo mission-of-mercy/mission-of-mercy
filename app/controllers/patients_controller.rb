@@ -14,8 +14,12 @@ class PatientsController < ApplicationController
     @patient      = @registration.decorated_patient
 
     if @registration.create!
-      stats.patient_checked_in
-      redirect_to new_patient_path(last_patient_id:  @patient.id)
+      if @patient.previous_chart_number.present?
+        stats.patient_checked_in
+        redirect_to new_patient_path(last_patient_id:  @patient.id)
+      else
+        redirect_to new_patient_survey_path(@patient)
+      end
     else
       render :action => "new"
     end
