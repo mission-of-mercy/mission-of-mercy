@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 gem 'rails', '~> 3.2.13'
 gem 'rack',  '~> 1.4.5'
@@ -35,6 +35,8 @@ group :development do
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'capistrano'
+  gem 'capistrano_colors'
 end
 
 group :test do
