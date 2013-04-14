@@ -1,7 +1,7 @@
 - title 'Reprint Chart'
 
 - @patients_table.controls do |patient|
-  = link_to "Reprint",
+  = link_to patient.chart_printed ? "Reprint" : "Print",
     chart_patient_path(patient),
     class: 'primary', target: '_blank'
 

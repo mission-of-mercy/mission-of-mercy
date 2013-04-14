@@ -31,3 +31,5 @@ MoM.disableEnterKey = function(form){
 MoM.openInBackground = function(url){
    window.open(url); self.focus();
 }
+
+MoM.mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);

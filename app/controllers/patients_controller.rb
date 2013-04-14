@@ -25,6 +25,7 @@ class PatientsController < ApplicationController
     @patient = Patient.find_by_id(params[:id])
 
     if @patient
+      @patient.update_attributes(chart_printed: true)
       render :layout => "print"
     else
       raise ActionController::RoutingError.new('Not Found')
@@ -32,6 +33,9 @@ class PatientsController < ApplicationController
   end
 
   def reprint
+    if params[:patient_search].blank?
+      params[:patient_search] = { chart_printed: false }
+    end
     @current_tab = "reprint"
     @patients_table = PatientsTable.new
     @patient_search = @patients_table.search(params)

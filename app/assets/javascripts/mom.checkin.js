@@ -112,7 +112,7 @@ MoM.Checkin.init = function(){
 }
 
 MoM.Checkin.printChart = function(patientId){
-  MoM.openInBackground('/patients/' + patientId + '/chart');
+  if(!MoM.mobile) MoM.openInBackground('/patients/' + patientId + '/chart');
 }
 
 MoM.Checkin.togglePatientPain = function(focus){
