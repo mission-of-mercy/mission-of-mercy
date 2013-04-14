@@ -139,6 +139,7 @@ class Reports::ClinicSummary
       count(*) * cost as subtotal_value})
       .joins(:patient_procedures)
       .group('procedures.code, procedures.description, procedures.cost')
+      .order('subtotal_count')
   end
 
   def collect_procedures_per_hour
@@ -176,6 +177,7 @@ class Reports::ClinicSummary
       count(*) * cost as prescription_value})
       .joins(:patient_prescriptions)
       .group('prescriptions.id, name, cost')
+      .order('prescription_count')
   end
 
   def collect_pre_meds
@@ -194,6 +196,7 @@ class Reports::ClinicSummary
       count(*) * cost as pre_med_value})
       .joins(:patient_pre_meds)
       .group('description, cost')
+      .order('pre_med_count')
   end
 
 end
