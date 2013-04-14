@@ -6,7 +6,8 @@ class Reports::ClinicSummary
                 :prescriptions, :prescription_count, :prescription_value,
                 :grand_total, :next_chart_number, :xrays, :checkouts,
                 :pre_med_count, :pre_meds, :pre_med_value,
-                :procedures_per_hour, :patients_per_hour, :checkouts_per_hour, :xrays_per_hour
+                :procedures_per_hour, :patients_per_hour, :checkouts_per_hour,
+                :xrays_per_hour
 
   TIME_SPANS = [ "All", "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM",
                  "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM",
@@ -53,6 +54,13 @@ class Reports::ClinicSummary
       patient_flows(ClinicArea::CHECKOUT).
         select("treatment_area_id, count(*) as patient_count").
         group("treatment_area_id")
+    end
+  end
+
+  def multivisit_patents
+    @multivisit_patents ||= begin
+      Patient.for_time('patients', day, span).
+        where('previous_chart_number IS NOT NULL')
     end
   end
 

@@ -19,38 +19,40 @@
 %h2
   %u Summary
 
-%div
-  Total Patients Checked In:
+%p
+  Patients Checked In:
   = @report.patient_count
   %br
-  Total Patients Given X-Rays:
+  Patients Given X-Rays:
   = @report.xrays
   %br
-  Total Patients Checked Out:
+  Patients Checked Out:
   = @report.checkouts
-
-%div
-  Total Procedures: #{@report.procedure_count}
   %br
-  Total Procedures Value:
+  Repeat Patients:
+  = @report.multivisit_patents.count
+%p
+  Procedures: #{@report.procedure_count}
+  %br
+  Procedures Value:
   = real_currency @report.procedure_value
   %br
-  Total Prescriptions:
+  Prescriptions:
   = @report.prescription_count
   %br
-  Total Prescriptions Value:
+  Prescriptions Value:
   = real_currency @report.prescription_value
   %br
-  Total Pre-Medications:
+  Pre-Medications:
   = @report.pre_med_count
   %br
-  Total Pre-Medications Value:
+  Pre-Medications Value:
   = real_currency @report.pre_med_value
   %br
   Grand Total Value:
   = real_currency @report.grand_total
 
-%div
+%p
   Next Chart Number:
   = @report.next_chart_number
 
