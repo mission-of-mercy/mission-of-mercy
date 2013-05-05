@@ -47,7 +47,7 @@ class PreviousPatientTest < ActionDispatch::IntegrationTest
     find_and_load_previous_patient
     finish_patient_check_in
 
-    within('#bottom_demographics') { click_button "Check In" }
+    within('.input-bottom') { click_button "Check In" }
 
     new_chart = find('div.last-patient').find('h1').text
 
@@ -61,7 +61,7 @@ class PreviousPatientTest < ActionDispatch::IntegrationTest
 
     finish_patient_check_in
 
-    within('#bottom_demographics') { click_button "Check In" }
+    within('.input-bottom') { click_button "Check In" }
 
     new_chart = find('div.last-patient').find('h1').text
 

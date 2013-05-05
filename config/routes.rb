@@ -24,8 +24,11 @@ MissionOfMercy::Application.routes.draw do
   match '/pharmacy/check_out/:patient_id' => 'pharmacy#check_out', :as => :pharmacy_check_out
   match '/pharmacy/finalize/:patient_id' => 'pharmacy#check_out_complete', :as => :pharmacy_finalize
 
-  resources :patients, except: [:edit, :update, :destroy, :index, :show] do
-    get :chart, :on => :member
+  resources :patients, except: [:destroy, :index, :show] do
+    resources :surveys
+    member do
+      get :chart
+    end
     collection do
       get :reprint
       get :previous

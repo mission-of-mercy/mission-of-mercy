@@ -21,7 +21,7 @@ FactoryGirl.define do
     city              { Faker::Address.city }
     state             { Faker::Address.state_abbr }
     zip               { Faker::Address.zip_code }
-
+    chart_printed     true
     # Faker::PhoneNumber includes invalid formats like "###-###-#### x###"
     phone             { Faker::PhoneNumber.phone_number.split(" ").first }
 

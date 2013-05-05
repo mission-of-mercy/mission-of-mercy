@@ -27,7 +27,7 @@ module Reports
     class SurveyPresenter
       def initialize(survey)
         @survey  = survey
-        @patient = Patient.where(id: survey.id).first
+        @patient = Patient.where(survey_id: survey.id).first
       end
 
       def valid?

@@ -1,7 +1,11 @@
 class Registration
-  def initialize(params)
-    @params           = params
-    @patient          = Patient.new(params[:patient])
+  def initialize(options = {})
+    @params  = options[:params]
+    @patient = if options[:patient]
+      options[:patient]
+    else
+      Patient.new(params[:patient])
+    end
     @last_patient     = Patient.find_by_id(params[:last_patient_id])
     @previous_patient = Patient.find_by_id(patient.previous_chart_number)
 
@@ -20,12 +24,18 @@ class Registration
     patient.save
   end
 
+  def save!
+    return false if errors?
+    patient.update_attributes(params[:patient])
+  end
+
   def form_data
     {
       last_patient_id: last_patient.try(:id),
       last_patient_contact: last_patient.try(:contact_information),
       require_waiver_confirmation: show_waver?,
-      date_input: date_input
+      date_input: date_input,
+      last_patient_chart_printed: last_patient.try(:chart_printed)
     }
   end
 
@@ -42,11 +52,13 @@ class Registration
   end
 
   def next_button
-    if previous_patient
-      h.submit_tag("Check In")
+    text = if previous_patient
+      "Check In"
     else
-      h.content_tag('button', 'Next', id: 'bottom_demographics_next' )
+      "Next"
     end
+
+    h.submit_tag(text, class: 'btn btn-primary')
   end
 
   private

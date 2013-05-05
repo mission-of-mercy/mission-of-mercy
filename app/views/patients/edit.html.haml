@@ -1,0 +1,15 @@
+- title 'Patient Check In'
+
+= render "nav"
+
+= header do
+  %h1 Patient Check In
+
+= form_for @patient, :html => { :autocomplete => "off",
+  data: @registration.form_data } do |f|
+
+  = render :partial => 'form', :locals => {:f => f}
+
+  %div.input-bottom.check_out
+    %span.left= link_to_reset new_patient_path
+    = @registration.next_button

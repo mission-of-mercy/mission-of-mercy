@@ -8,6 +8,7 @@ class PatientSearch
   attribute :procedure_id,      Integer
   attribute :age,               Integer
   attribute :name,              String
+  attribute :chart_printed,     Boolean
 
   def initialize(params)
     super params[:patient_search]
@@ -48,6 +49,10 @@ class PatientSearch
       )
     end
 
+    unless chart_printed.nil?
+      patients = patients.where(chart_printed: chart_printed)
+    end
+
     patients.order('id')
   end
 
@@ -58,7 +63,7 @@ class PatientSearch
   end
 
   def blank_search?
-    attributes.values.all?(&:blank?)
+    attributes.values.all?(&:nil?)
   end
 
   def persisted?; false; end
