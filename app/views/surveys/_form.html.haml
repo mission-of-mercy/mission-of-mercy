@@ -1,0 +1,55 @@
+- content_for(:header_js) { "$(function() { MoM.Survey.init(); });" }
+
+- title 'Patient Check In'
+
+= render "patients/nav"
+
+= header do
+  %h1 Patient Survey
+  %br
+  = "#{@patient.full_name} | Chart # #{@patient.id}"
+
+- unless @patient.chart_printed?
+  .alert.alert-info
+    Printing Chart # #{@patient.id}
+  :javascript
+    MoM.Checkin.printChart(#{@patient.id});
+
+= form_for [@patient, @survey], html: { autocomplete: "off" } do |f|
+  %p
+    = f.label :heard_about_clinic, 'How did you hear about the clinic?',
+      class: 'question'
+  .input
+    = f.select :heard_about_clinic, *HeardAboutClinicDecorator.options_for_select
+  #heard_about_other_div
+    %p
+      = f.label :heard_about_other, "Please describe:"
+      = f.text_field :heard_about_other
+  %p
+    Do you have a place to go for dental care after today?
+  .input
+    = f.radio_button :has_place_to_be_seen_for_dental_care, true
+    = f.label :has_place_to_be_seen_for_dental_care, "Yes", :value => true
+    = f.radio_button :has_place_to_be_seen_for_dental_care, false
+    = f.label :has_place_to_be_seen_for_dental_care, "No", :value => false
+  %p
+    What, if any, insurance do you have to pay for dental care? (Check all that apply)
+  .input
+    = f.check_box :no_insurance
+    = f.label :no_insurance
+    %br
+    = f.check_box :insurance_from_job
+    = f.label :insurance_from_job
+    %br
+    = f.check_box :medicaid_or_chp_plus
+    = f.label :medicaid_or_chp_plus, "Medicaid or CHP+"
+    %br
+    = f.check_box :self_purchase_insurance
+    = f.label :self_purchase_insurance, "Insurance purchased by myself"
+    %br
+
+  %p
+
+  %div.input-bottom.check_out
+    = f.submit "Back", class: 'btn'
+    = f.submit "Check In", class: 'btn btn-primary'

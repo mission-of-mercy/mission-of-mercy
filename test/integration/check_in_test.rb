@@ -111,6 +111,31 @@ class CheckInTest < ActionDispatch::IntegrationTest
     assert has_select?("Reason for today's visit", :with_options => options)
   end
 
+  test "can return to the demographic page from the survey page" do
+    sign_in_as "Check in"
+
+    agree_to_waver
+
+    fill_out_form
+
+    click_button "Next"
+
+    patient = Patient.last until patient.present?
+
+    assert_equal new_patient_survey_path(patient), current_path
+
+    click_button "Back"
+
+    assert_equal edit_patient_path(patient), current_path
+
+    fill_in 'First name', :with => "Frank"
+    fill_in 'Last name',  :with => "Pepelio"
+
+    click_button "Next"
+
+    assert_content "Frank Pepelio"
+  end
+
   private
 
   def agree_to_waver

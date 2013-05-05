@@ -5,7 +5,7 @@ $(document).on("pjax:success", function(){
 });
 
 MoM.Checkin.init = function(){
-  var $form = $('form.new_patient');
+  var $form = $('form.new_patient, form.edit_patient');
 
   if($form.length == 0) return false;
 

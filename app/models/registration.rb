@@ -1,7 +1,11 @@
 class Registration
-  def initialize(params)
-    @params           = params
-    @patient          = Patient.new(params[:patient])
+  def initialize(options = {})
+    @params  = options[:params]
+    @patient = if options[:patient]
+      options[:patient]
+    else
+      Patient.new(params[:patient])
+    end
     @last_patient     = Patient.find_by_id(params[:last_patient_id])
     @previous_patient = Patient.find_by_id(patient.previous_chart_number)
 
@@ -18,6 +22,11 @@ class Registration
     return false if errors?
     add_procedures
     patient.save
+  end
+
+  def save!
+    return false if errors?
+    patient.update_attributes(params[:patient])
   end
 
   def form_data
