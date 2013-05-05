@@ -28,7 +28,7 @@ class CheckInTest < ActionDispatch::IntegrationTest
     within("#new_patient") do
       click_button "Next"
 
-      refute has_css?('.waiver_confirmation'),
+      refute find('.waiver_confirmation').visible?,
              "waiver confirmation should not be present"
       refute find_button('Next')['disabled']
              "form should be enabled"
@@ -153,5 +153,6 @@ class CheckInTest < ActionDispatch::IntegrationTest
     select  'Cleaning',                  :from => "Reason for today's visit"
     select  "First Time",                :from => 'Last dental visit'
     fill_in 'patient_travel_time_hours', :with => "1"
+    choose 'patient_pain_false'
   end
 end

@@ -81,7 +81,8 @@ class PreviousPatientTest < ActionDispatch::IntegrationTest
   end
 
   def finish_patient_check_in
-    select  'Cleaning',                  from: "Reason for today's visit"
-    select  'First Time',                from: 'Last dental visit'
+    select 'Cleaning',   from: "Reason for today's visit"
+    select 'First Time', from: 'Last dental visit'
+    choose 'patient_pain_false'
   end
 end
