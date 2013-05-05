@@ -12,11 +12,11 @@ module PatientsHelper
     "display:none;" unless patient.attended_previous_mom_event
   end
 
-  def yes_no_group(f, attribute)
+  def yes_no_group(f, attribute, options = {})
     [
-      f.radio_button(attribute, true),
+      f.radio_button(attribute, true, options),
       f.label(attribute, "Yes", :value => true),
-      f.radio_button(attribute, false),
+      f.radio_button(attribute, false, options),
       f.label(attribute, "No", :value => false)
     ].join("\n").html_safe
   end

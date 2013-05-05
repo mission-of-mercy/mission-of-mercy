@@ -17,13 +17,14 @@ FactoryGirl.define do
     chief_complaint   { "Cleaning" }
     last_dental_visit { "First Time" }
     travel_time       { 1 + rand(90) }
+    pain              { [true, false].sample }
     street            { Faker::Address.street_address }
     city              { Faker::Address.city }
     state             { Faker::Address.state_abbr }
     zip               { Faker::Address.zip_code }
     chart_printed     true
-    # Faker::PhoneNumber includes invalid formats like "###-###-#### x###"
-    phone             { Faker::PhoneNumber.phone_number.split(" ").first }
+    # Faker::PhoneNumber includes invalid formats like "1-###-###-#### x###"
+    phone { Faker::PhoneNumber.phone_number.split(" ").first.gsub(/\A1-/, '') }
 
     survey
   end

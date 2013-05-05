@@ -13,8 +13,8 @@
     This patient was previously registered using
     %strong Chart ##{@patient.previous_chart_number}
 
-= form_for @patient, :html => { :autocomplete => "off",
-  data: @registration.form_data } do |f|
+= form_for @patient,
+  html: { autocomplete: "off", data: @registration.form_data } do |f|
   - if @registration.show_waver?
     .waiver_confirmation.unconfirmed
       %p.waiver_description

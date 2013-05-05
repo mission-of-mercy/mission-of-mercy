@@ -190,8 +190,12 @@ MoM.Checkin.waiverConfirmed = function() {
 }
 
 MoM.Checkin.enableAllFields = function() {
-  $('form.new_patient').find('input, button, select').attr('disabled', false);
-  $('form.new_patient').removeClass('disabled');
+  var $form = $('form.new_patient, form.edit_patient');
+  $form.find('input, button, select').attr('disabled', false);
+  $form.removeClass('disabled');
+
+  // Validate form with Parsley
+  $form.parsley();
 }
 
 MoM.Checkin.disableAllFields = function() {
