@@ -32,7 +32,7 @@ It's easy to work on a software project and never see the impact it makes on peo
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/mission-of-mercy/mission-of-mercy/blob/master/CONTRIBUTING.md)
+**Developers, developers, developers!!** I could really use your help. See [CONTRIBUTING.md](https://github.com/mission-of-mercy/mission-of-mercy/blob/master/CONTRIBUTING.md) for all the nitty gritty details. I can't thank you enough for lending a hand. It means the world to me :heart:
 
 ## Installation
 
