@@ -38,14 +38,17 @@ namespace :zip do
         row["state"].try(:upcase),
         row["latitude"],
         row["longitude"],
-        row["county"].try(:titlecase)
-      ].map{ |field| conn.quote(field) }.join(', ')
+        row["county"].try(:titlecase),
+        Time.now,
+        Time.now
+      ].map {|field| conn.quote(field) }.join(', ')
 
       all_values << "(#{values})"
     end
 
-    conn.execute %Q{
-      INSERT INTO patient_zipcodes (zip, city, state, latitude, longitude, county)
+    conn.execute %{
+      INSERT INTO patient_zipcodes (zip, city, state, latitude, longitude,
+                                    county, created_at, updated_at)
       VALUES #{all_values.join(',')}
     }
 
