@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper_method :app_config, :stats, :dexis?, :cdr?
+  helper_method :app_config, :stats, :dexis?, :cdr?, :kodak?
 
   protect_from_forgery
 
