@@ -89,12 +89,14 @@ module TreatmentAreasHelper
   end
 
   def radiology_link(patient, remote=false)
-    text = "Export"
-
-    if dexis?
-      text = "Export to Dexis"
+    text = if dexis?
+      "Export to Dexis"
     elsif cdr?
-      text = "Export to CDR"
+      "Export to CDR"
+    elsif kodak?
+      "Export to Kodak"
+    else
+      "Export"
     end
 
     options = { id: "export_to_xray", class: 'primary' }
