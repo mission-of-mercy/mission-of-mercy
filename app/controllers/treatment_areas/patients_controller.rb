@@ -10,7 +10,7 @@ class TreatmentAreas::PatientsController < ApplicationController
   def radiology
     @patient = Patient.find(params[:id])
 
-    if dexis?
+    if dexis? || kodak?
       app_config["dexis_paths"].each do |root_path|
         path = [root_path, "passtodex", current_user.x_ray_station_id, ".dat"].join
 
