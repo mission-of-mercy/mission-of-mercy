@@ -28,27 +28,37 @@
       = f.label :heard_about_other, "Please describe:"
       = f.text_field :heard_about_other
   %p
-    Do you have a place to go for dental care after today?
+    Do you use twitter?
   .input
-    = f.radio_button :has_place_to_be_seen_for_dental_care, true
-    = f.label :has_place_to_be_seen_for_dental_care, "Yes", :value => true
-    = f.radio_button :has_place_to_be_seen_for_dental_care, false
-    = f.label :has_place_to_be_seen_for_dental_care, "No", :value => false
+    = yes_no_group f, :use_twitter
   %p
-    What, if any, insurance do you have to pay for dental care? (Check all that apply)
+    Do you use facebook?
   .input
-    = f.check_box :no_insurance
-    = f.label :no_insurance
-    %br
-    = f.check_box :insurance_from_job
-    = f.label :insurance_from_job
-    %br
-    = f.check_box :medicaid_or_chp_plus
-    = f.label :medicaid_or_chp_plus, "Medicaid or CHP+"
-    %br
-    = f.check_box :self_purchase_insurance
-    = f.label :self_purchase_insurance, "Insurance purchased by myself"
-    %br
+    = yes_no_group f, :use_facebook
+  %p
+    Do you have a place to go for
+    %strong dental
+    care after today?
+  .input
+    = yes_no_group f, :has_place_to_be_seen_for_dental_care
+  %p
+    Do you have a place to go for
+    %strong medical
+    care after today?
+  .input
+    = yes_no_group f, :has_place_to_be_seen_for_medical_care
+  %p
+    Do you have
+    %strong dental
+    insurance
+  .input
+    = yes_no_group f, :dental_insurance
+  %p
+    Do you have
+    %strong medical
+    insurance
+  .input
+    = yes_no_group f, :medical_insurance
 
   %p
 

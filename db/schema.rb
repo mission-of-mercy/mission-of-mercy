@@ -202,12 +202,11 @@ ActiveRecord::Schema.define(version: 20140221194030) do
     t.string   "other_insurance"
     t.boolean  "tobacco_use"
     t.boolean  "saga_insurance"
-    t.boolean  "husky_insurance_a"
-    t.boolean  "husky_insurance_b"
-    t.boolean  "husky_insurance_c"
-    t.boolean  "husky_insurance_d"
-    t.boolean  "husky_insurance_unknown"
-    t.boolean  "charter_oak"
+    t.boolean  "use_twitter"
+    t.boolean  "use_facebook"
+    t.boolean  "dental_insurance"
+    t.boolean  "medical_insurance"
+    t.boolean  "has_place_to_be_seen_for_medical_care"
   end
 
   create_table "treatment_areas", force: true do |t|
