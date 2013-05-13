@@ -16,10 +16,10 @@
     %div.input
       %div.row
         %span.label= f.label :first_name
-        %span.formw= f.text_field :first_name
+        %span.formw= f.text_field :first_name, data: {required: true}
       %div.row
         %span.label= f.label :last_name
-        %span.formw= f.text_field :last_name
+        %span.formw= f.text_field :last_name, data: {required: true}
       %div.row
         %span.label= f.label :date_of_birth
         = image_tag "cog.png", :id => "date-input-toggle",
@@ -33,10 +33,12 @@
           Format: mm/dd/yyyy
       %div.row
         %span.label= f.label :sex
-        %span.formw= f.select :sex, *@patient.sex_select_options
+        %span.formw= f.select :sex, *@patient.sex_select_options,
+          data: {required: true}
       %div.row
         %span.label= f.label :race
-        %span.formw= f.select :race, *RaceDecorator.options_for_select
+        %span.formw= f.select :race, *RaceDecorator.options_for_select,
+          data: {required: true}
       #race_other_div.row
         %span.label= f.label :race_other, 'Specify race'
         %span.formw= f.text_field :race_other
@@ -59,10 +61,10 @@
         = image_tag "spinner.gif", :id => "zip-spinner", :class => "spinner"
       %div.row
         %span.label= f.label :city
-        %span.formw= f.text_field :city
+        %span.formw= f.text_field :city, data: {required: true}
       %div.row
         %span.label= f.label :state
-        %span.formw= f.text_field :state
+        %span.formw= f.text_field :state, data: {required: true}
     %br
 
   / End Demographics & Left Column
@@ -74,14 +76,16 @@
     %div.input
       %div.row
         %span.label= f.label :chief_complaint, "Reason for today's visit"
-        %span.formw= f.select :chief_complaint, *@patient.chief_complaint_options
+        %span.formw= f.select :chief_complaint,
+          *@patient.chief_complaint_options, data: {required: true}
       %div.row
         %span.label= f.label :last_dental_visit
-        %span.formw= f.select :last_dental_visit, *@patient.last_dental_visit_options
+        %span.formw= f.select :last_dental_visit,
+          *@patient.last_dental_visit_options, data: {required: true}
       %div.row
         %span.label
           %label Is the patient in pain?
-        %span.formw= yes_no_group f, :pain
+        %span.formw= yes_no_group f, :pain, data: {required: true}
       #pain_length_div.row
         %span.label= f.label :time_in_pain, "Time in pain"
         - if @patient.new_record?

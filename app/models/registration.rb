@@ -44,7 +44,7 @@ class Registration
   end
 
   def show_waver?
-    !(errors? || previous_patient)
+    !(errors? || previous_patient || patient.persisted?)
   end
 
   def date_input
