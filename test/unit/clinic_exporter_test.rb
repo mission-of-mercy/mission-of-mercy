@@ -5,7 +5,7 @@ describe ClinicExporter do
     it "takes single arguments" do
       clinic_exporter = ClinicExporter.new(:patients)
 
-      clinic_exporter.data_types.must_equal [:patients]
+      clinic_exporter.data_types.must_equal ['patients']
     end
 
     it "takes no arguments which defaults to all" do
@@ -17,17 +17,28 @@ describe ClinicExporter do
     it "takes multiple arguments" do
       clinic_exporter = ClinicExporter.new(:patients, :surveys)
 
-      clinic_exporter.data_types.must_equal [:patients, :surveys]
+      clinic_exporter.data_types.must_equal %w[patients surveys]
     end
   end
 
   describe "#data" do
-    it "returns all records for the requested data_types" do
+    let(:clinic_exporter) { ClinicExporter.new(:patients) }
+
+    before do
       5.times { FactoryGirl.create(:patient) }
+    end
 
-      clinic_exporter = ClinicExporter.new(:patients)
+    it "returns all records for the requested data_types" do
+      clinic_exporter.data['patients'].length.must_equal 5
+    end
 
-      clinic_exporter.data[:patients].length.must_equal 5
+    it "uses the format file as keys" do
+      format_file = Rails.root.join('config/clinic_exporter_formats.yml')
+      formats     = YAML.load_file(format_file)
+
+      patient = clinic_exporter.data['patients'].first
+
+      patient.keys.must_equal formats['patients'].values
     end
   end
 end

@@ -1,0 +1,19 @@
+patients:
+  id: Chart #
+  first_name: First Name
+  last_name: Last Name
+  date_of_birth: Date of Birth
+  age: Age (during the clinic)
+  sex: Gender
+  street: Street
+  city: City
+  state: State
+  zip: Zip
+  phone: Phone
+  race: Race
+  travel_time: Travel Time (in days)
+  chief_complaint: Chief Complaint
+  last_dental_visit: Last Dental Visit
+  pain: In Pain?
+  pain_length_in_days: Pain Length (in days)
+  previous_chart_number: Previous Chart Number (for returning patients)

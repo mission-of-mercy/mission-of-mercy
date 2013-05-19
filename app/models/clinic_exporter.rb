@@ -12,7 +12,10 @@ class ClinicExporter
       SUPPORTED_DATA_TYPES
     else
       data_types
-    end
+    end.map(&:to_s)
+
+    format_file = Rails.root.join('config/clinic_exporter_formats.yml')
+    @formats    = YAML.load_file(format_file)
   end
 
   def to_xlsx
@@ -27,18 +30,27 @@ class ClinicExporter
     raise NotImplementedError
   end
 
-  # Public the data for each requested +data_type+
+  # Public formatted records matching the requested +data_type+
   #
   # Returns a Hash of the data
   def data
-    data_types.each_with_object({}) do |data_type, data|
-      data[data_type] = class_for(data_type).all.map(&:attributes)
+    @data ||= begin
+      data_types.each_with_object({}) do |data_type, data|
+        data[data_type] = class_for(data_type).all.map {|r| format(r, data_type) }
+      end
     end
   end
 
   private
 
+  attr_reader :formats
+
   def class_for(data_type)
-    data_type.to_s.classify.constantize
+    data_type.classify.constantize
+  end
+
+  def format(record, data_type)
+    formatted_record = formats[data_type].map {|k,v| [v, record.send(k)] }
+    Hash[*formatted_record.flatten]
   end
 end
