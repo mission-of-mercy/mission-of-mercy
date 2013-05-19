@@ -11,8 +11,7 @@ describe ClinicExporter do
     it "takes no arguments which defaults to all" do
       clinic_exporter = ClinicExporter.new
 
-      clinic_exporter.data_types.must_equal [:patients, :procedures,
-        :prescriptions, :pre_meds, :surveys]
+      clinic_exporter.data_types.must_equal ClinicExporter::SUPPORTED_DATA_TYPES
     end
 
     it "takes multiple arguments" do
