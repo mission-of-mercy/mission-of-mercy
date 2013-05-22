@@ -2,14 +2,29 @@
 
 # Set up MoM app. Run this script immediately after cloning the codebase.
 
+command_exists() {
+  command -v "$1" &>/dev/null
+}
+
 # Check for qmake
-if ! command -v qmake &>/dev/null; then
+if ! command_exists "qmake"; then
   exec >&2
   echo "\033[31m == We use capybara-webkit for testing our app ==\033[0m"
   echo "capybara-webkit depends on a WebKit implementation from Qt."
   echo "You'll need to download the Qt libraries to build and install the gem."
   echo "This page should help you get up and running:"
   echo "\n \033[4;34mhttps://github.com/thoughtbot/capybara-webkit#readme\033[0m\n"
+  echo "Once that is installed, re-run this script to resume setup."
+  exit 1
+fi
+
+# PostgreSQL is also an external dependency
+if ! command_exists "psql"; then
+  exec >&2
+  echo "\033[31m == We use PostgreSQL as our database ==\033[0m"
+  echo "The PostgreSQL database is needed in order to install the pg gem."
+  echo "See the Wiki for instructions on how to install it on your operating system:"
+  echo "\n \033[4;34mhttp://wiki.postgresql.org/wiki/Detailed_installation_guides\033[0m\n"
   echo "Once that is installed, re-run this script to resume setup."
   exit 1
 fi
