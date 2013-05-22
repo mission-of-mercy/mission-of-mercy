@@ -6,6 +6,10 @@ command_exists() {
   command -v "$1" &>/dev/null
 }
 
+has_ruby() {
+  command_exists "ruby" && ruby -v | grep -q "$1"
+}
+
 # Check for qmake
 if ! command_exists "qmake"; then
   exec >&2
@@ -26,6 +30,17 @@ if ! command_exists "psql"; then
   echo "See the Wiki for instructions on how to install it on your operating system:"
   echo "\n \033[4;34mhttp://wiki.postgresql.org/wiki/Detailed_installation_guides\033[0m\n"
   echo "Once that is installed, re-run this script to resume setup."
+  exit 1
+fi
+
+# Check Ruby 1.9.3 is installed.
+if ! has_ruby "1.9.3"; then
+  exec >&2
+  echo "\033[31m == The application runs on Ruby 1.9.3 ==\033[0m"
+  echo "In order to get the app running, you first need to install Ruby 1.9.3."
+  echo "You can see more information on how to get it installed in the following page:"
+  echo "\n \033[4;34mhttp://www.ruby-lang.org/en/downloads/\033[0m\n"
+  echo "Once Ruby is installed, re-run this script to resume setup."
   exit 1
 fi
 
