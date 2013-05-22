@@ -56,7 +56,7 @@ setup_task :setup do
       # Check if there are pending migrations
       silence { Rake::Task['db:abort_if_pending_migrations'].invoke }
       done 'Skip: Database already setup'
-    rescue Exception
+    rescue
       silence do
         Rake::Task['db:create'].invoke
         Rake::Task['db:schema:load'].invoke
