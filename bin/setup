@@ -54,5 +54,4 @@ git remote add upstream git://github.com/mission-of-mercy/mission-of-mercy.git
 bundle exec rake setup
 
 # Run the tests
-
 bundle exec rake test
