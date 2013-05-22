@@ -48,6 +48,12 @@ class Dashboard
     }
   end
 
+  def treatment_areas
+    TreatmentArea.current_capacity.map do |area, count|
+      { name: area, count: count }
+    end
+  end
+
   def support_requests
     SupportRequest.active.map {|s| s.station_description }
   end
