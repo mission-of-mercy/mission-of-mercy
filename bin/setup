@@ -67,7 +67,9 @@ fi
 bundle install
 
 # Set up upstream git remote
-git remote add upstream git://github.com/mission-of-mercy/mission-of-mercy.git
+if ! git remote -v | grep -q upstream; then
+  git remote add upstream git://github.com/mission-of-mercy/mission-of-mercy.git
+fi
 
 # Set up config files and database
 bundle exec rake setup
