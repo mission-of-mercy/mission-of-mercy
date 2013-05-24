@@ -16,6 +16,10 @@ class DashboardController < ApplicationController
     render json: @dashboard.support_requests
   end
 
+  def treatment_areas
+    render json: @dashboard.treatment_areas
+  end
+
   private
 
   def load_dashboard

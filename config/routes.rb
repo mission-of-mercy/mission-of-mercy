@@ -69,7 +69,8 @@ MissionOfMercy::Application.routes.draw do
     match '/maintenance/reset' => 'maintenance#reset', :as => :maintenance_reset
   end
 
-  match '/dashboard/patients' => 'dashboard#patients'
-  match '/dashboard/summary'  => 'dashboard#summary'
-  match '/dashboard/support'  => 'dashboard#support'
+  match '/dashboard/patients'         => 'dashboard#patients'
+  match '/dashboard/summary'          => 'dashboard#summary'
+  match '/dashboard/support'          => 'dashboard#support'
+  match '/dashboard/treatment_areas'  => 'dashboard#treatment_areas'
 end
