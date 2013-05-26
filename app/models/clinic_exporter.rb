@@ -13,18 +13,6 @@ class ClinicExporter
     @formats    = YAML.load_file(format_file)
   end
 
-  def to_xlsx
-    raise NotImplementedError
-  end
-
-  def to_csv
-    raise NotImplementedError
-  end
-
-  def to_json
-    raise NotImplementedError
-  end
-
   # Public formatted records matching the requested +data_type+
   #
   # Returns a Hash of the data
@@ -62,9 +50,9 @@ class ClinicExporter
   #
   def column(record, key, value)
     if Hash === value
-      value.map {|k, v| column(record.public_send(key), k,v) }
+      value.map {|k, v| column(record.try(key), k,v) }
     else
-      [value, record.public_send(key)]
+      [value, record.try(key)]
     end
   end
 end

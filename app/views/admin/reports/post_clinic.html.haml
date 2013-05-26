@@ -89,10 +89,6 @@
         %td= county["state"]
         %td= county["patient_count"]
         %td= county["percent"]
-        %td= link_to "Export",
-          admin_export_patients_path(:patients => patients_by_county(county),
-            :filename => county_filename(county)),
-          :target => "_blank"
 
 %h2
   %u Ethnicities
