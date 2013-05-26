@@ -1,5 +1,5 @@
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     actionmailer (3.2.13)
       actionpack (= 3.2.13)
@@ -35,6 +35,9 @@ GEM
       htmlentities (~> 4.3.1)
       nokogiri (>= 1.4.1)
       rubyzip (>= 0.9.5)
+    axlsx_rails (0.1.4)
+      axlsx
+      rails (>= 3.1)
     backports (2.6.7)
     bcrypt-ruby (3.0.1)
     better_errors (0.3.2)
@@ -219,6 +222,7 @@ PLATFORMS
 
 DEPENDENCIES
   axlsx
+  axlsx_rails
   better_errors
   binding_of_caller
   bootstrap-sass-rails
