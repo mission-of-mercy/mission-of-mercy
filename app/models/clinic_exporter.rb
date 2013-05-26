@@ -8,12 +8,7 @@ class ClinicExporter
   #
   # Returns a new ClinicExporter
   def initialize(*data_types)
-    @data_types = if data_types.empty?
-      SUPPORTED_DATA_TYPES
-    else
-      data_types
-    end.map(&:to_s)
-
+    @data_types = (data_types.presence || SUPPORTED_DATA_TYPES).map(&:to_s)
     format_file = Rails.root.join('config/clinic_exporter_formats.yml')
     @formats    = YAML.load_file(format_file)
   end
@@ -50,7 +45,7 @@ class ClinicExporter
   end
 
   def format(record, data_type)
-    formatted_record = formats[data_type].map {|k,v| [v, record.send(k)] }
+    formatted_record = formats[data_type].map {|k,v| [v, record.public_send(k)] }
     Hash[*formatted_record.flatten]
   end
 end
