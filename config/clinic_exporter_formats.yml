@@ -1,5 +1,5 @@
 patients:
-  id: Chart #
+  id: "Chart #"
   first_name: First Name
   last_name: Last Name
   date_of_birth: Date of Birth
@@ -19,7 +19,7 @@ patients:
   previous_chart_number: Previous Chart Number (for returning patients)
 
 procedures:
-  patient_id: Chart #
+  patient_id: "Chart #"
   procedure:
     code: Procedure Code
     description: Procedure Description
@@ -28,13 +28,13 @@ procedures:
   surface_code: Surface Code
 
 prescriptions:
-  patient_id: Chart #
+  patient_id: "Chart #"
   prescription:
     full_description: Prescription
     cost: Cost
 
 pre_meds:
-  patient_id: Chart #
+  patient_id: "Chart #"
   pre_med:
     description: Pre-Med
     cost: Cost
