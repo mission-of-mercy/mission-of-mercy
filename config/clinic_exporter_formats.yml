@@ -17,3 +17,12 @@ patients:
   pain: In Pain?
   pain_length_in_days: Pain Length (in days)
   previous_chart_number: Previous Chart Number (for returning patients)
+
+procedures:
+  patient_id: Chart #
+  procedure:
+    code: Procedure Code
+    description: Procedure Description
+    cost: Cost
+  tooth_number: Tooth Number
+  surface_code: Surface Code

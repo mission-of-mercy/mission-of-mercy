@@ -40,5 +40,15 @@ describe ClinicExporter do
 
       patient.keys.must_equal formats['patients'].values
     end
+
+    it "can read associations" do
+      procedure = FactoryGirl.create(:procedure)
+      Patient.find_each {|p| p.procedures << procedure }
+      clinic_exporter = ClinicExporter.new(:procedures)
+
+      procedure_row = clinic_exporter.data['procedures'].last
+
+      procedure_row["Procedure Description"].must_equal procedure.description
+    end
   end
 end
