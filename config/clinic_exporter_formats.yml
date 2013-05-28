@@ -56,3 +56,11 @@ surveys:
   no_insurance: No Insurance
   insurance_from_job: Insurance from Job
   self_purchase_insurance: Self Purchase Insurance
+  saga_insurance: Saga Insurance
+  husky_insurance_a: Husky A Insurance
+  husky_insurance_b: Husky B Insurance
+  husky_insurance_c: Husky C Insurance
+  husky_insurance_d: Husky D Insurance
+  husky_insurance_unknown: Husky Unknown Insurance
+  charter_oak: Charter Oak Insurance
+
