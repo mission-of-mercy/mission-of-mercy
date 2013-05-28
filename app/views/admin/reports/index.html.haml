@@ -3,10 +3,19 @@
 = header do
   %h1 Reports
 
-%p= link_to 'Clinic Summary Report', admin_clinic_summary_report_path, :class => "general"
+%p= link_to 'Clinic Summary Report',
+  admin_clinic_summary_report_path,
+  class: "general"
 
-%p= link_to "Treatment Area Distribution Report", admin_treatment_area_distribution_report_path, :class => "general"
+%p= link_to "Treatment Area Distribution Report",
+  admin_treatment_area_distribution_report_path,
+  class: "general"
 
 %hr
 
-%p= link_to "Post Clinic Report", admin_post_clinic_report_path, :class => "general"
+%p= link_to "Post Clinic Report", admin_post_clinic_report_path,
+  class: "general"
+
+%p= link_to "Download Clinic Data",
+  admin_reports_export_path(format: 'xlsx'),
+  class: "btn"

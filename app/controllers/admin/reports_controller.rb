@@ -26,26 +26,12 @@ class Admin::ReportsController < ApplicationController
     @report = Reports::PostClinic.new
   end
 
-  def export_patients
-    if params[:patients]
-      patients = Patient.find(params[:patients])
-    else
-      patients = Patient.all
-    end
+  def export
+    @clinic_data = ClinicExporter.new.data
 
-    csv_string = CSV.generate do |csv|
-      csv << ["Chart #", "First Name", "Last Name", "Date of Birth", "Phone",
-              "Street Address", "City", "State", "Zip", "Sex"]
-      patients.sort_by(&:id).each do |patient|
-        csv << [ patient.id, patient.first_name, patient.last_name,
-                 patient.date_of_birth, patient.phone, patient.street,
-                 patient.city, patient.state, patient.zip, patient.sex ]
-      end
+    respond_to do |format|
+      format.xlsx
     end
-
-    send_data csv_string,
-              :type => 'text/csv; charset=iso-8859-1; header=present',
-              :disposition => "attachment; filename=#{params[:filename] || 'patients'}.csv"
   end
 
   private

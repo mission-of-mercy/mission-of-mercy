@@ -1,15 +1,65 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # Set up MoM app. Run this script immediately after cloning the codebase.
 
-# Check for qtmake
-if ! which -s qmake; then
-  echo "== We use capybara-webkit for testing our app =="
+command_exists() {
+  command -v "$1" &>/dev/null
+}
+
+has_ruby() {
+  command_exists "ruby" && ruby -v | grep -q "$1"
+}
+
+error_title() {
+  echo "\033[31m == $1 ==\033[0m"
+}
+
+link() {
+  echo "\n \033[4;34m$1\033[0m\n"
+}
+
+# Check for qmake
+if ! command_exists "qmake"; then
+  exec >&2
+  error_title "We use capybara-webkit for testing our app"
   echo "capybara-webkit depends on a WebKit implementation from Qt."
   echo "You'll need to download the Qt libraries to build and install the gem."
   echo "This page should help you get up and running:"
-  echo "\nhttps://github.com/thoughtbot/capybara-webkit#readme\n"
-  echo "Once that is installed, re-run this script to resume setup"
+  link "https://github.com/thoughtbot/capybara-webkit#readme"
+  echo "Once that is installed, re-run this script to resume setup."
+  exit 1
+fi
+
+# PostgreSQL is also an external dependency
+if ! command_exists "psql"; then
+  exec >&2
+  error_title "We use PostgreSQL as our database"
+  echo "The PostgreSQL database is needed in order to install the pg gem."
+  echo "See the Wiki for instructions on how to install it on your operating system:"
+  link "http://wiki.postgresql.org/wiki/Detailed_installation_guides"
+  echo "Once that is installed, re-run this script to resume setup."
+  exit 1
+fi
+
+# Check Ruby 1.9.3 is installed.
+if ! has_ruby "1.9.3"; then
+  exec >&2
+  error_title "The application runs on Ruby 1.9.3"
+  echo "In order to get the app running, you first need to install Ruby 1.9.3."
+  echo "You can see more information on how to get it installed in the following page:"
+  link "http://www.ruby-lang.org/en/downloads/"
+  echo "Once Ruby is installed, re-run this script to resume setup."
+  exit 1
+fi
+
+# Check if we have bundler installed
+if ! command_exists "bundle"; then
+  exec >&2
+  error_title "You need Bundler in order to manage the app dependencies"
+  echo "In order to get the app dependencies, you need to install the bundler gem."
+  echo "You can get it installed by running the command:"
+  link "gem install bundler"
+  echo "Once that is installed, re-run this script to resume setup."
   exit 1
 fi
 
@@ -17,11 +67,12 @@ fi
 bundle install
 
 # Set up upstream git remote
-git remote add upstream git://github.com/mission-of-mercy/mission-of-mercy.git
+if ! git remote -v | grep -q upstream; then
+  git remote add upstream git://github.com/mission-of-mercy/mission-of-mercy.git
+fi
 
 # Set up config files and database
 bundle exec rake setup
 
 # Run the tests
-
 bundle exec rake test

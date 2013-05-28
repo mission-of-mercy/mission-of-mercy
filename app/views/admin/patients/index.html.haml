@@ -2,10 +2,6 @@
 
 = header do
   %h1 Patients
-  .export
-    = link_to "Export All Patients",
-      admin_export_patients_path(:filename => "patients"),
-      :target => "_blank", :class => 'btn btn-small'
 
 - @patients_table.controls do |patient|
   = link_to 'History', history_admin_patient_path(patient)
