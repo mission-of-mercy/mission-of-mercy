@@ -61,6 +61,8 @@ surveys:
   told_needed_more_dental_treatment: Told needed more dental treatment
   has_place_to_be_seen_for_dental_care: Has a place to be seen for dental care
   tobacco_use: Uses Tobacco
-  no_insurance: No Insurance
-  insurance_from_job: Insurance from Job
-  self_purchase_insurance: Self Purchase Insurance
+  use_twitter: Use Twitter
+  use_facebook: Use Facebook
+  dental_insurance: Has Dental Insurnace
+  medical_insurance: Has Medical Insurnace
+  has_place_to_be_seen_for_medical_care: Has a place to be seen for medical care
