@@ -1,0 +1,58 @@
+patients:
+  id: "Chart #"
+  first_name: First Name
+  last_name: Last Name
+  date_of_birth: Date of Birth
+  age: Age (during the clinic)
+  sex: Gender
+  street: Street
+  city: City
+  state: State
+  zip: Zip
+  phone: Phone
+  race: Race
+  travel_time: Travel Time (in days)
+  chief_complaint: Chief Complaint
+  last_dental_visit: Last Dental Visit
+  pain: In Pain?
+  pain_length_in_days: Pain Length (in days)
+  previous_chart_number: Previous Chart Number (for returning patients)
+
+procedures:
+  patient_id: "Chart #"
+  procedure:
+    code: Procedure Code
+    description: Procedure Description
+    cost: Cost
+  tooth_number: Tooth Number
+  surface_code: Surface Code
+
+prescriptions:
+  patient_id: "Chart #"
+  prescription:
+    full_description: Prescription
+    cost: Cost
+
+pre_meds:
+  patient_id: "Chart #"
+  pre_med:
+    description: Pre-Med
+    cost: Cost
+
+surveys:
+  age: Age (during the clinic)
+  sex: Gender
+  city: City
+  state: State
+  zip: Zip
+  race: Race
+  rating_of_services: Rating of Services
+  pain: In Pain?
+  pain_length_in_days: Pain Length (in days)
+  heard_about_clinic: Heard about clinic
+  told_needed_more_dental_treatment: Told needed more dental treatment
+  has_place_to_be_seen_for_dental_care: Has a place to be seen for dental care
+  tobacco_use: Uses Tobacco
+  no_insurance: No Insurance
+  insurance_from_job: Insurance from Job
+  self_purchase_insurance: Self Purchase Insurance

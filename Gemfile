@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'rails', '~> 3.2.13'
 gem 'rack',  '~> 1.4.5'
@@ -15,6 +15,7 @@ gem 'draper'
 gem 'rack-pjax'
 gem 'virtus'
 gem 'axlsx'
+gem 'axlsx_rails'
 
 gem 'jquery-rails'
 gem 'will_paginate-bootstrap'

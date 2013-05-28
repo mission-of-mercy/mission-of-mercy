@@ -1,0 +1,6 @@
+@clinic_data.each do |sheet, rows|
+  xlsx_package.workbook.add_worksheet(name: sheet.titleize) do |sheet|
+    sheet.add_row rows.first.keys if rows.first
+    rows.each {|row| sheet.add_row row.values }
+  end
+end
