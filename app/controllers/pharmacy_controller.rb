@@ -1,9 +1,13 @@
 class PharmacyController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :find_patient, :only => [:check_out, :check_out_complete]
+
+  def index
+    @patients_table = PatientsTable.new
+    @patient_search = @patients_table.search(params)
+  end
 
   def check_out
-    @patient = Patient.find(params[:patient_id])
-
     @patient.patient_prescriptions.each do |p|
       p.prescribed = true
     end
@@ -18,22 +22,27 @@ class PharmacyController < ApplicationController
   end
 
   def check_out_complete
-    @patient = Patient.find(params[:patient_id])
+    new_prescription = false
 
     @patient.attributes = params[:patient]
 
     @patient.patient_prescriptions.each do |p|
-      p.destroy if !p.new_record? && p.prescribed == "0"
+      new_prescription = true if p.new_record?
     end
 
     @patient.save
 
-    if @patient.patient_prescriptions.count > 0
+    if new_prescription
       @patient.flows.create(:area_id => ClinicArea::PHARMACY)
     end
 
     flash[:notice] = "Prescriptions sucessfully added to patient's record"
-    redirect_to patients_path
+    redirect_to pharmacy_path
   end
 
+  private
+
+  def find_patient
+    @patient = Patient.find(params[:patient_id])
+  end
 end
