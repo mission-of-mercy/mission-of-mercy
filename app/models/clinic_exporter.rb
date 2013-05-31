@@ -18,8 +18,10 @@ class ClinicExporter
   # Returns a Hash of the data
   def data
     @data ||= begin
-      data_types.each_with_object({}) do |data_type, data|
-        data[data_type] = class_for(data_type).all.map {|r| format(r, data_type) }
+      data_types.each_with_object(Hash.new([])) do |data_type, data|
+        class_for(data_type).find_each do |r|
+          data[data_type] << format(r, data_type)
+        end
       end
     end
   end
