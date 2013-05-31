@@ -1,0 +1,10 @@
+- title "Pharmacy"
+
+= header do
+  %h1= "Pharmacy"
+
+- @patients_table.controls do |patient|
+  = link_to "Check out", pharmacy_check_out_path(patient),
+   class: 'primary'
+
+= render "patients/patients"

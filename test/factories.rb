@@ -54,6 +54,12 @@ FactoryGirl.define do
     strength  { "#{ daily_dose } TID x #{ days } days" }
   end
 
+  factory :patient_prescription do
+    prescribed true
+    patient
+    prescription
+  end
+
   factory :procedure do
     description           { Faker::Lorem.words(1 + rand(4)).join(" ").titleize }
     sequence(:code)       { |n| n }
