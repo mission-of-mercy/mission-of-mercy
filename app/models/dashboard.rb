@@ -36,7 +36,8 @@ class Dashboard
       select("description, count(*) as subtotal_count").
       joins(:patient_procedures).
       group('procedures.description')
-    top_procedures = procedures.limit(10).order("subtotal_count DESC").
+    top_procedures = procedures.where(auto_add: false).
+      limit(10).order("subtotal_count DESC").
         map {|p| { label: p.description, value: p.subtotal_count }}
 
     {
