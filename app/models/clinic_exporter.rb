@@ -1,5 +1,6 @@
 class ClinicExporter
-  SUPPORTED_DATA_TYPES = %w[patients procedures prescriptions pre_meds surveys]
+  SUPPORTED_DATA_TYPES = %w[patients procedures prescriptions pre_meds surveys
+    patient_flows]
   attr_reader :data_types
 
   # Public creates an exporter object which will dump the requested data
@@ -19,7 +20,11 @@ class ClinicExporter
   def data
     @data ||= begin
       data_types.each_with_object({}) do |data_type, data|
-        data[data_type] = class_for(data_type).all.map {|r| format(r, data_type) }
+        records = []
+        class_for(data_type).find_each do |r|
+          records << format(r, data_type)
+        end
+        data[data_type] = records
       end
     end
   end

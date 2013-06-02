@@ -95,6 +95,21 @@ class CheckOutTest < ActionDispatch::IntegrationTest
     assert_no_content patient_procedure.full_description
   end
 
+  test "prescriptions can be removed" do
+    patient_prescription = FactoryGirl.create(:patient_prescription,
+      patient: @patient)
+
+    visit treatment_area_patient_prescriptions_path(@treatment_area, @patient)
+
+    uncheck patient_prescription.prescription.full_description
+
+    click_button "Finish"
+
+    assert_content "Patient successfully checked out"
+
+    assert @patient.patient_procedures.empty?
+  end
+
   private
 
   def check_out(patient, skip_survey=true)

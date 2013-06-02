@@ -1,6 +1,32 @@
+styles      = xlsx_package.workbook.styles
+time        = styles.add_style format_code: "MM/DD/YY HH:MM AM/PM"
+bold_center = styles.add_style b: true, alignment: { horizontal: :center }
+
 @clinic_data.each do |sheet, rows|
+  next if rows.empty?
+
+  header_styles = rows.first.keys.length.times.map { bold_center }
+  row_options   = {types: [], style: []}
+
+  rows.first.values.each_with_object(row_options) do |value, r|
+    case value
+    when Time
+      r[:style] << time
+      r[:types] << :time
+    when Date
+      r[:style] << nil
+      r[:types] << :date
+    when Float || Decimal
+      r[:style] << nil
+      r[:types] << :float
+    else
+      r[:style] << nil
+      r[:types] << nil
+    end
+  end
+
   xlsx_package.workbook.add_worksheet(name: sheet.titleize) do |sheet|
-    sheet.add_row rows.first.keys if rows.first
-    rows.each {|row| sheet.add_row row.values }
+    sheet.add_row rows.first.keys, style: header_styles
+    rows.each {|row| sheet.add_row row.values, row_options.dup }
   end
 end

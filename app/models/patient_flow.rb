@@ -5,4 +5,8 @@ class PatientFlow < ActiveRecord::Base
   def area
     ClinicArea[area_id]
   end
+
+  def area_humanized
+    area.to_s.humanize
+  end
 end

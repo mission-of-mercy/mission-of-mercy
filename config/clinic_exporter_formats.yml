@@ -39,6 +39,13 @@ pre_meds:
     description: Pre-Med
     cost: Cost
 
+patient_flows:
+  patient_id: "Chart #"
+  treatment_area:
+    name: Treatment Area
+  area_humanized: Clinic Area
+  created_at: Visited At
+
 surveys:
   age: Age (during the clinic)
   sex: Gender
