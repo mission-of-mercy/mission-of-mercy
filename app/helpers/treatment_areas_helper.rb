@@ -112,10 +112,10 @@ module TreatmentAreasHelper
   def checkout_path(area, patient)
     if area == TreatmentArea.radiology
       radiology_treatment_area_patient_path(area, patient)
-    elsif patient.survey
-      edit_treatment_area_patient_survey_path(area, patient)
-    else
+    elsif patient.checked_out?
       treatment_area_patient_procedures_path(area, patient)
+    else
+      edit_treatment_area_patient_survey_path(area, patient)
     end
   end
 

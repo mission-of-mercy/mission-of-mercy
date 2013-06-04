@@ -128,6 +128,10 @@ class Patient < ActiveRecord::Base
     assignment.check_out if assignment
   end
 
+  def checked_out?
+    flows.where(area_id: ClinicArea::CHECKOUT).any?
+  end
+
   def assign(area_id, radiology)
     radiology_assignment = assignments.not_checked_out.radiology
 
