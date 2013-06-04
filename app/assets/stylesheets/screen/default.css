@@ -456,4 +456,5 @@ img.help-example {
   margin: 1em auto;
   -moz-box-shadow: 0px 0px 5px #999;
   box-shadow: 0px 0px 5px #999;
+  width: 100%
 }
