@@ -25,7 +25,7 @@
   %p
     = f.fields_for :patient_pre_meds do |p|
       = p.hidden_field :pre_med_id
-      = p.check_box :prescribed
+      = p.check_box :prescribed, {}, 1, -1
       = p.label :prescribed, p.object.pre_med.description
       %br
 
