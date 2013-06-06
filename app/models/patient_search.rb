@@ -63,7 +63,7 @@ class PatientSearch
   end
 
   def blank_search?
-    attributes.values.all?(&:nil?)
+    attributes.values.all?(&:blank?)
   end
 
   def persisted?; false; end
