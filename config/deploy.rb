@@ -2,8 +2,8 @@ require 'bundler/capistrano'
 
 set :application, "momma"
 
-set :repository, "git://github.com/mission-of-mercy/connecticut.git"
-set :deploy_via, :remote_cache
+set :repository, "/Users/byron/code/mom/connecticut"
+set :deploy_via, :copy
 
 set :scm, :git
 set :user, "deploy"

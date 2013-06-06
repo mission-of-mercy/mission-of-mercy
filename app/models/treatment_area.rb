@@ -7,9 +7,10 @@ class TreatmentArea < ActiveRecord::Base
                         order: 'code'
   has_many :patient_assignments
   has_many :patients, through: :patient_assignments,
-    conditions: proc { ["checked_out_at IS NULL AND patient_assignments.created_at BETWEEN ? AND ?",
-                        Time.now.beginning_of_day.utc,
-                        Time.now.end_of_day.utc] }
+    conditions: proc { ["checked_out_at IS NULL AND
+      patient_assignments.created_at BETWEEN ? AND ?",
+      Time.now.beginning_of_day.utc,
+      Time.now.end_of_day.utc] }
 
   accepts_nested_attributes_for :procedure_treatment_area_mappings, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['assigned'] == "0" }
