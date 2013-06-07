@@ -117,17 +117,17 @@ class Patient < ActiveRecord::Base
   def check_out(area)
     return unless area
 
-    if area.radiology?
+    to_check_out = if area.radiology?
       self.flows.create(area_id: ClinicArea::XRAY)
+
+      assignments.where(treatment_area_id: area.id).not_checked_out
     else
       self.flows.create(area_id: ClinicArea::CHECKOUT, treatment_area_id: area.id)
+
+      assignments.not_checked_out
     end
 
-    # Remove the patient from all assigned areas
-    #
-    assignments.not_checked_out.each do |assignment|
-      assignment.check_out
-    end
+    to_check_out.each {|assignment| assignment.check_out }
   end
 
   def checked_out?
