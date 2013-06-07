@@ -19,9 +19,10 @@ class Dashboard
       first.patient_count.to_i
 
     registrations_per_hour = Patient.where("created_at between ? and ?",
-      Time.now - 1.hour, Time.now).count
+      Time.now - 15.minutes, Time.now).count * 4
     check_outs_per_hour = PatientFlow.where(area_id: ClinicArea::CHECKOUT).
-      where("created_at between ? and ?", Time.now - 1.hour, Time.now).count
+      where("created_at between ? and ?",
+        Time.now - 15.minutes, Time.now).count * 4
 
     {
       registrations_today:    registrations_today,
