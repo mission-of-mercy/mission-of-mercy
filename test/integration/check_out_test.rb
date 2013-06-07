@@ -23,7 +23,7 @@ class CheckOutTest < ActionDispatch::IntegrationTest
   end
 
   test "survey questions are not asked after a patient has been  checked out" do
-    @patient.update_attribute(:survey_id, nil)
+    @patient.check_out(@treatment_area)
 
     check_out @patient, false # Don't skip the survey
 
