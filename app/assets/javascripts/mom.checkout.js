@@ -98,7 +98,7 @@ MoM.Checkout.procedureWarnings = function(){
     }
   });
 
-  $(document).on('a.go-back', 'click', function(e){
+  $(document).on('click', 'a.go-back', function(e){
     jQuery(document).trigger('close.facebox');
     e.preventDefault();
   });
