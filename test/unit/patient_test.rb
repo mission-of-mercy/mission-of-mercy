@@ -184,6 +184,30 @@ class PatientTest < ActiveSupport::TestCase
     assert patient.assigned_to.empty?
   end
 
+  test "checks out of radiology" do
+    radiology = TreatmentArea.where(name: TreatmentArea::RADIOLOGY_NAME).
+                  first_or_create
+    area      = FactoryGirl.create(:treatment_area)
+    patient   = FactoryGirl.create(:patient)
+
+    patient.assign(area.id, true)
+
+    patient.check_out(radiology)
+    assert_equal [area], patient.assigned_to
+  end
+
+  test "checks out of both radiology and a treatment area" do
+    radiology = TreatmentArea.where(name: TreatmentArea::RADIOLOGY_NAME).
+                  first_or_create
+    area      = FactoryGirl.create(:treatment_area)
+    patient   = FactoryGirl.create(:patient)
+
+    patient.assign(area.id, true)
+
+    patient.check_out(area)
+    assert patient.assigned_to.empty?
+  end
+
   test "should save check out time" do
     area = FactoryGirl.create(:treatment_area)
     patient = FactoryGirl.create(:patient)

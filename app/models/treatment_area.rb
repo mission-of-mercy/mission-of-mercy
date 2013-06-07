@@ -1,5 +1,4 @@
 class TreatmentArea < ActiveRecord::Base
-
   RADIOLOGY_NAME = 'Radiology'
 
   has_many :procedure_treatment_area_mappings
