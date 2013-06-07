@@ -122,7 +122,7 @@ class CheckInTest < ActionDispatch::IntegrationTest
 
     patient = Patient.last until patient.present?
 
-    assert_equal new_patient_survey_path(patient), current_path
+    assert_equal edit_patient_survey_path(patient, patient.survey), current_path
 
     click_button "Back"
 
@@ -134,6 +134,20 @@ class CheckInTest < ActionDispatch::IntegrationTest
     click_button "Next"
 
     assert_content "Frank Pepelio"
+  end
+
+  test "creates one survey" do
+    sign_in_as "Check in"
+
+    agree_to_waver
+
+    fill_out_form
+
+    click_button "Next"
+
+    click_button "Check In"
+
+    Survey.count.must_equal 1
   end
 
   private

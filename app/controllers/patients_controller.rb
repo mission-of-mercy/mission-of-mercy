@@ -8,6 +8,8 @@ class PatientsController < ApplicationController
       if @patient.previous_chart_number.present?
         stats.patient_checked_in
         redirect_to new_patient_path(last_patient_id:  @patient.id)
+      elsif @patient.survey
+        redirect_to edit_patient_survey_path(@patient, @patient.survey)
       else
         redirect_to new_patient_survey_path(@patient)
       end
