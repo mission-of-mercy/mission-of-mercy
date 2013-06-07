@@ -22,7 +22,7 @@ class CheckOutTest < ActionDispatch::IntegrationTest
     assert_current_path path
   end
 
-  test "survey questions are not asked after a patient has been  checked out" do
+  test "survey questions are not asked after a patient has been checked out" do
     @patient.check_out(@treatment_area)
 
     check_out @patient, false # Don't skip the survey
