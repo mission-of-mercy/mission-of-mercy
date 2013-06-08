@@ -90,11 +90,7 @@ class Patient < ActiveRecord::Base
   end
 
   def age
-    today = DateTime.now
-    age = today - date_of_birth
-    age.to_i / 365
-  rescue
-    nil
+    (Date.today - date_of_birth).to_i / 365
   end
 
   def contact_information
@@ -259,7 +255,7 @@ class Patient < ActiveRecord::Base
   private
 
   def update_survey
-    return if !previous_chart_number.blank?
+    return if previous_chart_number.present?
 
     survey.update_patient_information(self) if survey
   end
