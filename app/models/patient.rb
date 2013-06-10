@@ -77,10 +77,6 @@ class Patient < ActiveRecord::Base
     where("patients.created_at::Date = ?", Date.today)
   end
 
-  def self.unique
-    Patient.where(previous_chart_number: nil)
-  end
-
   def chart_number
     id
   end

@@ -52,7 +52,7 @@ class Reports::ClinicSummary
   def patients_per_treatment_area
     @patients_per_treatment_area ||= begin
       patient_flows(ClinicArea::CHECKOUT).
-        select("treatment_area_id, count(*) as patient_count").
+        select("treatment_area_id, count(DISTINCT patient_id) as patient_count").
         group("treatment_area_id")
     end
   end
@@ -64,6 +64,20 @@ class Reports::ClinicSummary
     end
   end
 
+  def total_patient_charts
+    @total_patient_charts ||= Patient.for_time('patients', day, span).count
+  end
+
+  def patients_never_checked_out
+    @patients_never_checked_out ||= begin
+      Patient.for_time('patients', @day, @span).
+        joins(%{LEFT JOIN patient_flows ON
+          patients.id = patient_flows.patient_id AND
+          patient_flows.area_id = #{ClinicArea::CHECKOUT}}).
+        where("patient_flows.id IS NULL").count
+    end
+  end
+
   private
 
   def collect_patients
@@ -72,7 +86,7 @@ class Reports::ClinicSummary
   end
 
   def load_patient_count
-    @patient_count = Patient.unique.for_time('patients', @day, @span).count.to_i
+    @patient_count = Patient.for_time('patients', @day, @span).unique.count
   end
 
   def load_patients_per_hour
@@ -109,13 +123,12 @@ class Reports::ClinicSummary
   end
 
   def area_count(area_id)
-    patient_flows(area_id).count.to_i
+    patient_flows(area_id).select("COUNT(DISTINCT patient_id) as patient_count").
+      first.patient_count
   end
 
   def patient_flows(area_id)
-    PatientFlow.
-      for_time('patient_flows', @day, @span).
-      where('area_id = ?', area_id)
+    PatientFlow.for_time('patient_flows', @day, @span).where(area_id: area_id)
   end
 
   def collect_procedures

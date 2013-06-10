@@ -7,13 +7,14 @@ module TimeScope
   end
 
   def for_time(table, day, span)
-    query = self
+    relation = self
     unless day == 'All'
-      query = query.where("#{table}.created_at::Date = ?", day)
+      relation = relation.where("#{table}.created_at::Date = ?", day)
       unless span == 'All'
-        query = query.where("#{table}.created_at::Time <= ?", span_time(day, span))
+        relation = relation.
+          where("#{table}.created_at::Time <= ?", span_time(day, span))
       end
     end
-    query
+    relation
   end
 end
