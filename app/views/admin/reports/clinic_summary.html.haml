@@ -23,14 +23,21 @@
   Patients Checked In:
   = @report.patient_count
   %br
+  Repeat Patients:
+  = @report.multivisit_patents.count
+  %br
+  Total Patient Charts:
+  = @report.total_patient_charts
+  %br
   Patients Given X-Rays:
   = @report.xrays
   %br
   Patients Checked Out:
   = @report.checkouts
   %br
-  Repeat Patients:
-  = @report.multivisit_patents.count
+  Charts Never Checked Out:
+  = @report.patients_never_checked_out
+
 %p
   Procedures: #{@report.procedure_count}
   %br
