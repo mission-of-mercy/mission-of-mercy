@@ -78,8 +78,8 @@ class CheckInTest < ActionDispatch::IntegrationTest
     phone = "230-111-1111"; street = "12 St."; zip = "90210"
     city = "Beverley Hills"; state = "CA"
 
-    patient = FactoryGirl.create(:patient, :phone => phone, :street => street, :zip => zip,
-                                 :city => city, :state => state)
+    patient = FactoryGirl.create(:patient, :phone => phone, :street => street,
+      :zip => zip, :city => city, :state => state)
 
     sign_in_as "Check in"
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
@@ -147,7 +147,9 @@ class CheckInTest < ActionDispatch::IntegrationTest
 
     click_button "Check In"
 
-    Survey.count.must_equal 1
+    assert_equal 1, Survey.count
+
+    assert_current_path new_patient_path
   end
 
   private

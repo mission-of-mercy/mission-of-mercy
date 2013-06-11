@@ -49,10 +49,10 @@ class ClinicSummaryTest < ActiveSupport::TestCase
     end
 
     report = Reports::ClinicSummary.new(@report_date, xray_time)
-    assert_equal xray_count, report.xrays
+    assert_equal xray_count, report.xrays.to_i
 
     report = Reports::ClinicSummary.new(@report_date, "8:00 AM")
-    assert_equal 0, report.xrays
+    assert_equal 0, report.xrays.to_i
   end
 
   def test_procedures_for_the_specified_day_or_span
