@@ -1,5 +1,4 @@
 class ProcedureTreatmentAreaMapping < ActiveRecord::Base
-  before_create lambda {|m| m.assigned = true }
   after_save    :destroy_unless_assigned
 
   belongs_to :procedure
