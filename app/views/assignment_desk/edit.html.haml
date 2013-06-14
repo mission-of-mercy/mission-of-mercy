@@ -20,7 +20,7 @@
       %label{:for => "patient_params_radiology"}= TreatmentArea::RADIOLOGY_NAME
 
   .input-right.border
-    = bar_graph 'treatment_area_graph',
+    = stacked_bar_graph 'treatment_area_graph',
       { "Assigned" => @assignments,
         "Capacity" => @capacity },
       { style: 'width: 590px; height: 200px' }
