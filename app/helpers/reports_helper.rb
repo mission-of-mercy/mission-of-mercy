@@ -46,8 +46,15 @@ module ReportsHelper
     sprintf('%.2f', percent)
   end
 
-  def bar_graph(name, data_series=[], div_options={}, graph_options={})
+  def bar_graph(name, data_series={}, div_options={}, graph_options={})
     output = ""
+
+    data = data_series.each.with_object([]) do |(key, value), result|
+      result << {
+        label: key,
+        data: bar_graph_data(value.map {|v| v[1] })
+      }
+    end
 
     div_options.merge!({ :id => name })
     output << content_tag(:div, "", div_options)
@@ -55,8 +62,8 @@ module ReportsHelper
       %{
         $(function(){
           var placeholder = jQuery('\##{ name }');
-          var data = #{ bar_graph_data(data_series) };
-          var options = #{ bar_graph_options(data_series) };
+          var data = #{ data.to_json };
+          var options = #{ bar_graph_options(data_series.first[1]) };
           var plot = jQuery.plot(placeholder, data, options);
         });
       }.html_safe
@@ -66,21 +73,27 @@ module ReportsHelper
   end
 
   def bar_graph_data(original_data)
-    data_series = original_data.each_with_index.map {|s, i| [ [ i, s[1] ] ] }
-    data_series.to_json
+    original_data.each_with_index.map {|s, i| [ i, s ] }
   end
 
   def bar_graph_options(original_data)
     {
-      :bars => { :show => true, :align => :center, :barWidth => 0.6 },
       :valueLabels => { :show => true },
       :xaxis => {
         :min => -0.6,
-        :max => original_data.count - 0.4,
+        :max => original_data.length - 0.4,
         :ticks => original_data.each_with_index.map {|data, i| [i, data[0]] }
       },
       :yaxis => { :minTickSize => 1, :tickDecimals => 0 },
-      :grid => { :tickColor => "#ffffff" }
+      :grid => { :tickColor => "#ffffff" },
+      series: {
+        bars: {
+          show: true,
+          barWidth: 0.6,
+          align: "center"
+        },
+        stack: true
+      }
     }.to_json
   end
 
