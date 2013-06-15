@@ -2,6 +2,7 @@ class TreatmentAreas::Patients::ProceduresController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_treatment_area
   before_filter :find_patient
+  before_filter :tooth_numbers
 
   def index
     @patient_procedure = @patient.patient_procedures.build
@@ -19,6 +20,8 @@ class TreatmentAreas::Patients::ProceduresController < ApplicationController
     @procedure_added = params.has_key?(:procedure_added)
   end
 
+  # FIXME Cowboy coded @ GMOM 2013
+  #
   def create
     if tooth_numbers = params[:patient_procedure].delete(:tooth_numbers)
       tooth_numbers.each do |tooth|
@@ -57,5 +60,9 @@ class TreatmentAreas::Patients::ProceduresController < ApplicationController
 
   def find_patient
     @patient = Patient.find(params[:patient_id])
+  end
+
+  def tooth_numbers
+    @tooth_numbers = ('A'..'T').to_a + (1..32).to_a + %w[LL LR UL UR]
   end
 end

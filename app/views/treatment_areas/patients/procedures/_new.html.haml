@@ -33,7 +33,7 @@
         = f.label :tooth_number, "Tooth Number:"
       %dd{:id => "tooth_dd", :style => tooth_visible(@patient_procedure)}
         - if @treatment_area.name == "Surgery"
-          - (('A'..'T').to_a + (1..32).to_a).each do |tooth|
+          - @tooth_numbers.each do |tooth|
             .check-field
               = check_box_tag "patient_procedure_tooth_numbers_#{tooth}", tooth,
                 false, name: "patient_procedure[tooth_numbers][]"
