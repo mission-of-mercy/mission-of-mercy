@@ -32,7 +32,14 @@
       %dt{:id => "tooth_dt", :style => tooth_visible(@patient_procedure)}
         = f.label :tooth_number, "Tooth Number:"
       %dd{:id => "tooth_dd", :style => tooth_visible(@patient_procedure)}
-        = f.text_field :tooth_number
+        - if @treatment_area.name == "Surgery"
+          - (('A'..'T').to_a + (1..32).to_a).each do |tooth|
+            .check-field
+              = check_box_tag "patient_procedure_tooth_numbers_#{tooth}", tooth,
+                false, name: "patient_procedure[tooth_numbers][]"
+              = label_tag "patient_procedure_tooth_numbers_#{tooth}", tooth
+        - else
+          = f.text_field :tooth_number
       %dt{:id => "surface_dt", :style => surface_visible(@patient_procedure)}
         = f.label :surface_code, "Surface Code(s):"
       %dd{:id => "surface_dd", :style => surface_visible(@patient_procedure)}
