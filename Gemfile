@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2.13'
+gem 'rails', '~> 3.2.16'
 gem 'rack',  '~> 1.4.5'
 gem 'rdoc',  '~> 3.12.1'
 gem 'json',  '~> 1.7.7'
@@ -8,7 +8,8 @@ gem 'pg'
 gem 'haml'
 gem 'sass'
 
-gem 'will_paginate', '~> 3.0.2'
+gem 'nokogiri',      '~> 1.5.11'
+gem 'will_paginate', '>= 3.0.5'
 gem 'devise',        '~> 2.2.3'
 gem 'dynamic_form'
 gem 'draper'
