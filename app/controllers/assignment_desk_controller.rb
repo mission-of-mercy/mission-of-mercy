@@ -11,7 +11,8 @@ class AssignmentDeskController < ApplicationController
     @is_assigned_to_radiology = @patient.assigned_to?(TreatmentArea.radiology)
 
     @areas = TreatmentArea.order('name')
-    @current_capacity = TreatmentArea.current_capacity
+    @assignments = TreatmentArea.current_capacity
+    @capacity = @areas.map {|ta| [ta.name, ta.capacity] }
   end
 
   def update

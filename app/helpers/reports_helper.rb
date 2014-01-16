@@ -46,6 +46,57 @@ module ReportsHelper
     sprintf('%.2f', percent)
   end
 
+  def stacked_bar_graph(name, data_series={}, div_options={}, graph_options={})
+    output = ""
+
+    data = data_series.each.with_object([]) do |(key, value), result|
+      result << {
+        label: key,
+        data: stacked_bar_graph_data(value.map {|v| v[1] })
+      }
+    end
+
+    div_options.merge!({ :id => name })
+    output << content_tag(:div, "", div_options)
+    output << javascript_tag do
+      %{
+        $(function(){
+          var placeholder = jQuery('\##{ name }');
+          var data = #{ data.to_json };
+          var options = #{ stacked_bar_graph_options(data_series.first[1]) };
+          var plot = jQuery.plot(placeholder, data, options);
+        });
+      }.html_safe
+    end
+
+    output.html_safe
+  end
+
+  def stacked_bar_graph_data(original_data)
+    original_data.each_with_index.map {|s, i| [ i, s ] }
+  end
+
+  def stacked_bar_graph_options(original_data)
+    {
+      :valueLabels => { :show => true },
+      :xaxis => {
+        :min => -0.6,
+        :max => original_data.length - 0.4,
+        :ticks => original_data.each_with_index.map {|data, i| [i, data[0]] }
+      },
+      :yaxis => { :minTickSize => 1, :tickDecimals => 0 },
+      :grid => { :tickColor => "#ffffff" },
+      series: {
+        bars: {
+          show: true,
+          barWidth: 0.6,
+          align: "center"
+        },
+        stack: true
+      }
+    }.to_json
+  end
+
   def bar_graph(name, data_series=[], div_options={}, graph_options={})
     output = ""
 
@@ -83,5 +134,4 @@ module ReportsHelper
       :grid => { :tickColor => "#ffffff" }
     }.to_json
   end
-
 end

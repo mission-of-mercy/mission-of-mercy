@@ -78,6 +78,7 @@ FactoryGirl.define do
   end
 
   factory :procedure_treatment_area_mapping do
+    assigned true
     treatment_area
     procedure
   end
