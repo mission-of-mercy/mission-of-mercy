@@ -25,6 +25,8 @@ It's easy to work on a software project and never see the impact it makes on peo
 
 **Videos**
 
+- [2013 Connecticut](http://youtu.be/xV_mqPqB4k8)
+- [2013 Georgia](http://youtu.be/xqLxaFC6vRU)
 - [2012 Minnesota](http://bcove.me/6bv0v1x3)
 - [2012 Connecticut](http://youtu.be/i3QQ0G-xcqc)
 - [2011 Connecticut](http://youtu.be/aGAEtleugnk)
