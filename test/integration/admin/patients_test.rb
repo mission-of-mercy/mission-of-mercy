@@ -3,7 +3,7 @@ require 'test_helper'
 class AdminPatientsTest < ActionDispatch::IntegrationTest
 
   def setup
-    Capybara.current_driver = :webkit
+    Capybara.current_driver = Capybara.javascript_driver
     sign_in_as 'Admin'
     @patient = FactoryGirl.create(:patient)
   end

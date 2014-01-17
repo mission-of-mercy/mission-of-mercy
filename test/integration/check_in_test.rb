@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CheckInTest < ActionDispatch::IntegrationTest
   def setup
-    Capybara.current_driver = :webkit
+    Capybara.current_driver = Capybara.javascript_driver
   end
 
   test "must agree that the waiver has been signed before filling out form" do
@@ -28,7 +28,7 @@ class CheckInTest < ActionDispatch::IntegrationTest
     within("#new_patient") do
       click_button "Next"
 
-      refute find('.waiver_confirmation').visible?,
+      refute find('.waiver_confirmation', :visible => false).visible?,
              "waiver confirmation should not be present"
       refute find_button('Next')['disabled']
              "form should be enabled"
@@ -41,10 +41,9 @@ class CheckInTest < ActionDispatch::IntegrationTest
     assert find('#date-text').visible?,
       "date of birth text input should be visible"
 
-    refute find('#date-select').visible?,
+    refute find('#date-select', :visible => false).visible?,
       "date of birth selects should be hidden"
   end
-
 
   test "previous patients chart should be printed when there is one" do
     patient = FactoryGirl.create(:patient)
@@ -60,7 +59,7 @@ class CheckInTest < ActionDispatch::IntegrationTest
 
     agree_to_waver
 
-    refute find(".same_as_previous_patient_button").visible?,
+    refute find(".same_as_previous_patient_button", :visible => false).visible?,
       "'Same as previous patient' button should be hidden"
   end
 

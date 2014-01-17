@@ -22,8 +22,8 @@ gem 'jquery-rails'
 gem 'will_paginate-bootstrap'
 
 gem 'rails_setup'
-gem 'faker',        :require => false
-gem 'rubyzip',      :require => false
+gem 'faker',            :require => false
+gem 'rubyzip', '0.9.9', :require => false
 
 gem 'coffee-rails', '~> 3.2.0'
 

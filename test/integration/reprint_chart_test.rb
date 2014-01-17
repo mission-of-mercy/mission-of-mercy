@@ -2,7 +2,7 @@ require_relative '../test_helper'
 
 class ReprintChartTest < ActionDispatch::IntegrationTest
   def setup
-    Capybara.current_driver = :webkit
+    Capybara.current_driver = Capybara.javascript_driver
     @patient = FactoryGirl.create(:patient)
   end
 

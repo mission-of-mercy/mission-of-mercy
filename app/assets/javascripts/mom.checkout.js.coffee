@@ -81,11 +81,11 @@ class mom.checkout
     mom.checkout.adjustColumnHeight()
 
   procedureWarnings: ->
-    $('#next-button').click (e) ->
+    $('#next-button').click (e) =>
       if $('input[type=radio]').is(':checked')
         $.facebox { div: '#incomplete_procedure' }, 'warning'
         e.preventDefault()
-      else if @procedureAdded == false
+      else if !@procedureAdded
         $.facebox({ div: '#no_procedure' }, 'warning')
         e.preventDefault()
 

@@ -3,7 +3,7 @@ require 'test_helper'
 class ReportsControllerTest < ActionDispatch::IntegrationTest
 
   def setup
-    Capybara.current_driver = :webkit
+    Capybara.current_driver = Capybara.javascript_driver
     sign_in_as 'Admin'
     @patients = (1 .. 3).map { FactoryGirl.create(:patient) }
     @treatment_area = FactoryGirl.create(:treatment_area)

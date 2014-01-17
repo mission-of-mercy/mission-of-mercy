@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ChangeTreatmentAreaTest < ActionDispatch::IntegrationTest
   def setup
-    Capybara.current_driver = :webkit
+    Capybara.current_driver = Capybara.javascript_driver
 
     @patient                = FactoryGirl.create(:patient)
     @treatment_area         = FactoryGirl.create(:treatment_area)

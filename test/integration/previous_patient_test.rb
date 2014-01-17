@@ -2,7 +2,7 @@ require_relative '../test_helper'
 
 class PreviousPatientTest < ActionDispatch::IntegrationTest
   def setup
-    Capybara.current_driver = :webkit
+    Capybara.current_driver = Capybara.javascript_driver
     @patient = FactoryGirl.create(:patient)
 
     sign_in_as "Check in"

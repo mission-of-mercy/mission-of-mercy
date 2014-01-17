@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CheckOutTest < ActionDispatch::IntegrationTest
   def setup
-    Capybara.current_driver = :webkit
+    Capybara.current_driver = Capybara.javascript_driver
 
     @patient        = FactoryGirl.create(:patient)
     @treatment_area = FactoryGirl.create(:treatment_area)
@@ -88,7 +88,13 @@ class CheckOutTest < ActionDispatch::IntegrationTest
 
     assert_content patient_procedure.full_description
 
-    find("div.procedure").find("a").click
+    # FIXME Poltergeist detected another element with CSS selector 'html
+    # body.procedures-index div#outer_container div#container div div#contents
+    # div#procedures div.input-right.border div.procedure' at this position. It
+    # may be overlapping the element you are trying to interact with. If you
+    # don't care about overlapping elements, try using node.trigger('click').
+    #
+    find("a.delete-procedure").trigger('click')
 
     press_okay_in_dialog
 
