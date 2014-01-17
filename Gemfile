@@ -44,7 +44,6 @@ end
 
 group :test do
   gem 'minitest'
-  gem 'faker'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'capybara-webkit'
