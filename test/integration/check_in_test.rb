@@ -1,13 +1,12 @@
-require 'test_helper'
+require_relative  '../test_helper'
 
-class CheckInTest < ActionDispatch::IntegrationTest
-  def setup
+feature "Checking in a patient" do
+  before(:each) do
     Capybara.current_driver = Capybara.javascript_driver
+    sign_in_as "Check in"
   end
 
   test "must agree that the waiver has been signed before filling out form" do
-    sign_in_as "Check in"
-
     # For some reason capybara won't find this field via `field_labeled`
     # while disabled. Instead we have to use the field's ID
     #
@@ -21,8 +20,6 @@ class CheckInTest < ActionDispatch::IntegrationTest
   end
 
   test "does not show the waiver confirmation when returning to form for errors" do
-    sign_in_as "Check in"
-
     agree_to_waver
 
     within("#new_patient") do
@@ -36,8 +33,6 @@ class CheckInTest < ActionDispatch::IntegrationTest
   end
 
   test "date of birth visible field should be text by default" do
-    sign_in_as "Check in"
-
     assert find('#date-text').visible?,
       "date of birth text input should be visible"
 
@@ -47,7 +42,6 @@ class CheckInTest < ActionDispatch::IntegrationTest
 
   test "previous patients chart should be printed when there is one" do
     patient = FactoryGirl.create(:patient)
-    sign_in_as "Check in"
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
 
     assert find(".popup").has_content?("Patient's Chart Number")
@@ -55,8 +49,6 @@ class CheckInTest < ActionDispatch::IntegrationTest
   end
 
   test "button is hidden if there is no previous patient information" do
-    sign_in_as "Check in"
-
     agree_to_waver
 
     refute find(".same_as_previous_patient_button", :visible => false).visible?,
@@ -65,7 +57,6 @@ class CheckInTest < ActionDispatch::IntegrationTest
 
   test "display the button if previous patient information is available" do
     patient = FactoryGirl.create(:patient)
-    sign_in_as "Check in"
 
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
 
@@ -80,7 +71,6 @@ class CheckInTest < ActionDispatch::IntegrationTest
     patient = FactoryGirl.create(:patient, :phone => phone, :street => street,
       :zip => zip, :city => city, :state => state)
 
-    sign_in_as "Check in"
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
 
     within("#facebox") do
@@ -103,16 +93,12 @@ class CheckInTest < ActionDispatch::IntegrationTest
 
     options.each { |name| FactoryGirl.create(:treatment, name: name) }
 
-    sign_in_as "Check in"
-
     agree_to_waver
 
     assert has_select?("Reason for today's visit", :with_options => options)
   end
 
   test "can return to the demographic page from the survey page" do
-    sign_in_as "Check in"
-
     agree_to_waver
 
     fill_out_form
@@ -136,8 +122,6 @@ class CheckInTest < ActionDispatch::IntegrationTest
   end
 
   test "creates one survey" do
-    sign_in_as "Check in"
-
     agree_to_waver
 
     fill_out_form

@@ -44,7 +44,8 @@ patient_flows:
   treatment_area:
     name: Treatment Area
   area_humanized: Clinic Area
-  created_at: Visited At
+  created_at:
+    to_time: Visited At
 
 surveys:
   age: Age (during the clinic)

@@ -1,14 +1,14 @@
 require_relative '../test_helper'
 
-class ReprintChartTest < ActionDispatch::IntegrationTest
-  def setup
+feature "Reprinting a patient's chart" do
+  before :each do
     Capybara.current_driver = Capybara.javascript_driver
     @patient = FactoryGirl.create(:patient)
+
+    sign_in_as "Check in"
   end
 
   test "charts can be reprinted" do
-    sign_in_as "Check in"
-
     click_link "Reprint chart"
 
     fill_in "Chart number", with: @patient.id
@@ -27,8 +27,6 @@ class ReprintChartTest < ActionDispatch::IntegrationTest
 
   test "charts which were never printed are displayed by default" do
     chart_not_printed = FactoryGirl.create(:patient, chart_printed: false)
-
-    sign_in_as "Check in"
 
     click_link "Reprint chart"
 

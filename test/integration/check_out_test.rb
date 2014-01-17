@@ -1,14 +1,15 @@
-require 'test_helper'
+require_relative  '../test_helper'
 
-class CheckOutTest < ActionDispatch::IntegrationTest
-  def setup
+feature "Checking Out a Patient" do
+  before :each do
     Capybara.current_driver = Capybara.javascript_driver
 
     @patient        = FactoryGirl.create(:patient)
     @treatment_area = FactoryGirl.create(:treatment_area)
 
     5.times do
-      FactoryGirl.create(:procedure_treatment_area_mapping, :treatment_area => @treatment_area)
+      FactoryGirl.create(:procedure_treatment_area_mapping,
+                         :treatment_area => @treatment_area)
     end
 
     sign_in_as "Check out"

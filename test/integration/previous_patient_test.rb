@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
-class PreviousPatientTest < ActionDispatch::IntegrationTest
-  def setup
+feature "Checking in a Previous Patient" do
+  before :each do
     Capybara.current_driver = Capybara.javascript_driver
     @patient = FactoryGirl.create(:patient)
 

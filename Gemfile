@@ -43,13 +43,14 @@ group :development do
 end
 
 group :test do
-  gem 'minitest'
+  gem 'minitest-spec-rails', '~> 4.7.6'
+  gem 'capybara_minitest_spec'
+  gem 'minitest-metadata'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'capybara-screenshot'
   gem 'launchy'
   gem 'database_cleaner'
-  gem 'turn'
   gem 'timecop'
 end

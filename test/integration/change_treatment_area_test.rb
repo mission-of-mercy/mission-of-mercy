@@ -1,7 +1,7 @@
-require 'test_helper'
+require_relative '../test_helper'
 
-class ChangeTreatmentAreaTest < ActionDispatch::IntegrationTest
-  def setup
+feature "Changing the current Treatment Area" do
+  before :each do
     Capybara.current_driver = Capybara.javascript_driver
 
     @patient                = FactoryGirl.create(:patient)

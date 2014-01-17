@@ -1,4 +1,4 @@
-require 'test_helper'
+require_relative '../test_helper'
 
 describe ClinicExporter do
   describe "#initialize" do
@@ -49,6 +49,20 @@ describe ClinicExporter do
       procedure_row = clinic_exporter.data['procedures'].last
 
       procedure_row["Procedure Description"].must_equal procedure.description
+    end
+  end
+
+  describe 'times' do
+    let(:clinic_exporter) { ClinicExporter.new(:patient_flows) }
+
+    before do
+      @flow = FactoryGirl.create(:patient_flow)
+    end
+
+    it "Uses the proper timezone" do
+      flow_row = clinic_exporter.data['patient_flows'].first
+
+      flow_row["Visited At"].to_i.must_equal @flow.created_at.to_i
     end
   end
 end
