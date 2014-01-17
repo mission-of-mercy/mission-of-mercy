@@ -1,6 +1,6 @@
-- content_for :header_js do
-  :plain
-    $(function(){ MoM.Checkin.init(); });
+- content_for :header do
+  :coffeescript
+    $ -> new mom.checkin
 
 = hidden_field_tag :date_input
 

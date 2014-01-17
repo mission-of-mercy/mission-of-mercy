@@ -25,9 +25,10 @@ gem 'rails_setup'
 gem 'faker',        :require => false
 gem 'rubyzip',      :require => false
 
+gem 'coffee-rails', '~> 3.2.0'
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.0'
-  gem 'coffee-rails', '~> 3.2.0'
   gem 'uglifier'
   gem 'compass-rails'
   gem 'bootstrap-sass-rails'

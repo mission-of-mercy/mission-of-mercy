@@ -3,13 +3,10 @@
 - else
   - title "Checkout - Procedures"
 
-- content_for :header_js do
-  :plain
-    $(function(){
-      MoM.Checkout.init({
-        procedureAdded: #{params.has_key?(:procedure_added)}
-      });
-    });
+- content_for :header do
+  :coffeescript
+    $ ->
+      new mom.checkout(procedureAdded: #{params.has_key?(:procedure_added)})
 
 = header do
   %h1 Checkout - Procedures
