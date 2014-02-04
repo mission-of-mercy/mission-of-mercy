@@ -43,6 +43,14 @@ FactoryGirl.define do
     pf.area_id       { 1 + rand(5) }
     pf.association   :patient
     pf.created_at    { Time.current.utc }
+
+    factory :patient_check_in do
+      area_id ClinicArea::CHECKIN
+    end
+
+    factory :patient_check_out do
+      area_id ClinicArea::CHECKOUT
+    end
   end
 
   factory :prescription do

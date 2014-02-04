@@ -1,127 +1,126 @@
-require "test_helper"
+require_relative '../../test_helper'
 
-class ClinicSummaryTest < ActiveSupport::TestCase
-  def setup
-    @report_date = TestHelper.clinic_date
+describe Reports::ClinicSummary do
+  let(:report_date) { TestHelper.clinic_date }
+  let(:patients)    { Patient.where("created_at::Date = ?", report_date).
+                      order("created_at") }
 
+  let(:report)      { Reports::ClinicSummary.new(report_date, "All") }
+
+  before do
     TestHelper.create_test_prescriptions
     TestHelper.create_test_procedures
     (0..1).each do |i|
-      TestHelper.create_test_patients(TestHelper.clinic_date + i.days)
+      TestHelper.create_test_patients(report_date + i.days)
     end
-
-    @patients    = Patient.all(:order => "created_at",
-                     :conditions => ["created_at::Date = ?", @report_date])
+    patients # Create patients
   end
 
-  def test_only_reports_on_the_specified_date_and_span
-    report = Reports::ClinicSummary.new(@report_date, "All")
+  it "only reports on the specified date and span" do
+    report = Reports::ClinicSummary.new(report_date, "All")
 
-    assert_equal report.day,  @report_date
-    assert_equal report.span, "All"
+    report.day.must_equal  report_date
+    report.span.must_equal "All"
   end
 
-  def test_checked_in_patients
-    report = Reports::ClinicSummary.new(@report_date, "All")
+  it "reports all checked in patients" do
+    report = Reports::ClinicSummary.new(report_date, "All")
 
-    assert_equal @patients.count, report.patient_count
+    report.patient_count.must_equal patients.count
   end
 
-  def test_only_reports_on_patients_for_the_selected_time_span
+  it "only reports on patients for the selected time span" do
     Reports::ClinicSummary::TIME_SPANS.each_with_index do |span, index|
       if index == 0 # All
-        expected_patient_count = @patients.count
+        expected_patient_count = patients.count
       else
         expected_patient_count = index
       end
 
-      report = Reports::ClinicSummary.new(@report_date, span)
-      assert_equal expected_patient_count, report.patient_count,
-                   "#{span} should have #{expected_patient_count} patients"
+      report = Reports::ClinicSummary.new(report_date, span)
+      report.patient_count.must_equal expected_patient_count
     end
   end
 
-  def test_radiology_patients
+  it "reports all patients who have visited radiology" do
     xray_time = TestHelper.clinic_date("8:30 AM")
     xray_count = 3
-    @patients.first(xray_count).each do |patient|
+
+    patients.first(xray_count).each do |patient|
       TestHelper.create_test_xray(xray_time, patient)
     end
 
-    report = Reports::ClinicSummary.new(@report_date, xray_time)
-    assert_equal xray_count, report.xrays.to_i
+    report = Reports::ClinicSummary.new(report_date, xray_time)
+    report.xrays.to_i.must_equal xray_count
 
-    report = Reports::ClinicSummary.new(@report_date, "8:00 AM")
-    assert_equal 0, report.xrays.to_i
+    report = Reports::ClinicSummary.new(report_date, "8:00 AM")
+    report.xrays.to_i.must_equal 0
   end
 
-  def test_procedures_for_the_specified_day_or_span
-    @first_proc  = Procedure.first
-    @second_proc = Procedure.all.second || Procedure.first
+  it "reports all procedures for the specified day or span" do
+    first_proc  = Procedure.first
+    second_proc = Procedure.all.second || Procedure.first
 
-    PatientProcedure.create(:patient => @patients.first,
-                            :procedure => @first_proc,
+    PatientProcedure.create(:patient    => patients.first,
+                            :procedure  => first_proc,
                             :created_at => TestHelper.clinic_date("8:30 AM"))
-    PatientProcedure.create(:patient => @patients.first,
-                            :procedure => @second_proc,
+    PatientProcedure.create(:patient    => patients.first,
+                            :procedure  => second_proc,
                             :created_at => TestHelper.clinic_date("9:30 AM"))
 
-    report = Reports::ClinicSummary.new(@report_date, "8:30 AM")
-    assert_equal 1,  report.procedure_count
-    assert_equal @first_proc.cost, report.procedure_value
+    report = Reports::ClinicSummary.new(report_date, "8:30 AM")
+    report.procedure_count.must_equal 1
+    report.procedure_value.must_equal first_proc.cost
 
-    report = Reports::ClinicSummary.new(@report_date, "8:00 AM")
-    assert_equal 0, report.procedure_count
-    assert_equal 0, report.procedure_value
+    report = Reports::ClinicSummary.new(report_date, "8:00 AM")
+    report.procedure_count.must_equal 0
+    report.procedure_value.must_equal 0
 
-    report = Reports::ClinicSummary.new(@report_date, "All")
-    assert_equal 2,   report.procedure_count
-    assert_equal @first_proc.cost + @second_proc.cost, report.procedure_value
+    report = Reports::ClinicSummary.new(report_date, "All")
+    report.procedure_count.must_equal 2
+    report.procedure_value.must_equal first_proc.cost + second_proc.cost
   end
 
-  def test_prescriptions_for_the_specified_day_or_span
-    @prescription = Prescription.first
+  it "reports prescriptions for the specified day or span" do
+    prescription = Prescription.first
     ["8:30 AM", "9:30 AM"].each do |time|
-      PatientPrescription.create(:patient => @patients.first,
-                                 :prescription => @prescription,
+      PatientPrescription.create(:patient => patients.first,
+                                 :prescription => prescription,
                                  :prescribed => true,
                                  :created_at => TestHelper.clinic_date(time))
     end
 
-    report = Reports::ClinicSummary.new(@report_date, "8:30 AM")
-    assert_equal 1, report.prescription_count
-    assert_equal @prescription.cost, report.prescription_value
+    report = Reports::ClinicSummary.new(report_date, "8:30 AM")
+    report.prescription_count.must_equal 1
+    report.prescription_value.must_equal prescription.cost
 
-    report = Reports::ClinicSummary.new(@report_date, "8:00 AM")
-    assert_equal 0, report.prescription_count
-    assert_equal 0, report.prescription_value
+    report = Reports::ClinicSummary.new(report_date, "8:00 AM")
+    report.prescription_count.must_equal 0
+    report.prescription_value.must_equal 0
 
-    report = Reports::ClinicSummary.new(@report_date, "All")
-    assert_equal 2, report.prescription_count
-    assert_equal @prescription.cost * 2.0, report.prescription_value
+    report = Reports::ClinicSummary.new(report_date, "All")
+    report.prescription_count.must_equal 2
+    report.prescription_value.must_equal prescription.cost * 2.0
   end
 
-  def test_procedures_per_hour
+  it "reports procedures per hour" do
     Time.zone
     ["8:30AM", "8:45 AM", "9:15 AM"].each do |time|
-      PatientProcedure.create(:patient => @patients.first,
+      PatientProcedure.create(:patient => patients.first,
                               :procedure => Procedure.first,
                               :created_at => TestHelper.clinic_date(time))
     end
-    report = Reports::ClinicSummary.new(@report_date, "All")
 
     first_entry = report.procedures_per_hour[0]
-    assert_equal Time.zone.parse('1985-12-26 08:00 AM'), first_entry.hour
-    assert_equal 2, first_entry.total
+    first_entry.hour.must_equal Time.zone.parse('1985-12-26 08:00 AM')
+    first_entry.total.must_equal 2
 
     second_entry = report.procedures_per_hour[1]
-    assert_equal Time.zone.parse('1985-12-26 09:00 AM'), second_entry.hour
-    assert_equal 1, second_entry.total
+    second_entry.hour.must_equal Time.zone.parse('1985-12-26 09:00 AM')
+    second_entry.total.must_equal 1
   end
 
-  def test_patients_per_treatment_area
-    report = Reports::ClinicSummary.new(@report_date, "All")
-
+  it "reports patients per treatment area" do
     pedo = FactoryGirl.create(:treatment_area, name: "Pediatrics")
 
     5.times do
@@ -158,19 +157,33 @@ class ClinicSummaryTest < ActiveSupport::TestCase
 
     results = report.patients_per_treatment_area
 
-    assert_equal "5", results.where(treatment_area_id: pedo.id).first.patient_count
-    assert_equal "4", results.where(treatment_area_id: surgery.id).first.patient_count
+    results.where(treatment_area_id: pedo.id)
+      .first.patient_count.must_equal "5"
+    results.where(treatment_area_id: surgery.id)
+      .first.patient_count.must_equal "4"
   end
 
-  def test_multivisit_patients
-    report = Reports::ClinicSummary.new(@report_date, "All")
+  it "reports how many patients have gone through the clinic multiple times" do
+    report = Reports::ClinicSummary.new(report_date, "All")
     5.times do
       FactoryGirl.create(:patient,
         previous_chart_number: rand(1000),
-        created_at: TestHelper.clinic_date("8:30 AM")
-      )
+        created_at: TestHelper.clinic_date("8:30 AM"))
     end
 
-    assert_equal 5, report.multivisit_patents.count
+    report.multivisit_patents.count.must_equal 5
+  end
+
+  it "calculates the average time a patient is in the clinic" do
+    patients.each do |patient|
+      FactoryGirl.create(:patient_check_in,
+                         :patient    => patient,
+                         :created_at => TestHelper.clinic_date("6:30 AM"))
+      FactoryGirl.create(:patient_check_out,
+                         :patient    => patient,
+                         :created_at => TestHelper.clinic_date("2:30 PM"))
+    end
+
+    report.average_patient_treatment_time.must_equal "08:00:00"
   end
 end

@@ -78,6 +78,29 @@ class Reports::ClinicSummary
     end
   end
 
+  def average_patient_treatment_time
+    @average_patient_treatment_time ||= begin
+      check_ins = PatientFlow.select("min(created_at) as check_in, patient_id").
+        where(area_id: ClinicArea::CHECKIN).
+        group("patient_id").
+        for_time('patient_flows', @day, @span)
+
+      check_outs = PatientFlow.select("max(created_at) as check_out, patient_id").
+        where(area_id: ClinicArea::CHECKOUT).
+        group("patient_id").
+        for_time('patient_flows', @day, @span)
+
+      result = Patient.connection.select_all(%{
+        SELECT avg(check_out - check_in) as patient_time
+        FROM (#{check_ins.to_sql}) as i LEFT JOIN (#{check_outs.to_sql}) as o
+        ON i.patient_id = o.patient_id
+        WHERE check_out IS NOT NULL AND
+              (check_out - check_in) < interval '10 hours'})
+
+      result.first["patient_time"]
+    end
+  end
+
   private
 
   def collect_patients
