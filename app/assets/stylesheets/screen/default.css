@@ -5,16 +5,16 @@ html {
 body {
   background-color: #788694; color: #333;
   padding: 0px;
-	margin: 0;
+  margin: 0;
 }
 
 body.admin{
-	background-color: #c12317; color: black;
+  background-color: #c12317; color: black;
 }
 
 body.logged_out{
-	background-color: #333;
-	color: black;
+  background-color: #333;
+  color: black;
 }
 
 html, body {
@@ -27,10 +27,10 @@ body, p, ol, ul, td {
 }
 
 #outer_container{
-	background-color: #4B7399;
-	margin: 0 auto;
-	padding: 0;
-	width: 950px;
+  background-color: #4B7399;
+  margin: 0 auto;
+  padding: 0;
+  width: 950px;
   min-height: 100%;
 
   -moz-box-shadow: #222 0px -10px 10px 0;
@@ -38,40 +38,40 @@ body, p, ol, ul, td {
 }
 
 body.red{
-	background-color: #c12317;
+  background-color: #c12317;
 }
 
 #container{
-	width: 950px;
-	margin: 0 auto;
-	padding-top: 10px;
+  width: 950px;
+  margin: 0 auto;
+  padding-top: 10px;
 }
 
 #contents{
-	background-color: #fff;
-	margin-top: 10px;
-	border: 1px solid #000;
-	padding: 20px;
-	margin-right: 20px;
-	margin-left: 20px;
+  background-color: #fff;
+  margin-top: 10px;
+  border: 1px solid #000;
+  padding: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
 #contents.login{
-	width: 300px;
-	border: 5px solid #788694;
-	margin: 50px auto 0;
+  width: 300px;
+  border: 5px solid #788694;
+  margin: 50px auto 0;
 }
 
 #contents.login input[type=text], #contents.login input[type=password]{
-	width: 280px;
-	font-size: 1.5em;
+  width: 280px;
+  font-size: 1.5em;
 }
 
 div.header{
-	background-color: #edf3fe;
-	margin: -20px -20px 20px;
-	border-bottom-style: groove;
-	padding: 8px 17px 10px 20px;
+  background-color: #edf3fe;
+  margin: -20px -20px 20px;
+  border-bottom-style: groove;
+  padding: 8px 17px 10px 20px;
 }
 
 .header img{
@@ -88,22 +88,22 @@ div.header{
 }
 
 #footer{
-	color: #e6e6e6;
-	font-size: 10px;
-	float: right;
-	text-align: right;
+  color: #e6e6e6;
+  font-size: 10px;
+  float: right;
+  text-align: right;
 }
 
 #controls form{
-	display: inline-block;
+  display: inline-block;
 }
 
 #report_date{
-	display: none;
+  display: none;
 }
 
 #footer a, a:visited, a:hover{
-	color: #e6e6e6;
+  color: #e6e6e6;
 }
 
 .left {
@@ -115,30 +115,30 @@ div.header{
 }
 
 #footer-version{
-	color: #e6e6e6;
-	font-size: 10px;
+  color: #e6e6e6;
+  font-size: 10px;
 }
 
 a.general, a.warning, a.back{
-	padding: 5px;
+  padding: 5px;
 }
 
 a.general:hover{
-	background-color: #588f00;
-	text-decoration: none;
-	color: white;
+  background-color: #588f00;
+  text-decoration: none;
+  color: white;
 }
 
 a.warning:hover{
-	background-color: red;
-	text-decoration: none;
-	color: white;
+  background-color: red;
+  text-decoration: none;
+  color: white;
 }
 
 a.back:hover{
-	text-decoration: none;
-	color: white;
-	background-color: #4b7399;
+  text-decoration: none;
+  color: white;
+  background-color: #4b7399;
 }
 
 pre {
@@ -148,7 +148,7 @@ pre {
 }
 
 table.hidden{
-	border-style: none;
+  border-style: none;
 }
 
 a { color: #000; }
@@ -159,7 +159,7 @@ a:hover { color: #000; }
   padding: 2px;
   background-color: red;
   display: inline-block;
-	color: white;
+  color: white;
 }
 
 #errorExplanation {
@@ -214,60 +214,60 @@ a img.no_border{
 }
 
 img.side_image{
-	border-style: none;
-	vertical-align: middle;
+  border-style: none;
+  vertical-align: middle;
 }
 
 img.right{
-	float: right;
+  float: right;
 }
 
 img.table_image{
-	display: block;
+  display: block;
     margin-left: auto;
     margin-right: auto
 }
 
-form.new_patient  label, form.new_patient_procedure label{
-	width: 250px;
-	white-space: pre;
+form.new_patient  label{
+  width: 250px;
+  white-space: pre;
 }
 
 div.input-left{
-	float: left;
-	border-right: 1px solid gray;
-	padding-right: 15px;
+  float: left;
+  border-right: 1px solid gray;
+  padding-right: 15px;
 }
 
 div.input-left.no_border{
-	padding-right: 0px;
-	margin-right: 15px;
-	border-right-style: none;
+  padding-right: 0px;
+  margin-right: 15px;
+  border-right-style: none;
 }
 
 div.input-right{
-	display: inline-block;
-	margin-left: 15px;
+  display: inline-block;
+  margin-left: 15px;
 }
 
 div.input-right.border{
-	border-left: 1px solid gray;
-	margin-left: 0px;
-	padding-left: 15px;
+  border-left: 1px solid gray;
+  margin-left: 0px;
+  padding-left: 15px;
 }
 
 div.input{
-	/*margin-left: 25px;*/
+  /*margin-left: 25px;*/
 }
 
 div.input-top{
-	margin-top: -10px;
-	margin-bottom: 20px;
+  margin-top: -10px;
+  margin-bottom: 20px;
 }
 
 div.input-bottom{
-	clear: both;
-	padding-top: 10px;
+  clear: both;
+  padding-top: 10px;
 }
 
 div.row {
@@ -277,14 +277,14 @@ div.row {
 
 form.new_patient div.row span.label,
 form.edit_patient div.row span.label{
-	float: left;
+  float: left;
   width: 100px;
   text-align: right;
 }
 
 form.new_patient div.input-right div.row span.label,
 form.edit_patient div.input-right div.row span.label{
-	float: left;
+  float: left;
   width: 150px;
   text-align: right;
 }
@@ -313,7 +313,7 @@ div.row #date-input-toggle{
 
 div.row span.formw {
   text-align: left;
-	margin-left: 20px;
+  margin-left: 20px;
 }
 
 div.input-right div.row .formexample {
@@ -321,56 +321,56 @@ div.input-right div.row .formexample {
 }
 
 div.row .formexample{
-	font-size: x-small;
-	font-style: italic;
-	display: block;
-	margin-left: 125px;
+  font-size: x-small;
+  font-style: italic;
+  display: block;
+  margin-left: 125px;
 }
 
 span.procedure{
-	width: 250px;
-	display: inline-block;
+  width: 250px;
+  display: inline-block;
 }
 
 form.button-to{
-	display: inline-block;
+  display: inline-block;
 }
 
 div.about img{
-	padding-top: 20px;
-	padding-bottom: 20px;
-	padding-right: 20px;
-	padding-left: 20px;
-	float: left;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  float: left;
 }
 
 
 a.add{
 padding: 10px;
-	text-decoration: none;
+  text-decoration: none;
 }
 
 a.add:hover{
-	color: #fffefe;
-	background-color: #0033CC;
+  color: #fffefe;
+  background-color: #0033CC;
 }
 
 div.procedure{
-	font-size:14px;
-	margin-bottom:6px;
-	margin-top:6px;
-	padding:4px;
-	width:375px;
-	color: #535353;
+  font-size:14px;
+  margin-bottom:6px;
+  margin-top:6px;
+  padding:4px;
+  width:375px;
+  color: #535353;
 }
 
 div.procedure.odd{
-	background-color: #f1f5fa;
+  background-color: #f1f5fa;
 }
 
 div.procedure:hover{
-	color: #000;
-	background-color: #EDF3FE;
+  color: #000;
+  background-color: #EDF3FE;
 }
 
 form dt {
@@ -387,10 +387,10 @@ form dd {
 }
 
 div.check_out{
-	text-align:right;
-	padding-bottom: 6px;
-	padding-right: 6px;
-	border-top: 1px solid gray;
+  text-align:right;
+  padding-bottom: 6px;
+  padding-right: 6px;
+  border-top: 1px solid gray;
 }
 
 select.change_treatment_area{

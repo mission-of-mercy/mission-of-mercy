@@ -41,7 +41,6 @@
       = continue_button @treatment_area, @patient, :text => "Continue without adding"
       %a.go-back{:href=>'#'} Go back and finish adding procedure
 
-
   = render :partial => "new"
 
   %div.input-right.border
@@ -51,7 +50,12 @@
       - unless p.new_record?
         .procedure{:'data-id' => p.id, :class => cycle('','odd')}
           = p.full_description
-          = remove_procedure(p)
+          = link_to image_tag("delete.png", :class => "side_image right"),
+            patient_procedure_path(p),
+            :remote  => true,
+            :method  => :delete,
+            :confirm => "Are you sure you wish to remove this procedure?",
+            :class   => "delete-procedure"
           = image_tag "spinner.gif", :class => "side_image right spinner"
     - if @patient.patient_procedures.length <= 1
       %div{:style => "width:375px; padding-left:4px;"}

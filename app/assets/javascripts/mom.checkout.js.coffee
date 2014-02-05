@@ -18,7 +18,7 @@ class mom.checkout
     .on 'ajax:complete', (e) ->
       $(this).siblings('img').hide()
 
-    $('form.new_patient_procedure input[type=radio]').change (e) =>
+    $('ul.procedures input[type=radio]').change (e) =>
       code    = $(e.target).data('generic-procedure') || false
       type    = $(e.target).data('amalgam-composite') || false
       tooth   = $(e.target).data('requires-tooth-number') || false
@@ -34,49 +34,14 @@ class mom.checkout
     this.procedureWarnings()
 
   addProcedure: (tooth, surface, code, type) ->
-    highlightOptions = ["highlight", {}, 2000]
+    $('dl .tooth-number').toggle(tooth)
+    $('dl .surface-code').toggle(surface)
+    $('dl .other-procedure').toggle(code)
+    $('dl .amalgam-composite-procedure').toggle(type)
 
     if tooth
-      $('#tooth_dt').show()
-      $('#tooth_dd').show()
-
-      $("#tooth_dt").effect highlightOptions...
-
-      $('#patient_procedure_tooth_number').focus()
-    else
-      $('#tooth_dt').hide()
-      $('#tooth_dd').hide()
-
-    if surface
-      $('#surface_dt').show()
-      $('#surface_dd').show()
-
-      $("#surface_dt").effect highlightOptions...
-    else
-      $('#surface_dt').hide()
-      $('#surface_dd').hide()
-
-    if code
-      $('#other_dt').show()
-      $('#other_dd').show()
-
-      $("#other_dt").effect highlightOptions...
-
-      $('#patient_procedure_code').focus()
-    else
-      $('#other_dt').hide()
-      $('#other_dd').hide()
-
-    if type
-      $('#amcomp_dt').show()
-      $('#amcomp_dd').show()
-
-      $("#amcomp_dt").effect highlightOptions...
-
-      $('#patient_procedure_procedure_type').focus()
-    else
-      $('#amcomp_dt').hide()
-      $('#amcomp_dd').hide()
+      $('#tooth-numbers').toggle(!surface)
+      $('#tooth-number').toggle(surface)
 
     mom.checkout.adjustColumnHeight()
 

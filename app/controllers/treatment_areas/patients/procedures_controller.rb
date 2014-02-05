@@ -45,8 +45,6 @@ class TreatmentAreas::Patients::ProceduresController < ApplicationController
 
         redirect_to treatment_area_patient_procedures_path(:procedure_added => true)
       else
-        @selected_procedure = params[:patient_procedure][:procedure_id]
-
         render :action => :index
       end
     end
@@ -63,6 +61,6 @@ class TreatmentAreas::Patients::ProceduresController < ApplicationController
   end
 
   def tooth_numbers
-    @tooth_numbers = ('A'..'T').to_a + (1..32).to_a + %w[LL LR UL UR]
+    @tooth_numbers = [%w[LL LR UL UR], ('A'..'T').to_a, (1..32).to_a]
   end
 end

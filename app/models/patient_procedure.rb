@@ -50,6 +50,7 @@ class PatientProcedure < ActiveRecord::Base
 
   def normalize_data
     self.tooth_number = tooth_number.try(:upcase)
+    self.surface_code = surface_code.join if Array === surface_code
     self.surface_code = surface_code.try(:upcase)
   end
 

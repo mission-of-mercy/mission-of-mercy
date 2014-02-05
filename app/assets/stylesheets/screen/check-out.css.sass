@@ -4,24 +4,43 @@
 
   .input-left
     width: 450px
+    ul.no-style
+      list-style: none
+      margin: 0
+      padding: 0
 
     input[type=radio]
       vertical-align: top
     label
       display: inline-block
-      white-space: pre-line
 
+    .check-group
+      margin-bottom: 5px
+      padding-bottom: 5px
+      border-bottom: 1px solid #eee
+      &:last-child
+        border-bottom: none
     .check-field
       display: inline-block
       width: 56px
       label
         width: auto
 
+    dd
+      position: relative
+      ul.parsley-error-list
+        position: absolute
+        top: 16px
+        left: -190px
   // Dialogs & Optional Fields
 
   #no_procedure,
   #incomplete_procedure,
-  img.spinner
+  img.spinner,
+  dl .other-procedure,
+  dl .amalgam-composite-procedure,
+  dl .tooth-number,
+  dl .surface-code
     display: none
 
 
