@@ -7,7 +7,7 @@ class ProcedureDecorator < ApplicationDecorator
           :'requires-tooth-number' => procedure.requires_tooth_number,
           :'requires-surface-code' => procedure.requires_surface_code
         }) +
-        " " + procedure.description.html_safe
+        " " + procedure.full_description.html_safe
     end
   end
 end

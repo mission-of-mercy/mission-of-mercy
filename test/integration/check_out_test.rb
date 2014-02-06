@@ -36,12 +36,10 @@ feature "Checking Out a Patient" do
   test "procedures can be added without warnings" do
     check_out @patient
 
-    procedure = @treatment_area.procedures.sample
+    procedure = @treatment_area.procedures
+      .where(requires_tooth_number: false, requires_surface_code: false).sample
 
     choose procedure.full_description
-
-    fill_in 'Tooth Number:', :with => "1" if procedure.requires_tooth_number
-    fill_in 'Surface Code:', :with => "F" if procedure.requires_surface_code
 
     click_button "Add Procedure"
 
