@@ -1,8 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2.16'
-gem 'rack',  '~> 1.4.5'
-gem 'rdoc',  '~> 3.12.1'
+gem 'rails', '~> 4.0.0'
 gem 'json',  '~> 1.7.7'
 gem 'pg'
 gem 'haml'
@@ -10,7 +8,7 @@ gem 'sass'
 
 gem 'nokogiri',      '~> 1.5.11'
 gem 'will_paginate', '>= 3.0.5'
-gem 'devise',        '~> 2.2.3'
+gem 'devise'
 gem 'dynamic_form'
 gem 'draper'
 gem 'rack-pjax'
@@ -25,17 +23,13 @@ gem 'rails_setup'
 gem 'faker',            :require => false
 gem 'rubyzip', '0.9.9', :require => false
 
-gem 'coffee-rails', '~> 3.2.0'
-
-group :assets do
-  gem 'sass-rails',   '~> 3.2.0'
-  gem 'uglifier'
-  gem 'compass-rails'
-  gem 'bootstrap-sass-rails'
-end
+gem 'coffee-rails', '~> 4.0.0'
+gem 'sass-rails',   '~> 4.0.0'
+gem 'uglifier'
+gem 'compass-rails'
+gem 'bootstrap-sass-rails'
 
 group :development do
-  gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'capistrano'
@@ -46,6 +40,7 @@ group :test do
   gem 'minitest-spec-rails', '~> 4.7.6'
   gem 'capybara_minitest_spec'
   gem 'minitest-metadata'
+  gem 'minitest-reporters'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'capybara-webkit'

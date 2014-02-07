@@ -66,10 +66,10 @@ class PatientProcedure < ActiveRecord::Base
       surface_count = 4 if surface_count > 4
 
       if procedure_type == "Amalgam"
-        self.procedure = Procedure.find(:first,
-          :conditions => { :procedure_type     => procedure_type,
-                           :number_of_surfaces => surface_count
-                         })
+        self.procedure = Procedure.where(
+          :procedure_type     => procedure_type,
+          :number_of_surfaces => surface_count
+        ).first
       else
         # Find out if Post or Ant ...
         tooth_numb = self.tooth_number.to_i
@@ -83,20 +83,20 @@ class PatientProcedure < ActiveRecord::Base
            tooth_number.between?("K","L") ||
            tooth_number.between?("S","T")
 
-          self.procedure = Procedure.find(:first,
-            :conditions => { :procedure_type     => "Post Composite",
-                             :number_of_surfaces => surface_count
-                           })
+          self.procedure = Procedure.where(
+            :procedure_type     => "Post Composite",
+            :number_of_surfaces => surface_count
+          ).first
 
         elsif tooth_numb.between?(6,11) ||
               tooth_numb.between?(22,27) ||
               tooth_number.between?("C","H") ||
               tooth_number.between?("M","R")
 
-          self.procedure = Procedure.find(:first,
-            :conditions => { :procedure_type     => "Ant Composite",
-                             :number_of_surfaces => surface_count
-                           })
+          self.procedure = Procedure.where(
+            :procedure_type     => "Ant Composite",
+            :number_of_surfaces => surface_count
+          ).first
 
         end
       end

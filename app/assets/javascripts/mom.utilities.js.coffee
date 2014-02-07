@@ -21,3 +21,8 @@ mom.utilities.printChart = (patientId) ->
     mom.utilities.openInBackground "/patients/#{patientId}/chart"
 
 mom.mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
+
+$(document).on 'click', "a[href='#reset-form']", ->
+  if confirm('Are you sure you wish to reset this form?')
+    url = $(this).data('url')
+    document.location.href = url

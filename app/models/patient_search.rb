@@ -22,9 +22,8 @@ class PatientSearch
       return Patient.where(id: chart_number)
     end
 
-    # TODO Turn these into scopes?
+    patients = Patient.all
 
-    patients = Patient.scoped
     if name.present?
       patients = patients.where(
         'first_name ILIKE :name or last_name ILIKE :name', name: "%#{name}%"

@@ -4,26 +4,29 @@ MissionOfMercy::Application.routes.draw do
   root :to => 'home#index'
 
   devise_scope :user do
-    match '/logout' => 'devise/sessions#destroy', :as => :logout
-    match '/login'  => 'devise/sessions#new',     :as => :login
+    get '/logout' => 'devise/sessions#destroy', :as => :logout
+    get '/login'  => 'devise/sessions#new',     :as => :login
   end
 
   resources :support_requests
-  match '/active_support_requests.:format' => 'support_requests#active_requests'
+  get '/active_support_requests.:format' => 'support_requests#active_requests'
 
   resources :treatment_areas do
     post :change, :on => :collection
-    resources :patients, :module => "TreatmentAreas" do
+    resources :patients, :controller => "treatment_areas/patients" do
       get :radiology, :on => :member
-      resources :prescriptions, :module => "Patients"
-      resources :procedures,    :module => "Patients"
-      resource :survey,         :module => "Patients"
+      resource :survey,
+        :controller => "treatment_areas/patients/surveys"
+      resources :procedures,
+        :controller => "treatment_areas/patients/procedures"
+      resources :prescriptions,
+        :controller => "treatment_areas/patients/prescriptions"
     end
   end
 
-  match '/pharmacy' => 'pharmacy#index'
-  match '/pharmacy/check_out/:patient_id' => 'pharmacy#check_out', :as => :pharmacy_check_out
-  match '/pharmacy/finalize/:patient_id' => 'pharmacy#check_out_complete', :as => :pharmacy_finalize
+  get '/pharmacy' => 'pharmacy#index'
+  get '/pharmacy/check_out/:patient_id' => 'pharmacy#check_out', :as => :pharmacy_check_out
+  get '/pharmacy/finalize/:patient_id' => 'pharmacy#check_out_complete', :as => :pharmacy_finalize
 
   resources :patients, except: [:destroy, :index, :show] do
     resources :surveys
@@ -36,15 +39,15 @@ MissionOfMercy::Application.routes.draw do
     end
   end
 
-  match '/autocomplete/city.json' => 'autocomplete#city', :as => :autocomplete_city
-  match '/autocomplete/zip.json'  => 'autocomplete#zip',  :as => :autocomplete_zip
-  match '/autocomplete/race.json'  => 'autocomplete#race',  :as => :autocomplete_race
-  match '/autocomplete/heard_about_clinic.json'  => 'autocomplete#heard_about_clinic',  :as => :autocomplete_heard_about_clinic
+  get '/autocomplete/city.json' => 'autocomplete#city', :as => :autocomplete_city
+  get '/autocomplete/zip.json'  => 'autocomplete#zip',  :as => :autocomplete_zip
+  get '/autocomplete/race.json'  => 'autocomplete#race',  :as => :autocomplete_race
+  get '/autocomplete/heard_about_clinic.json'  => 'autocomplete#heard_about_clinic',  :as => :autocomplete_heard_about_clinic
 
   resources :patient_procedures
   resources :assignment_desk
 
-  match '/patients/:patient_id/radiology' => 'patients#radiology', :as => :patient_radiology
+  get '/patients/:patient_id/radiology' => 'patients#radiology', :as => :patient_radiology
 
   namespace :admin do
     resources :treatments
@@ -61,17 +64,17 @@ MissionOfMercy::Application.routes.draw do
         delete :destroy_all
       end
     end
-    match '/reports' => 'reports#index', :as => :reports
-    match '/reports/clinic_summary/' => 'reports#clinic_summary', :as => :clinic_summary_report
-    match '/reports/treatment_area_distribution' => 'reports#treatment_area_distribution', :as => :treatment_area_distribution_report
-    match '/reports/post_clinic' => 'reports#post_clinic', :as => :post_clinic_report
-    match '/reports/export' => 'reports#export'
-    match '/maintenance'    => 'maintenance#index', :as => :maintenance
-    match '/maintenance/reset' => 'maintenance#reset', :as => :maintenance_reset
+    get '/reports' => 'reports#index', :as => :reports
+    get '/reports/clinic_summary/' => 'reports#clinic_summary', :as => :clinic_summary_report
+    get '/reports/treatment_area_distribution' => 'reports#treatment_area_distribution', :as => :treatment_area_distribution_report
+    get '/reports/post_clinic' => 'reports#post_clinic', :as => :post_clinic_report
+    get '/reports/export' => 'reports#export'
+    get '/maintenance'    => 'maintenance#index', :as => :maintenance
+    get '/maintenance/reset' => 'maintenance#reset', :as => :maintenance_reset
   end
 
-  match '/dashboard/patients'         => 'dashboard#patients'
-  match '/dashboard/summary'          => 'dashboard#summary'
-  match '/dashboard/support'          => 'dashboard#support'
-  match '/dashboard/treatment_areas'  => 'dashboard#treatment_areas'
+  get '/dashboard/patients'         => 'dashboard#patients'
+  get '/dashboard/summary'          => 'dashboard#summary'
+  get '/dashboard/support'          => 'dashboard#support'
+  get '/dashboard/treatment_areas'  => 'dashboard#treatment_areas'
 end

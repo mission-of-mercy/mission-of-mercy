@@ -4,7 +4,7 @@ class Admin::SupportRequestsController < ApplicationController
   before_filter :set_current_tab
 
   def index
-    @requests = SupportRequest.all(:order => :resolved)
+    @requests = SupportRequest.order(:resolved)
   end
 
   def edit

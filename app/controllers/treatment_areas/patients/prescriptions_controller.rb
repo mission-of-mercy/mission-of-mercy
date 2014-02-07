@@ -1,7 +1,5 @@
-class TreatmentAreas::Patients::PrescriptionsController < ApplicationController
+class TreatmentAreas::Patients::PrescriptionsController < CheckoutController
   before_filter :authenticate_user!
-  before_filter :find_treatment_area
-  before_filter :find_patient
 
   def index
     @patient.patient_prescriptions.each do |p|

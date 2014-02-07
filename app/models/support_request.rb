@@ -2,7 +2,7 @@ class SupportRequest < ActiveRecord::Base
   belongs_to :user
   belongs_to :treatment_area
 
-  scope :active, SupportRequest.where(resolved: false)
+  scope :active, -> { where(resolved: false) }
 
   def station_description
     description = []

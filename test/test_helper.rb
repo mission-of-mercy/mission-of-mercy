@@ -1,7 +1,7 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
-require 'minitest/pride'
+require 'minitest/reporters'
 
 require 'capybara-screenshot/minitest'
 require 'database_cleaner'
@@ -12,6 +12,7 @@ require_relative 'support/minitest_capybara'
 require_relative '../db/seeds/users'
 
 Capybara.javascript_driver = :webkit
+Minitest::Reporters.use! Minitest::Reporters::ProgressReporter.new
 
 class Capybara::Rails::TestCase
   include Support::Integration

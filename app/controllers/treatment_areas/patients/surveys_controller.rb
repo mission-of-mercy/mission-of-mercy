@@ -1,7 +1,5 @@
-class TreatmentAreas::Patients::SurveysController < ApplicationController
+class TreatmentAreas::Patients::SurveysController < CheckoutController
   before_filter :authenticate_user!
-  before_filter :find_treatment_area
-  before_filter :find_patient
 
   def edit
     @survey = @patient.survey
@@ -29,15 +27,5 @@ class TreatmentAreas::Patients::SurveysController < ApplicationController
     else
       redirect_to treatment_area_patient_procedures_path(@treatment_area, @patient)
     end
-  end
-
-  private
-
-  def find_treatment_area
-    @treatment_area = TreatmentArea.find(params[:treatment_area_id])
-  end
-
-  def find_patient
-    @patient = Patient.find(params[:patient_id])
   end
 end

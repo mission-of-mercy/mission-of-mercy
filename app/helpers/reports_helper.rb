@@ -11,11 +11,11 @@ module ReportsHelper
   end
 
   def days(report)
-    existing_dates = Patient.all(
-      :select => "patients.created_at::Date as created_at_date",
-      :group => "patients.created_at::Date",
-      :order => "patients.created_at::Date"
-    ).map {|p| p.created_at_date.to_date }
+    existing_dates = Patient
+      .select("patients.created_at::Date as created_at_date")
+      .group("patients.created_at::Date")
+      .order("patients.created_at::Date")
+      .map { |p| p.created_at_date.to_date }
 
     ["All", *existing_dates]
   end
@@ -30,11 +30,9 @@ module ReportsHelper
       conditions << "= ?"
     end
 
-    Patient.all(
-      :select => "patients.id",
-      :include => [:zipcode],
-      :conditions => [conditions, county["state"], county["county"]]
-    ).map(&:id)
+    Patient.select("patients.id").includes(:zipcode)
+      .where(conditions, county["state"], county["county"])
+      .map(&:id)
   end
 
   def county_filename(county)

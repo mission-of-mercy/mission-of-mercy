@@ -54,7 +54,7 @@
             patient_procedure_path(p),
             :remote  => true,
             :method  => :delete,
-            :confirm => "Are you sure you wish to remove this procedure?",
+            'data-confirm' => "Are you sure you wish to remove this procedure?",
             :class   => "delete-procedure"
           = image_tag "spinner.gif", :class => "side_image right spinner"
     - if @patient.patient_procedures.length <= 1

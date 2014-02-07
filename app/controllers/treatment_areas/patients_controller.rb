@@ -1,6 +1,5 @@
-class TreatmentAreas::PatientsController < ApplicationController
+class TreatmentAreas::PatientsController < CheckoutController
   before_filter :authenticate_user!
-  before_filter :find_treatment_area
 
   def index
     @patients_table = PatientsTable.new
@@ -28,11 +27,5 @@ class TreatmentAreas::PatientsController < ApplicationController
   rescue => e
     flash[:error] = e.message
     redirect_to :action => :index
-  end
-
-  private
-
-  def find_treatment_area
-    @treatment_area = TreatmentArea.find(params[:treatment_area_id])
   end
 end

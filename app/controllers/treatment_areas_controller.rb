@@ -1,9 +1,5 @@
-class TreatmentAreasController < ApplicationController
+class TreatmentAreasController < CheckoutController
   before_filter :authenticate_user!
-
-  def index
-    @treatment_areas = TreatmentArea.order("name")
-  end
 
   # TODO Clean this up
   def change

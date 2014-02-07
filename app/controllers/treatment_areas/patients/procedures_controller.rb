@@ -1,7 +1,5 @@
-class TreatmentAreas::Patients::ProceduresController < ApplicationController
+class TreatmentAreas::Patients::ProceduresController < CheckoutController
   before_filter :authenticate_user!
-  before_filter :find_treatment_area
-  before_filter :find_patient
   before_filter :tooth_numbers
 
   def index
@@ -51,14 +49,6 @@ class TreatmentAreas::Patients::ProceduresController < ApplicationController
   end
 
   private
-
-  def find_treatment_area
-    @treatment_area = TreatmentArea.find(params[:treatment_area_id])
-  end
-
-  def find_patient
-    @patient = Patient.find(params[:patient_id])
-  end
 
   def tooth_numbers
     @tooth_numbers = [%w[LL LR UL UR], ('A'..'T').to_a, (1..32).to_a]
