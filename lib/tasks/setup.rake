@@ -6,7 +6,8 @@ namespace :setup do
     secret_token = Rails.root.join('config', 'initializers', 'secret_token.rb').to_s
 
     unless File.exists?(secret_token)
-      secret   = SecureRandom.hex(64)
+      secret      = SecureRandom.hex(64)
+      secret_base = SecureRandom.hex(64)
       template = ERB.new(File.read(secret_token + '.example'))
 
       File.open(secret_token, 'w') { |f| f.write(template.result(binding)) }
