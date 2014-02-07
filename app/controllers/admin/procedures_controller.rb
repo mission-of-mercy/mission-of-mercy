@@ -7,18 +7,12 @@ class Admin::ProceduresController < ApplicationController
     @procedures = Procedure.order("code").paginate(:page => params[:page])
   end
 
-  def show
-  end
-
   def new
     @procedure = Procedure.new
   end
 
-  def edit
-  end
-
   def create
-    @procedure = Procedure.new(params[:procedure])
+    @procedure = Procedure.new(procedure_params)
 
     if @procedure.save
       flash[:notice] = 'Procedure was successfully created.'
@@ -29,7 +23,7 @@ class Admin::ProceduresController < ApplicationController
   end
 
   def update
-    if @procedure.update_attributes(params[:procedure])
+    if @procedure.update_attributes(procedure_params)
       flash[:notice] = 'Procedure was successfully updated.'
       redirect_to admin_procedures_path
     else
@@ -51,5 +45,9 @@ class Admin::ProceduresController < ApplicationController
 
   def set_current_tab
     @current_tab = "procedures"
+  end
+
+  def procedure_params
+    params.require(:procedure).permit!
   end
 end

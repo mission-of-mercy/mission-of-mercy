@@ -23,7 +23,7 @@ class TreatmentAreas::Patients::ProceduresController < CheckoutController
   def create
     if tooth_numbers = params[:patient_procedure].delete(:tooth_numbers)
       tooth_numbers.each do |tooth|
-        PatientProcedure.create(params[:patient_procedure].
+        PatientProcedure.create(patient_procedure_params.
           merge(tooth_number: tooth))
 
         stats.procedure_added
@@ -33,7 +33,7 @@ class TreatmentAreas::Patients::ProceduresController < CheckoutController
 
       redirect_to treatment_area_patient_procedures_path(:procedure_added => true)
     else
-      @patient_procedure = PatientProcedure.new(params[:patient_procedure])
+      @patient_procedure = PatientProcedure.new(patient_procedure_params)
 
       if @patient_procedure.save
 
@@ -52,5 +52,9 @@ class TreatmentAreas::Patients::ProceduresController < CheckoutController
 
   def tooth_numbers
     @tooth_numbers = [%w[LL LR UL UR], ('A'..'T').to_a, (1..32).to_a]
+  end
+
+  def patient_procedure_params
+    params.require(:patient_procedure).permit!
   end
 end

@@ -11,12 +11,8 @@ class Admin::PrescriptionsController < ApplicationController
     @prescription = Prescription.new
   end
 
-  def edit
-
-  end
-
   def create
-    @prescription = Prescription.new(params[:prescription])
+    @prescription = Prescription.new(prescription_params)
 
     if @prescription.save
       flash[:notice] = 'Prescription was successfully created.'
@@ -27,7 +23,7 @@ class Admin::PrescriptionsController < ApplicationController
   end
 
   def update
-    if @prescription.update_attributes(params[:prescription])
+    if @prescription.update_attributes(prescription_params)
       flash[:notice] = 'Prescription was successfully updated.'
       redirect_to admin_prescriptions_path
     else
@@ -37,7 +33,7 @@ class Admin::PrescriptionsController < ApplicationController
 
   def destroy
     @prescription.destroy
-    
+
     flash[:notice] = 'Prescription was successfully destroyed.'
 
     redirect_to admin_prescriptions_path
@@ -51,5 +47,9 @@ class Admin::PrescriptionsController < ApplicationController
 
   def set_current_tab
     @current_tab = "prescriptions"
+  end
+
+  def prescription_params
+    params.require(:prescription).permit!
   end
 end

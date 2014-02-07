@@ -16,16 +16,20 @@ class TreatmentAreas::Patients::SurveysController < CheckoutController
   end
 
   def update
-    @patient.update_attributes(params[:patient])
-
-    if @patient.survey
-      if @patient.survey.update_attributes(params[:survey])
-        redirect_to treatment_area_patient_procedures_path(@treatment_area, @patient)
-      else
-        render :action => "edit"
-      end
-    else
+    if @patient.update_attributes(patient_params)
       redirect_to treatment_area_patient_procedures_path(@treatment_area, @patient)
+    else
+      render :action => "edit"
     end
+  end
+
+  private
+
+  def patient_params
+    params.require(:patient).permit(
+      survey_attributes: %w[tobacco_use told_needed_more_dental_treatment
+        rating_of_services id],
+      patient_pre_meds_attributes: %w[pre_med_id prescribed id]
+    )
   end
 end

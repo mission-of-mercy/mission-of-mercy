@@ -25,7 +25,7 @@ class SupportRequestsController < ApplicationController
   end
 
   def create
-    @request = SupportRequest.new(params[:support_request])
+    @request = SupportRequest.new(support_request_params)
 
     @request.ip_address = request.remote_ip
     @request.resolved   = false
@@ -45,7 +45,7 @@ class SupportRequestsController < ApplicationController
     @request = SupportRequest.find(params[:id])
 
     if params[:support_request]
-      @request.update_attributes(params[:support_request])
+      @request.update_attributes(support_request_params)
     else
       @request.resolved = true
 
@@ -66,4 +66,10 @@ class SupportRequestsController < ApplicationController
     redirect_to :action => 'index'
   end
 
+  private
+
+  def support_request_params
+    params.require(:support_request).permit(:area_id, :treatment_area_id,
+                                            :user_id)
+  end
 end

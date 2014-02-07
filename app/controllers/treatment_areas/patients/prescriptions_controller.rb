@@ -18,7 +18,7 @@ class TreatmentAreas::Patients::PrescriptionsController < CheckoutController
   def update
     new_prescription = false
 
-    @patient.attributes = params[:patient]
+    @patient.attributes = patient_params
 
     @patient.patient_prescriptions.each do |p|
       new_prescription = true if p.new_record?
@@ -40,11 +40,7 @@ class TreatmentAreas::Patients::PrescriptionsController < CheckoutController
 
   private
 
-  def find_treatment_area
-    @treatment_area = TreatmentArea.find(params[:treatment_area_id])
-  end
-
-  def find_patient
-    @patient = Patient.find(params[:patient_id])
+  def patient_params
+    params.require(:patient).permit!
   end
 end
