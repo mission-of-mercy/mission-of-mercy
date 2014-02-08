@@ -20,11 +20,11 @@ module ApplicationHelper
   end
 
   def app_version
-    '5.1'
+    '6.0.beta1'
   end
 
   def clinic_state
-    app_config["state"]
+    ENV["STATE"]
   end
 
   def patient_searches_path(*args)

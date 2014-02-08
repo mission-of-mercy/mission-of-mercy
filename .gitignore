@@ -3,17 +3,10 @@ log/*.log
 tmp/**/*
 tmp/*
 .sass-cache
-doc/api
-doc/app
-db/*.sqlite3
 .svn
-vendor/plugins/haml/init.rb
-config/mom.yml
 .rvmrc
-config/database.yml
-config/initializers/secret_token.rb
 .bundle
-vendor/ruby/*
+.env
 
 # CSV Import Files
 /zipcode.csv

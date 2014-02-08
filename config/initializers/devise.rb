@@ -204,5 +204,5 @@ Devise.setup do |config|
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
 
-  config.secret_key = '98b403ad1647f76a15ae7e3ad912d74e6183057f7c2e3efc803ef22763feae54dd7d8a1152216059c9ca54285a51705ec3a9c4a2b0e1110deea2f21c7a584412'
+  config.secret_key = ENV['DEVISE_SECRET_KEY']
 end

@@ -41,11 +41,11 @@ if ! command_exists "psql"; then
   exit 1
 fi
 
-# Check Ruby 1.9.3 is installed.
-if ! has_ruby "1.9.3"; then
+# Check Ruby 2.0 is installed.
+if ! has_ruby "2.0"; then
   exec >&2
-  error_title "The application runs on Ruby 1.9.3"
-  echo "In order to get the app running, you first need to install Ruby 1.9.3."
+  error_title "The application runs on Ruby 2.0"
+  echo "In order to get the app running, you first need to install Ruby 2.0."
   echo "You can see more information on how to get it installed in the following page:"
   link "http://www.ruby-lang.org/en/downloads/"
   echo "Once Ruby is installed, re-run this script to resume setup."

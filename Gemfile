@@ -5,7 +5,7 @@ gem 'json',  '~> 1.7.7'
 gem 'pg'
 gem 'haml'
 gem 'sass'
-
+gem 'dotenv-rails'
 gem 'nokogiri',      '~> 1.5.11'
 gem 'will_paginate', '>= 3.0.5'
 gem 'devise'
@@ -30,8 +30,6 @@ gem 'compass-rails'
 gem 'bootstrap-sass-rails'
 
 group :development do
-  gem 'better_errors'
-  gem 'binding_of_caller'
   gem 'capistrano'
   gem 'capistrano_colors'
 end
