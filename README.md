@@ -38,8 +38,8 @@ It's easy to work on a software project and never see the impact it makes on peo
 
 ## Installation
 
-Mission of Mercy Software is a Ruby on Rails 3.2 application which runs on
-Ruby 1.9.3 and [PostgreSQL](http://www.postgresql.org) databases.
+Mission of Mercy Software is a Ruby on Rails 4.0 application which runs on
+Ruby 2.0 and [PostgreSQL](http://www.postgresql.org) databases.
 Other databases like MySQL or SQLite are not officially supported.
 
 ### Setting Up a Development Copy: Step by Step

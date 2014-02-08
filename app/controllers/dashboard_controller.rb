@@ -28,8 +28,8 @@ class DashboardController < ApplicationController
 
   def authenticate
     authenticate_or_request_with_http_digest("MOMMA") do |username|
-      u = app_config['dashboard']['username']
-      p = app_config['dashboard']['password']
+      u = ENV['DASHBOARD_USERNAME']
+      p = ENV['DASHBOARD_PASSWORD']
 
       username == u && Digest::MD5.hexdigest([u,"MOMMA",p].join(":"))
     end

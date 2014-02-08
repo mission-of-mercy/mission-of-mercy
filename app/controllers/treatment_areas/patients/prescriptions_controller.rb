@@ -1,7 +1,5 @@
-class TreatmentAreas::Patients::PrescriptionsController < ApplicationController
+class TreatmentAreas::Patients::PrescriptionsController < CheckoutController
   before_filter :authenticate_user!
-  before_filter :find_treatment_area
-  before_filter :find_patient
 
   def index
     @patient.patient_prescriptions.each do |p|
@@ -20,7 +18,7 @@ class TreatmentAreas::Patients::PrescriptionsController < ApplicationController
   def update
     new_prescription = false
 
-    @patient.attributes = params[:patient]
+    @patient.attributes = patient_params
 
     @patient.patient_prescriptions.each do |p|
       new_prescription = true if p.new_record?
@@ -42,11 +40,7 @@ class TreatmentAreas::Patients::PrescriptionsController < ApplicationController
 
   private
 
-  def find_treatment_area
-    @treatment_area = TreatmentArea.find(params[:treatment_area_id])
-  end
-
-  def find_patient
-    @patient = Patient.find(params[:patient_id])
+  def patient_params
+    params.require(:patient).permit!
   end
 end

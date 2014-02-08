@@ -4,15 +4,11 @@ class Admin::SupportRequestsController < ApplicationController
   before_filter :set_current_tab
 
   def index
-    @requests = SupportRequest.all(:order => :resolved)
-  end
-
-  def edit
-
+    @requests = SupportRequest.order(:resolved)
   end
 
   def update
-    if @request.update_attributes(params[:support_request])
+    if @request.update_attributes(support_request_params)
       redirect_to admin_support_requests_path
     else
       render :action => "edit"
@@ -39,5 +35,9 @@ class Admin::SupportRequestsController < ApplicationController
 
   def set_current_tab
     @current_tab = "support-requests"
+  end
+
+  def support_request_params
+    params.require(:support_request).permit!
   end
 end

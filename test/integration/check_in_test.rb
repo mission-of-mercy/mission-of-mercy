@@ -6,7 +6,7 @@ feature "Checking in a patient" do
     sign_in_as "Check in"
   end
 
-  test "must agree that the waiver has been signed before filling out form" do
+  it "must agree that the waiver has been signed before filling out form" do
     # For some reason capybara won't find this field via `field_labeled`
     # while disabled. Instead we have to use the field's ID
     #
@@ -19,7 +19,7 @@ feature "Checking in a patient" do
     refute find('.input-bottom input')['disabled']
   end
 
-  test "does not show the waiver confirmation when returning to form for errors" do
+  it "does not show the waiver confirmation when returning to form for errors" do
     agree_to_waver
 
     within("#new_patient") do
@@ -32,7 +32,7 @@ feature "Checking in a patient" do
     end
   end
 
-  test "date of birth visible field should be text by default" do
+  it "date of birth visible field should be text by default" do
     assert find('#date-text').visible?,
       "date of birth text input should be visible"
 
@@ -40,7 +40,7 @@ feature "Checking in a patient" do
       "date of birth selects should be hidden"
   end
 
-  test "previous patients chart should be printed when there is one" do
+  it "previous patients chart should be printed when there is one" do
     patient = FactoryGirl.create(:patient)
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
 
@@ -48,14 +48,14 @@ feature "Checking in a patient" do
     assert find(".popup").has_content?(patient.id.to_s)
   end
 
-  test "button is hidden if there is no previous patient information" do
+  it "button is hidden if there is no previous patient information" do
     agree_to_waver
 
     refute find(".same_as_previous_patient_button", :visible => false).visible?,
       "'Same as previous patient' button should be hidden"
   end
 
-  test "display the button if previous patient information is available" do
+  it "display the button if previous patient information is available" do
     patient = FactoryGirl.create(:patient)
 
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
@@ -64,7 +64,7 @@ feature "Checking in a patient" do
       "'Same as previous patient' button should be visible"
   end
 
-  test "same as previous patient populates each field when clicked" do
+  it "same as previous patient populates each field when clicked" do
     phone = "230-111-1111"; street = "12 St."; zip = "90210"
     city = "Beverley Hills"; state = "CA"
 
@@ -88,7 +88,7 @@ feature "Checking in a patient" do
     assert_field_value 'State',  state
   end
 
-  test "lists treatments dynamically from the treatment model" do
+  it "lists treatments dynamically from the treatment model" do
     options = %w[Extraction Prosthetic Bazinga]
 
     options.each { |name| FactoryGirl.create(:treatment, name: name) }
@@ -98,12 +98,14 @@ feature "Checking in a patient" do
     assert has_select?("Reason for today's visit", :with_options => options)
   end
 
-  test "can return to the demographic page from the survey page" do
+  it "can return to the demographic page from the survey page" do
     agree_to_waver
 
     fill_out_form
 
     click_button "Next"
+
+    current_path.wont_equal patients_path
 
     patient = Patient.last until patient.present?
 
@@ -121,7 +123,7 @@ feature "Checking in a patient" do
     assert_content "Frank Pepelio"
   end
 
-  test "creates one survey" do
+  it "creates one survey" do
     agree_to_waver
 
     fill_out_form

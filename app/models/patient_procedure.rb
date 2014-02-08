@@ -35,12 +35,12 @@ class PatientProcedure < ActiveRecord::Base
   end
 
   def procedure_requirements
-    if procedure != nil
-      if procedure.requires_tooth_number && (tooth_number == nil || tooth_number.blank?)
+    if procedure.present?
+      if procedure.requires_tooth_number && tooth_number.blank?
         errors[:base] << "Tooth number can't be blank"
       end
 
-      if procedure.requires_surface_code && (surface_code == nil || surface_code.blank?)
+      if procedure.requires_surface_code && surface_code.blank?
         errors[:base] << "Surface code can't be blank"
       end
     end
@@ -61,15 +61,15 @@ class PatientProcedure < ActiveRecord::Base
   end
 
   def load_procedure_from_type
-    if !procedure_type.blank? and (procedure_id.nil? || procedure_id == 0)
+    if procedure_type.present? && (procedure_id.nil? || procedure_id == 0)
       surface_count = surface_code.gsub(/\s|,/, "").length
       surface_count = 4 if surface_count > 4
 
       if procedure_type == "Amalgam"
-        self.procedure = Procedure.find(:first,
-          :conditions => { :procedure_type     => procedure_type,
-                           :number_of_surfaces => surface_count
-                         })
+        self.procedure = Procedure.where(
+          :procedure_type     => procedure_type,
+          :number_of_surfaces => surface_count
+        ).first
       else
         # Find out if Post or Ant ...
         tooth_numb = self.tooth_number.to_i
@@ -83,20 +83,20 @@ class PatientProcedure < ActiveRecord::Base
            tooth_number.between?("K","L") ||
            tooth_number.between?("S","T")
 
-          self.procedure = Procedure.find(:first,
-            :conditions => { :procedure_type     => "Post Composite",
-                             :number_of_surfaces => surface_count
-                           })
+          self.procedure = Procedure.where(
+            :procedure_type     => "Post Composite",
+            :number_of_surfaces => surface_count
+          ).first
 
         elsif tooth_numb.between?(6,11) ||
               tooth_numb.between?(22,27) ||
               tooth_number.between?("C","H") ||
               tooth_number.between?("M","R")
 
-          self.procedure = Procedure.find(:first,
-            :conditions => { :procedure_type     => "Ant Composite",
-                             :number_of_surfaces => surface_count
-                           })
+          self.procedure = Procedure.where(
+            :procedure_type     => "Ant Composite",
+            :number_of_surfaces => surface_count
+          ).first
 
         end
       end

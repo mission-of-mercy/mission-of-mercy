@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
-  helper_method :app_config, :stats, :dexis?, :cdr?, :kodak?
+  helper_method :stats, :dexis?, :cdr?, :kodak?
 
-  protect_from_forgery
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+  protect_from_forgery with: :exception
 
   before_filter :set_area_id
   around_filter :setup_stats
@@ -29,10 +31,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def app_config
-    @app_config ||= YAML.load_file("#{Rails.root}/config/mom.yml")
-  end
-
   def stats
     @stats
   end
@@ -46,14 +44,14 @@ class ApplicationController < ActionController::Base
   end
 
   def dexis?
-    app_config['xray'] == "dexis"
+    ENV['XRAY_SYSTEM'] == "dexis"
   end
 
   def cdr?
-    app_config['xray'] == "cdr"
+    ENV['XRAY_SYSTEM'] == "cdr"
   end
 
   def kodak?
-    app_config['xray'] == "kodak"
+    ENV['XRAY_SYSTEM'] == "kodak"
   end
 end

@@ -157,10 +157,8 @@ describe Reports::ClinicSummary do
 
     results = report.patients_per_treatment_area
 
-    results.where(treatment_area_id: pedo.id)
-      .first.patient_count.must_equal "5"
-    results.where(treatment_area_id: surgery.id)
-      .first.patient_count.must_equal "4"
+    results.where(treatment_area_id: pedo.id)[0].patient_count.must_equal 5
+    results.where(treatment_area_id: surgery.id)[0].patient_count.must_equal 4
   end
 
   it "reports how many patients have gone through the clinic multiple times" do

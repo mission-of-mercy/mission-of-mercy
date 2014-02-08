@@ -4,9 +4,9 @@ module Admin
     before_filter :set_current_tab
 
     def index
-      @backup        = app_config["backup_path"]
-      @xray          = app_config["dexis_paths"].join(", ")
-      @xray_solution = app_config["xray"]
+      @backup        = ENV['BACKUP_PATH']
+      @xray          = ENV['XRAY_PATH']
+      @xray_solution = ENV['XRAY_SYSTEM']
     end
 
     def reset

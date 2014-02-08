@@ -47,27 +47,19 @@ class Patient < ActiveRecord::Base
   accepts_nested_attributes_for :previous_mom_clinics, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['attended'] == "0" }
 
-  validate              :time_in_pain_format
-  validate              :date_of_birth_entry
+  validate              :time_in_pain_format, :date_of_birth_entry
   validates_length_of   :zip,   :maximum => 10, :allow_blank => true
   validates_length_of   :state, :maximum => 2
   validates_presence_of :first_name, :last_name, :sex, :race,
                         :chief_complaint, :last_dental_visit, :travel_time,
                         :city, :state
   validates_format_of   :phone, :message     => "must be a valid telephone number.",
-                                :with        => /^[\(\)0-9\- \+\.]{10,20}$/,
+                                :with        => /\A[\(\)0-9\- \+\.]{10,20}\z/,
                                 :allow_blank => true
   validates_numericality_of :travel_time, :greater_than => 0
 
   attr_accessor :race_other
   attr_reader   :time_in_pain
-
-  # TODO Remove this after Rails 4 upgrade
-  # https://github.com/rails/rails/commit/75de1ce131cd39f68dbe6b68eecf2617a720a8e4
-  #
-  def self.none
-    where(id: -1)
-  end
 
   def self.unique
     where(:previous_chart_number => nil)

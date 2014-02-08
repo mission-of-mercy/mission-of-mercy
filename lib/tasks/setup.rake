@@ -1,54 +1,23 @@
 require 'rails_setup'
 
 namespace :setup do
-  desc 'Generate a secret token file'
-  setup_task :secret_token do
-    secret_token = Rails.root.join('config', 'initializers', 'secret_token.rb').to_s
+  desc 'Generate dotenv file'
+  setup_task :dotenv do
+    find_or_create_file Rails.root.join('.env').to_s, "dotenv", true
 
-    unless File.exists?(secret_token)
-      secret   = SecureRandom.hex(64)
-      template = ERB.new(File.read(secret_token + '.example'))
+    Dotenv.load
 
-      File.open(secret_token, 'w') { |f| f.write(template.result(binding)) }
-    end
-
-    done 'secret_token.rb'
+    done '.env'
   end
 end
 
 desc 'runs the tasks necessary to setup MoM'
 setup_task :setup do
-
   puts
   puts "#{heart} Thanks for helping thousands of people get the dental care they need #{heart}"
 
   section 'Configuration Files' do
-    database_file = File.join(Rails.root, 'config', 'database.yml')
-    mom_file      = File.join(Rails.root, 'config', 'mom.yml')
-
-    find_or_create_file database_file, 'database.yml', true
-
-    done 'database.yml'
-
-    unless File.exists?(mom_file)
-      template     = ERB.new(File.read(mom_file + '.erb'))
-      default_path = Rails.root.join("tmp").to_s
-
-      puts
-
-      state = console.ask('In which state will you be running the clinic?') do |q|
-        q.default = 'CT'
-      end
-
-      dexis_path = console.ask('Path to dexis folder') { |q| q.default = default_path }
-      backup_path = console.ask('Path to backup folder') { |q| q.default = default_path }
-
-      File.open(mom_file, 'w') { |f| f.write(template.result(binding)) }
-    end
-
-    done 'mom.yml'
-
-    Rake::Task['setup:secret_token'].invoke
+    Rake::Task['setup:dotenv'].invoke
   end
 
   section 'Database' do
