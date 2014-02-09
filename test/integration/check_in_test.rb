@@ -4,6 +4,7 @@ feature "Checking in a patient" do
   before(:each) do
     Capybara.current_driver = Capybara.javascript_driver
     sign_in_as "Check in"
+    click_link "New Patient"
   end
 
   it "must agree that the waiver has been signed before filling out form" do
@@ -60,6 +61,12 @@ feature "Checking in a patient" do
 
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
 
+    within("#facebox") do
+      click_link "Check In Next Patient"
+    end
+
+    click_link "New Patient"
+
     assert find(".same_as_previous_patient_button").visible?,
       "'Same as previous patient' button should be visible"
   end
@@ -77,6 +84,8 @@ feature "Checking in a patient" do
       click_link "Check In Next Patient"
     end
 
+    click_link "New Patient"
+
     agree_to_waver
 
     click_button 'Same as previous patient'
@@ -92,6 +101,10 @@ feature "Checking in a patient" do
     options = %w[Extraction Prosthetic Bazinga]
 
     options.each { |name| FactoryGirl.create(:treatment, name: name) }
+
+    visit new_patient_path
+
+    click_link "New Patient"
 
     agree_to_waver
 
@@ -137,6 +150,12 @@ feature "Checking in a patient" do
     assert_current_path new_patient_path
   end
 
+  it "asks if the patient has already been through the clinic" do
+    visit new_patient_path
+
+    page.must_have_content "Has the patient already been through the clinic?"
+  end
+
   private
 
   def agree_to_waver
@@ -144,16 +163,16 @@ feature "Checking in a patient" do
   end
 
   def fill_out_form
-    fill_in 'First name',                :with => "Jordan"
-    fill_in 'Last name',                 :with => "Byron"
-    fill_in 'Date of birth',             :with => "12/26/1985"
-    select  "M",                         :from => 'Sex'
-    select  "Caucasian/White",           :from => 'Race'
-    fill_in 'City',                      :with => "Norwalk"
-    fill_in 'State',                     :with => "CT"
+    fill_in 'First name',                :with => 'Jordan'
+    fill_in 'Last name',                 :with => 'Byron'
+    fill_in 'Date of birth',             :with => '12/26/1985'
+    select  'M',                         :from => 'Sex'
+    select  'Caucasian/White',           :from => 'Race'
+    fill_in 'City',                      :with => 'Norwalk'
+    fill_in 'State',                     :with => 'CT'
     select  'Cleaning',                  :from => "Reason for today's visit"
-    select  "First Time",                :from => 'Last dental visit'
-    fill_in 'patient_travel_time_hours', :with => "1"
-    choose 'patient_pain_false'
+    select  'First Time',                :from => 'Last dental visit'
+    fill_in 'patient_travel_time_hours', :with => '1'
+    choose  'patient_pain_false'
   end
 end

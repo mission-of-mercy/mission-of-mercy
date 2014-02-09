@@ -13,6 +13,14 @@
     This patient was previously registered using
     %strong Chart ##{@patient.previous_chart_number}
 
+
+- if @registration.show_waver?
+  #checkin-start
+    %h3 Has the patient already been through the clinic?
+
+    = link_to "New Patient", new_patient_path, class: 'btn btn-large'
+    = link_to "Previous Patient", previous_patients_path, class: 'btn btn-large'
+
 = form_for @patient,
   html: { autocomplete: "off", data: @registration.form_data } do |f|
   - if @registration.show_waver?
@@ -21,7 +29,6 @@
         Patient or legal guardian (if under 18) has read, understood, and
         signed the waiver.
         %button#waiver_agree_button.btn.btn-success Yes &rarr;
-
 
   = render :partial => 'form', :locals => {:f => f}
 

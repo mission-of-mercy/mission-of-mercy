@@ -10,6 +10,7 @@ class mom.checkin
 
     if @form.data('require-waiver-confirmation')
       this.disableAllFields()
+      this.hideForm()
     else
       this.waiverConfirmed()
 
@@ -55,6 +56,11 @@ class mom.checkin
 
     @lastPatientId = @form.data('last-patient-id')
 
+    $(document).on 'click', "a[href='/patients/new']", (e) =>
+      e.preventDefault()
+      $('#checkin-start').hide()
+      @form.show()
+
     if @lastPatientId
       unless @form.data('last-patient-chart-printed')
         mom.utilities.printChart @lastPatientId
@@ -66,9 +72,6 @@ class mom.checkin
       $('div.last-patient a').click (e) ->
         jQuery(document).trigger('close.facebox')
         e.preventDefault()
-        $('#waiver_agree_button').focus()
-    else
-      $('#waiver_agree_button').focus()
 
     $('a[rel=tooltip]').tooltip()
 
@@ -155,6 +158,9 @@ class mom.checkin
     this.enableAllFields()
     $('.waiver_confirmation').hide()
     $('form.new_patient input[type=text]').first().focus()
+
+  hideForm: ->
+    @form.hide()
 
   enableAllFields: ->
     @form.find('input, button, select').attr('disabled', false)
