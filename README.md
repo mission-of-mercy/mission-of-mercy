@@ -15,7 +15,7 @@ While there are other Missions of Mercy around the country, the mission this pro
 
 ![CT Clinic](https://github.com/mission-of-mercy/mission-of-mercy/raw/master/doc/ct_clinic.png)
 
-It's easy to work on a software project and never see the impact it makes on people. For Mission of Mercy, it' hard NOT to see the amazing impact your contributions make on people's lives. Below is a collection of photos and videos from various clinics throughout the country which use this software.
+It's easy to work on a software project and never see the impact it makes on people. For Mission of Mercy, it's hard NOT to see the amazing impact your contributions make on people's lives. Below is a collection of photos and videos from various clinics throughout the country which use this software.
 
 **Photos**
 
