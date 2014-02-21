@@ -84,3 +84,18 @@ if HeardAboutClinic.count.zero?
 else
   puts "Skip: #{HeardAboutClinic.count} heard about clinic methods already exist"
 end
+
+if !PreviousClinic.any?
+  clinics = [ { :year => 2008, :location => "Tolland" },
+              { :year => 2009, :location => "New Haven" },
+              { :year => 2010, :location => "Middletown" },
+              { :year => 2011, :location => "Waterbury" },
+              { :year => 2012, :location => "Danbury" },
+              { :year => 2013, :location => "Bridgeport" } ]
+
+  clinics.each {|clinic| PreviousClinic.create(clinic) }
+
+  puts "#{PreviousClinic.count} previous clinics created"
+else
+  puts "Skip: #{PreviousClinic.count} previous clinics already exist"
+end
