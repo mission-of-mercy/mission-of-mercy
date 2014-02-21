@@ -1,0 +1,7 @@
+- title "New Previous Clinic"
+
+= header do
+  %h1 New Previous Clinic
+
+= form_for @previous_clinic, :url => admin_previous_clinics_path do |f|
+  = render :partial => "form", :locals => {:f => f}

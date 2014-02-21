@@ -56,9 +56,9 @@ module Reports
       attr_reader :survey, :patient
 
       def clinics
-        PatientPreviousMomClinic::CLINICS.map do |year, location|
-          patient.previous_mom_clinics.where(clinic_year: year,
-                                             location: location).any?
+        PreviousClinic.order("year").map do |clinic|
+          patient.previous_mom_clinics.where(clinic_year: clinic.year,
+                                             location: clinic.location).any?
         end
       end
 
@@ -76,7 +76,7 @@ module Reports
     def render
       book.add_worksheet(:name => "Mission of Mercy") do |sheet|
         sheet.add_row ["Age", "Gender", "Race", "Travel Time"] +
-          PatientPreviousMomClinic::CLINICS.map {|n,y| [n,y].join(' ') } +
+          PreviousClinic.order("year").map(&:description) +
           ["Needs More Dental Care", "Has a Dentist", "Last Dental Visit",
            "In Pain?", "Pain Length in days", "Uses Tobacco?" ] +
           Reports::Ada.insurances.map(&:titleize)
