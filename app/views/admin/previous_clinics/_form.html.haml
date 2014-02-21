@@ -1,0 +1,14 @@
+= error_messages_for :previous_clinic
+
+%p
+  = f.label :year
+  %br
+  = f.text_field :year
+%p
+  = f.label :location
+  %br
+  = f.text_field :location
+
+%p
+  = submit_tag 'Save'
+  = link_to 'Cancel', admin_previous_clinics_path, :class => "warning"

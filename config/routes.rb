@@ -59,11 +59,7 @@ MissionOfMercy::Application.routes.draw do
     resources :patients do
       get 'history', :on => :member
     end
-    resources :support_requests do
-      collection do
-        delete :destroy_all
-      end
-    end
+    resources :previous_clinics
     get '/reports' => 'reports#index', :as => :reports
     get '/reports/clinic_summary/' => 'reports#clinic_summary', :as => :clinic_summary_report
     get '/reports/treatment_area_distribution' => 'reports#treatment_area_distribution', :as => :treatment_area_distribution_report
