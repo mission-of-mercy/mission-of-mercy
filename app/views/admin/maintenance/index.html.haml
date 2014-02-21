@@ -18,10 +18,28 @@
   %b X-Ray Solution:
   = @xray_solution
 
-%h2 Tools
-
-%p
-  = link_to 'Reset Clinic DB', admin_maintenance_reset_path,
-    :class   => "btn btn-danger",
-    :'data-confirm' => "WARNING: This will destroy all patient information! Are you sure you want to proceed?",
-    :method  => :post
+%table#danger-zone
+  %thead
+    %tr
+      %th{colspan: 2}
+        %h2 Danger Zone
+  %tbody
+    %tr
+      %td
+        %strong Resolve all open support requests
+        %p Clears any unresolved support requests from the database
+      %td.control
+        = link_to 'Clear',
+          admin_maintenance_clear_support_requests_path,
+          'data-confirm' => "Are you sure you'd like to clear all support requests?",
+          'method' => :post, 'class' => 'btn btn-danger'
+    %tr
+      %td
+        %strong Reset the entire clinic database
+        %p
+          Be careful, this destroys all patient records from the database and
+          resets each table's index
+      %td.control
+        = link_to 'Reset', admin_maintenance_reset_path,
+          'data-confirm' => "WARNING: This will destroy all patient information! Are you sure you want to proceed?",
+          'class' => "btn btn-danger", 'method' => :post

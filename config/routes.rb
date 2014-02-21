@@ -70,7 +70,8 @@ MissionOfMercy::Application.routes.draw do
     get '/reports/post_clinic' => 'reports#post_clinic', :as => :post_clinic_report
     get '/reports/export' => 'reports#export'
     get '/maintenance'    => 'maintenance#index', :as => :maintenance
-    get '/maintenance/reset' => 'maintenance#reset', :as => :maintenance_reset
+    post '/maintenance/reset' => 'maintenance#reset', :as => :maintenance_reset
+    post '/maintenance/clear_support_requests' => 'maintenance#clear_support_requests'
   end
 
   get '/dashboard/patients'         => 'dashboard#patients'
