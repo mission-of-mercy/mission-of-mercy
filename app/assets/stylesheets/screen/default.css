@@ -233,6 +233,12 @@ form.new_patient  label{
   white-space: pre;
 }
 
+form.new_patient input[type=number] {
+  width: 40px;
+  margin: 0;
+  margin-right: 10px;
+}
+
 div.input-left{
   float: left;
   border-right: 1px solid gray;

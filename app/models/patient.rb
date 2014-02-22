@@ -170,7 +170,11 @@ class Patient < ActiveRecord::Base
 
   def travel_time_hours
     @travel_time_hours ||= begin
-      (travel_time / 60).to_i if travel_time
+      if travel_time
+        (travel_time / 60).to_i
+      else
+        0
+      end
     end
   end
 
@@ -182,7 +186,11 @@ class Patient < ActiveRecord::Base
 
   def travel_time_minutes
     @travel_time_minutes ||= begin
-      (travel_time % 60).to_i if travel_time
+      if travel_time
+        (travel_time % 60).to_i
+      else
+        0
+      end
     end
   end
 

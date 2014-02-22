@@ -168,6 +168,9 @@ class mom.checkin
 
     # Validate form with Parsley
     @form.parsley()
+    @form.parsley 'addListener',
+      onFieldValidate: ( elem ) ->
+        !$(elem).is(':visible')
 
   disableAllFields: ->
     @form.find('input, button, select').attr('disabled', true)

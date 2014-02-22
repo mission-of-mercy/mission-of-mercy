@@ -16,29 +16,31 @@
     %div.input
       %div.row
         %span.label= f.label :first_name
-        %span.formw= f.text_field :first_name, data: {required: true}
+        %span.formw= f.text_field :first_name, required: true
       %div.row
         %span.label= f.label :last_name
-        %span.formw= f.text_field :last_name, data: {required: true}
+        %span.formw= f.text_field :last_name, required: true
       %div.row
         %span.label= f.label :date_of_birth
         = image_tag "cog.png", :id => "date-input-toggle",
         :title => "Toggle date input method"
         %span#date-input-container.formw
           %span#date-select
-            = f.date_select :date_of_birth, @patient.dob_select_options
+            = f.date_select :date_of_birth, @patient.dob_select_options,
+              required: true
           %span#date-text
-            = f.text_field :date_of_birth, :value => @patient.dob
+            = f.text_field :date_of_birth, :value => @patient.dob,
+              required: true, 'parsley-americandate' => true
         #date-format.formexample
           Format: mm/dd/yyyy
       %div.row
         %span.label= f.label :sex
         %span.formw= f.select :sex, *@patient.sex_select_options,
-          data: {required: true}
+          required: true
       %div.row
         %span.label= f.label :race
         %span.formw= f.select :race, *RaceDecorator.options_for_select,
-          data: {required: true}
+          required: true
       #race_other_div.row
         %span.label= f.label :race_other, 'Specify race'
         %span.formw= f.text_field :race_other
@@ -61,10 +63,10 @@
         = image_tag "spinner.gif", :id => "zip-spinner", :class => "spinner"
       %div.row
         %span.label= f.label :city
-        %span.formw= f.text_field :city, data: {required: true}
+        %span.formw= f.text_field :city, required: true
       %div.row
         %span.label= f.label :state
-        %span.formw= f.text_field :state, data: {required: true}
+        %span.formw= f.text_field :state, required: true
     %br
 
   / End Demographics & Left Column
@@ -77,15 +79,15 @@
       %div.row
         %span.label= f.label :chief_complaint, "Reason for today's visit"
         %span.formw= f.select :chief_complaint,
-          *@patient.chief_complaint_options, data: {required: true}
+          *@patient.chief_complaint_options, required: true
       %div.row
         %span.label= f.label :last_dental_visit
         %span.formw= f.select :last_dental_visit,
-          *@patient.last_dental_visit_options, data: {required: true}
+          *@patient.last_dental_visit_options, required: true
       %div.row
         %span.label
           %label Is the patient in pain?
-        %span.formw= yes_no_group f, :pain, data: {required: true}
+        %span.formw= yes_no_group f, :pain, required: true
       #pain_length_div.row
         %span.label= f.label :time_in_pain, "Time in pain"
         - if @patient.new_record?
@@ -104,9 +106,9 @@
         %span.formw
           - if @patient.new_record?
             Hours:
-            = f.text_field :travel_time_hours, :size => 2
+            = f.number_field :travel_time_hours
             Minutes:
-            = f.text_field :travel_time_minutes, :size => 2
+            = f.number_field :travel_time_minutes
           - else
             = f.text_field :travel_time
       - if PreviousClinic.any?

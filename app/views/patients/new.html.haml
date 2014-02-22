@@ -22,7 +22,8 @@
     = link_to "Previous Patient", previous_patients_path, class: 'btn btn-large'
 
 = form_for @patient,
-  html: { autocomplete: "off", data: @registration.form_data } do |f|
+  html: { autocomplete: "off", data: @registration.form_data,
+  'parsley-validate' => '', :novalidate => '' } do |f|
   - if @registration.show_waver?
     .waiver_confirmation.unconfirmed
       %p.waiver_description
