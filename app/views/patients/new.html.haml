@@ -18,8 +18,18 @@
   #checkin-start
     %h3 Has the patient already been through the clinic?
 
-    = link_to "New Patient", new_patient_path, class: 'btn btn-large'
-    = link_to "Previous Patient", previous_patients_path, class: 'btn btn-large'
+    = link_to previous_patients_path, class: 'btn btn-large' do
+      = succeed "," do
+        %strong Yes
+      this is a previous patient
+    = link_to new_patient_path, class: 'btn btn-large' do
+      = succeed "," do
+        %strong No
+      this is a new patient
+
+    %p.info
+      Ask this question once patients have finished recieving treatment and got
+      back in line or on the second day of the clinic
 
 = form_for @patient,
   html: { autocomplete: "off", data: @registration.form_data,

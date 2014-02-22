@@ -4,7 +4,7 @@ feature "Checking in a patient" do
   before(:each) do
     Capybara.current_driver = Capybara.javascript_driver
     sign_in_as "Check in"
-    click_link "New Patient"
+    click_link "No, this is a new patient"
   end
 
   it "must agree that the waiver has been signed before filling out form" do
@@ -65,7 +65,7 @@ feature "Checking in a patient" do
       click_link "Check In Next Patient"
     end
 
-    click_link "New Patient"
+    click_link "No, this is a new patient"
 
     assert find(".same_as_previous_patient_button").visible?,
       "'Same as previous patient' button should be visible"
@@ -84,7 +84,7 @@ feature "Checking in a patient" do
       click_link "Check In Next Patient"
     end
 
-    click_link "New Patient"
+    click_link "No, this is a new patient"
 
     agree_to_waver
 
@@ -104,7 +104,7 @@ feature "Checking in a patient" do
 
     visit new_patient_path
 
-    click_link "New Patient"
+    click_link "No, this is a new patient"
 
     agree_to_waver
 
