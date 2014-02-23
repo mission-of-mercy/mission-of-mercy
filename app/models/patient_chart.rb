@@ -45,12 +45,12 @@ class PatientChart < Prawn::Document
   end
 
   def pain_length
-    return "N/A" unless patient.pain?
+    return "N/A" unless patient.pain? && patient.pain_length_in_days
     h.distance_of_time_in_words patient.pain_length_in_days.days.ago, Date.today
   end
 
   def phone_number
-    h.number_to_phone(patient.phone.gsub(/[\(\)-\.]/,""), area_code: true)
+    h.number_to_phone(patient.phone.to_s.gsub(/[\(\)-\.]/,""), area_code: true)
   end
 
   def in_pain

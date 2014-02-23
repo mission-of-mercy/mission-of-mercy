@@ -17,12 +17,9 @@ feature "Reprinting a patient's chart" do
 
     within("#contents") { click_link "Reprint" }
 
-    within_window('Mission of Mercy - Print') do
-      # Spot check chart details
-      assert_content @patient.id
-      assert_content @patient.last_name
-    end
-
+    # Make sure the chart window opened
+    #
+    page.driver.browser.window_handles.count.must_equal 2
   end
 
   test "charts which were never printed are displayed by default" do
@@ -37,10 +34,8 @@ feature "Reprinting a patient's chart" do
       click_link "Print"
     end
 
-    within_window('Mission of Mercy - Print') do
-      # Spot check chart details
-      assert_content chart_not_printed.id
-      assert_content chart_not_printed.last_name
-    end
+    # Make sure the chart window opened
+    #
+    page.driver.browser.window_handles.count.must_equal 2
   end
 end
