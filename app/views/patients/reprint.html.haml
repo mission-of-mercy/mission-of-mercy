@@ -3,8 +3,12 @@
 - @patients_table.controls do |patient|
   = link_to patient.chart_printed ? "Reprint" : "Print",
     chart_patient_path(patient),
-    class: 'primary', target: '_blank'
+    class: 'primary', data: { chart_number: patient.id }
 
+:coffeescript
+  $(document).on 'click', 'a[href$="/chart"]', (e) ->
+    e.preventDefault()
+    mom.utilities.printChart $(this).data('chart-number')
 = render "nav"
 
 = header do

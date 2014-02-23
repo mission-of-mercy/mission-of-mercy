@@ -15,6 +15,7 @@ gem 'rack-pjax'
 gem 'virtus'
 gem 'axlsx'
 gem 'axlsx_rails'
+gem 'prawn', '~> 0.15.0'
 
 gem 'jquery-rails'
 gem 'will_paginate-bootstrap'

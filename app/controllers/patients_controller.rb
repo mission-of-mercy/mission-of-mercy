@@ -31,7 +31,15 @@ class PatientsController < ApplicationController
 
     if @patient
       @patient.update_attributes(chart_printed: true)
-      render :layout => "print"
+      respond_to do |format|
+        format.html { render :layout => "print" }
+        format.pdf do
+          pdf = PatientChart.new(@patient)
+          send_data pdf.render, filename: "chart_#{@patient.id}",
+                                type: "application/pdf",
+                                disposition: "inline"
+        end
+      end
     else
       raise ActionController::RoutingError.new('Not Found')
     end
