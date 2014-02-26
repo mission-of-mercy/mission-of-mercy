@@ -36,8 +36,6 @@ It's easy to work on a software project and never see the impact it makes on peo
 
 **Developers, developers, developers!!** I could really use your help. I can't thank you enough for lending a hand. It means the world to me :heart:
 
-### We :heart: pull requests!
-
 Contributors retain copyright to their work but must agree to release their
 contributions under the same terms as this project. For details, please see the
 LICENSE file.
@@ -46,9 +44,10 @@ If you would like to help with developing Mission of Mercy, please get in touch!
 Contact Jordan through [GitHub (@jordanbyron)][gh] or 
 [Twitter (@jordan_byron)][twitter]
 
-### Submitting a Pull Request
+### Submitting a Pull Request - We :heart: pull requests!
 
-1. If an issue doesn't exist for your bug or feature create one on [gh-issues].
+1. If an issue doesn't exist for your bug or feature create one on 
+   [GitHub Issues][gh-issues].
     - Don't be afraid to get feedback on your idea before you begin
       development work. In fact it is encouraged. I promise I don't bite
       :wink:
