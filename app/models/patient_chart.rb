@@ -1,6 +1,6 @@
-class PatientChart < Prawn::Document
+class PatientChart
   def initialize(patient)
-    super(top_margin: 20, left_margin: 20, right_margin: 20)
+    @document = Prawn::Document.new(top_margin: 20, left_margin: 20, right_margin: 20)
     @patient = patient
     chart_header
     chart_table
@@ -35,6 +35,11 @@ class PatientChart < Prawn::Document
     cell_style: { inline_format: true, border_color: 'aaaaaa' },
     position: :center
   end
+
+  # proxy unhandled calls to Prawn
+  def method_missing(m, *a, &b) 
+    @document.send(m, *a, &b) 
+  end 
 
   private
 
