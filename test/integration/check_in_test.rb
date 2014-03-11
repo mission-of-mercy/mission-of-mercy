@@ -150,6 +150,18 @@ feature "Checking in a patient" do
     assert_current_path new_patient_path
   end
 
+  it "prints the patient's chart" do
+    agree_to_waver
+    fill_out_form
+    click_button "Next"
+
+    page.must_have_content "Printing Chart"
+
+    # Find the patient from the database
+    patient = Patient.order("created_at DESC").first
+    assert_queued PrintChart, [patient.id, nil]
+  end
+
   it "asks if the patient has already been through the clinic" do
     visit new_patient_path
 

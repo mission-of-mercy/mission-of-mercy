@@ -18,10 +18,7 @@ mom.utilities.openInBackground = (url) ->
   newWindow
 
 mom.utilities.printChart = (patientId) ->
-  chart = mom.utilities.openInBackground "/patients/#{patientId}/chart.pdf"
-  $(chart).on 'load', ->
-    this.print()
-    this.close()
+  $.post "/patients/#{patientId}/queue_chart_for_printing"
 
 mom.mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
 

@@ -17,6 +17,8 @@ gem 'axlsx'
 gem 'axlsx_rails'
 gem 'prawn', '~> 0.15.0'
 
+gem 'resque'
+
 gem 'jquery-rails'
 gem 'will_paginate-bootstrap'
 
@@ -46,4 +48,5 @@ group :test do
   gem 'launchy'
   gem 'database_cleaner'
   gem 'timecop'
+  gem 'resque_unit'
 end

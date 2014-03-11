@@ -31,7 +31,8 @@ MissionOfMercy::Application.routes.draw do
   resources :patients, except: [:destroy, :index, :show] do
     resources :surveys
     member do
-      get :chart
+      get  :chart
+      post :queue_chart_for_printing
     end
     collection do
       get :reprint

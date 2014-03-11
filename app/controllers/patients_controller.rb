@@ -35,7 +35,7 @@ class PatientsController < ApplicationController
         format.html { render :layout => "print" }
         format.pdf do
           pdf = PatientChart.new(@patient)
-          send_data pdf.render, filename: "chart_#{@patient.id}",
+          send_data pdf.render, filename: "chart_#{@patient.id}.pdf",
                                 type: "application/pdf",
                                 disposition: "inline"
         end
@@ -43,6 +43,11 @@ class PatientsController < ApplicationController
     else
       raise ActionController::RoutingError.new('Not Found')
     end
+  end
+
+  def queue_chart_for_printing
+    Resque.enqueue(PrintChart, params[:id].to_i, session[:printer])
+    render :text => "Queued Chart ##{params[:id]}"
   end
 
   def reprint

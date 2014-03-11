@@ -3,6 +3,7 @@ require_relative '../test_helper'
 feature "Reprinting a patient's chart" do
   before :each do
     Capybara.current_driver = Capybara.javascript_driver
+    Resque.reset!
     @patient = FactoryGirl.create(:patient)
 
     sign_in_as "Check in"
@@ -17,9 +18,8 @@ feature "Reprinting a patient's chart" do
 
     within("#contents") { click_link "Reprint" }
 
-    # Make sure the chart window opened
-    #
-    page.driver.browser.window_handles.count.must_equal 2
+    assert_content "Printing"
+    assert_queued PrintChart, [@patient.id, nil]
   end
 
   test "charts which were never printed are displayed by default" do
@@ -34,8 +34,7 @@ feature "Reprinting a patient's chart" do
       click_link "Print"
     end
 
-    # Make sure the chart window opened
-    #
-    page.driver.browser.window_handles.count.must_equal 2
+    assert_content "Printing"
+    assert_queued PrintChart, [chart_not_printed.id, nil]
   end
 end

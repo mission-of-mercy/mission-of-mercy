@@ -7,6 +7,7 @@ tmp/*
 .rvmrc
 .bundle
 .env
+dump.rdb
 
 # CSV Import Files
 /zipcode.csv
