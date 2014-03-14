@@ -126,6 +126,7 @@ GEM
     minitest-spec-rails (4.7.6)
       minitest (~> 4.7)
       rails (>= 3.0, < 4.1)
+    minitest-stub_any_instance (1.0.0)
     mono_logger (1.1.0)
     multi_json (1.8.4)
     net-scp (1.1.0)
@@ -255,6 +256,7 @@ DEPENDENCIES
   launchy
   minitest-metadata
   minitest-spec-rails (~> 4.7.6)
+  minitest-stub_any_instance
   nokogiri (~> 1.5.11)
   pg
   prawn (~> 0.15.0)

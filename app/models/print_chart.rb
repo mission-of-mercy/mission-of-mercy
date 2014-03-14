@@ -18,7 +18,7 @@ class PrintChart
     @printer = printer
     @printed = false
 
-    raise "Invalid Printer" unless valid_printer?
+    raise ArgumentError.new("Invalid Printer") unless valid_printer?
   end
 
   attr_reader :chart, :patient, :printer, :printed
@@ -27,10 +27,8 @@ class PrintChart
     Dir.mktmpdir do |workdir|
       chart_path = "#{workdir}/chart_#{patient.id}.pdf"
       chart.render_file chart_path
-      `lpr #{printer_option} #{chart_path}`
+      @printed = send_to_printer(chart_path)
     end
-
-    @printed = $?.success?
 
     patient.chart_printed = printed
     patient.save
@@ -48,5 +46,10 @@ class PrintChart
     return unless printer
 
     "-P #{printer}"
+  end
+
+  def send_to_printer(chart_path)
+    `lpr #{printer_option} #{chart_path}`
+    $?.success?
   end
 end
