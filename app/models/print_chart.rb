@@ -8,8 +8,17 @@ class PrintChart
     job.print
   end
 
+  # List of available printers
+  #
   def self.printers
-    @printers ||= `lpstat -a`.split.map {|printer| printer[/\S*/] }
+    (p = $redis.get('printers')) ? JSON.parse(p) : ["WARNING: No Printers!"]
+  end
+
+  # Update list of available printers on the current system
+  #
+  def self.update_printers!
+    printers = `lpstat -a`.split("\n").map {|printer| printer[/\S*/] }
+    $redis.set 'printers', printers.to_json
   end
 
   def initialize(chart_id, printer=nil)

@@ -1,0 +1,3 @@
+%span.text-muted Printer
+%select#printer
+  = options_for_select([["-- Please select a printer --", nil]] + PrintChart.printers, session[:printer])
