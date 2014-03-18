@@ -30,24 +30,30 @@ class PatientsController < ApplicationController
     @patient = Patient.find_by_id(params[:id])
 
     if @patient
-      @patient.update_attributes(chart_printed: true)
       respond_to do |format|
-        format.html { render :layout => "print" }
+        format.html do
+          @patient.update_attributes(chart_printed: true)
+          render :layout => "print"
+        end
         format.pdf do
+          @patient.update_attributes(chart_printed: true)
           pdf = PatientChart.new(@patient)
           send_data pdf.render, filename: "chart_#{@patient.id}.pdf",
                                 type: "application/pdf",
                                 disposition: "inline"
         end
+        format.js do
+          if PrintChart.printers.any? && session[:printer]
+            Resque.enqueue(PrintChart, @patient.id, session[:printer])
+            @queued = true
+          else
+            @queued = false
+          end
+        end
       end
     else
       raise ActionController::RoutingError.new('Not Found')
     end
-  end
-
-  def queue_chart_for_printing
-    Resque.enqueue(PrintChart, params[:id].to_i, session[:printer])
-    render :text => "Queued Chart ##{params[:id]}"
   end
 
   def reprint

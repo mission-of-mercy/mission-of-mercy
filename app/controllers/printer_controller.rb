@@ -3,7 +3,5 @@ class PrinterController < ApplicationController
 
   def update
     session[:printer] = params[:printer]
-
-    render text: 'Printer Updated'
   end
 end

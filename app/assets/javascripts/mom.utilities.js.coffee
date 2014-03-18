@@ -19,7 +19,7 @@ mom.utilities.openInBackground = (url) ->
   newWindow
 
 mom.utilities.printChart = (patientId) ->
-  xhr = $.post("/patients/#{patientId}/queue_chart_for_printing")
+  xhr = $.get("/patients/#{patientId}/chart.js")
   xhr.fail ->
     alert "Chart failed to print!"
 

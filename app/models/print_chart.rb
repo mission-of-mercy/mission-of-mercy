@@ -11,7 +11,9 @@ class PrintChart
   # List of available printers
   #
   def self.printers
-    (p = $redis.get('printers')) ? JSON.parse(p) : ["WARNING: No Printers!"]
+    JSON.parse($redis.get('printers'))
+  rescue Redis::CannotConnectError, TypeError
+    []
   end
 
   # Update list of available printers on the current system

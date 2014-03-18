@@ -10,11 +10,11 @@
       = link_to "#{@treatment_area.name} #{current_user.name}",
         current_user.start_path, :class => 'user-name'
     - else
+      - if current_user.user_type == UserType::CHECKIN
+        = render :partial => "shared/printer"
       = link_to current_user.name, current_user.start_path,
         :class => 'user-name'
-      - if current_user.user_type == UserType::CHECKIN
-        |
-        = render :partial => "shared/printer"
+
     |
     = link_to 'Log out', logout_path
   - else

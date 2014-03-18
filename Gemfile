@@ -31,6 +31,7 @@ gem 'sass-rails',   '~> 4.0.0'
 gem 'uglifier'
 gem 'compass-rails'
 gem 'bootstrap-sass-rails'
+gem 'font-awesome-rails'
 
 group :development do
   gem 'capistrano'
