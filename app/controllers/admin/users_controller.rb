@@ -11,7 +11,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
 
     if @user.save
       flash[:notice] = "User Created"
@@ -28,7 +28,7 @@ class Admin::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
 
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(user_params)
       flash[:notice] = 'User was successfully updated.'
       redirect_to admin_users_path
     end
@@ -38,5 +38,9 @@ class Admin::UsersController < ApplicationController
 
   def set_current_tab
     @current_tab = "users"
+  end
+
+  def user_params
+    params.require(:user).permit!
   end
 end

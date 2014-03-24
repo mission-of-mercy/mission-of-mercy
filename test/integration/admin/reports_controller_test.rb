@@ -1,14 +1,15 @@
-require 'test_helper'
+require_relative '../../test_helper'
 
-class ReportsControllerTest < ActionDispatch::IntegrationTest
-
-  def setup
-    Capybara.current_driver = :webkit
+feature "Running reports" do
+  before :each do
+    Capybara.current_driver = Capybara.javascript_driver
     sign_in_as 'Admin'
+
     @patients = (1 .. 3).map { FactoryGirl.create(:patient) }
     @treatment_area = FactoryGirl.create(:treatment_area)
     @patients.each do |patient|
-      FactoryGirl.create(:patient_assignment, patient: patient, treatment_area: @treatment_area)
+      FactoryGirl.create(:patient_assignment, patient: patient,
+                         treatment_area: @treatment_area)
     end
   end
 
@@ -38,6 +39,4 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
       assert_no_content empty_treatment_area.name
     end
   end
-
-
 end

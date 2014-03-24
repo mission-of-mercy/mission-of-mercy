@@ -47,27 +47,19 @@ class Patient < ActiveRecord::Base
   accepts_nested_attributes_for :previous_mom_clinics, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['attended'] == "0" }
 
-  validate              :time_in_pain_format
-  validate              :date_of_birth_entry
+  validate              :time_in_pain_format, :date_of_birth_entry
   validates_length_of   :zip,   :maximum => 10, :allow_blank => true
   validates_length_of   :state, :maximum => 2
   validates_presence_of :first_name, :last_name, :sex, :race,
                         :chief_complaint, :last_dental_visit, :travel_time,
                         :city, :state
   validates_format_of   :phone, :message     => "must be a valid telephone number.",
-                                :with        => /^[\(\)0-9\- \+\.]{10,20}$/,
+                                :with        => /\A[\(\)0-9\- \+\.]{10,20}\z/,
                                 :allow_blank => true
   validates_numericality_of :travel_time, :greater_than => 0
 
   attr_accessor :race_other
   attr_reader   :time_in_pain
-
-  # TODO Remove this after Rails 4 upgrade
-  # https://github.com/rails/rails/commit/75de1ce131cd39f68dbe6b68eecf2617a720a8e4
-  #
-  def self.none
-    where(id: -1)
-  end
 
   def self.unique
     where(:previous_chart_number => nil)
@@ -126,10 +118,6 @@ class Patient < ActiveRecord::Base
     flows.where(area_id: ClinicArea::CHECKOUT).any?
   end
 
-  def checked_out?
-    flows.where(area_id: ClinicArea::CHECKOUT).any?
-  end
-
   def assign(area_id, radiology)
     radiology_assignment = assignments.not_checked_out.radiology
 
@@ -182,7 +170,11 @@ class Patient < ActiveRecord::Base
 
   def travel_time_hours
     @travel_time_hours ||= begin
-      (travel_time / 60).to_i if travel_time
+      if travel_time
+        (travel_time / 60).to_i
+      else
+        0
+      end
     end
   end
 
@@ -194,7 +186,11 @@ class Patient < ActiveRecord::Base
 
   def travel_time_minutes
     @travel_time_minutes ||= begin
-      (travel_time % 60).to_i if travel_time
+      if travel_time
+        (travel_time % 60).to_i
+      else
+        0
+      end
     end
   end
 
@@ -241,13 +237,14 @@ class Patient < ActiveRecord::Base
   end
 
   def build_previous_mom_clinics
-    PatientPreviousMomClinic::CLINICS.each do |year, location|
+    PreviousClinic.order("year").each do |clinic|
       existing = self.previous_mom_clinics.detect do |c|
-        c.clinic_year == year && c.location == location
+        c.clinic_year == clinic.year && c.location == clinic.location
       end
 
       unless existing
-        self.previous_mom_clinics.build(clinic_year: year, location: location)
+        self.previous_mom_clinics.build(clinic_year: clinic.year,
+                                        location: clinic.location)
       end
     end
   end

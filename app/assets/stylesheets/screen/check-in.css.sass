@@ -20,6 +20,11 @@
     font-weight: bold
     font-size: 1.25em
 
+#checkin-start
+  text-align: center
+  font-size: 2em
+  margin: 40px
+
 form.new_patient, form.edit_patient
   &.disabled
     color: #CCC
@@ -29,6 +34,14 @@ form.new_patient, form.edit_patient
     display: none
   button.same_as_previous_patient_button
     margin-left: 10px
+  .input-left
+    ul.parsley-error-list
+      margin-left: 122px
+      margin-top: 10px
+  .input-right
+    ul.parsley-error-list
+      margin-left: 172px
+      margin-top: 10px
 
 #demographics
   height: 350px

@@ -8,16 +8,8 @@ class Admin::TreatmentAreasController < ApplicationController
     @treatment_areas = TreatmentArea.order("name")
   end
 
-  def show
-
-  end
-
-  def new
-
-  end
-
   def create
-    @treatment_area = TreatmentArea.new(params[:treatment_area])
+    @treatment_area = TreatmentArea.new(treatment_area_params)
 
     if @treatment_area.save
       redirect_to admin_treatment_areas_path
@@ -26,12 +18,8 @@ class Admin::TreatmentAreasController < ApplicationController
     end
   end
 
-  def edit
-
-  end
-
   def update
-    @treatment_area.attributes = params[:treatment_area]
+    @treatment_area.attributes = treatment_area_params
 
     @treatment_area.procedure_treatment_area_mappings.each do |p|
       p.destroy if !p.new_record? && p.assigned == "0"
@@ -80,5 +68,9 @@ class Admin::TreatmentAreasController < ApplicationController
 
   def set_current_tab
     @current_tab = "treatment-areas"
+  end
+
+  def treatment_area_params
+    params.require(:treatment_area).permit!
   end
 end

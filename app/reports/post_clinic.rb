@@ -43,9 +43,8 @@ class Reports::PostClinic
 
     @areas = Patient.connection.select_all(sql)
 
-    TreatmentArea.all(
-      :conditions => {:amalgam_composite_procedures => true}).each do |treatment_area|
-
+    treatment_areas = TreatmentArea.where(:amalgam_composite_procedures => true)
+    treatment_areas.each do |treatment_area|
       amalgam_composite_sql = %{
         SELECT DISTINCT patient_procedures.patient_id
         FROM   patient_procedures LEFT JOIN procedures ON
@@ -122,7 +121,7 @@ class Reports::PostClinic
   # TODO: Make this suck less
   #
   def load_ages
-    patients = Survey.all(:select => "age")
+    patients = Survey.select("age")
     @ages = []
 
     count = patients.reject {|p| !(p.age <= 10) }.length

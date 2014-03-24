@@ -10,6 +10,10 @@ has_ruby() {
   command_exists "ruby" && ruby -v | grep -q "$1"
 }
 
+has_qmake() {
+  command_exists "qmake" && qmake -v | grep -q "$1"
+}
+
 error_title() {
   echo "\033[31m == $1 ==\033[0m"
 }
@@ -19,7 +23,7 @@ link() {
 }
 
 # Check for qmake
-if ! command_exists "qmake"; then
+if ! has_qmake "4.8"; then
   exec >&2
   error_title "We use capybara-webkit for testing our app"
   echo "capybara-webkit depends on a WebKit implementation from Qt."
@@ -41,11 +45,11 @@ if ! command_exists "psql"; then
   exit 1
 fi
 
-# Check Ruby 1.9.3 is installed.
-if ! has_ruby "1.9.3"; then
+# Check Ruby 2.0 is installed.
+if ! has_ruby "2.*"; then
   exec >&2
-  error_title "The application runs on Ruby 1.9.3"
-  echo "In order to get the app running, you first need to install Ruby 1.9.3."
+  error_title "The application runs on Ruby 2.0"
+  echo "In order to get the app running, you first need to install Ruby 2.0."
   echo "You can see more information on how to get it installed in the following page:"
   link "http://www.ruby-lang.org/en/downloads/"
   echo "Once Ruby is installed, re-run this script to resume setup."

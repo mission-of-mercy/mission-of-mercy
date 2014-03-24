@@ -25,7 +25,7 @@
   - @procedures.each do |procedure_map|
     = f.fields_for :procedure_treatment_area_mappings, procedure_map do |p|
       = p.hidden_field :procedure_id
-      = p.check_box :assigned
+      = p.check_box :assigned, {}, 1, -1
       = p.label :assigned, p.object.procedure.full_description
     %br
 

@@ -1,7 +1,6 @@
-class TreatmentAreas::Patients::ProceduresController < ApplicationController
+class TreatmentAreas::Patients::ProceduresController < CheckoutController
   before_filter :authenticate_user!
-  before_filter :find_treatment_area
-  before_filter :find_patient
+  before_filter :tooth_numbers
 
   def index
     @patient_procedure = @patient.patient_procedures.build
@@ -19,30 +18,43 @@ class TreatmentAreas::Patients::ProceduresController < ApplicationController
     @procedure_added = params.has_key?(:procedure_added)
   end
 
+  # FIXME Cowboy coded @ GMOM 2013
+  #
   def create
-    @patient_procedure = PatientProcedure.new(params[:patient_procedure])
+    if tooth_numbers = params[:patient_procedure].delete(:tooth_numbers)
+      tooth_numbers.each do |tooth|
+        PatientProcedure.create(patient_procedure_params.
+          merge(tooth_number: tooth))
 
-    if @patient_procedure.save
-
-      stats.procedure_added
+        stats.procedure_added
+      end
 
       @patient_procedure = @patient.patient_procedures.build
 
       redirect_to treatment_area_patient_procedures_path(:procedure_added => true)
     else
-      @selected_procedure = params[:patient_procedure][:procedure_id]
+      @patient_procedure = PatientProcedure.new(patient_procedure_params)
 
-      render :action => :index
+      if @patient_procedure.save
+
+        stats.procedure_added
+
+        @patient_procedure = @patient.patient_procedures.build
+
+        redirect_to treatment_area_patient_procedures_path(:procedure_added => true)
+      else
+        render :action => :index
+      end
     end
   end
 
   private
 
-  def find_treatment_area
-    @treatment_area = TreatmentArea.find(params[:treatment_area_id])
+  def tooth_numbers
+    @tooth_numbers = [%w[LL LR UL UR], ('A'..'T').to_a, (1..32).to_a]
   end
 
-  def find_patient
-    @patient = Patient.find(params[:patient_id])
+  def patient_procedure_params
+    params.require(:patient_procedure).permit!
   end
 end

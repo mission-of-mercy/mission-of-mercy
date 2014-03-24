@@ -78,6 +78,29 @@ class Reports::ClinicSummary
     end
   end
 
+  def average_patient_treatment_time
+    @average_patient_treatment_time ||= begin
+      check_ins = PatientFlow.select("min(created_at) as check_in, patient_id").
+        where(area_id: ClinicArea::CHECKIN).
+        group("patient_id").
+        for_time('patient_flows', @day, @span)
+
+      check_outs = PatientFlow.select("max(created_at) as check_out, patient_id").
+        where(area_id: ClinicArea::CHECKOUT).
+        group("patient_id").
+        for_time('patient_flows', @day, @span)
+
+      result = Patient.connection.select_all(%{
+        SELECT avg(check_out - check_in) as patient_time
+        FROM (#{check_ins.to_sql}) as i LEFT JOIN (#{check_outs.to_sql}) as o
+        ON i.patient_id = o.patient_id
+        WHERE check_out IS NOT NULL AND
+              (check_out - check_in) < interval '10 hours'})
+
+      result.first["patient_time"]
+    end
+  end
+
   private
 
   def collect_patients
@@ -123,8 +146,8 @@ class Reports::ClinicSummary
   end
 
   def area_count(area_id)
-    patient_flows(area_id).select("COUNT(DISTINCT patient_id) as patient_count").
-      first.patient_count
+    patient_flows(area_id).
+      select("COUNT(DISTINCT patient_id) as patient_count")[0].patient_count
   end
 
   def patient_flows(area_id)
@@ -141,7 +164,7 @@ class Reports::ClinicSummary
 
     summary = query.select(
       "count(*) as total_count, sum(procedures.cost) as total_cost")
-      .joins(:patient_procedures).first
+      .joins(:patient_procedures)[0]
 
     @procedure_count = summary.total_count.to_i
     @procedure_value = summary.total_cost.to_f
@@ -165,13 +188,6 @@ class Reports::ClinicSummary
       select("TO_TIMESTAMP(TO_CHAR(created_at, 'YYYYMMDDHH2400'),'YYYYMMDDHH24MI') AS hour, COUNT(*) AS total").
       group('hour').
       order('hour')
-
-    # Not sure why Postgres is returning the hour as a String instead of DateTime
-    # and the total as a string. This loop normalizes to sensible classes
-    records.each do |p|
-      p.hour = Time.zone.parse(p.hour)
-      p.total = p.total.to_i
-    end
   end
 
   def collect_prescriptions
@@ -179,7 +195,7 @@ class Reports::ClinicSummary
 
     summary = query.select(
       "count(*) as total_count, sum(cost) as total_cost")
-      .joins(:patient_prescriptions).first
+      .joins(:patient_prescriptions)[0]
 
     @prescription_count = summary.total_count.to_i
     @prescription_value = summary.total_cost.to_f
@@ -198,7 +214,7 @@ class Reports::ClinicSummary
 
     summary = query.select(
       "count(*) as total_count, sum(cost) as total_cost")
-      .joins(:patient_pre_meds).first
+      .joins(:patient_pre_meds)[0]
 
     @pre_med_count = summary.total_count.to_i
     @pre_med_value = summary.total_cost.to_f
@@ -211,5 +227,4 @@ class Reports::ClinicSummary
       .group('description, cost')
       .order('pre_med_count')
   end
-
 end

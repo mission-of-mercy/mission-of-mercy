@@ -1,13 +1,13 @@
-require 'test_helper'
+require_relative  '../test_helper'
 
-class CheckInTest < ActionDispatch::IntegrationTest
-  def setup
-    Capybara.current_driver = :webkit
+feature "Checking in a patient" do
+  before(:each) do
+    Capybara.current_driver = Capybara.javascript_driver
+    sign_in_as "Check in"
+    click_link "No, this is a new patient"
   end
 
-  test "must agree that the waiver has been signed before filling out form" do
-    sign_in_as "Check in"
-
+  it "must agree that the waiver has been signed before filling out form" do
     # For some reason capybara won't find this field via `field_labeled`
     # while disabled. Instead we have to use the field's ID
     #
@@ -20,73 +20,71 @@ class CheckInTest < ActionDispatch::IntegrationTest
     refute find('.input-bottom input')['disabled']
   end
 
-  test "does not show the waiver confirmation when returning to form for errors" do
-    sign_in_as "Check in"
-
+  it "does not show the waiver confirmation when returning to form for errors" do
     agree_to_waver
 
     within("#new_patient") do
       click_button "Next"
 
-      refute find('.waiver_confirmation').visible?,
+      refute find('.waiver_confirmation', :visible => false).visible?,
              "waiver confirmation should not be present"
       refute find_button('Next')['disabled']
              "form should be enabled"
     end
   end
 
-  test "date of birth visible field should be text by default" do
-    sign_in_as "Check in"
-
+  it "date of birth visible field should be text by default" do
     assert find('#date-text').visible?,
       "date of birth text input should be visible"
 
-    refute find('#date-select').visible?,
+    refute find('#date-select', :visible => false).visible?,
       "date of birth selects should be hidden"
   end
 
-
-  test "previous patients chart should be printed when there is one" do
+  it "previous patients chart should be printed when there is one" do
     patient = FactoryGirl.create(:patient)
-    sign_in_as "Check in"
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
 
     assert find(".popup").has_content?("Patient's Chart Number")
     assert find(".popup").has_content?(patient.id.to_s)
   end
 
-  test "button is hidden if there is no previous patient information" do
-    sign_in_as "Check in"
-
+  it "button is hidden if there is no previous patient information" do
     agree_to_waver
 
-    refute find(".same_as_previous_patient_button").visible?,
+    refute find(".same_as_previous_patient_button", :visible => false).visible?,
       "'Same as previous patient' button should be hidden"
   end
 
-  test "display the button if previous patient information is available" do
+  it "display the button if previous patient information is available" do
     patient = FactoryGirl.create(:patient)
-    sign_in_as "Check in"
 
-    visit("/patients/new?last_patient_id=" + patient.id.to_s)
-
-    assert find(".same_as_previous_patient_button").visible?,
-      "'Same as previous patient' button should be visible"
-  end
-
-  test "same as previous patient populates each field when clicked" do
-    phone = "230-111-1111"; street = "12 St."; zip = "90210"
-    city = "Beverley Hills"; state = "CA"
-
-    patient = FactoryGirl.create(:patient, :phone => phone, :street => street, :zip => zip,
-                                 :city => city, :state => state)
-
-    sign_in_as "Check in"
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
 
     within("#facebox") do
       click_link "Check In Next Patient"
     end
+
+    click_link "No, this is a new patient"
+
+    assert find(".same_as_previous_patient_button").visible?,
+      "'Same as previous patient' button should be visible"
+  end
+
+  it "same as previous patient populates each field when clicked" do
+    phone = "230-111-1111"; street = "12 St."; zip = "90210"
+    city = "Beverley Hills"; state = "CA"
+
+    patient = FactoryGirl.create(:patient, :phone => phone, :street => street,
+      :zip => zip, :city => city, :state => state)
+
+    visit("/patients/new?last_patient_id=" + patient.id.to_s)
+
+    within("#facebox") do
+      click_link "Check In Next Patient"
+    end
+
+    click_link "No, this is a new patient"
 
     agree_to_waver
 
@@ -99,26 +97,28 @@ class CheckInTest < ActionDispatch::IntegrationTest
     assert_field_value 'State',  state
   end
 
-  test "lists treatments dynamically from the treatment model" do
+  it "lists treatments dynamically from the treatment model" do
     options = %w[Extraction Prosthetic Bazinga]
 
     options.each { |name| FactoryGirl.create(:treatment, name: name) }
 
-    sign_in_as "Check in"
+    visit new_patient_path
+
+    click_link "No, this is a new patient"
 
     agree_to_waver
 
     assert has_select?("Reason for today's visit", :with_options => options)
   end
 
-  test "can return to the demographic page from the survey page" do
-    sign_in_as "Check in"
-
+  it "can return to the demographic page from the survey page" do
     agree_to_waver
 
     fill_out_form
 
     click_button "Next"
+
+    current_path.wont_equal patients_path
 
     patient = Patient.last until patient.present?
 
@@ -136,9 +136,7 @@ class CheckInTest < ActionDispatch::IntegrationTest
     assert_content "Frank Pepelio"
   end
 
-  test "creates one survey" do
-    sign_in_as "Check in"
-
+  it "creates one survey" do
     agree_to_waver
 
     fill_out_form
@@ -148,25 +146,83 @@ class CheckInTest < ActionDispatch::IntegrationTest
     click_button "Check In"
 
     Survey.count.must_equal 1
+
+    assert_current_path new_patient_path
+  end
+
+  it "queues the patient's chart for printing when printers are present" do
+    PrintChart.stub('printers', ['printer']) do
+      visit new_patient_path
+      click_link "No, this is a new patient"
+      agree_to_waver
+      fill_out_form
+
+      select_printer
+
+      click_button "Next"
+
+      page.must_have_content "Printing Chart"
+
+      # Find the patient from the database
+      patient = Patient.order("created_at DESC").first
+      assert_queued PrintChart, [patient.id, "printer"]
+    end
+  end
+
+  it "warns when printers are not available" do
+    page.must_have_content "No Remote Printers"
+  end
+
+  it "falls back to old pop-up printing method when queue is offline" do
+    agree_to_waver
+    fill_out_form
+
+    click_button "Next"
+
+    page.must_have_content "No Remote Printers"
+    page.must_have_content "Printing Chart"
+
+    # Find the patient from the database
+    patient = Patient.order("created_at DESC").first
+
+    within_window('Mission of Mercy - Print') do
+      # Spot check chart details
+      page.must_have_content patient.id
+      page.must_have_content patient.last_name
+    end
+  end
+
+  it "asks if the patient has already been through the clinic" do
+    visit new_patient_path
+
+    page.must_have_content "Has the patient already been through the clinic?"
   end
 
   private
+
+  def select_printer
+    within("#printer-dropdown") do
+      first('a').click
+      click_link 'printer'
+      page.must_have_css 'li.selected'
+    end
+  end
 
   def agree_to_waver
     click_button "waiver_agree_button"
   end
 
   def fill_out_form
-    fill_in 'First name',                :with => "Jordan"
-    fill_in 'Last name',                 :with => "Byron"
-    fill_in 'Date of birth',             :with => "12/26/1985"
-    select  "M",                         :from => 'Sex'
-    select  "Caucasian/White",           :from => 'Race'
-    fill_in 'City',                      :with => "Norwalk"
-    fill_in 'State',                     :with => "CT"
+    fill_in 'First name',                :with => 'Jordan'
+    fill_in 'Last name',                 :with => 'Byron'
+    fill_in 'Date of birth',             :with => '12/26/1985'
+    select  'M',                         :from => 'Sex'
+    select  'Caucasian/White',           :from => 'Race'
+    fill_in 'City',                      :with => 'Norwalk'
+    fill_in 'State',                     :with => 'CT'
     select  'Cleaning',                  :from => "Reason for today's visit"
-    select  "First Time",                :from => 'Last dental visit'
-    fill_in 'patient_travel_time_hours', :with => "1"
-    choose 'patient_pain_false'
+    select  'First Time',                :from => 'Last dental visit'
+    fill_in 'patient_travel_time_hours', :with => '1'
+    choose  'patient_pain_false'
   end
 end

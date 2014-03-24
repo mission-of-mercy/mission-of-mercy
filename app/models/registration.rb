@@ -4,7 +4,7 @@ class Registration
     @patient = if options[:patient]
       options[:patient]
     else
-      Patient.new(params[:patient])
+      Patient.new(patient_params)
     end
     @last_patient     = Patient.find_by_id(params[:last_patient_id])
     @previous_patient = Patient.find_by_id(patient.previous_chart_number)
@@ -26,7 +26,7 @@ class Registration
 
   def save!
     return false if errors?
-    patient.update_attributes(params[:patient])
+    patient.update_attributes(patient_params)
   end
 
   def form_data
@@ -88,5 +88,16 @@ class Registration
 
   def h
     ActionController::Base.helpers
+  end
+
+  def patient_params
+    return {} unless params[:patient]
+    params.require(:patient).permit(*%w[previous_chart_number first_name
+      last_name date_of_birth sex race race_other phone street zip city state
+      chief_complaint last_dental_visit pain time_in_pain travel_time_hours
+      travel_time_minutes attended_previous_mom_event pain_length_in_days
+      travel_time] +
+      [:previous_mom_clinics_attributes => %w[location clinic_year attended id]]
+    )
   end
 end

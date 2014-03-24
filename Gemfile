@@ -1,54 +1,54 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2.13'
-gem 'rack',  '~> 1.4.5'
-gem 'rdoc',  '~> 3.12.1'
+gem 'rails', '4.0.3'
 gem 'json',  '~> 1.7.7'
 gem 'pg'
 gem 'haml'
 gem 'sass'
-
-gem 'will_paginate', '~> 3.0.2'
-gem 'devise',        '~> 2.2.3'
+gem 'dotenv-rails'
+gem 'nokogiri',      '~> 1.5.11'
+gem 'will_paginate', '>= 3.0.5'
+gem 'devise'
 gem 'dynamic_form'
 gem 'draper'
 gem 'rack-pjax'
 gem 'virtus'
 gem 'axlsx'
 gem 'axlsx_rails'
+gem 'prawn', '~> 0.15.0'
+
+gem 'resque'
 
 gem 'jquery-rails'
 gem 'will_paginate-bootstrap'
 
 gem 'rails_setup'
-gem 'faker',        :require => false
-gem 'rubyzip',      :require => false
+gem 'faker',            :require => false
+gem 'rubyzip', '0.9.9', :require => false
 
-group :assets do
-  gem 'sass-rails',   '~> 3.2.0'
-  gem 'coffee-rails', '~> 3.2.0'
-  gem 'uglifier'
-  gem 'compass-rails'
-  gem 'bootstrap-sass-rails'
-end
+gem 'coffee-rails', '~> 4.0.0'
+gem 'sass-rails',   '~> 4.0.0'
+gem 'uglifier'
+gem 'compass-rails'
+gem 'bootstrap-sass-rails'
+gem 'font-awesome-rails'
 
 group :development do
-  gem 'quiet_assets'
-  gem 'better_errors'
-  gem 'binding_of_caller'
   gem 'capistrano'
   gem 'capistrano_colors'
 end
 
 group :test do
-  gem 'minitest'
-  gem 'faker'
+  gem 'minitest-spec-rails', '~> 4.7.6'
+  gem 'capybara_minitest_spec'
+  gem 'minitest-metadata'
+  gem 'minitest-stub_any_instance'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'capybara-screenshot'
   gem 'launchy'
   gem 'database_cleaner'
-  gem 'turn'
   gem 'timecop'
+  gem 'resque_unit'
 end

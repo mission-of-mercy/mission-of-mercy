@@ -1,12 +1,4 @@
 class PatientPreviousMomClinic < ActiveRecord::Base
-  CLINICS = {
-    2012 => "Danbury",
-    2011 => "Waterbury",
-    2010 => "Middletown",
-    2009 => "New Haven",
-    2008 => "Tolland"
-  }
-
   after_save :destroy_unless_attended
 
   belongs_to :patient

@@ -9,10 +9,8 @@
     = stylesheet_link_tag 'application'
     = csrf_meta_tag
 
-    :javascript
-      $(function() { MoM.init(); });
-      #{yield(:header_js)}
-
+    :coffeescript
+      $ -> mom.init()
     = yield(:header)
 
   %body{:class => body_css}

@@ -11,12 +11,8 @@ class Admin::PreMedsController < ApplicationController
     @pre_med = PreMed.new
   end
 
-  def edit
-
-  end
-
   def create
-    @pre_med = PreMed.new(params[:pre_med])
+    @pre_med = PreMed.new(pre_med_params)
 
     if @pre_med.save
       flash[:notice] = 'PreMed was successfully created.'
@@ -27,8 +23,7 @@ class Admin::PreMedsController < ApplicationController
   end
 
   def update
-
-    if @pre_med.update_attributes(params[:pre_med])
+    if @pre_med.update_attributes(pre_med_params)
       flash[:notice] = 'PreMed was successfully updated.'
       redirect_to admin_pre_meds_path
     else
@@ -50,5 +45,9 @@ class Admin::PreMedsController < ApplicationController
 
   def set_current_tab
     @current_tab = "pre-meds"
+  end
+
+  def pre_med_params
+    params.require(:pre_med).permit!
   end
 end

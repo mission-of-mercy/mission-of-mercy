@@ -1,0 +1,17 @@
+<%= ENV['RAILS_ENV'] %>:
+  adapter: postgresql
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host:     <%= ENV['DB_HOST'] %>
+  min_messages: error
+  encoding: utf8
+
+test:
+  adapter: postgresql
+  database: <%= ENV['TEST_DB_NAME'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host:     <%= ENV['DB_HOST'] %>
+  min_messages: error
+  encoding: utf8

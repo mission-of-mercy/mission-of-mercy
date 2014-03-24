@@ -11,7 +11,7 @@ class Admin::TreatmentsController < ApplicationController
   end
 
   def create
-    @treatment = Treatment.new(params[:treatment])
+    @treatment = Treatment.new(treatment_params)
 
     if @treatment.save
       redirect_to admin_treatments_path
@@ -27,7 +27,7 @@ class Admin::TreatmentsController < ApplicationController
   def update
     @treatment = Treatment.find(params[:id])
 
-    if @treatment.update_attributes(params[:treatment])
+    if @treatment.update_attributes(treatment_params)
       flash[:notice] = 'Treatment was successfully updated.'
       redirect_to admin_treatments_path
     else
@@ -44,5 +44,9 @@ class Admin::TreatmentsController < ApplicationController
 
   def set_current_tab
     @current_tab = "treatments"
+  end
+
+  def treatment_params
+    params.require(:treatment).permit!
   end
 end

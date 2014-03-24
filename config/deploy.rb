@@ -1,4 +1,5 @@
 require 'bundler/capistrano'
+require 'dotenv/capistrano'
 
 set :application, "momma"
 
@@ -17,15 +18,6 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{File.join(current_path,'tmp','restart.txt')}"
   end
-end
-
-after 'deploy:update_code' do
-  { "database.yml"    => "config/database.yml",
-    "mom.yml"         => "config/mom.yml",
-    "secret_token.rb" => "config/initializers/secret_token.rb"}.
-   each do |from, to|
-     run "ln -nfs #{shared_path}/#{from} #{release_path}/#{to}"
-   end
 end
 
 after "deploy", "deploy:migrate"

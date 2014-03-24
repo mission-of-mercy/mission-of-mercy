@@ -1,9 +1,0 @@
-<% if @request %>
-
-MoM.Support.showSupportRequested(<%= @request.id %>);
-
-<% else %>
-$('#help_link').show();
-<% end %>
-
-$('#help_loading').hide();

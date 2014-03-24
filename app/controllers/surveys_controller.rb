@@ -9,7 +9,7 @@ class SurveysController < ApplicationController
   end
 
   def create
-    @patient.survey = Survey.new(params[:survey])
+    @patient.survey = Survey.new(survey_params)
 
     if @patient.save
       route_request
@@ -19,7 +19,7 @@ class SurveysController < ApplicationController
   end
 
  def update
-    if @survey.update_attributes(params[:survey])
+    if @survey.update_attributes(survey_params)
       route_request
     else
       render :edit
@@ -47,5 +47,11 @@ class SurveysController < ApplicationController
       stats.patient_checked_in
       redirect_to new_patient_path(last_patient_id:  @patient.id)
     end
+  end
+
+  def survey_params
+    params.require(:survey).permit(*%w[heard_about_clinic heard_about_other
+      has_place_to_be_seen_for_dental_care no_insurance insurance_from_job
+      medicaid_or_chp_plus self_purchase_insurance])
   end
 end

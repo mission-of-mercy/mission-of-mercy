@@ -1,0 +1,22 @@
+- title 'Previous Clinics'
+
+= header do
+  %h1 Previous Clinics
+
+%table
+  %thead
+    %tr
+      %th Year
+      %th Location
+  %tbody
+    - @previous_clinics.each do |previous_clinic|
+      %tr
+        %td= previous_clinic.year
+        %td= previous_clinic.location
+        %td.controls
+          = link_to 'Edit', edit_admin_previous_clinic_path(previous_clinic)
+          = link_to 'Destroy', admin_previous_clinic_path(previous_clinic),
+           :method => :delete, :'data-confirm' => "Are you sure?"
+
+%p
+  = link_to 'New', new_admin_previous_clinic_path, class: 'btn'

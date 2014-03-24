@@ -1,42 +1,76 @@
 .input-left.no_border
 
   %h4 New Procedure
+  :coffeescript
+    $ ->
+      $('form.new_patient_procedure').parsley 'addListener',
+        onFieldValidate: ( elem ) ->
+          !$(elem).is(':visible')
 
   = form_for @patient_procedure,
     :url => treatment_area_patient_procedures_path(@treatment_area, @patient),
-    :html => { :autocomplete => "off" } do |f|
+    :html => { :autocomplete => "off", :novalidate => '',
+    :'parsley-validate' => '' } do |f|
     = f.error_messages
     = f.hidden_field :patient_id
 
     %dl
       %dt Procedure:
       %dd
-        - @treatment_area.procedures.each do |procedure|
-          = procedure_radio procedure, f
-          = f.label :procedure_id, procedure.full_description, :value => procedure.id
-          %br
-        - if @treatment_area.amalgam_composite_procedures
-          = procedure_amalgam_composite_radio f
-          = f.label :procedure_id,  "Amalgam / Composite", :value => "amalgam_composite"
-          %br
-        = procedure_other_radio f
-        = f.label :procedure_id, "Other Procedure", :value => "other"
-      %dt{:id => "other_dt", :style => other_visible}
+        %ul.no-style.procedures
+          - @treatment_area.procedures.decorate.each do |procedure|
+            %li= procedure.radio_button(f)
+          - if @treatment_area.amalgam_composite_procedures
+            %li
+              = f.label :procedure_id, :value => "amalgam_composite" do
+                = f.radio_button :procedure_id, "amalgam_composite",
+                  :'data-amalgam-composite' => true, :required => true
+                Amalgam / Composite
+          %li
+            = f.label(:procedure_id, :value => "other") do
+              = f.radio_button :procedure_id, "other",
+                :'data-generic-procedure' => true, :required => true
+              Other Procedure
+      %dt.other-procedure
         = f.label :code, "Procedure Code:"
-      %dd{:id => "other_dd", :style => other_visible}
-        = f.text_field :code
-      %dt{:id => "amcomp_dt", :style => amcomp_visible}
+      %dd.other-procedure
+        = f.text_field :code, :required => true
+      %dt.amalgam-composite-procedure
         = f.label :procedure_type, "Procedure Type:"
-      %dd{:id => "amcomp_dd", :style => amcomp_visible}
-        = f.select :procedure_type, ['Amalgam','Composite'], :include_blank => true
-      %dt{:id => "tooth_dt", :style => tooth_visible(@patient_procedure)}
+      %dd.amalgam-composite-procedure
+        = f.select :procedure_type, ['Amalgam','Composite'],
+          {:include_blank => true}, {:required => true}
+      %dt.tooth-number
         = f.label :tooth_number, "Tooth Number:"
-      %dd{:id => "tooth_dd", :style => tooth_visible(@patient_procedure)}
-        = f.text_field :tooth_number
-      %dt{:id => "surface_dt", :style => surface_visible(@patient_procedure)}
+      %dd.tooth-number
+        #tooth-numbers
+          - @tooth_numbers.each do |group|
+            .check-group
+              - group.each do |tooth|
+                .check-field
+                  = label_tag "patient_procedure_tooth_numbers_#{tooth}" do
+                    = check_box_tag "patient_procedure_tooth_numbers_#{tooth}",
+                      tooth, false, name: "patient_procedure[tooth_numbers][]",
+                      :required => true
+                    = tooth
+        #tooth-number
+          - @tooth_numbers.each do |group|
+            .check-group
+              - group.each do |tooth|
+                .check-field
+                  = f.label :tooth_number, :value => tooth do
+                    = f.radio_button :tooth_number, tooth, :required => true
+                    = tooth
+      %dt.surface-code
         = f.label :surface_code, "Surface Code(s):"
-      %dd{:id => "surface_dd", :style => surface_visible(@patient_procedure)}
-        = f.text_field :surface_code
+      %dd.surface-code
+        - "FLOMDIB".chars.sort.each do |code|
+          .check-field
+            = label_tag "patient_procedure_surface_code_#{code}" do
+              = check_box_tag "patient_procedure_surface_code_#{code}",
+                code, false, name: "patient_procedure[surface_code][]",
+                :required => true
+              = code
 
     %p
       = f.submit "Add Procedure"

@@ -1,3 +1,5 @@
+require 'faker'
+
 FactoryGirl.define do
   factory :heard_about_clinic do |f|
     f.sequence(:reason) { |n| "Heard about Clinic \##{n}" }
@@ -41,6 +43,14 @@ FactoryGirl.define do
     pf.area_id       { 1 + rand(5) }
     pf.association   :patient
     pf.created_at    { Time.current.utc }
+
+    factory :patient_check_in do
+      area_id ClinicArea::CHECKIN
+    end
+
+    factory :patient_check_out do
+      area_id ClinicArea::CHECKOUT
+    end
   end
 
   factory :prescription do
@@ -78,6 +88,7 @@ FactoryGirl.define do
   end
 
   factory :procedure_treatment_area_mapping do
+    assigned true
     treatment_area
     procedure
   end

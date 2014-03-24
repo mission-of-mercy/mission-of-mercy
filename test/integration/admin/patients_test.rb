@@ -1,9 +1,8 @@
-require 'test_helper'
+require_relative '../../test_helper'
 
-class AdminPatientsTest < ActionDispatch::IntegrationTest
-
-  def setup
-    Capybara.current_driver = :webkit
+feature "Editing Patients as an Admin" do
+  before :each do
+    Capybara.current_driver = Capybara.javascript_driver
     sign_in_as 'Admin'
     @patient = FactoryGirl.create(:patient)
   end
@@ -15,5 +14,4 @@ class AdminPatientsTest < ActionDispatch::IntegrationTest
 
     assert_current_path admin_patients_path
   end
-
 end

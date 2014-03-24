@@ -1,4 +1,6 @@
-- content_for(:header_js) { "$(function() { MoM.Survey.init(); });" }
+- content_for :header do
+  :coffeescript
+    $ -> mom.survey.init()
 
 - title 'Patient Check In'
 
@@ -12,8 +14,8 @@
 - unless @patient.chart_printed?
   .alert.alert-info
     Printing Chart # #{@patient.id}
-  :javascript
-    MoM.Checkin.printChart(#{@patient.id});
+  :coffeescript
+    mom.utilities.printChart #{@patient.id}
 
 = form_for [@patient, @survey], html: { autocomplete: "off" } do |f|
   %p
