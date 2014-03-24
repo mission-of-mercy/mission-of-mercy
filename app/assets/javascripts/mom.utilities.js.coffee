@@ -13,12 +13,14 @@ mom.utilities.disableEnterKey = (form) ->
     e.preventDefault() if e.keyCode == 13
 
 mom.utilities.openInBackground = (url) ->
-  window.open(url)
+  newWindow = window.open(url)
   self.focus()
+  newWindow
 
 mom.utilities.printChart = (patientId) ->
-  unless mom.mobile
-    mom.utilities.openInBackground "/patients/#{patientId}/chart"
+  xhr = $.get("/patients/#{patientId}/chart.js")
+  xhr.fail ->
+    alert "Chart failed to print!"
 
 mom.mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
 

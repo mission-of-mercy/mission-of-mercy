@@ -1,0 +1,13 @@
+- if PrintChart.printers.any?
+  #printer-dropdown.dropdown
+    %a.dropdown-toggle{'data-toggle' => 'dropdown', href: '#'}
+      %i.fa.fa-print
+    %ul.dropdown-menu
+      - PrintChart.printers.each do |printer|
+        %li{class: ('selected' if printer == session[:printer])}
+          = link_to printer, printer_path(printer: printer), method: 'post',
+            remote: true
+- else
+  .warnings
+    %i.fa.fa-exclamation-triangle
+    No Remote Printers

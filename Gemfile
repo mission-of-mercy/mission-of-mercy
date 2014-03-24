@@ -15,6 +15,9 @@ gem 'rack-pjax'
 gem 'virtus'
 gem 'axlsx'
 gem 'axlsx_rails'
+gem 'prawn', '~> 0.15.0'
+
+gem 'resque'
 
 gem 'jquery-rails'
 gem 'will_paginate-bootstrap'
@@ -28,6 +31,7 @@ gem 'sass-rails',   '~> 4.0.0'
 gem 'uglifier'
 gem 'compass-rails'
 gem 'bootstrap-sass-rails'
+gem 'font-awesome-rails'
 
 group :development do
   gem 'capistrano'
@@ -38,6 +42,7 @@ group :test do
   gem 'minitest-spec-rails', '~> 4.7.6'
   gem 'capybara_minitest_spec'
   gem 'minitest-metadata'
+  gem 'minitest-stub_any_instance'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'capybara-webkit'
@@ -45,4 +50,5 @@ group :test do
   gem 'launchy'
   gem 'database_cleaner'
   gem 'timecop'
+  gem 'resque_unit'
 end

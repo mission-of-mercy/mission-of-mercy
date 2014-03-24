@@ -8,14 +8,30 @@
   a.user-name
     text-decoration: none
 
-  a, a:visited
+  .warnings
+    margin-right: 5px
+    display: inline-block
+
+  a, a:visited, a:hover
     color: #fff
     text-decoration: underline
 
-  a:hover
-    color: #fff
-    text-decoration: underline
-
+  .dropdown
+    display: inline-block
+    margin-right: 5px
+    li
+      &.selected a
+        padding-left: 20px
+        font-weight: bold
+        &:before
+          content: '✔︎ '
+      a
+        padding-left: 38px
+        text-align: left
+        color: #333
+        text-decoration: none
+        &:hover
+          color: #fff
   form
     display: inline-block
 

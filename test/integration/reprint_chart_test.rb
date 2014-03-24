@@ -3,44 +3,54 @@ require_relative '../test_helper'
 feature "Reprinting a patient's chart" do
   before :each do
     Capybara.current_driver = Capybara.javascript_driver
+    Resque.reset!
     @patient = FactoryGirl.create(:patient)
 
     sign_in_as "Check in"
   end
 
   test "charts can be reprinted" do
-    click_link "Reprint chart"
+    PrintChart.stub('printers', ['printer']) do
+      click_link "Reprint chart"
 
-    fill_in "Chart number", with: @patient.id
+      fill_in "Chart number", with: @patient.id
 
-    click_button "Search"
+      click_button "Search"
 
-    within("#contents") { click_link "Reprint" }
+      select_printer
 
-    within_window('Mission of Mercy - Print') do
-      # Spot check chart details
-      assert_content @patient.id
-      assert_content @patient.last_name
+      within("#contents") { click_link "Reprint" }
+
+      assert_content "Printing"
+      assert_queued PrintChart, [@patient.id, "printer"]
     end
-
   end
 
   test "charts which were never printed are displayed by default" do
-    chart_not_printed = FactoryGirl.create(:patient, chart_printed: false)
+    PrintChart.stub('printers', ['printer']) do
+      chart_not_printed = FactoryGirl.create(:patient, chart_printed: false)
 
-    click_link "Reprint chart"
+      click_link "Reprint chart"
 
-    within('#contents table') do
-      assert_no_content @patient.last_name
-      assert_no_content "Reprint"
+      select_printer
 
-      click_link "Print"
+      within('#contents table') do
+        assert_no_content @patient.last_name
+        assert_no_content "Reprint"
+
+        click_link "Print"
+      end
+
+      assert_content "Printing"
+      assert_queued PrintChart, [chart_not_printed.id, "printer"]
     end
+  end
 
-    within_window('Mission of Mercy - Print') do
-      # Spot check chart details
-      assert_content chart_not_printed.id
-      assert_content chart_not_printed.last_name
+  def select_printer
+    within("#printer-dropdown") do
+      first('a').click
+      click_link 'printer'
+      page.must_have_css 'li.selected'
     end
   end
 end

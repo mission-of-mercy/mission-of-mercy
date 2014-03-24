@@ -10,12 +10,14 @@
       = link_to "#{@treatment_area.name} #{current_user.name}",
         current_user.start_path, :class => 'user-name'
     - else
+      - if current_user.user_type == UserType::CHECKIN
+        = render :partial => "shared/printer"
       = link_to current_user.name, current_user.start_path,
         :class => 'user-name'
+
     |
     = link_to 'Log out', logout_path
   - else
     %span.left
-      = link_to 'System Dashboard',
-        ENV['DASHBOARD_URL']
+      = link_to('System Dashboard', ENV['DASHBOARD_URL']) if ENV['DASHBOARD_URL']
     Not Logged In

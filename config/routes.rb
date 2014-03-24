@@ -70,6 +70,8 @@ MissionOfMercy::Application.routes.draw do
     post '/maintenance/clear_support_requests' => 'maintenance#clear_support_requests'
   end
 
+  post '/printer' => 'printer#update'
+
   get '/dashboard/patients'         => 'dashboard#patients'
   get '/dashboard/summary'          => 'dashboard#summary'
   get '/dashboard/support'          => 'dashboard#support'
