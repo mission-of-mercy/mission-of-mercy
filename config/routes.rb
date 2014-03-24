@@ -1,3 +1,5 @@
+require "resque_web"
+
 MissionOfMercy::Application.routes.draw do
   devise_for :users
 
@@ -76,4 +78,13 @@ MissionOfMercy::Application.routes.draw do
   get '/dashboard/summary'          => 'dashboard#summary'
   get '/dashboard/support'          => 'dashboard#support'
   get '/dashboard/treatment_areas'  => 'dashboard#treatment_areas'
+
+  resque_web_constraint = lambda do |request|
+    current_user = request.env['warden'].user
+    current_user.present? && current_user.user_type == UserType::ADMIN
+  end
+
+  constraints resque_web_constraint do
+    mount ResqueWeb::Engine => "/admin/resque"
+  end
 end

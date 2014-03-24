@@ -18,6 +18,7 @@ gem 'axlsx_rails'
 gem 'prawn', '~> 0.15.0'
 
 gem 'resque'
+gem 'resque-web', require: 'resque_web'
 
 gem 'jquery-rails'
 gem 'will_paginate-bootstrap'
