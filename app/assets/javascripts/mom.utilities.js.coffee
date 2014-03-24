@@ -7,7 +7,6 @@ window.mom = {utilities: {}}
 mom.init = ->
   mom.support.init(true)
   $(document).pjax('#tabnav a', '[data-pjax-container]')
-  $(document).on 'change', '#printer', mom.utilities.updatePrinter
 
 mom.utilities.disableEnterKey = (form) ->
   $(form).keypress (e) ->
@@ -22,9 +21,6 @@ mom.utilities.printChart = (patientId) ->
   xhr = $.get("/patients/#{patientId}/chart.js")
   xhr.fail ->
     alert "Chart failed to print!"
-
-mom.utilities.updatePrinter = ->
-  $.post '/printer', printer: $(this).val()
 
 mom.mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
 
