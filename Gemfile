@@ -34,6 +34,10 @@ gem 'compass-rails'
 gem 'bootstrap-sass-rails'
 gem 'font-awesome-rails'
 
+# MOMMA Gems
+
+gem 'print_chart', git: 'https://github.com/mission-of-mercy/print_chart.git'
+
 group :development do
   gem 'capistrano'
   gem 'capistrano_colors'
@@ -43,7 +47,6 @@ group :test do
   gem 'minitest-spec-rails', '~> 4.7.6'
   gem 'capybara_minitest_spec'
   gem 'minitest-metadata'
-  gem 'minitest-stub_any_instance'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'capybara-webkit'

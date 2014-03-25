@@ -79,6 +79,14 @@ MissionOfMercy::Application.routes.draw do
   get '/dashboard/support'          => 'dashboard#support'
   get '/dashboard/treatment_areas'  => 'dashboard#treatment_areas'
 
+  namespace :api do
+    resources :patients do
+      member do
+        get :chart
+      end
+    end
+  end
+
   resque_web_constraint = lambda do |request|
     current_user = request.env['warden'].user
     current_user.present? && current_user.user_type == UserType::ADMIN
