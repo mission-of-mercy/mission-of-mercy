@@ -110,4 +110,10 @@ FactoryGirl.define do
     attended    true
     patient
   end
+
+  factory :support_request do
+    user_id    { User.first.try(:id) }
+    ip_address "123.123.123.123"
+    resolved   false
+  end
 end
