@@ -20,7 +20,7 @@ module ApplicationHelper
   end
 
   def app_version
-    '6.0.beta1'
+    @app_version ||= File.read(Rails.root + "VERSION")
   end
 
   def clinic_state
