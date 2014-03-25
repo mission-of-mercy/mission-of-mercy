@@ -83,8 +83,6 @@
         'font': 'Bitstream Vera Sans,verdana,sans-serif',
         'fontColor': 'InfoText',
         'fontSize': '12px',
-        'icon': 'assets/activebar-information.png',
-        'button': 'assets/activebar-closebtn.png',
         'url': null
     };
 

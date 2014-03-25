@@ -35,8 +35,8 @@ mom.support.processRequests = (data) ->
   if data.requests.length > 0
     text    = "Help needed at " + data.requests
     options = {
-      icon:      '/assets/activebar/icon.png'
-      button:    '/assets/activebar/close.png'
+      icon:      '<%= asset_path('activebar/icon.png') %>'
+      button:    '<%= asset_path('activebar/close.png') %>'
       highlight: 'InfoBackground'
       border:    'InfoBackground'
     }
@@ -71,8 +71,8 @@ mom.support.showSupportRequested = (id) ->
       dataType: "script"
 
   options =
-    icon:       '/assets/activebar/icon.png'
-    button:     '/assets/activebar/close.png'
+    icon:       '<%= asset_path('activebar/icon.png') %>'
+    button:     '<%= asset_path('activebar/close.png') %>'
     highlight:  'none repeat scroll 0 0 #d23234'
     background: 'none repeat scroll 0 0 #d23234'
     border:     '#d23234'
