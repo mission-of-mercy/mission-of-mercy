@@ -37,6 +37,8 @@ gem 'font-awesome-rails'
 # MOMMA Gems
 
 gem 'print_chart', git: 'https://github.com/mission-of-mercy/print_chart.git'
+gem 'support_notification',
+  git: 'https://github.com/mission-of-mercy/support_notification.git'
 
 group :development do
   gem 'capistrano'
