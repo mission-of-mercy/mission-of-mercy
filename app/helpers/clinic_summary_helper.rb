@@ -1,6 +1,6 @@
 module ClinicSummaryHelper
   def per_hour(records)
-    return [] if records.empty?
+    return [] if records.length.zero?
 
     start_time = records.first.hour
     end_time   = records.last.hour

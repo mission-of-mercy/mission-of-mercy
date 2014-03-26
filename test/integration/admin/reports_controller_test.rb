@@ -13,30 +13,46 @@ feature "Running reports" do
     end
   end
 
-  test "should show the treatment area name" do
-    visit admin_treatment_area_distribution_report_path
+  describe "Treatment Area Distribution" do
+    test "should show the treatment area name" do
+      visit admin_treatment_area_distribution_report_path
 
-    within "#treatment_area_details" do
-      assert_content @treatment_area.name
+      within "#treatment_area_details" do
+        assert_content @treatment_area.name
+      end
     end
-  end
 
-  test "should show each patient's name" do
-    visit admin_treatment_area_distribution_report_path
+    test "should show each patient's name" do
+      visit admin_treatment_area_distribution_report_path
 
-    within "#treatment_area_details" do
-      @patients.each do |patient|
-        assert_content patient.full_name
+      within "#treatment_area_details" do
+        @patients.each do |patient|
+          assert_content patient.full_name
+        end
+      end
+    end
+
+    test "should not show show empty treatment areas" do
+      empty_treatment_area = FactoryGirl.create(:treatment_area)
+      visit admin_treatment_area_distribution_report_path
+
+      within "#treatment_area_details" do
+        assert_no_content empty_treatment_area.name
       end
     end
   end
 
-  test "should not show show empty treatment areas" do
-    empty_treatment_area = FactoryGirl.create(:treatment_area)
-    visit admin_treatment_area_distribution_report_path
+  describe "Post Clinic" do
+    test "page loads" do
+      visit admin_post_clinic_report_path
+      assert_content "Post Clinic Report"
+    end
+  end
 
-    within "#treatment_area_details" do
-      assert_no_content empty_treatment_area.name
+  describe "Clinic Summary" do
+    test "page loads" do
+      visit admin_clinic_summary_report_path
+      assert_content "Clinic Summary Report"
     end
   end
 end
