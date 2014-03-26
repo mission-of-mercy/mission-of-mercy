@@ -41,7 +41,7 @@ class Reports::PostClinic
             GROUP BY treatment_areas.name
             ORDER BY treatment_areas.name}
 
-    @areas = Patient.connection.select_all(sql)
+    @areas = Patient.connection.select_all(sql).to_a
 
     treatment_areas = TreatmentArea.where(:amalgam_composite_procedures => true)
     treatment_areas.each do |treatment_area|
@@ -92,7 +92,7 @@ class Reports::PostClinic
 
     calculate_percentage @towns
 
-    @town_count = @towns.length
+    @town_count = @towns.count
   end
 
   def load_counties
