@@ -13,10 +13,10 @@ class Dashboard
 
     check_outs = PatientFlow.where(area_id: ClinicArea::CHECKOUT).
       select("COUNT(DISTINCT patient_id) as patient_count")
-    check_outs_total = check_outs.first.patient_count.to_i
+    check_outs_total = check_outs[0].patient_count.to_i
     check_outs_today = check_outs.
-      where("patient_flows.created_at::Date = ?", Date.today).
-      first.patient_count.to_i
+      where("patient_flows.created_at::Date = ?", Date.today)[0].
+      patient_count.to_i
 
     registrations_per_hour = Patient.where("created_at between ? and ?",
       Time.now - 15.minutes, Time.now).count * 4
