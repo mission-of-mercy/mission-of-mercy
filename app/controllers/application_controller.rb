@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :set_area_id
-  around_filter :setup_stats
 
   attr_accessor :current_area_id, :current_treatment_area_id
 
@@ -32,15 +31,7 @@ class ApplicationController < ActionController::Base
   end
 
   def stats
-    @stats
-  end
-
-  def setup_stats
-    @stats ||= Stats.new(session[:stats])
-
-    yield
-
-    session[:stats] = @stats.data
+    @stats ||= Stats.new(session)
   end
 
   def dexis?
