@@ -6,7 +6,7 @@ module Admin
     def index
       @backup        = ENV['BACKUP_PATH']
       @xray          = ENV['XRAY_PATH']
-      @xray_solution = ENV['XRAY_SYSTEM']
+      @xray_solution = xray_system
     end
 
     def reset

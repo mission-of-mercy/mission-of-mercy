@@ -34,15 +34,19 @@ class ApplicationController < ActionController::Base
     @stats ||= Stats.new(session)
   end
 
+  def xray_system
+    @xray_system ||= ENV['XRAY_SYSTEM']
+  end
+
   def dexis?
-    ENV['XRAY_SYSTEM'] == "dexis"
+    xray_system == "dexis"
   end
 
   def cdr?
-    ENV['XRAY_SYSTEM'] == "cdr"
+    xray_system == "cdr"
   end
 
   def kodak?
-    ENV['XRAY_SYSTEM'] == "kodak"
+    xray_system == "kodak"
   end
 end
