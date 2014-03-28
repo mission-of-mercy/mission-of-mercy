@@ -14,7 +14,7 @@
     = yield(:header)
 
   %body{:class => body_css}
-    #help_request
+    = render("support_requests/support_request") if current_support_request
     #outer_container
       #container
         = render :partial => 'shared/header'

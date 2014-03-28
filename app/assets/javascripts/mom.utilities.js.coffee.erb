@@ -5,7 +5,6 @@ $.facebox.settings.loadingImage = '<%= asset_path('loading.gif') %>'
 window.mom = {utilities: {}}
 
 mom.init = ->
-  mom.support.init(true)
   $(document).pjax('#tabnav a', '[data-pjax-container]')
 
 mom.utilities.disableEnterKey = (form) ->

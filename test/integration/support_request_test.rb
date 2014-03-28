@@ -15,7 +15,7 @@ feature "Need Help" do
     request = SupportRequest.first
 
     assert_queued SupportNotification,
-      [request.station_description, request.created_at]
+      [request.description, request.created_at]
   end
 
   it "can be canceled" do
@@ -25,11 +25,9 @@ feature "Need Help" do
 
     page.must_have_content "Help is on the way"
 
-    within("#activebar-container") do
-      find("div.close").click
-    end
+    click_link "Cancel your request"
 
-    page.wont_have_content "Help is on the way"
+    page.wont_have_css "body.support-requested"
 
     SupportRequest.first.resolved.must_equal true
   end

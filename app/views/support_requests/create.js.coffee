@@ -1,8 +1,13 @@
-request = <%= @request.try(:id) %>
+html = '<%= escape_javascript render(@request) %>'
 
-if request
-  mom.support.showSupportRequested(request)
-else
-  $('#help_link').show()
+# Clear any old support requests
+#
+$('#support-request').remove()
 
-$('#help_loading').hide()
+$('body').prepend html
+
+# Hacky hack hack hack. Wait to update the body so the css transition works
+#
+setTimeout ->
+  $('body').addClass('support-requested')
+, 1

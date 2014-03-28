@@ -26,6 +26,13 @@ module Admin
       redirect_to admin_maintenance_path
     end
 
+    def clear_support_requests
+      requests = SupportRequest.active.update_all(resolved: true)
+
+      flash[:notice] = "#{requests} support request(s) cleared"
+      redirect_to admin_maintenance_path
+    end
+
     private
 
     def set_current_tab
