@@ -1,14 +1,12 @@
 class ApplicationController < ActionController::Base
-  helper_method :stats, :dexis?, :cdr?, :kodak?
+  helper_method :stats, :dexis?, :cdr?, :kodak?, :current_support_request,
+    :current_area_id, :current_treatment_area
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :set_area_id
-  around_filter :setup_stats
-
-  attr_accessor :current_area_id, :current_treatment_area_id
+  after_filter :set_current_treatment_area
 
   private
 
@@ -21,37 +19,57 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_area_id
-    self.current_area_id = current_user.user_type if current_user
-
-    if treatment_id = params[:treatment_area_id]
-      self.current_treatment_area_id = treatment_id
+  def set_current_treatment_area
+    if current_user &&
+      current_user.user_type == UserType::CHECKOUT &&
+      @treatment_area
+        self.current_treatment_area = @treatment_area
     else
-      self.current_treatment_area_id = nil
+      current_treatment_area = nil
     end
   end
 
   def stats
-    @stats
+    @stats ||= Stats.new(session)
   end
 
-  def setup_stats
-    @stats ||= Stats.new(session[:stats])
-
-    yield
-
-    session[:stats] = @stats.data
+  def xray_system
+    @xray_system ||= ENV['XRAY_SYSTEM']
   end
 
   def dexis?
-    ENV['XRAY_SYSTEM'] == "dexis"
+    xray_system == "dexis"
   end
 
   def cdr?
-    ENV['XRAY_SYSTEM'] == "cdr"
+    xray_system == "cdr"
   end
 
   def kodak?
-    ENV['XRAY_SYSTEM'] == "kodak"
+    xray_system == "kodak"
+  end
+
+  def current_support_request
+    @current_support_request ||= begin
+      support_request = SupportRequest
+        .where(id: session[:current_support_request_id])
+        .first
+
+      if support_request && !support_request.resolved
+        support_request
+      else
+        session[:current_treatment_area_id] = nil
+      end
+    end
+  end
+
+  def current_treatment_area=(treatment_area)
+    @current_treatment_area = treatment_area
+    session[:current_treatment_area_id] = treatment_area.try(:id)
+  end
+
+  def current_treatment_area
+    @current_treatment_area ||= TreatmentArea
+      .where(id: session[:current_treatment_area_id]).first
   end
 end

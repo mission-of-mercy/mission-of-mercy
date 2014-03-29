@@ -9,6 +9,7 @@ require 'database_cleaner'
 require_relative 'support/integration'
 require_relative 'support/helpers'
 require_relative 'support/minitest_capybara'
+require_relative 'support/redis_stub'
 require_relative '../db/seeds/users'
 
 Capybara.javascript_driver = :webkit
@@ -36,3 +37,7 @@ end
 class ActiveSupport::TestCase
   self.use_transactional_fixtures = true
 end
+
+# Stub redis
+#
+$redis = RedisStub.new

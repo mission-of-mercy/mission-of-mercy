@@ -1,10 +1,6 @@
-#top_navigation
+%header#top_navigation
   - if signed_in?
-    %span.left
-      = link_to_help
-      %span#help_loading
-        = image_tag "help_loading.gif"
-        Requesting Help ...
+    %span.left= render "support_requests/header"
     - if current_user.user_type == UserType::CHECKOUT && @treatment_area
       = render :partial => "treatment_areas/change_treatment_area"
       = link_to "#{@treatment_area.name} #{current_user.name}",

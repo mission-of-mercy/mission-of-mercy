@@ -1,5 +1,4 @@
 class ClinicArea
-
   def self.add_enum(key,value)
     @hash ||= {}
     @hash[key]=value
@@ -22,5 +21,4 @@ class ClinicArea
   self.add_enum :ASSIGNMENT, 3
   self.add_enum :CHECKOUT, 4
   self.add_enum :PHARMACY, 5
-
 end

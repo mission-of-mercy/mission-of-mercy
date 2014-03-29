@@ -6,7 +6,7 @@ module Admin
     def index
       @backup        = ENV['BACKUP_PATH']
       @xray          = ENV['XRAY_PATH']
-      @xray_solution = ENV['XRAY_SYSTEM']
+      @xray_solution = xray_system
     end
 
     def reset
@@ -23,6 +23,13 @@ module Admin
       Patient.connection.execute(reset_sql)
 
       flash[:notice] = "Clinic DB Reset"
+      redirect_to admin_maintenance_path
+    end
+
+    def clear_support_requests
+      requests = SupportRequest.active.update_all(resolved: true)
+
+      flash[:notice] = "#{requests} support request(s) cleared"
       redirect_to admin_maintenance_path
     end
 

@@ -1,3 +1,6 @@
+require_relative 'simulated_user'
+require_relative 'simulated_check_in_user'
+
 module Support
   module Integration
     def sign_in_as(user_type)
@@ -104,9 +107,13 @@ module Support
       within(scope) { click_link(text) }
     end
 
-    def within(scope, prefix=nil)
-      scope = '#' << ActionController::RecordIdentifier.dom_id(scope, prefix) if scope.is_a?(ActiveRecord::Base)
-      super(scope)
+    def simulated_user(type)
+      case type
+      when "Check in"
+        Support::SimulatedCheckInUser.new(self)
+      else
+        raise ArgumentError.new("Unsupported simulated user type")
+      end
     end
   end
 end

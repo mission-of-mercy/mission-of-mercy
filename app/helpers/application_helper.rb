@@ -1,13 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  def current_area_id
-    controller.current_area_id
-  end
-
-  def current_treatment_area_id
-    controller.current_treatment_area_id
-  end
-
   def title(page_title)
     content_for(:title) { page_title }
   end
@@ -64,6 +56,8 @@ module ApplicationHelper
     elsif current_user.user_type == UserType::ADMIN
       css << "admin"
     end
+
+    css << "support-requested" if current_support_request
 
     css.join(' ')
   end

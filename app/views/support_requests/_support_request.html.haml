@@ -1,0 +1,7 @@
+#support-request
+  %i.fa.fa-exclamation-circle
+  Help is on the way.
+  %span.right
+    = link_to "Cancel your request",
+      support_request_path(current_support_request), method: 'delete',
+      remote: true, class: 'btn btn-mini'

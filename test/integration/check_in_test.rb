@@ -41,7 +41,7 @@ feature "Checking in a patient" do
       "date of birth selects should be hidden"
   end
 
-  it "previous patients chart should be printed when there is one" do
+  it "previous patients chart number should be displayed when there is one" do
     patient = FactoryGirl.create(:patient)
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
 

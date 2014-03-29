@@ -32,9 +32,6 @@ body, p, ol, ul, td {
   padding: 0;
   width: 950px;
   min-height: 100%;
-
-  -moz-box-shadow: #222 0px -10px 10px 0;
-  box-shadow: #222 0px 0px 10px 0;
 }
 
 body.red{

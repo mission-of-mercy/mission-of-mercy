@@ -6,28 +6,19 @@ class SupportRequest < ActiveRecord::Base
 
   scope :active, -> { where(resolved: false) }
 
-  def station_description
-    description = []
+  def description
+    description = [user.name]
 
     if treatment_area && treatment_area != TreatmentArea.radiology
-      description << treatment_area.name
+      description.insert 0, treatment_area.name
     end
 
-    description << user.name if user
-
-    description.compact.join(" ")
-  end
-
-  def to_hash
-    {
-      :ip_address           => ip_address,
-      :station_description  => station_description
-    }
+    description.join(" ")
   end
 
   private
 
   def send_notification
-    Resque.enqueue(SupportNotification, station_description, created_at)
+    Resque.enqueue(SupportNotification, description, created_at)
   end
 end

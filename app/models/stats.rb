@@ -1,12 +1,8 @@
 class Stats
   include ActionView::Helpers::TextHelper
 
-  attr_reader :data
-
-  def initialize(data)
-    @data = data
-
-    reset unless @data
+  def initialize(session)
+    @session = session
   end
 
   def procedure_added
@@ -32,27 +28,31 @@ class Stats
   end
 
   def messages
-    messages = @data[:messages].dup
-    @data[:messages].clear
+    messages = data[:messages].dup
+    data[:messages].clear
 
     return messages
   end
 
-  def reset
-    @data            = Hash.new(0)
-    @data[:messages] = Array.new
+  def data
+    session[:stats] ||= begin
+      data            = Hash.new(0)
+      data[:messages] = Array.new
+      data
+    end
   end
 
   private
 
-  def add_stat(type, verb, object)
-    @data[type] += 1
+  attr_reader :session
 
-    message = [ exclamation(@data[type]),
-                "You've #{verb} #{pluralize(@data[type], object)} today."
+  def add_stat(type, verb, object)
+    data[type] += 1
+
+    message = [ exclamation(data[type]),
+                "You've #{verb} #{pluralize(data[type], object)} today."
               ].join(" ")
 
-    @data[:messages] << message
+    data[:messages] << message
   end
-
 end

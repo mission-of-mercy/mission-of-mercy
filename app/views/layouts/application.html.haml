@@ -14,10 +14,10 @@
     = yield(:header)
 
   %body{:class => body_css}
-    #help_request
+    = render("support_requests/support_request") if current_support_request
     #outer_container
       #container
-        = render :partial => 'users/user_bar'
+        = render :partial => 'shared/header'
         %div{'data-pjax-container' => ''}
           = render "shared/flash", :flash => flash
           - if current_user.try(:user_type) == UserType::ADMIN
