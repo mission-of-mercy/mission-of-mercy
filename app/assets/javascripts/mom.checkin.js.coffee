@@ -42,6 +42,10 @@ class mom.checkin
     $('input[name="patient[attended_previous_mom_event]"]').change (e) =>
       this.togglePreviousMom()
 
+    $('#patient_sex').change (e) ->
+      console.debug $(this).val()
+      $('#pregnant-questions').toggle($(this).val() == "F")
+
     $('#patient_zip').keyup =>
       this.lookupZip()
 

@@ -96,7 +96,7 @@ class Registration
       last_name date_of_birth sex race race_other phone street zip city state
       chief_complaint last_dental_visit pain time_in_pain travel_time_hours
       travel_time_minutes attended_previous_mom_event pain_length_in_days
-      travel_time] +
+      travel_time pregnant has_obgyn due_date follow_up obgyn_name] +
       [:previous_mom_clinics_attributes => %w[location clinic_year attended id]]
     )
   end

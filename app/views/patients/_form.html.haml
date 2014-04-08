@@ -132,3 +132,19 @@
               = p.check_box :attended
               = p.label :attended, p.object.description
             %br
+      #pregnant-questions
+        %div.row
+          %span.label= f.label :pregnant, "Are you pregnant?"
+          %span.formw= yes_no_group f, :pregnant
+        %div.row
+          %span.label= f.label :has_obgyn, "Do you have an OBGYN?"
+          %span.formw= yes_no_group f, :has_obgyn
+        %div.row
+          %span.label= f.label :due_date, "What is your due date"
+          %span.formw= f.date_select :due_date
+        %div.row
+          %span.label= f.label :follow_up, "May we follow up with you?"
+          %span.formw= yes_no_group f, :follow_up
+        %div.row
+          %span.label= f.label :obgyn_name, "What is your OBGYN's name?"
+          %span.formw= f.text_field :obgyn_name
