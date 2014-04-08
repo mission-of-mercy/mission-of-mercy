@@ -1,12 +1,12 @@
 class ApplicationController < ActionController::Base
   helper_method :stats, :dexis?, :cdr?, :kodak?, :current_support_request,
-    :current_area_id, :current_treatment_area
+    :current_area_id, :current_treatment_area, :pending_support_requests
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  after_filter :set_current_treatment_area
+  # after_filter :set_current_treatment_area
 
   private
 
@@ -60,6 +60,15 @@ class ApplicationController < ActionController::Base
       else
         session[:current_treatment_area_id] = nil
       end
+    end
+  end
+
+  def pending_support_requests
+    @pending_support_requests ||= begin
+      requests = SupportRequest.active
+        .reject {|sr| sr == current_support_request }
+
+      requests.map(&:description).join(', ')
     end
   end
 

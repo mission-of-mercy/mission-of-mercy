@@ -58,6 +58,7 @@ module ApplicationHelper
     end
 
     css << "support-requested" if current_support_request
+    css << "pending-requests"  if pending_support_requests.present?
 
     css.join(' ')
   end

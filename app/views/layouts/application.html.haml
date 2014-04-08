@@ -15,6 +15,7 @@
 
   %body{:class => body_css}
     = render("support_requests/support_request") if current_support_request
+    = render("support_requests/pending_requests")
     #outer_container
       #container
         = render :partial => 'shared/header'
