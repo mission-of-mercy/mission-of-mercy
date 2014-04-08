@@ -1,11 +1,17 @@
 body
   transition: padding-top 0.5s ease-in-out
+  &.pending-requests
+    padding-top: 32px
   &.support-requested
     padding-top: 32px
     a#help_link
       display: none
     #support-request
       top: 0px
+  &.support-requested.pending-requests
+    padding-top: 64px
+    #pending-requests
+      top: 32px
 
 #support-request
   transition: top 0.5s ease-in-out
@@ -18,3 +24,14 @@ body
   color: #fff
   position: absolute
   top: -34px
+
+#pending-requests
+  text-align: left
+  padding: 5px 10px
+  width: 100%
+  background: #FBFFED
+  box-sizing: border-box
+  line-height: 22px
+  color: #333
+  position: absolute
+  top: 0
