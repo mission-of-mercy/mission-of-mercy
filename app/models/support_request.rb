@@ -20,5 +20,8 @@ class SupportRequest < ActiveRecord::Base
 
   def send_notification
     Resque.enqueue(SupportNotification, description, created_at)
+  rescue
+    # Sometimes, redis is down. I still want to know about this support request
+    true
   end
 end
