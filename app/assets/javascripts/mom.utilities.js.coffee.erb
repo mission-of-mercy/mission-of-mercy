@@ -6,6 +6,9 @@ window.mom = {utilities: {}}
 
 mom.init = ->
   $(document).pjax('#tabnav a', '[data-pjax-container]')
+  mom.poll = setInterval ->
+    $.get('/support_requests.js')
+  , 60000 # 1 Minute
 
 mom.utilities.disableEnterKey = (form) ->
   $(form).keypress (e) ->
