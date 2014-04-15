@@ -1,4 +1,8 @@
 class SupportRequestsController < ApplicationController
+  def index
+    @support_requests = pending_support_requests
+  end
+
   def create
     @request = SupportRequest.create(
       user_id:           current_user.id,
