@@ -9,7 +9,10 @@ class PatientChart
 
   def chart_header
     if patient.pregnant?
-      float { text("Pregnant", size: 24, align: :center, color: '808080') }
+      float do
+        move_down 5
+        text("Pregnant", size: 24, align: :left, color: '808080')
+      end
     end
     text patient.chart_number.to_s, size: 36, style: :bold, align: :right
   end
