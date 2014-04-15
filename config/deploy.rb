@@ -5,7 +5,7 @@ require './lib/capistrano_local_overrides'
 set :application, "momma"
 
 set :repository, "git://github.com/mission-of-mercy/connecticut.git"
-set :deploy_via, :remote_cache
+set :deploy_via, :remote_cache # copy
 
 set :scm, :git
 set :user, "deploy"
