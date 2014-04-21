@@ -43,5 +43,6 @@
           resets each table's index
       %td.control
         = link_to 'Reset', admin_maintenance_reset_path,
+          'data-pass-confirm' => "missionofmercy",
           'data-confirm' => "WARNING: This will destroy all patient information! Are you sure you want to proceed?",
           'class' => "btn btn-danger", 'method' => :post
