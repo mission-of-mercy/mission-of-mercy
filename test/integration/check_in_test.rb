@@ -169,27 +169,21 @@ feature "Checking in a patient" do
     end
   end
 
-  it "warns when printers are not available" do
-    page.must_have_content "No Remote Printers"
-  end
-
   it "falls back to old pop-up printing method when queue is offline" do
     agree_to_waver
     fill_out_form
 
     click_button "Next"
 
-    page.must_have_content "No Remote Printers"
     page.must_have_content "Printing Chart"
+
+    # The chart has popped up
+    page.driver.browser.window_handles.length.must_equal 2
 
     # Find the patient from the database
     patient = Patient.order("created_at DESC").first
 
-    within_window('Mission of Mercy - Print') do
-      # Spot check chart details
-      page.must_have_content patient.id
-      page.must_have_content patient.last_name
-    end
+    patient.chart_printed.must_equal true
   end
 
   it "asks if the patient has already been through the clinic" do

@@ -43,7 +43,7 @@ class PatientsController < ApplicationController
                                 disposition: "inline"
         end
         format.js do
-          if PrintChart.printers.any? && session[:printer]
+          if PrintChart.printers.include? session[:printer]
             Resque.enqueue(PrintChart, @patient.id, session[:printer])
             @queued = true
           else
