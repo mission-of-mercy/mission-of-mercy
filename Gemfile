@@ -40,6 +40,11 @@ gem 'print_chart', git: 'https://github.com/mission-of-mercy/print_chart.git'
 gem 'support_notification',
   git: 'https://github.com/mission-of-mercy/support_notification.git'
 
+group :development, :test do
+  gem 'pry'
+  gem 'pry-rails'
+end
+
 group :development do
   gem 'capistrano'
   gem 'capistrano_colors'
