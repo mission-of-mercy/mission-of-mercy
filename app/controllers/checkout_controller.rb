@@ -6,8 +6,7 @@ class CheckoutController < ApplicationController
   private
 
   def load_treatment_areas
-    @treatment_areas = TreatmentArea.where("id <> ?", TreatmentArea.radiology)
-      .order(:name)
+    @treatment_areas = TreatmentArea.check_out.order(:name)
   end
 
   private
