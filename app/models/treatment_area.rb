@@ -27,6 +27,14 @@ class TreatmentArea < ActiveRecord::Base
     end
   end
 
+  def self.check_out
+    if TreatmentArea.radiology
+      where("id <> ?", TreatmentArea.radiology.id)
+    else
+      self
+    end
+  end
+
   def self.with_patients
     joins(:patients).includes(:patients).order("treatment_areas.name")
   end

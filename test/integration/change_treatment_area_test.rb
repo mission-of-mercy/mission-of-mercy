@@ -11,6 +11,14 @@ feature "Changing the current Treatment Area" do
     sign_in_as "Check out"
   end
 
+  test "radiology isn't included" do
+    @radiology = FactoryGirl.create(:treatment_area, name: "Radiology")
+
+    visit treatment_areas_path
+
+    page.wont_have_select 'treatment_area_id', 'Radiology'
+  end
+
   test "from the patient search page" do
     visit treatment_area_patients_path(@treatment_area)
 
