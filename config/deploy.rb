@@ -1,6 +1,5 @@
 require 'bundler/capistrano'
 require 'dotenv/capistrano'
-require './lib/capistrano_local_overrides'
 
 set :application, "momma"
 
