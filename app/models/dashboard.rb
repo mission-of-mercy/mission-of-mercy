@@ -62,7 +62,7 @@ class Dashboard
   end
 
   def support_requests
-    SupportRequest.active.map {|s| s.station_description }
+    SupportRequest.active.map {|s| s.description }
   end
 
   private
