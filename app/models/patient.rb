@@ -13,7 +13,7 @@ class Patient < ActiveRecord::Base
                                           REGEXP[:months],
                                           REGEXP[:years] )
 
-  before_save  :normalize_data
+  before_validation :normalize_data
   before_save  :update_survey
   after_create :check_in_flow
 
@@ -258,7 +258,7 @@ class Patient < ActiveRecord::Base
   end
 
   def normalize_data
-    self.race = race_other if race_other != nil and race == "Other"
+    self.race = race_other if race_other
 
     self.first_name.capitalize!
     self.last_name.capitalize!
