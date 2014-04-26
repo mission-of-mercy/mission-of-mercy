@@ -11,6 +11,8 @@ class Dashboard
       patient_flows.area_id = #{ClinicArea::CHECKOUT}}).
       where("patient_flows.id IS NULL").count
 
+    # These aren't taking into account repeat patients
+    # Which makes me :sad:
     check_outs = PatientFlow.where(area_id: ClinicArea::CHECKOUT).
       select("COUNT(DISTINCT patient_id) as patient_count")
     check_outs_total = check_outs[0].patient_count.to_i
