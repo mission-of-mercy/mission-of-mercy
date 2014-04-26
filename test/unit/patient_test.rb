@@ -276,4 +276,17 @@ class PatientTest < ActiveSupport::TestCase
     assert_equal 2, patient.assignments.count
   end
 
+  test "other race specified" do
+    patient = FactoryGirl.build(:patient)
+
+    patient.race = nil
+
+    patient.valid?.must_equal false
+
+    patient.race_other = "Not in list"
+
+    patient.valid?.must_equal true
+
+    patient.race.must_equal "Not in list"
+  end
 end
