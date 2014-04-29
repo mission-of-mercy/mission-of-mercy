@@ -24,6 +24,9 @@ class mom.checkin
     $('#patient_race').change =>
       this.toggleOtherRace()
 
+    $('input[name="patient[interpreter_needed]"]').change =>
+      this.toggleLanguage()
+
     $('input[name="patient[pain]"]').change =>
       this.togglePatientPain()
 
@@ -53,6 +56,7 @@ class mom.checkin
     this.togglePreviousMom(false)
     this.togglePatientPain(false)
     this.toggleOtherRace(false)
+    this.toggleLanguage(false)
 
     @lastPatientId = @form.data('last-patient-id')
 
@@ -141,6 +145,17 @@ class mom.checkin
     else
       $('#race_other_div').slideUp()
       $('#patient_race_other').val("")
+
+  toggleLanguage: (focus) ->
+    $language = $('#language')
+    focus ||= true
+
+    if $('#patient_interpreter_needed_true').is(":checked")
+      $language.slideDown ->
+        $language.focus() if focus
+    else
+      $language.slideUp()
+      $('#patient_language').prop('selectedIndex',0)
 
   fillContactInformation: ->
     contact = @form.data('last-patient-contact')

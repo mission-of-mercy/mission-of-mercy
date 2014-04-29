@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140221194030) do
+ActiveRecord::Schema.define(version: 20140429144117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,8 @@ ActiveRecord::Schema.define(version: 20140221194030) do
     t.string   "phone"
     t.integer  "previous_chart_number"
     t.boolean  "chart_printed",                          default: false, null: false
+    t.boolean  "interpreter_needed",                     default: false, null: false
+    t.text     "language"
   end
 
   create_table "pre_meds", force: true do |t|
@@ -201,7 +203,6 @@ ActiveRecord::Schema.define(version: 20140221194030) do
     t.boolean  "self_purchase_insurance"
     t.string   "other_insurance"
     t.boolean  "tobacco_use"
-    t.boolean  "saga_insurance"
     t.boolean  "use_twitter"
     t.boolean  "use_facebook"
     t.boolean  "dental_insurance"

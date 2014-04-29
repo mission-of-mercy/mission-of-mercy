@@ -44,6 +44,12 @@
       #race_other_div.row
         %span.label= f.label :race_other, 'Specify race'
         %span.formw= f.text_field :race_other
+      %div.row
+        %span.label= f.label :interpreter_needed, "Interpreter needed?"
+        %span.formw= yes_no_group f, :interpreter_needed
+      #language.row
+        %span.label= f.label :language
+        %span.formw= f.select :language, languages, include_blank: true
 
     %div.contact_information_header
       %h4 2: Contact Information

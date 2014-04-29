@@ -20,4 +20,24 @@ module PatientsHelper
       f.label(attribute, "No", :value => false)
     ].join("\n").html_safe
   end
+
+  def languages
+    [
+      "Spanish or Spanish Creole",
+      "Portuguese or Portuguese Creole",
+      "French",
+      "Italian",
+      "Mon-Khmer, Cambodian",
+      "Vietnamese",
+      "French Creole",
+      "Chinese",
+      "Laotian",
+      "Hmung",
+      "Polish",
+      "German",
+      "African languages",
+      "Arabic",
+      "Other"
+    ]
+  end
 end

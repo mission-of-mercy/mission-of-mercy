@@ -281,7 +281,7 @@ div.row {
 form.new_patient div.row span.label,
 form.edit_patient div.row span.label{
   float: left;
-  width: 100px;
+  width: 125px;
   text-align: right;
 }
 
@@ -327,7 +327,7 @@ div.row .formexample{
   font-size: x-small;
   font-style: italic;
   display: block;
-  margin-left: 125px;
+  margin-left: 150px;
 }
 
 span.procedure{
