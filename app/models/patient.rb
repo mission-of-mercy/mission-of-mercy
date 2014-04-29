@@ -258,7 +258,7 @@ class Patient < ActiveRecord::Base
   end
 
   def normalize_data
-    self.race = race_other if race_other
+    self.race = race_other if race_other.present?
 
     self.first_name.capitalize!
     self.last_name.capitalize!
