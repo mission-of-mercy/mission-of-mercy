@@ -5,7 +5,7 @@ pid_file   = "#{rails_root}/tmp/pids/unicorn.pid"
 
 God.watch do |w|
   w.name  = "momma"
-  w.group = "momma"
+  w.group = "unicorn"
   w.env   = Dotenv::Environment.new("/etc/environment")
 
   # Start, stop and restart commands for the process.
