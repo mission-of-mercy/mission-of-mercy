@@ -1,5 +1,4 @@
 require 'bundler/capistrano'
-require 'dotenv/capistrano'
 
 set :application, "momma"
 
@@ -9,18 +8,21 @@ set :deploy_via, :remote_cache
 set :scm, :git
 set :user, "deploy"
 
+if match = `git branch`.match(/\* (?<branch>\S+)\s/m)
+  set :branch, match[:branch]
+else
+  set :branch, "master"
+end
+
 set :deploy_to, "/home/deploy/#{application}"
 set :use_sudo, false
 
-server "172.16.58.128", :app, :web, :db, :primary => true
-
-namespace :deploy do
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "touch #{File.join(current_path,'tmp','restart.txt')}"
-  end
-end
+server "momma.ri", :app, :web, :db, :primary => true
 
 after "deploy", "deploy:migrate"
 after "deploy", "deploy:cleanup"
+after "deploy" do
+  sudo "god restart momma"
+end
 
 load 'deploy/assets'
