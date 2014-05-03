@@ -269,9 +269,6 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    unicorn-rails (2.1.1)
-      rack
-      unicorn
     vegas (0.1.11)
       rack (>= 1.0.0)
     virtus (0.5.4)
@@ -332,7 +329,7 @@ DEPENDENCIES
   support_notification!
   timecop
   uglifier
-  unicorn-rails
+  unicorn
   virtus
   will_paginate (>= 3.0.5)
   will_paginate-bootstrap
