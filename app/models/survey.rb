@@ -1,4 +1,5 @@
 class Survey < ActiveRecord::Base
+  has_one :patient
   attr_reader :heard_about_other
 
   def update_patient_information(patient)

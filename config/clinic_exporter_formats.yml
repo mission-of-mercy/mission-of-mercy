@@ -48,6 +48,8 @@ patient_flows:
     to_time: Visited At
 
 surveys:
+  patient:
+    id: "Chart #"
   age: Age (during the clinic)
   sex: Gender
   city: City
