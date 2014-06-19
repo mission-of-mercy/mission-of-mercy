@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.0.3'
 gem 'json',  '~> 1.7.7'
-gem 'unicorn-rails'
 gem 'pg'
 gem 'haml'
 gem 'sass'
@@ -63,4 +62,8 @@ group :test do
   gem 'database_cleaner'
   gem 'timecop'
   gem 'resque_unit'
+end
+
+group :production do
+  gem 'unicorn-rails'
 end
