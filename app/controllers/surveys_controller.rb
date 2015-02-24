@@ -52,6 +52,8 @@ class SurveysController < ApplicationController
   def survey_params
     params.require(:survey).permit(*%w[heard_about_clinic heard_about_other
       has_place_to_be_seen_for_dental_care no_insurance insurance_from_job
-      medicaid_or_chp_plus self_purchase_insurance])
+      medicaid_or_chp_plus self_purchase_insurance veteran
+      husky_insurance_unknown husky_insurance_a husky_insurance_b
+      husky_insurance_c husky_insurance_d charter_oak])
   end
 end

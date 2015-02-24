@@ -64,6 +64,16 @@
     = f.check_box :charter_oak
     = f.label :charter_oak
 
+
+  %p
+    Are you a veteran?
+
+  .input
+    = f.radio_button :veteran, true
+    = f.label :veteran, "Yes", :value => true
+    = f.radio_button :veteran, false
+    = f.label :veteran, "No", :value => false
+
   %p
 
   %div.input-bottom.check_out
