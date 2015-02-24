@@ -1,7 +1,7 @@
 language: ruby
 cache: bundler
 rvm:
-  - 2.0.0
+  - 2.1.2
 env: STATE=CT SECRET_TOKEN=7b433023ce52cd60d3d5ae25583aff68436063d910ced81 SECRET_KEY_BASE=49bddcc206c8ac14843da15faf856576200c67e8d1d DEVISE_SECRET_KEY=bcab1e88bad7a6654634db1708c8a73366947ca6 XRAY_PATH=$TRAVIS_BUILD_DIR/tmp XRAY_SYSTEM=dexis TEST_DB_NAME=mom_test DB_USERNAME=postgres
 before_script:
   - bin/rake travis:setup
