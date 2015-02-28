@@ -42,31 +42,8 @@
       %a.go-back{:href=>'#'} Go back and finish adding procedure
 
   = render :partial => "new"
-
   %div.input-right.border
-    %h4 Entered Procedures
-
-    - @patient.patient_procedures.each do |p|
-      - unless p.new_record?
-        .procedure{:'data-id' => p.id, :class => cycle('','odd')}
-          = p.full_description
-          = link_to image_tag("delete.png", :class => "side_image right"),
-            patient_procedure_path(p),
-            :remote  => true,
-            :method  => :delete,
-            'data-confirm' => "Are you sure you wish to remove this procedure?",
-            :class   => "delete-procedure"
-          = image_tag "spinner.gif", :class => "side_image right spinner"
-    - if @patient.patient_procedures.length <= 1
-      %div{:style => "width:375px; padding-left:4px;"}
-        %p
-          There are currently no procedures entered for this patient.
-        %p
-          To enter a procedure fill out the form to the right and click
-          %b Add Procedure
-        %p
-          Once all procedures have been entered click
-          %b Finish
+    = render "existing_procedures"
 
   %div.input-bottom.check_out
     - if current_user.user_type == UserType::XRAY && (dexis? || kodak?)
