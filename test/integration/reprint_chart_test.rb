@@ -45,12 +45,4 @@ feature "Reprinting a patient's chart" do
       assert_queued PrintChart, [chart_not_printed.id, "printer"]
     end
   end
-
-  def select_printer
-    within("#printer-dropdown") do
-      first('a').click
-      click_link 'printer'
-      page.must_have_css 'li.selected'
-    end
-  end
 end

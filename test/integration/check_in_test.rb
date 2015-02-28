@@ -194,14 +194,6 @@ feature "Checking in a patient" do
 
   private
 
-  def select_printer
-    within("#printer-dropdown") do
-      first('a').click
-      click_link 'printer'
-      page.must_have_css 'li.selected'
-    end
-  end
-
   def agree_to_waver
     click_button "waiver_agree_button"
   end
