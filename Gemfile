@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.3'
+gem 'rails', '4.0.13'
 gem 'json',  '~> 1.7.7'
 gem 'pg'
 gem 'haml'
@@ -36,7 +36,8 @@ gem 'font-awesome-rails'
 
 # MOMMA Gems
 
-gem 'print_chart', git: 'https://github.com/mission-of-mercy/print_chart.git'
+gem 'print_chart', '~> 0.0.2', 
+  git: 'https://github.com/mission-of-mercy/print_chart.git'
 gem 'support_notification',
   git: 'https://github.com/mission-of-mercy/support_notification.git'
 
