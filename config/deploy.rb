@@ -3,7 +3,10 @@ require 'dotenv/capistrano'
 
 set :application, "momma"
 
-set :repository, "/Users/byron/code/mom/connecticut"
+# For local, offline deploys
+#
+set :repository, "/Users/byron/code/mom/mission-of-mercy"
+set :branch,     "connecticut"
 set :deploy_via, :copy
 
 set :scm, :git
@@ -16,7 +19,7 @@ server "momma.ct", :app, :web, :db, :primary => true
 
 namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "touch #{File.join(current_path,'tmp','restart.txt')}"
+    sudo "god restart momma"
   end
 end
 
