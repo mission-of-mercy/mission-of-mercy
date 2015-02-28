@@ -7,7 +7,8 @@
   = form_for resource, :as => resource_name, :url => session_path(resource_name), html: {class: 'form-horizontal'} do |f|
     .control-group
       = f.label :login, "System type", class: 'control-label'
-      .controls= f.select :login, user_list
+      .controls= f.select :login,
+        options_for_select(user_list, disabled: ["- Restricted -"])
     .control-group
       = f.label :password, "Password", class: 'control-label'
       .controls= f.password_field :password
