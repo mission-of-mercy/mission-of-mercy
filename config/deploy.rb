@@ -15,11 +15,11 @@ set :user, "deploy"
 set :deploy_to, "/home/deploy/#{application}"
 set :use_sudo, false
 
-server "momma.ct", :app, :web, :db, :primary => true
+server "momma.ct:3396", :app, :web, :db, :primary => true
 
 namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
-    sudo "god restart momma"
+    run "sudo god restart momma"
   end
 end
 
