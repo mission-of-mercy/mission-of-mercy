@@ -5,6 +5,7 @@ require 'minitest/pride'
 
 require 'capybara-screenshot/minitest'
 require 'database_cleaner'
+require 'minitest/mock'
 
 require_relative 'support/integration'
 require_relative 'support/helpers'
