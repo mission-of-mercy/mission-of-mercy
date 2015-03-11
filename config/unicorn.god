@@ -1,3 +1,5 @@
+require 'dotenv'
+
 rails_root = "/home/deploy/momma/current"
 pid_file   = "#{rails_root}/tmp/pids/unicorn.pid"
 
