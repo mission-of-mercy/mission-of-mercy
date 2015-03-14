@@ -248,6 +248,7 @@ ActiveRecord::Schema.define(version: 20160318131248) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "amalgam_composite_procedures"
+    t.integer  "base_processing_time_in_seconds"
   end
 
   create_table "treatments", force: true do |t|

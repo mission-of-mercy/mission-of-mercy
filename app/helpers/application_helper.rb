@@ -66,4 +66,8 @@ module ApplicationHelper
   def link_to_reset(url)
     link_to 'Reset Form', "#reset-form", :class => 'warning', 'data-url' => url
   end
+
+  def humanized_time(time)
+    time ? time.strftime("%m/%d/%Y %I:%M %p") : "--"
+  end
 end

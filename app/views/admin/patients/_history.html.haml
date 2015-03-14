@@ -1,4 +1,13 @@
-%h4 Treatment Area Assignments
+%h3 Checkout
+
+%p
+  Calculated:
+  = humanized_time @patient.expected_check_out_time
+%p
+  Actual:
+  = humanized_time @patient.flows.where(area_id: ClinicArea::CHECKOUT).first.try(:created_at)
+
+%h3 Treatment Area Assignments
 
 - if @patient.assignments.empty?
   %p No treatment area ssignments
@@ -13,7 +22,7 @@
       = render partial: 'patient_assignment', collection: @patient.assignments,
         as: 'assignment'
 
-%h4 Flows
+%h3 Flows
 
 - if @patient.flows.empty?
   %p No patient flows
@@ -26,7 +35,7 @@
     %tbody
       = render partial: 'patient_flow', collection: @patient.flows, as: 'flow'
 
-%h4 Multiple Visits
+%h3 Multiple Visits
 
 - if @patient.associated_charts.empty?
   %p No multiple visits
