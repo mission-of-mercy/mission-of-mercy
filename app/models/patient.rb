@@ -118,6 +118,20 @@ class Patient < ActiveRecord::Base
     flows.where(area_id: ClinicArea::CHECKOUT).any?
   end
 
+  def expected_processing_time
+    @expected_processing_time ||= begin
+      if treatment_area = assigned_to.compact.reject {|t| t.radiology? }.first
+        treatment_area.weighted_average_processing_time_in_seconds
+      else
+        TreatmentArea.average_processing_time_in_seconds
+      end
+    end
+  end
+
+  def expected_check_out_time
+    @expected_check_out_time ||= created_at + expected_processing_time.seconds
+  end
+
   def assign(area_id, radiology)
     radiology_assignment = assignments.not_checked_out.radiology
 

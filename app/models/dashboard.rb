@@ -9,8 +9,10 @@ class Dashboard
     in_clinic = Patient.created_today.joins(%{LEFT JOIN patient_flows ON
       patients.id = patient_flows.patient_id AND
       patient_flows.area_id = #{ClinicArea::CHECKOUT}}).
-      where("patient_flows.id IS NULL").count
-
+      where("patient_flows.id IS NULL")
+    expected_close = in_clinic.order("created_at DESC").first.
+                       try(:expected_check_out_time)
+    expected_close = expected_close ? expected_close.strftime("%I:%M %p") : nil
     # These aren't taking into account repeat patients
     # Which makes me :sad:
     check_outs = PatientFlow.where(area_id: ClinicArea::CHECKOUT).
@@ -26,12 +28,14 @@ class Dashboard
       where("created_at between ? and ?",
         Time.now - 15.minutes, Time.now).count * 4
 
+
     {
       registrations_today:    registrations_today,
       registrations_total:    registrations_total,
       check_outs_today:       check_outs_today,
       check_outs_total:       check_outs_total,
-      in_clinic:              in_clinic,
+      in_clinic:              in_clinic.count,
+      expected_close_time:    expected_close,
       registrations_per_hour: registrations_per_hour,
       check_outs_per_hour:    check_outs_per_hour
     }
