@@ -8,7 +8,8 @@
     .control-group
       = f.label :login, "System type", class: 'control-label'
       .controls= f.select :login,
-        options_for_select(user_list, disabled: ["- Restricted -"])
+        options_for_select(user_list, disabled: ["- Restricted -"],
+        selected: cookies.permanent[:remember_me])
     .control-group
       = f.label :password, "Password", class: 'control-label'
       .controls= f.password_field :password

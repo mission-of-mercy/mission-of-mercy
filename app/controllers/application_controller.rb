@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   helper_method :stats, :dexis?, :cdr?, :kodak?, :current_support_request,
     :current_area_id, :current_treatment_area, :pending_support_requests
 
+  before_filter :remember_me
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -26,6 +28,12 @@ class ApplicationController < ActionController::Base
         self.current_treatment_area = @treatment_area
     else
       current_treatment_area = nil
+    end
+  end
+
+  def remember_me
+    if current_user
+      cookies.permanent[:remember_me] = current_user.login
     end
   end
 
