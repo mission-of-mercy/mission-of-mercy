@@ -28,9 +28,9 @@ class TreatmentArea < ActiveRecord::Base
   end
 
   def self.average_processing_time_in_seconds
-    TreatmentArea.where("name <> ?", RADIOLOGY_NAME).all.select do |t|
-      t.weighted_average_processing_time_in_seconds.present?
-    end.sum
+    where("name <> ?", RADIOLOGY_NAME).all.map do |t|
+      t.weighted_average_processing_time_in_seconds
+    end.compact.sum
   end
 
   def self.check_out
