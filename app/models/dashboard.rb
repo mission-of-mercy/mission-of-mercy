@@ -13,9 +13,9 @@ class Dashboard
     expected_close = in_clinic.order("created_at DESC").first.
                        try(:expected_check_out_time)
     expected_close = expected_close ? expected_close.strftime("%I:%M %p") : nil
-    # These aren't taking into account repeat patients
-    # Which makes me :sad:
     check_outs = PatientFlow.where(area_id: ClinicArea::CHECKOUT).
+      where("patients.previous_chart_number is null").
+      joins("LEFT JOIN patients ON patients.id = patient_flows.patient_id").
       select("COUNT(DISTINCT patient_id) as patient_count")
     check_outs_total = check_outs[0].patient_count.to_i
     check_outs_today = check_outs.
