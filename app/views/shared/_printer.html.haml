@@ -2,10 +2,10 @@
   %a.dropdown-toggle{'data-toggle' => 'dropdown', href: '#'}
     %i.fa.fa-print
   %ul.dropdown-menu
-    %li{class: ('selected' if session[:printer] == 'local')}
+    %li{class: ('selected' if selected_printer == 'local')}
       = link_to 'Local Printer', printer_path(printer: 'local'), method: 'post',
         remote: true
     - PrintChart.printers.each do |printer|
-      %li{class: ('selected' if printer == session[:printer])}
+      %li{class: ('selected' if printer == selected_printer)}
         = link_to printer, printer_path(printer: printer), method: 'post',
           remote: true

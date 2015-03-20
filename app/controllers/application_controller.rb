@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   helper_method :stats, :dexis?, :cdr?, :kodak?, :current_support_request,
-    :current_area_id, :current_treatment_area, :pending_support_requests
+    :current_area_id, :current_treatment_area, :pending_support_requests,
+    :selected_printer
 
   before_filter :remember_me
 
@@ -88,5 +89,9 @@ class ApplicationController < ActionController::Base
   def current_treatment_area
     @current_treatment_area ||= TreatmentArea
       .where(id: session[:current_treatment_area_id]).first
+  end
+
+  def selected_printer
+    cookies.permanent[:printer]
   end
 end

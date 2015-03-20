@@ -123,7 +123,7 @@ class Patient < ActiveRecord::Base
       if treatment_area = assigned_to.compact.reject {|t| t.radiology? }.first
         treatment_area.weighted_average_processing_time_in_seconds
       else
-        TreatmentArea.average_processing_time_in_seconds
+        TreatmentArea.average_processing_time_in_seconds || 0
       end
     end
   end
