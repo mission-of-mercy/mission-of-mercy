@@ -73,13 +73,13 @@ class TreatmentArea < ActiveRecord::Base
 
   # Uses both the current and base processing time averages to calculate a more
   # balanaced average processing time giving a slight weighted advantage to the
-  # base time
+  # current time
   #
   def weighted_average_processing_time_in_seconds
     if base_processing_time_in_seconds.present? &&
        current_average_processing_time_in_seconds.present?
-      (base_processing_time_in_seconds * 3) +
-      (current_average_processing_time_in_seconds * 2) / 5
+      ((base_processing_time_in_seconds * 2) +
+      (current_average_processing_time_in_seconds * 3)) / 5
     else
       current_average_processing_time_in_seconds ||
       base_processing_time_in_seconds
