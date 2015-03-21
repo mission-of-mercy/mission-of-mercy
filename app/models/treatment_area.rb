@@ -78,8 +78,8 @@ class TreatmentArea < ActiveRecord::Base
   def weighted_average_processing_time_in_seconds
     if base_processing_time_in_seconds.present? &&
        current_average_processing_time_in_seconds.present?
-      ((base_processing_time_in_seconds * 2) +
-      (current_average_processing_time_in_seconds * 3)) / 5
+      ((base_processing_time_in_seconds) +
+      (current_average_processing_time_in_seconds * 3)) / 4
     else
       current_average_processing_time_in_seconds ||
       base_processing_time_in_seconds
