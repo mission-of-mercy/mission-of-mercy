@@ -101,8 +101,12 @@ class Patient < ActiveRecord::Base
 
   def expected_processing_time
     @expected_processing_time ||= begin
-      if treatment_area = assigned_to.compact.reject {|t| t.radiology? }.first
-        treatment_area.weighted_average_processing_time_in_seconds
+      assigned_to = assignments.map(&:treatment_area).compact.reject do |t|
+        t.radiology?
+      end
+
+      assigned_to.any?
+        assigned_to.sum {|t| t.weighted_average_processing_time_in_seconds || 0 }
       else
         TreatmentArea.average_processing_time_in_seconds
       end
