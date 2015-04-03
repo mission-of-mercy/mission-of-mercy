@@ -105,7 +105,7 @@ class Patient < ActiveRecord::Base
         t.radiology?
       end
 
-      assigned_to.any?
+      if assigned_to.any?
         assigned_to.sum {|t| t.weighted_average_processing_time_in_seconds || 0 }
       else
         TreatmentArea.average_processing_time_in_seconds
