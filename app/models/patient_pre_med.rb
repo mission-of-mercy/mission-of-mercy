@@ -4,6 +4,14 @@ class PatientPreMed < ActiveRecord::Base
   belongs_to :pre_med
   belongs_to :patient
 
+  def full_description
+    if pre_med != nil
+      pre_med.description
+    else
+      "Pre Med"
+    end
+  end
+
   private
 
   def destroy_unless_prescribed
