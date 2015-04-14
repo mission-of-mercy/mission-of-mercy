@@ -28,7 +28,7 @@ class TreatmentAreas::Patients::SurveysController < CheckoutController
   def patient_params
     params.require(:patient).permit(
       survey_attributes: %w[tobacco_use told_needed_more_dental_treatment
-        rating_of_services id],
+        rating_of_services id utilize_free_cleaning],
       patient_pre_meds_attributes: %w[pre_med_id prescribed id]
     )
   end
