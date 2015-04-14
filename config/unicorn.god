@@ -4,8 +4,8 @@ rails_root = "/home/deploy/momma/current"
 pid_file   = "#{rails_root}/tmp/pids/unicorn.pid"
 
 God.watch do |w|
-  w.name  = "momma"
-  w.group = "unicorn"
+  w.name  = "unicorn"
+  w.group = "momma"
   w.env   = Dotenv::Environment.new("/etc/environment")
 
   # Start, stop and restart commands for the process.

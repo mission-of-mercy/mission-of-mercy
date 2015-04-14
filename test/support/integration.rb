@@ -115,5 +115,13 @@ module Support
         raise ArgumentError.new("Unsupported simulated user type")
       end
     end
+
+    def select_printer(printer_name = 'printer')
+      within("#printer-dropdown") do
+        first('a').click
+        click_link printer_name
+        page.wont_have_css '#printer-dropdown.open'
+      end
+    end
   end
 end

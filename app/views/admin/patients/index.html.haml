@@ -4,7 +4,6 @@
   %h1 Patients
 
 - @patients_table.controls do |patient|
-  = link_to 'History', history_admin_patient_path(patient)
   = link_to 'Edit',    edit_admin_patient_path(patient)
   = link_to 'Print',   chart_patient_path(patient, format: 'pdf')
   = link_to 'Destroy', admin_patient_path(patient),

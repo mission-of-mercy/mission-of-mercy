@@ -2,14 +2,56 @@
 
 = header do
   %h1 Edit Patient
+  %br
+  = "#{@patient.full_name} | Chart # #{@patient.id}"
 
-= form_for @patient, html: { autocomplete: "off" }, url: admin_patient_path(@patient) do |f|
-  = render partial: 'patients/form', locals: {f: f}
+%ul.nav.nav-tabs
+  %li.active
+    %a{href: "#general", data: {toggle: "tab"}} General
+  %li
+    %a{href: "#procedures-prescriptions-pre-meds", data: {toggle: "tab"}}
+      Procedures, Prescriptions, and Pre Meds
+  %li
+    %a{href: "#history", data: {toggle: "tab"}}
+      History
 
-  .input-bottom
-    = f.submit "Update"
-    |
-    = link_to 'Cancel', admin_patients_path, class: 'warning'
+.tab-content
+  #general.tab-pane.active
+    = form_for @patient, html: { autocomplete: "off" },
+      url: admin_patient_path(@patient) do |f|
+      = render partial: 'patients/form', locals: {f: f}
 
+      .input-bottom
+        = f.submit "Update"
+        |
+        = link_to 'Cancel', admin_patients_path, class: 'warning'
+  #procedures-prescriptions-pre-meds.tab-pane
+    %h4 Procedures
 
+    - if @patient.patient_procedures.empty?
+      %p No procedures entered
+    - else
+      %ul
+        - @patient.patient_procedures.each do |patient_procedure|
+          %li= patient_procedure.full_description
 
+    %h4 Prescriptions
+
+    - if @patient.patient_prescriptions.empty?
+      %p No prescriptions entered
+    - else
+      %ul
+        - @patient.patient_prescriptions.each do |patient_prescription|
+          %li= patient_prescription.full_description
+
+    %h4 Pre Meds
+
+    - if @patient.patient_pre_meds.empty?
+      %p No pre meds entered
+    - else
+      %ul
+        - @patient.patient_pre_meds.each do |patient_pre_med|
+          %li= patient_pre_med.full_description
+
+  #history.tab-pane
+    = render 'history'

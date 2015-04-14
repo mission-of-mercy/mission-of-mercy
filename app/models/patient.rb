@@ -249,6 +249,30 @@ class Patient < ActiveRecord::Base
     end
   end
 
+  # All charts that came before or after this chart
+  #
+  def associated_charts
+    @associated_charts ||= begin
+      patients = []
+      # Forward
+      next_patient = ->(id) { Patient.where(previous_chart_number: id).first }
+      id = self.id
+      while(next_patient[id].present?)
+        patients << next_patient[id]
+        id = patients.last.id
+      end
+      # Backward
+      previous_id = previous_chart_number
+      previous_patient = ->(id) { Patient.where(id: id).first }
+      while(previous_patient[previous_id].present?)
+        patients << previous_patient[previous_id]
+        previous_id = patients.last.previous_chart_number
+      end
+
+      patients.sort_by(&:id)
+    end
+  end
+
   private
 
   def update_survey

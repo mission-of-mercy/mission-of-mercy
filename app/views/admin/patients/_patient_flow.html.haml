@@ -4,4 +4,4 @@
     - if flow.treatment_area
       \- #{flow.treatment_area.name}
   %td
-    = flow.created_at.to_s(:time)
+    = flow.created_at.strftime('%I:%M %p')

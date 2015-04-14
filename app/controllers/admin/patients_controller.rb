@@ -1,6 +1,6 @@
 class Admin::PatientsController < ApplicationController
   before_filter :admin_required, :set_current_tab
-  before_filter :find_patient, :only => [:edit, :update, :destroy, :history]
+  before_filter :find_patient, :only => [:edit, :update, :destroy]
 
   def index
     @patients_table = PatientsTable.new(:chart_number, :name,  :age,

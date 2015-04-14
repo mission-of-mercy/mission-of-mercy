@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.3'
+gem 'rails', '~> 4.1.9'
 gem 'json',  '~> 1.7.7'
 gem 'unicorn'
 gem 'pg'
 gem 'haml'
 gem 'sass'
 gem 'dotenv-rails'
-gem 'nokogiri',      '~> 1.5.11'
+gem 'nokogiri'
 gem 'will_paginate', '>= 3.0.5'
 gem 'devise'
 gem 'dynamic_form'
@@ -32,12 +32,13 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'sass-rails',   '~> 4.0.0'
 gem 'uglifier'
 gem 'compass-rails'
-gem 'bootstrap-sass-rails'
+gem 'bootstrap-sass-rails', '~> 2.3.2.1'
 gem 'font-awesome-rails'
 
 # MOMMA Gems
 
-gem 'print_chart', git: 'https://github.com/mission-of-mercy/print_chart.git'
+gem 'print_chart', '~> 0.0.2', 
+  git: 'https://github.com/mission-of-mercy/print_chart.git'
 gem 'support_notification',
   git: 'https://github.com/mission-of-mercy/support_notification.git'
 
@@ -52,7 +53,7 @@ group :development do
 end
 
 group :test do
-  gem 'minitest-spec-rails', '~> 4.7.6'
+  gem 'minitest-spec-rails', '~> 5.2.0'
   gem 'capybara_minitest_spec'
   gem 'minitest-metadata'
   gem 'factory_girl_rails'
