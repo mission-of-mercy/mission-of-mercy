@@ -110,7 +110,7 @@ feature "Checking Out a Patient" do
 
     assert_content "Patient successfully checked out"
 
-    assert patient.patient_procedures.empty?
+    assert patient.patient_prescriptions.empty?
   end
 
   it "requires a procedure is selected" do

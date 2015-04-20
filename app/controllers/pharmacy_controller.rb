@@ -1,4 +1,6 @@
 class PharmacyController < ApplicationController
+  include CanHasPharmacy
+
   before_filter :authenticate_user!
   before_filter :find_patient, :only => [:check_out, :check_out_complete]
 
@@ -8,33 +10,11 @@ class PharmacyController < ApplicationController
   end
 
   def check_out
-    @patient.patient_prescriptions.each do |p|
-      p.prescribed = true
-    end
-
-    Prescription.all.each do |pres|
-      unless @patient.prescriptions.exists? pres
-        @patient.patient_prescriptions.build(:prescription_id => pres.id)
-      end
-    end
-
-    @prescriptions = @patient.patient_prescriptions.sort_by {|p| p.prescription.position || -1 }
+    prescriptions
   end
 
   def check_out_complete
-    new_prescription = false
-
-    @patient.attributes = params[:patient]
-
-    @patient.patient_prescriptions.each do |p|
-      new_prescription = true if p.new_record?
-    end
-
-    @patient.save
-
-    if new_prescription
-      @patient.flows.create(:area_id => ClinicArea::PHARMACY)
-    end
+    pharmacy_check_out
 
     flash[:notice] = "Prescriptions sucessfully added to patient's record"
     redirect_to pharmacy_path
