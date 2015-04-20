@@ -62,14 +62,6 @@ GEM
       railties (>= 3.1.0)
       sass-rails (>= 3.1.0)
     builder (3.1.4)
-    capistrano (2.14.2)
-    capistrano (2.15.5)
-      highline
-      net-scp (>= 1.0.0)
-      net-sftp (>= 2.0.0)
-      net-ssh (>= 2.0.14)
-      net-ssh-gateway (>= 1.1.0)
-    capistrano_colors (0.5.5)
     capybara (2.2.1)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -164,13 +156,6 @@ GEM
     mono_logger (1.1.0)
     multi_json (1.11.0)
     multi_xml (0.5.5)
-    net-scp (1.1.0)
-      net-ssh (>= 2.6.5)
-    net-sftp (2.1.1)
-      net-ssh (>= 2.6.5)
-    net-ssh (2.6.7)
-    net-ssh-gateway (1.2.0)
-      net-ssh (>= 2.6.5)
     netrc (0.10.3)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
@@ -303,8 +288,6 @@ DEPENDENCIES
   axlsx
   axlsx_rails
   bootstrap-sass-rails (~> 2.3.2.1)
-  capistrano
-  capistrano_colors
   capybara
   capybara-screenshot
   capybara-webkit
