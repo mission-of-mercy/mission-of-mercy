@@ -25,8 +25,21 @@ bold_center = styles.add_style b: true, alignment: { horizontal: :center }
     end
   end
 
+
   xlsx_package.workbook.add_worksheet(name: sheet.titleize) do |sheet|
     sheet.add_row rows.first.keys, style: header_styles
-    rows.each {|row| sheet.add_row row.values, row_options.dup }
+    rows.each do |row|
+      values = row.values.map do |value|
+        # Old versions of axlsx failed to properly handle local times
+        # https://github.com/randym/axlsx/issues/188
+        #
+        if Time === value
+          value + value.utc_offset
+        else
+          value
+        end
+      end
+      sheet.add_row values, row_options.dup
+    end
   end
 end
