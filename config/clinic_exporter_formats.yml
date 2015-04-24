@@ -11,7 +11,7 @@ patients:
   zip: Zip
   phone: Phone
   race: Race
-  travel_time: Travel Time (in days)
+  travel_time: Travel Time (in minutes)
   chief_complaint: Chief Complaint
   last_dental_visit: Last Dental Visit
   pain: In Pain?
@@ -66,3 +66,4 @@ surveys:
   dental_insurance: Has Dental Insurnace
   medical_insurance: Has Medical Insurnace
   has_place_to_be_seen_for_medical_care: Has a place to be seen for medical care
+  utilize_free_cleaning: Utilizes the free cleaning at CCRI?
