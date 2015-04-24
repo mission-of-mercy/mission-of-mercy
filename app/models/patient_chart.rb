@@ -7,6 +7,12 @@ class PatientChart
   end
 
   def chart_header
+    if patient.interpreter_needed?
+      float do
+        text "Translator needed"
+        text patient.language, size: 20
+      end
+    end
     text patient.chart_number.to_s, size: 36, style: :bold, align: :right
   end
 
@@ -37,9 +43,9 @@ class PatientChart
   end
 
   # proxy unhandled calls to Prawn
-  def method_missing(m, *a, &b) 
-    @document.send(m, *a, &b) 
-  end 
+  def method_missing(m, *a, &b)
+    @document.send(m, *a, &b)
+  end
 
   private
 
