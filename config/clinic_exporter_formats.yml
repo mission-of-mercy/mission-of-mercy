@@ -67,3 +67,5 @@ surveys:
   medical_insurance: Has Medical Insurnace
   has_place_to_be_seen_for_medical_care: Has a place to be seen for medical care
   utilize_free_cleaning: Utilizes the free cleaning at CCRI?
+  er_last_6_months: Have you been to the ER in the last 6 months for dental issues?
+  er_last_year: Have you been to the ER in the last year for dental issues?

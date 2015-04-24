@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150414144017) do
+ActiveRecord::Schema.define(version: 20150424124703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -209,6 +209,8 @@ ActiveRecord::Schema.define(version: 20150414144017) do
     t.boolean  "medical_insurance"
     t.boolean  "has_place_to_be_seen_for_medical_care"
     t.boolean  "utilize_free_cleaning"
+    t.boolean  "er_last_6_months",                      default: false, null: false
+    t.boolean  "er_last_year",                          default: false, null: false
   end
 
   create_table "treatment_areas", force: true do |t|

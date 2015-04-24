@@ -59,6 +59,14 @@
     insurance
   .input
     = yes_no_group f, :medical_insurance
+  %p
+    Have you been to the ER in the last 6 months for dental issues?
+  .input
+    = yes_no_group f, :er_last_6_months
+  %p
+    Have you been to the ER in the last year for dental issues?
+  .input
+    = yes_no_group f, :er_last_year
 
   %p
 

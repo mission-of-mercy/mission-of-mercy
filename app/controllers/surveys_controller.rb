@@ -54,6 +54,7 @@ class SurveysController < ApplicationController
       has_place_to_be_seen_for_dental_care no_insurance insurance_from_job
       medicaid_or_chp_plus self_purchase_insurance use_twitter use_facebook
       dental_insurance medical_insurance has_place_to_be_seen_for_medical_care
+      er_last_year er_last_6_months
     ])
   end
 end
