@@ -17,6 +17,8 @@ patients:
   pain: In Pain?
   pain_length_in_days: Pain Length (in days)
   previous_chart_number: Previous Chart Number (for returning patients)
+  interpreter_needed: Interpreter was needed
+  language: Language spoken
 
 procedures:
   patient_id: "Chart #"
