@@ -17,6 +17,11 @@ patients:
   pain: In Pain?
   pain_length_in_days: Pain Length (in days)
   previous_chart_number: Previous Chart Number (for returning patients)
+  pregnant: Pregnant?
+  has_obgyn: Has an OBGYN?
+  due_date: Due Date
+  follow_up: Gave permission to follow up about care
+  obgyn_name: OBGYN's name
 
 procedures:
   patient_id: "Chart #"
