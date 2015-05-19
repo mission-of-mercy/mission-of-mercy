@@ -17,6 +17,7 @@ gem 'virtus'
 gem 'axlsx'
 gem 'axlsx_rails'
 gem 'prawn', '~> 0.15.0'
+gem 'prawn-js', git: 'https://github.com/RailsData/prawn-js'
 
 gem 'resque'
 gem 'resque-web', require: 'resque_web'

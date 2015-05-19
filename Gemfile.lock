@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/RailsData/prawn-js
+  revision: 612a7901b3220c33e32feaee140b5002f4ff5343
+  specs:
+    prawn-js (0.7.1)
+      prawn-core (>= 0.6.1)
+
+GIT
   remote: https://github.com/mission-of-mercy/print_chart.git
   revision: b0ed0f83f3ed56983a0415c9a690564979d36be9
   specs:
@@ -165,6 +172,7 @@ GEM
     prawn (0.15.0)
       pdf-core (~> 0.1.3)
       ttfunk (~> 1.1.0)
+    prawn-core (0.8.4)
     prowl (0.1.3)
     pry (0.9.12.6)
       coderay (~> 1.0)
@@ -248,7 +256,7 @@ GEM
     thread_safe (0.3.4)
     tilt (1.4.1)
     timecop (0.5.9)
-    ttfunk (1.1.0)
+    ttfunk (1.1.1)
     twilio (3.1.1)
       builder (>= 2.1.2)
       httparty (>= 0.8)
@@ -311,6 +319,7 @@ DEPENDENCIES
   nokogiri
   pg
   prawn (~> 0.15.0)
+  prawn-js!
   print_chart (~> 0.0.2)!
   pry
   pry-rails

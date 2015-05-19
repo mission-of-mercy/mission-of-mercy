@@ -1,9 +1,12 @@
+require 'prawn/js'
+
 class PatientChart
   def initialize(patient)
     @document = Prawn::Document.new(top_margin: 20, left_margin: 20, right_margin: 20)
     @patient = patient
     chart_header
     chart_table
+    auto_print
   end
 
   def chart_header
@@ -37,9 +40,13 @@ class PatientChart
   end
 
   # proxy unhandled calls to Prawn
-  def method_missing(m, *a, &b) 
-    @document.send(m, *a, &b) 
-  end 
+  def method_missing(m, *a, &b)
+    @document.send(m, *a, &b)
+  end
+
+  def auto_print
+    add_docopen_js("autoprint", "this.print(false);")
+  end
 
   private
 
