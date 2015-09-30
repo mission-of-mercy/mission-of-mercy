@@ -289,4 +289,20 @@ class PatientTest < ActiveSupport::TestCase
 
     patient.race.must_equal "Not in list"
   end
+
+  test '#export_to_dexis includes the clinic location in id' do
+    location = ENV['LOCATION'] = 'Clinic Location'
+
+    patient = FactoryGirl.build(:patient)
+
+    f = Tempfile.new('foo.dat')
+
+    patient.export_to_dexis(f.path)
+
+    f.rewind
+
+    f.read.must_include location.parameterize
+
+    f.unlink
+  end
 end
