@@ -28,14 +28,12 @@ feature "Changing the current Treatment Area" do
   end
 
   test "with a chart number entered" do
-    skip "The initial visit isn't keeping the params :("
-
     options = { patient_search: { chart_number: @patient.chart_number } }
     visit treatment_area_patients_path(@treatment_area, options)
 
     change_treatment_area
 
-    assert_current_path treatment_area_patients_path(@another_treatment_area,
+    current_url.must_include treatment_area_patients_path(@another_treatment_area,
                                                      options)
   end
 
