@@ -1,12 +1,9 @@
 require 'csv'
 
 class Admin::ReportsController < ApplicationController
-  before_filter :admin_required
+  before_filter :admin_or_reports_required
   before_filter :set_current_tab
-
-  def index
-
-  end
+  before_filter :admin_required, only: :export
 
   def clinic_summary
     if params[:day] && params[:span]
@@ -40,4 +37,10 @@ class Admin::ReportsController < ApplicationController
     @current_tab = "reports"
   end
 
+  def admin_or_reports_required
+    if !signed_in? ||
+      ![UserType::ADMIN, UserType::REPORTS].include?(current_user.user_type)
+      access_denied
+    end
+  end
 end

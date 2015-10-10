@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
   def start_path
     if user_type == UserType::ADMIN
       Rails.application.routes.url_helpers.admin_reports_path
+    elsif user_type == UserType::POWER
+      Rails.application.routes.url_helpers.admin_patients_path
+    elsif user_type == UserType::REPORTS
+      Rails.application.routes.url_helpers.admin_clinic_summary_report_path
     elsif user_type == UserType::CHECKIN
       Rails.application.routes.url_helpers.new_patient_path
     elsif user_type == UserType::XRAY

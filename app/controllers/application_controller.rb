@@ -15,11 +15,14 @@ class ApplicationController < ActionController::Base
 
   # Filter method to enforce admin access rights
   def admin_required
-    if signed_in?
-      current_user.user_type == UserType::ADMIN
-    else
-      redirect_to login_path
+    if !signed_in? || current_user.user_type != UserType::ADMIN
+      access_denied
     end
+  end
+
+  def access_denied
+    flash[:error] = "Sorry you don't have access to that area"
+    redirect_to root_path
   end
 
   def set_current_treatment_area

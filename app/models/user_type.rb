@@ -1,5 +1,4 @@
 class UserType
-
   def self.add_enum(key,value)
     @hash ||= {}
     @hash[key]=value
@@ -19,5 +18,8 @@ class UserType
   self.add_enum :XRAY, 4
   self.add_enum :PHARMACY, 5
   self.add_enum :ASSIGNMENT, 6
+  self.add_enum :REPORTS, 7
+  self.add_enum :POWER, 8
 
+  RESTRICTED = [UserType::ADMIN, UserType::POWER]
 end

@@ -1,5 +1,6 @@
 class Admin::PatientsController < ApplicationController
-  before_filter :admin_required, :set_current_tab
+  before_filter :admin_or_power_required, :set_current_tab
+  before_filter :admin_required, :only => [:destroy]
   before_filter :find_patient, :only => [:edit, :update, :destroy]
 
   def index
@@ -45,5 +46,12 @@ class Admin::PatientsController < ApplicationController
 
   def patient_params
     params.require(:patient).permit!
+  end
+
+  def admin_or_power_required
+    if !signed_in? ||
+      ![UserType::ADMIN, UserType::POWER].include?(current_user.user_type)
+      access_denied
+    end
   end
 end
