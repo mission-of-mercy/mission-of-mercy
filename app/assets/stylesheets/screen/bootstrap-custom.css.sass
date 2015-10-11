@@ -11,6 +11,7 @@ $iconWhiteSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings-white.p
 @import twitter/bootstrap/component-animations
 @import twitter/bootstrap/dropdowns
 @import twitter/bootstrap/navs
+@import twitter/bootstrap/modals
 
 a.btn
   text-decoration: none
@@ -18,7 +19,9 @@ a.btn
     color: #fff
 
 table
-  @extend .table, .table-condensed, .table-striped, .table-hover
+  @extend .table, .table-striped, .table-hover
+  &:not(.expanded)
+    @extend .table-condensed
   td.controls
     text-align: right
     a

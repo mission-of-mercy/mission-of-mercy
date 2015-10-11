@@ -87,6 +87,8 @@ MissionOfMercy::Application.routes.draw do
     end
   end
 
+  resources :stats, only: [:index]
+
   resque_web_constraint = lambda do |request|
     current_user = request.env['warden'].user
     current_user.present? && current_user.user_type == UserType::ADMIN

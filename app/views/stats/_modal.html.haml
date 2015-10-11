@@ -1,0 +1,17 @@
+%a#stats-modal--launcher{data: {toggle: 'modal', target: '#stats-modal'},
+  href: stats_path }
+  Stats
+
+#stats-modal.modal.hide.fade
+  .modal-header
+    %button.close{'data-dismiss' => 'modal'} &times;
+    %h2 Clinic Statistics
+  .modal-body
+    Loading ...
+  .modal-footer
+    %button.btn{'data-dismiss' => 'modal'} Close
+
+:javascript
+  $('#stats-modal').on('hidden', function() {
+    $(this).removeData('modal');
+  });

@@ -1,0 +1,14 @@
+%table.expanded
+  %tbody
+    %tr
+      %th Patients Registered Today
+      %td= @patients[:registrations_today]
+    %tr
+      %th Patients in Clinic
+      %td= @patients[:in_clinic]
+    %tr
+      %th Total Patient Registrations
+      %td= @patients[:registrations_total]
+    %tr
+      %th Total Donated Dental Care
+      %td= number_to_currency @summary[:total_donated]
