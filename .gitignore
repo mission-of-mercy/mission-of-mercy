@@ -1,12 +1,8 @@
-.DS_Store
+.*
+!.gitignore
 log/*.log
 tmp/**/*
 tmp/*
-.sass-cache
-.svn
-.rvmrc
-.bundle
-.env
 dump.rdb
 
 # CSV Import Files
