@@ -6,9 +6,13 @@ $bootstrap = <<THIS_IS_A_BASH_SCRIPT
 set -e
 # fetch dependencies
 apt-get update
-apt-get install -y apt-file git libpq-dev make nginx nodejs postgresql qt4-default qt4-qmake ruby-dev ruby 
+apt-get install -y apt-file git libpq-dev make nginx nodejs postgresql qt4-default qt4-qmake ruby-dev ruby redis xvfb
+# setup psql
+sudo -u postgres createuser --superuser vagrant
+# TODO: set the password to 'vagrant' without manual invervention
 # run application setup
-cd /vagrant/ && ./bin/setup
+cd /vagrant/
+xvfb -a bundle exec ./bin/setup
 THIS_IS_A_BASH_SCRIPT
 
 Vagrant.configure("2") do |config|
