@@ -178,7 +178,8 @@ feature "Checking in a patient" do
     page.must_have_content "Printing Chart"
 
     # The chart has popped up
-    page.driver.browser.window_handles.length.must_equal 2
+    page.driver.browser.window_handles.length.must_equal 2, \
+      "Expected to see a popup window containing a printable chart."
 
     # Find the patient from the database
     patient = Patient.order("created_at DESC").first
