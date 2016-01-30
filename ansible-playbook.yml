@@ -1,10 +1,12 @@
-# This build script is only meant to work with local development VMs
+# This build script is meant for spinning up a known-good development 
+# environment on a VM. Running 'vagrant up' in this directory will ultimately
+# invoke this.
 ---
 
 - hosts: all
   tasks:
 
-    - name: install dependencies
+    - name: install system packages
       apt: state=present name={{ item }}
       with_items:
         - apt-file
@@ -15,21 +17,43 @@
         - nginx
         - nodejs
         - postgresql
-        - qt4-default
-        - qt4-qmake
-        - ruby-dev
-        - ruby
+        - python-psycopg2
         - redis-server
         - redis-tools
+        - qt4-default
+        - qt4-qmake
+        - redis-server
+        - redis-tools
+        - ruby
+        - ruby-dev
         - xvfb
 
-    - name: create a postgresql test user
-      postgresql_user: name=vagrant password=vagrant role_attr_flags=SUPERUSER
+    ## Postgres Setup ##
+
+    - name: ensure dev superuser account exists
+      postgresql_user: name=postgres password=postgres role_attr_flags=SUPERUSER
       sudo: yes
       sudo_user: postgres
 
-    - name: put the environment file into place
+    - name: put the environment file into place, providing db config
       file: src=/vagrant/.env.example dest=/vagrant/.env state=link
 
-    - name: run the setup script
+    - name: put dev database username into the environment file
+      lineinfile: dest=/vagrant/.env 
+                  line="DB_USERNAME=postgres" 
+                  regexp=^DB_USERNAME
+
+    - name: put dev password into the environment file
+      lineinfile: dest=/vagrant/.env
+                  line="DB_PASSWORD=postgres" 
+                  regexp=^DB_PASSWORD
+
+    - name: ensure test database exists
+      postgresql_db: name=mom-test
+      sudo: yes
+      sudo_user: postgres
+
+    ## Dovetail with ./bin/setup ##
+
+    - name: run the setup script (includes automated tests)
       shell: xvfb-run -a /vagrant/bin/setup
