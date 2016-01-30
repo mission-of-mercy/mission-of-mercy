@@ -6,7 +6,8 @@ $bootstrap = <<THIS_IS_A_BASH_SCRIPT
 set -e
 # fetch dependencies
 apt-get update
-apt-get install -y apt-file git libpq-dev make nginx nodejs postgresql qt4-default qt4-qmake ruby-dev ruby redis xvfb
+apt-get install -y ansible cowsay python-pip python-dev
+pip install psycopg2
 # setup psql
 sudo -u postgres createuser --superuser vagrant
 # TODO: set the password to 'vagrant' without manual invervention

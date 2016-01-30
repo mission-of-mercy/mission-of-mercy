@@ -1,0 +1,35 @@
+# This build script is only meant to work with local development VMs
+---
+
+- hosts: all
+  tasks:
+
+    - name: install dependencies
+      apt: state=present name={{ item }}
+      with_items:
+        - apt-file
+        - cowsay
+        - git
+        - libpq-dev
+        - make
+        - nginx
+        - nodejs
+        - postgresql
+        - qt4-default
+        - qt4-qmake
+        - ruby-dev
+        - ruby
+        - redis-server
+        - redis-tools
+        - xvfb
+
+    - name: create a postgresql test user
+      postgresql_user: name=vagrant password=vagrant role_attr_flags=SUPERUSER
+      sudo: yes
+      sudo_user: postgres
+
+    - name: put the environment file into place
+      file: src=/vagrant/.env.example dest=/vagrant/.env state=link
+
+    - name: run the setup script
+      shell: xvfb-run -a /vagrant/bin/setup
