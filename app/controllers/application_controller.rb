@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
-  helper_method :stats, :dexis?, :cdr?, :kodak?, :current_support_request,
-    :current_area_id, :current_treatment_area, :pending_support_requests
+  helper_method :stats, :dexis?, :cdr?, :kodak?, :apteryx?,
+    :current_support_request, :current_area_id, :current_treatment_area,
+    :pending_support_requests
 
   before_filter :remember_me
 
@@ -55,6 +56,10 @@ class ApplicationController < ActionController::Base
 
   def kodak?
     xray_system == "kodak"
+  end
+
+  def apteryx?
+    xray_system == "apteryx"
   end
 
   def current_support_request

@@ -1,4 +1,4 @@
-- if current_user.user_type == UserType::XRAY && cdr?
+- if current_user.user_type == UserType::XRAY && (cdr? || apteryx?)
   - title "#{@patient.full_name} - #{@patient.id}"
 - else
   - title "Checkout - Procedures"
