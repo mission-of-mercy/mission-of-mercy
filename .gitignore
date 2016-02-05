@@ -6,7 +6,7 @@ tmp/*
 .svn
 .rvmrc
 .bundle
-.env
+.env*
 dump.rdb
 
 # CSV Import Files
