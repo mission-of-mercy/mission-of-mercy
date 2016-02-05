@@ -12,3 +12,6 @@ dump.rdb
 # CSV Import Files
 /zipcode.csv
 /procedures.csv
+
+# Hacks
+hacks
