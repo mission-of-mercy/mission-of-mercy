@@ -235,6 +235,7 @@ ActiveRecord::Schema.define(version: 20160209183025) do
     t.text     "household_anual_income"
     t.text     "reason_for_visit"
     t.boolean  "attended_previous_mom"
+    t.string   "last_dental_visit"
   end
 
   create_table "treatment_areas", force: true do |t|

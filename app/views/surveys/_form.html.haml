@@ -14,8 +14,9 @@
     mom.utilities.printChart #{@patient.id}
 
 = form_for [@patient, @survey], html: { autocomplete: "off" } do |f|
-  %h3 Visit Information
-  %hr
+  %legend
+    Visit Information
+    .pull-right 7 questions
 
   %p 1. What is the reason for your visit today?
 
@@ -29,7 +30,9 @@
     = f.radio_button :pain, false
     = f.label :pain, "No", value: false
 
-  %p 3. How long have you had this pain?
+  %p
+    3. How long have you had this pain?
+    %code TODO Disable if previous selection was false
   .input
     = f.select :time_in_pain, [ "1 month or less",
       "More than 1 month, but not more than 6 months",
@@ -52,9 +55,23 @@
       'More than 4 hours'], include_blank: true
   %p
     6. How did you hear about the Mission of Mercy clinic?
-    %i Mark all that apply.
+    %i Select all that apply.
   .input
-    TODO
+    %code
+      TODO: Need to update datamodel so multiple "heard about" options can be
+      selected
+    %ul
+      %li Family member or friend
+      %li Television
+      %li Radio
+      %li Newspaper
+      %li Internet – Facebook, Twitter, Blog, or other website
+      %li Doctor’s office
+      %li Health center/clinic
+      %li Hospital
+      %li Church or other religious organization
+      %li At work
+      %li Other (DESCRIBE)
 
   %p 7. Did you attend the Mission of Mercy clinic in Tampa in March, 2014?
   .input
@@ -63,13 +80,24 @@
     = f.radio_button :attended_previous_mom, false
     = f.label :attended_previous_mom, "No", value: false
 
-  %h3 Your Dental Health and Dental Care
-  %hr
+  %legend
+    Your Dental Health and Dental Care
+    .pull-right 9 questions
 
   %p
     8. In general, how would you rate the
     %strong overall condition of your teeth and gums?
+  .input
+    = f.select :overall_dental_health, ['Excellent', 'Very good', 'Good',
+      'Fair', 'Poor'], include_blank: true
+
   %p 9. Do you own a toothbrush?
+  .input
+    = f.radio_button :own_a_toothbrush, true
+    = f.label :own_a_toothbrush, "Yes", value: true
+    = f.radio_button :own_a_toothbrush, false
+    = f.label :own_a_toothbrush, "No", value: false
+
   %p
     10. About how long has it been since you
     %strong last visited
@@ -78,110 +106,298 @@
     %i
       Include all types of dentists, such as, orthodontists, oral surgeons,
       and all other dental specialists, as well as dental hygienists.
+  .input
+    = f.select :last_dental_visit, ['6 months or less',
+      'More than 6 months, but not more than 1 year ago',
+      'More than 1 year, but not more than 2 years ago',
+      'More than 2 years, but not more than 5 years ago',
+      'More than 5 years ago',
+      'Never have been to a dentist'], include_blank: true
+
   %p 11. What kind of place do you usually go to when you need dental care?
+  .input
+    = f.select :dental_care_home, [' Dentist’s office',
+      'Clinic or health center',
+      'Hospital emergency room',
+      'Hospital outpatient department',
+      'Urgent care center',
+      'Some other place',
+      'There is no place I go to most often'], include_blank: true
   %p
     12. Have you
     %strong ever
     gone to a hospital emergency room for a dental problem?
+  .input
+    = f.radio_button :emergency_room_for_dental, true
+    = f.label :emergency_room_for_dental, "Yes", value: true
+    = f.radio_button :emergency_room_for_dental, false
+    = f.label :emergency_room_for_dental, "No", value: false
+
   %p
     13. In the
     %strong last 6 months,
     how many times did you go to a hospital emergency room for a dental problem?
+
+    %code TODO Disable if previous selection was false
+
+  .input
+    = f.select :frequency_of_emergency_dental_visits_past_6_months,
+      ['None', '1 time', '2 times', '3 times', '4 or more times'],
+      include_blank: true
   %p
     14. Thinking about your last visit to an emergency room for a dental
     problem, before you left the emergency room, did someone tell you that you
     should go to a dentist’s office or dental clinic for additional care?
+
+    %code TODO Disable if previous selection was false
+
+  .input
+    = f.radio_button :told_need_more_dental_care_after_emergency_visit, true
+    = f.label :told_need_more_dental_care_after_emergency_visit, "Yes",
+      value: true
+    = f.radio_button :told_need_more_dental_care_after_emergency_visit, false
+    = f.label :told_need_more_dental_care_after_emergency_visit, "No",
+      value: false
+
   %p
     15. In the
     %strong past 12 months,
     have you gone to any of the following places for dental care?
+
+  %table
+    %tbody
+      %tr
+        %td
+          = f.label :six_mo_visited_dental_office do
+            = f.check_box :six_mo_visited_dental_office
+            Dentist’s office
+      %tr
+        %td
+          %label
+            = f.check_box :six_mo_visited_apple_clinic
+            Apple Clinic/Community Health Outreach
+      %tr
+        %td
+          %label
+            = f.check_box :six_mo_visited_clay_county_cares
+            Clay County Cares Dental Clinic/Green Cove Springs
+      %tr
+        %td
+          %label
+            = f.check_box :six_mo_visited_sulzbacher_clinic
+            Sulzbacher Clinic
+      %tr
+        %td
+          %label
+            = f.check_box :six_mo_visited_baptist_emergency
+            Baptist Medical Center emergency room
+      %tr
+        %td
+          %label
+            = f.check_box :six_mo_visited_memorial_hospital_emergency
+            Memorial Hospital emergency room
+      %tr
+        %td
+          %label
+            = f.check_box :six_mo_visited_orange_park_emergency
+            Orange Park Medical Center emergency room
+      %tr
+        %td
+          %label
+            = f.check_box :six_mo_visited_st_vincent_emergency
+            St. Vincent’s Medical Center Riverside emergency room
+      %tr
+        %td
+          %label
+            = f.check_box :six_mo_visited_uf_emergency
+            University of Florida (UF) Health Jacksonville emergency room
+      %tr
+        %td
+          %label
+            = check_box_tag 'TODO'
+            Some other place
+            %code TODO Toggle Textfield
+
   %p
     16. Do you have any kind of insurance coverage that
     %strong pays for any costs for dental care?
 
-  %h3 About You
+  .input
+    = f.radio_button :dental_insurance_coverage, true
+    = f.label :dental_insurance_coverage, "Yes",
+      value: true
+    = f.radio_button :dental_insurance_coverage, false
+    = f.label :dental_insurance_coverage, "No",
+      value: false
 
-  %hr
+  = react_component('SurveyPrompt')
 
-  %h2 Would you like to answer the following questions verbally or in written form?
+  #survey--sensative-questions
+    %legend
+      About You
+      .pull-right 6 questions
 
-  %p 17. What is the highest grade or level of school that you have completed?
-  %p
-    18. What kind of health insurance or health care coverage do you have?
-    %i Mark all that apply.
-  %p
-    19. Did you ever serve on active duty in the U.S. Armed Forces, Reserves or
-    National Guard?
-  %p 20. Are you of Hispanic or Latino or Spanish origin or descent?
-  %p 21. What is your race?
-  %p
-    22. Which of the following best describes your current job or work
-    situation?
+    %p 17. What is the highest grade or level of school that you have completed?
+    .input
+      = f.select :highest_level_of_school_completed, ['8th grade or less',
+        'Some high school, but did not graduate',
+        'High school graduate or GED',
+        'Some college or 2-year degree',
+        '4-year college graduate',
+        'More than 4-year college degree'], include_blank: true
+    %p
+      18. What kind of health insurance or health care coverage do you have?
+      %i Select all that apply.
+    %table
+      %tbody
+        %tr
+          %td
+            %label
+              = f.check_box :health_insurance_none
+              No health insurance or health coverage of any type
+        %tr
+          %td
+            %label
+              = f.check_box :health_insurance_from_employer
+              Insurance from employer
+        %tr
+          %td
+            %label
+              = f.check_box :health_insurance_purchased_from_insurance_co
+              Insurance purchased directly from an insurance company
+        %tr
+          %td
+            %label
+              = f.check_box :health_insurance_purchased_from_gov
+              Insurance purchased through Healthcare.gov or Health Insurance
+              Marketplace
+        %tr
+          %td
+            %label
+              = f.check_box :health_insurance_medicare
+              Medicare, for people 65 and older or people with certain disabilities
+        %tr
+          %td
+            %label
+              = f.check_box :health_insurance_medicaid
+              Medicaid, Medical Assistance, or government assistance for people
+              with low incomes or a disability
+        %tr
+          %td
+            %label
+              = f.check_box :health_insurance_military
+              Military (TRICARE/VA/CHAMP-VA)
+        %tr
+          %td
+            %label
+              = f.check_box :health_insurance_other
+              Another type of health insurance or health coverage
 
-  %h3 Your Household
-  %hr
+    %p
+      19. Did you ever serve on active duty in the U.S. Armed Forces, Reserves or
+      National Guard?
+    .input
+      = f.select :military_service, ['Yes, now on active duty',
+        'Yes, on active duty in the past, but not now',
+        'Yes, only on active duty for training in the Reserves or National Guard',
+        'No, never served in the military'], include_blank: true
 
-  %p
-    23. Including yourself, how many people are living or staying at your home
-    address for more than 2 months?
-  %p
-    24. In the
-    %strong past 12 months,
-    did you or any member of your household receive benefits from the Food
-    Stamp Program or SNAP (the Supplemental Nutrition Assistance Program)?
-  %p
-    25. In the
-    %strong past 12 months,
-    did you or any member of your household receive benefits from the WIC
-    program (the Women, Infants, and Children program)?
-  %p
-    26. What is your
-    %u best estimate
-    of the
-    %strong total yearly income of all members in your household from all sources
-    before taxes?
-    %br
-    %i
-      This includes money from jobs, net income from business,
-      unemployment compensation, workers’ compensation, Social Security
-      payments, Supplemental Security Income, retirement benefits, veterans’
-      payments, alimony, child support, dividends, interest, and any other
-      money received.
+    %p 20. Are you of Hispanic or Latino or Spanish origin or descent?
+    .input
+      = f.radio_button :hispanic_latino_spanish, true
+      = f.label :hispanic_latino_spanish, "Yes",
+        value: true
+      = f.radio_button :hispanic_latino_spanish, false
+      = f.label :hispanic_latino_spanish, "No",
+        value: false
 
-  -# %p
-  -#   = f.label :heard_about_clinic, 'How did you hear about the clinic?',
-  -#     class: 'question'
-  -# .input
-  -#   = f.select :heard_about_clinic, *HeardAboutClinicDecorator.options_for_select
-  -# #heard_about_other_div
-  -#   %p
-  -#     = f.label :heard_about_other, "Please describe:"
-  -#     = f.text_field :heard_about_other
-  -# %p
-  -#   Do you have a place to go for dental care after today?
-  -# .input
-  -#   = f.radio_button :has_place_to_be_seen_for_dental_care, true
-  -#   = f.label :has_place_to_be_seen_for_dental_care, "Yes", :value => true
-  -#   = f.radio_button :has_place_to_be_seen_for_dental_care, false
-  -#   = f.label :has_place_to_be_seen_for_dental_care, "No", :value => false
-  -# %p
-  -#   What, if any, insurance do you have to pay for dental care? (Check all that apply)
-  -# .input
-  -#   = f.check_box :no_insurance
-  -#   = f.label :no_insurance
-  -#   %br
-  -#   = f.check_box :insurance_from_job
-  -#   = f.label :insurance_from_job
-  -#   %br
-  -#   = f.check_box :medicaid_or_chp_plus
-  -#   = f.label :medicaid_or_chp_plus, "Medicaid or CHP+"
-  -#   %br
-  -#   = f.check_box :self_purchase_insurance
-  -#   = f.label :self_purchase_insurance, "Insurance purchased by myself"
-  -#   %br
+    %p 21. What is your race?
+    %code TODO: Support multiple choice
+    %ul
+      %li White
+      %li Black or African-American
+      %li Asian
+      %li Native Hawaiian or other Pacific Islander
+      %li American Indian or Alaska Native
+      %li Other
+    %p
+      22. Which of the following best describes your current job or work
+      situation?
+    .input
+      = f.select :current_work_situation, ['Employed for wages or salary',
+        'Self-employed',
+        'Out of work for less than 1 year and looking for work',
+        'Out of work for 1 year or more and looking for work',
+        'Taking care of house or family',
+        'Going to school',
+        'Retired',
+        'Unable to work for health reasons or disability'], include_blank: true
+
+    %legend
+      Your Household
+      .pull-right 4 questions
+
+    %p
+      23. Including yourself, how many people are living or staying at your home
+      address for more than 2 months?
+    .input
+      = f.select :household_size, ['1 person (just myself)',
+        '2 people', '3 people', '4 people', '5 people', '6 people',
+        '7 people', '8 people', '9 or more people'], include_blank: true
+    %p
+      24. In the
+      %strong past 12 months,
+      did you or any member of your household receive benefits from the Food
+      Stamp Program or SNAP (the Supplemental Nutrition Assistance Program)?
+    .input
+      = f.radio_button :food_stamps, true
+      = f.label :food_stamps, "Yes",
+        value: true
+      = f.radio_button :food_stamps, false
+      = f.label :food_stamps, "No",
+        value: false
+
+    %p
+      25. In the
+      %strong past 12 months,
+      did you or any member of your household receive benefits from the WIC
+      program (the Women, Infants, and Children program)?
+    .input
+      = f.radio_button :wic_program_benefits, true
+      = f.label :wic_program_benefits, "Yes",
+        value: true
+      = f.radio_button :wic_program_benefits, false
+      = f.label :wic_program_benefits, "No",
+        value: false
+    %p
+      26. What is your
+      %u best estimate
+      of the
+      %strong total yearly income of all members in your household from all sources
+      before taxes?
+      %br
+      %i
+        This includes money from jobs, net income from business,
+        unemployment compensation, workers’ compensation, Social Security
+        payments, Supplemental Security Income, retirement benefits, veterans’
+        payments, alimony, child support, dividends, interest, and any other
+        money received.
+
+    .input
+      = f.select :household_anual_income, ['Less than $10,000',
+        '$10,000 to $14,999',
+        '$15,000 to $19,999',
+        '$20,000 to $24,999',
+        '$25,000 to $29,999',
+        '$30,000 to $34,999',
+        '$35,000 to $39,999',
+        '$40,000 to $49,999',
+        '$50,000 to $59,999',
+        '$60,000 to $69,999',
+        '$70,000 or more'], include_blank: true
 
   %p
 
   %div.input-bottom.check_out
     = f.submit "Back", class: 'btn'
-    = f.submit "Check In", class: 'btn btn-primary'
+    = f.submit "Finish", class: 'btn btn-primary'

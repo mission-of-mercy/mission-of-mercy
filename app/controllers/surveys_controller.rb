@@ -50,6 +50,6 @@ class SurveysController < ApplicationController
   end
 
   def survey_params
-    params.require(:survey).permit(*%w[heard_about_clinic])
+    params.require(:survey).permit!
   end
 end

@@ -1,0 +1,32 @@
+form.edit_survey, form.new_survey {
+  legend {
+    font-size: 1.5em;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    .pull-right {
+      color: #aaa;
+      font-weight: normal;
+    }
+  }
+  #survey--sensative-questions {
+    display: none;
+  }
+
+  .survey--prompt {
+    margin-top: 20px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 2px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+
+    a.btn {
+      margin: 10px 20px;
+    }
+  }
+}
