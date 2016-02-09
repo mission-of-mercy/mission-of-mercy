@@ -18,6 +18,7 @@ gem 'axlsx'
 gem 'axlsx_rails'
 gem 'prawn', '~> 0.15.0'
 gem 'prawn-js', git: 'https://github.com/RailsData/prawn-js'
+gem 'react-rails', '~> 1.6.0'
 
 gem 'resque'
 gem 'resque-web', require: 'resque_web'
@@ -29,8 +30,8 @@ gem 'rails_setup'
 gem 'faker',            :require => false
 gem 'rubyzip', '0.9.9', :require => false
 
-gem 'coffee-rails', '~> 4.0.0'
-gem 'sass-rails',   '~> 4.0.0'
+gem 'coffee-rails'
+gem 'sass-rails'
 gem 'uglifier'
 gem 'compass-rails'
 gem 'bootstrap-sass-rails', '~> 2.3.2.1'
