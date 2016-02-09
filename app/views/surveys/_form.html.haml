@@ -1,13 +1,9 @@
-- content_for :header do
-  :coffeescript
-    $ -> mom.survey.init()
-
 - title 'Patient Check In'
 
 = render "patients/nav"
 
 = header do
-  %h1 Patient Survey
+  %h1 Patient Research Study
   %br
   = "#{@patient.full_name} | Chart # #{@patient.id}"
 
@@ -18,37 +14,171 @@
     mom.utilities.printChart #{@patient.id}
 
 = form_for [@patient, @survey], html: { autocomplete: "off" } do |f|
-  %p
-    = f.label :heard_about_clinic, 'How did you hear about the clinic?',
-      class: 'question'
+  %h3 Visit Information
+  %hr
+
+  %p 1. What is the reason for your visit today?
+
+  .input= f.select :reason_for_visit,
+    Treatment.order('name').pluck(:name), {include_blank: true}
+
+  %p 2. Are you having pain anywhere in your mouth?
   .input
-    = f.select :heard_about_clinic, *HeardAboutClinicDecorator.options_for_select
-  #heard_about_other_div
-    %p
-      = f.label :heard_about_other, "Please describe:"
-      = f.text_field :heard_about_other
-  %p
-    Do you have a place to go for dental care after today?
+    = f.radio_button :pain, true
+    = f.label :pain, "Yes", value: true
+    = f.radio_button :pain, false
+    = f.label :pain, "No", value: false
+
+  %p 3. How long have you had this pain?
   .input
-    = f.radio_button :has_place_to_be_seen_for_dental_care, true
-    = f.label :has_place_to_be_seen_for_dental_care, "Yes", :value => true
-    = f.radio_button :has_place_to_be_seen_for_dental_care, false
-    = f.label :has_place_to_be_seen_for_dental_care, "No", :value => false
+    = f.select :time_in_pain, [ "1 month or less",
+      "More than 1 month, but not more than 6 months",
+      "More than 6 months, but not more than 1 year",
+      "More than 1 year"], include_blank: true
+
   %p
-    What, if any, insurance do you have to pay for dental care? (Check all that apply)
+    4. In general, how would you rate your
+    %strong overall health?
   .input
-    = f.check_box :no_insurance
-    = f.label :no_insurance
+    = f.select :overall_health, ['Excellent', 'Very good', 'Good', 'Fair',
+      'Poor'], include_blank: true
+
+  %p 5. How much time did it take you to travel here today?
+  .input
+    = f.select :travel_time, ['0-15 minutes', '16-30 minutes', '31-60 minutes',
+      'More than 1 hour, but not more than 2 hours',
+      'More than 2 hours, but not more than 3 hours',
+      'More than 3 hours, but not more than 4 hours',
+      'More than 4 hours'], include_blank: true
+  %p
+    6. How did you hear about the Mission of Mercy clinic?
+    %i Mark all that apply.
+  .input
+    TODO
+
+  %p 7. Did you attend the Mission of Mercy clinic in Tampa in March, 2014?
+  .input
+    = f.radio_button :attended_previous_mom, true
+    = f.label :attended_previous_mom, "Yes", value: true
+    = f.radio_button :attended_previous_mom, false
+    = f.label :attended_previous_mom, "No", value: false
+
+  %h3 Your Dental Health and Dental Care
+  %hr
+
+  %p
+    8. In general, how would you rate the
+    %strong overall condition of your teeth and gums?
+  %p 9. Do you own a toothbrush?
+  %p
+    10. About how long has it been since you
+    %strong last visited
+    a dentist or dental clinic for any reason?
     %br
-    = f.check_box :insurance_from_job
-    = f.label :insurance_from_job
+    %i
+      Include all types of dentists, such as, orthodontists, oral surgeons,
+      and all other dental specialists, as well as dental hygienists.
+  %p 11. What kind of place do you usually go to when you need dental care?
+  %p
+    12. Have you
+    %strong ever
+    gone to a hospital emergency room for a dental problem?
+  %p
+    13. In the
+    %strong last 6 months,
+    how many times did you go to a hospital emergency room for a dental problem?
+  %p
+    14. Thinking about your last visit to an emergency room for a dental
+    problem, before you left the emergency room, did someone tell you that you
+    should go to a dentist’s office or dental clinic for additional care?
+  %p
+    15. In the
+    %strong past 12 months,
+    have you gone to any of the following places for dental care?
+  %p
+    16. Do you have any kind of insurance coverage that
+    %strong pays for any costs for dental care?
+
+  %h3 About You
+
+  %hr
+
+  %h2 Would you like to answer the following questions verbally or in written form?
+
+  %p 17. What is the highest grade or level of school that you have completed?
+  %p
+    18. What kind of health insurance or health care coverage do you have?
+    %i Mark all that apply.
+  %p
+    19. Did you ever serve on active duty in the U.S. Armed Forces, Reserves or
+    National Guard?
+  %p 20. Are you of Hispanic or Latino or Spanish origin or descent?
+  %p 21. What is your race?
+  %p
+    22. Which of the following best describes your current job or work
+    situation?
+
+  %h3 Your Household
+  %hr
+
+  %p
+    23. Including yourself, how many people are living or staying at your home
+    address for more than 2 months?
+  %p
+    24. In the
+    %strong past 12 months,
+    did you or any member of your household receive benefits from the Food
+    Stamp Program or SNAP (the Supplemental Nutrition Assistance Program)?
+  %p
+    25. In the
+    %strong past 12 months,
+    did you or any member of your household receive benefits from the WIC
+    program (the Women, Infants, and Children program)?
+  %p
+    26. What is your
+    %u best estimate
+    of the
+    %strong total yearly income of all members in your household from all sources
+    before taxes?
     %br
-    = f.check_box :medicaid_or_chp_plus
-    = f.label :medicaid_or_chp_plus, "Medicaid or CHP+"
-    %br
-    = f.check_box :self_purchase_insurance
-    = f.label :self_purchase_insurance, "Insurance purchased by myself"
-    %br
+    %i
+      This includes money from jobs, net income from business,
+      unemployment compensation, workers’ compensation, Social Security
+      payments, Supplemental Security Income, retirement benefits, veterans’
+      payments, alimony, child support, dividends, interest, and any other
+      money received.
+
+  -# %p
+  -#   = f.label :heard_about_clinic, 'How did you hear about the clinic?',
+  -#     class: 'question'
+  -# .input
+  -#   = f.select :heard_about_clinic, *HeardAboutClinicDecorator.options_for_select
+  -# #heard_about_other_div
+  -#   %p
+  -#     = f.label :heard_about_other, "Please describe:"
+  -#     = f.text_field :heard_about_other
+  -# %p
+  -#   Do you have a place to go for dental care after today?
+  -# .input
+  -#   = f.radio_button :has_place_to_be_seen_for_dental_care, true
+  -#   = f.label :has_place_to_be_seen_for_dental_care, "Yes", :value => true
+  -#   = f.radio_button :has_place_to_be_seen_for_dental_care, false
+  -#   = f.label :has_place_to_be_seen_for_dental_care, "No", :value => false
+  -# %p
+  -#   What, if any, insurance do you have to pay for dental care? (Check all that apply)
+  -# .input
+  -#   = f.check_box :no_insurance
+  -#   = f.label :no_insurance
+  -#   %br
+  -#   = f.check_box :insurance_from_job
+  -#   = f.label :insurance_from_job
+  -#   %br
+  -#   = f.check_box :medicaid_or_chp_plus
+  -#   = f.label :medicaid_or_chp_plus, "Medicaid or CHP+"
+  -#   %br
+  -#   = f.check_box :self_purchase_insurance
+  -#   = f.label :self_purchase_insurance, "Insurance purchased by myself"
+  -#   %br
 
   %p
 

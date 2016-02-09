@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160209155236) do
+ActiveRecord::Schema.define(version: 20160209183025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 20160209155236) do
     t.integer  "previous_chart_number"
     t.boolean  "chart_printed",                          default: false, null: false
     t.text     "language"
-    t.boolean  "consent_to_research_study"
+    t.boolean  "consent_to_research_study",              default: false
     t.text     "travel_time"
     t.text     "time_in_pain"
   end
@@ -233,6 +233,8 @@ ActiveRecord::Schema.define(version: 20160209155236) do
     t.boolean  "food_stamps"
     t.boolean  "wic_program_benefits"
     t.text     "household_anual_income"
+    t.text     "reason_for_visit"
+    t.boolean  "attended_previous_mom"
   end
 
   create_table "treatment_areas", force: true do |t|
