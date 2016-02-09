@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140221194030) do
+ActiveRecord::Schema.define(version: 20160209155236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,19 +102,21 @@ ActiveRecord::Schema.define(version: 20140221194030) do
     t.string   "state",                       limit: 2
     t.string   "zip",                         limit: 10
     t.string   "race"
-    t.float    "travel_time"
     t.boolean  "attended_previous_mom_event"
     t.string   "previous_mom_event_location"
     t.string   "chief_complaint"
     t.string   "last_dental_visit"
     t.boolean  "pain"
-    t.integer  "pain_length_in_days"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "survey_id"
     t.string   "phone"
     t.integer  "previous_chart_number"
     t.boolean  "chart_printed",                          default: false, null: false
+    t.text     "language"
+    t.boolean  "consent_to_research_study",              default: false
+    t.text     "travel_time"
+    t.text     "time_in_pain"
   end
 
   create_table "pre_meds", force: true do |t|
@@ -191,23 +193,46 @@ ActiveRecord::Schema.define(version: 20140221194030) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "pain"
-    t.integer  "pain_length_in_days"
     t.string   "heard_about_clinic"
-    t.boolean  "told_needed_more_dental_treatment"
-    t.boolean  "has_place_to_be_seen_for_dental_care"
-    t.boolean  "no_insurance"
-    t.boolean  "insurance_from_job"
-    t.boolean  "medicaid_or_chp_plus"
-    t.boolean  "self_purchase_insurance"
-    t.string   "other_insurance"
     t.boolean  "tobacco_use"
-    t.boolean  "saga_insurance"
-    t.boolean  "husky_insurance_a"
-    t.boolean  "husky_insurance_b"
-    t.boolean  "husky_insurance_c"
-    t.boolean  "husky_insurance_d"
-    t.boolean  "husky_insurance_unknown"
-    t.boolean  "charter_oak"
+    t.text     "language"
+    t.boolean  "consent_to_research_study",                          default: false
+    t.text     "travel_time"
+    t.text     "time_in_pain"
+    t.text     "overall_health"
+    t.text     "overall_dental_health"
+    t.boolean  "own_a_toothbrush"
+    t.text     "dental_care_home"
+    t.boolean  "emergency_room_for_dental"
+    t.text     "frequency_of_emergency_dental_visits_past_6_months"
+    t.boolean  "told_need_more_dental_care_after_emergency_visit"
+    t.boolean  "six_mo_visited_dental_office"
+    t.boolean  "six_mo_visited_apple_clinic"
+    t.boolean  "six_mo_visited_clay_county_cares"
+    t.boolean  "six_mo_visited_sulzbacher_clinic"
+    t.boolean  "six_mo_visited_baptist_emergency"
+    t.boolean  "six_mo_visited_memorial_hospital_emergency"
+    t.boolean  "six_mo_visited_orange_park_emergency"
+    t.boolean  "six_mo_visited_st_vincent_emergency"
+    t.boolean  "six_mo_visited_uf_emergency"
+    t.text     "six_mo_visited_other"
+    t.boolean  "dental_insurance_coverage"
+    t.text     "highest_level_of_school_completed"
+    t.boolean  "health_insurance_none"
+    t.boolean  "health_insurance_from_employer"
+    t.boolean  "health_insurance_purchased_from_insurance_co"
+    t.boolean  "health_insurance_purchased_from_gov"
+    t.boolean  "health_insurance_medicare"
+    t.boolean  "health_insurance_medicaid"
+    t.boolean  "health_insurance_military"
+    t.boolean  "health_insurance_other"
+    t.text     "military_service"
+    t.boolean  "hispanic_latino_spanish"
+    t.text     "current_work_situation"
+    t.text     "household_size"
+    t.boolean  "food_stamps"
+    t.boolean  "wic_program_benefits"
+    t.text     "household_anual_income"
   end
 
   create_table "treatment_areas", force: true do |t|
