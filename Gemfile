@@ -49,6 +49,11 @@ group :development, :test do
   gem 'pry-rails'
 end
 
+group :development do
+  gem 'capistrano', '~> 2.15.5'
+  gem 'capistrano_colors'
+end
+
 group :test do
   gem 'minitest-spec-rails', '~> 5.2.0'
   gem 'capybara_minitest_spec'
