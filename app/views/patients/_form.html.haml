@@ -37,13 +37,14 @@
         %span.label= f.label :sex
         %span.formw= f.select :sex, *@patient.sex_select_options,
           required: true
-      %div.row
-        %span.label= f.label :race
-        %span.formw= f.select :race, *RaceDecorator.options_for_select,
-          required: true
-      #race_other_div.row
-        %span.label= f.label :race_other, 'Specify race'
-        %span.formw= f.text_field :race_other
+      = react_component('LanguageField', language: @patient.language)
+      -# %div.row
+      -#   %span.label= f.label :race
+      -#   %span.formw= f.select :race, *RaceDecorator.options_for_select,
+      -#     required: true
+      -# #race_other_div.row
+      -#   %span.label= f.label :race_other, 'Specify race'
+      -#   %span.formw= f.text_field :race_other
 
     %div.contact_information_header
       %h4 2: Contact Information
@@ -90,11 +91,7 @@
         %span.formw= yes_no_group f, :pain, required: true
       #pain_length_div.row
         %span.label= f.label :time_in_pain, "Time in pain"
-        - if @patient.new_record?
-          %span.formw= f.text_field :time_in_pain
-          %span.formexample Example: "1 month" or "2 years"
-        - else
-          %span.formw= f.text_field :pain_length_in_days
+        %span.formw= f.text_field :time_in_pain
 
     / End Visit Details
 
@@ -103,14 +100,7 @@
     %div.input
       %div.row
         %span.label= f.label :travel_time
-        %span.formw
-          - if @patient.new_record?
-            Hours:
-            = f.number_field :travel_time_hours
-            Minutes:
-            = f.number_field :travel_time_minutes
-          - else
-            = f.text_field :travel_time
+        %span.formw= f.text_field :travel_time
       - if PreviousClinic.any?
         %div.row
           %span.label

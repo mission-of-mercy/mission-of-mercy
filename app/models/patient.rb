@@ -1,18 +1,4 @@
 class Patient < ActiveRecord::Base
-  REGEXP = {
-    :time_in_pain   => /\A(\d*\.?\d*)\s*(.+)\Z/,
-    :number_only    => /\A(\d*\.?\d*)\Z/,
-    :days           => /\Ad(ay(s)?)?\Z/i,
-    :weeks          => /\Aw(eek(s)?)?\Z/i,
-    :months         => /\Am(onth(s)?)?\Z/i,
-    :years          => /\Ay(ear(s)?)?\Z/i
-  }
-
-  REGEXP[:all_time_units] = Regexp.union( REGEXP[:days],
-                                          REGEXP[:weeks],
-                                          REGEXP[:months],
-                                          REGEXP[:years] )
-
   before_validation :normalize_data
   before_save  :update_survey
   after_create :check_in_flow
@@ -47,19 +33,14 @@ class Patient < ActiveRecord::Base
   accepts_nested_attributes_for :previous_mom_clinics, :allow_destroy => true,
                                 :reject_if => proc { |attributes| attributes['attended'] == "0" }
 
-  validate              :time_in_pain_format, :date_of_birth_entry
+  validate              :date_of_birth_entry
   validates_length_of   :zip,   :maximum => 10, :allow_blank => true
   validates_length_of   :state, :maximum => 2
-  validates_presence_of :first_name, :last_name, :sex, :race,
-                        :chief_complaint, :last_dental_visit, :travel_time,
+  validates_presence_of :first_name, :last_name, :sex, :language,
                         :city, :state
   validates_format_of   :phone, :message     => "must be a valid telephone number.",
                                 :with        => /\A[\(\)0-9\- \+\.]{10,20}\z/,
                                 :allow_blank => true
-  validates_numericality_of :travel_time, :greater_than => 0
-
-  attr_accessor :race_other
-  attr_reader   :time_in_pain
 
   def self.unique
     where(:previous_chart_number => nil)
@@ -162,66 +143,6 @@ class Patient < ActiveRecord::Base
     f.close
   end
 
-  def travel_time_hours=(hours)
-    @travel_time_hours = hours.to_i
-
-    calculate_travel_time
-  end
-
-  def travel_time_hours
-    @travel_time_hours ||= begin
-      if travel_time
-        (travel_time / 60).to_i
-      else
-        0
-      end
-    end
-  end
-
-  def travel_time_minutes=(minutes)
-    @travel_time_minutes = minutes.to_i
-
-    calculate_travel_time
-  end
-
-  def travel_time_minutes
-    @travel_time_minutes ||= begin
-      if travel_time
-        (travel_time % 60).to_i
-      else
-        0
-      end
-    end
-  end
-
-  def time_in_pain=(time_in_pain)
-    @time_in_pain = time_in_pain.strip
-    if match = REGEXP[:time_in_pain].match(@time_in_pain)
-      number, units = match.captures
-      units.downcase!
-
-      units = case units
-      when REGEXP[:days] then "days"
-      when REGEXP[:weeks] then "weeks"
-      when REGEXP[:months] then "months"
-      when REGEXP[:years] then "years"
-      else
-        nil
-      end
-
-      # Use highest possible precision - Float if possible, otherwise Integer
-      unless units.nil?
-        if ["days", "weeks"].include?(units)
-          self.pain_length_in_days = (number.to_f.send(units) / 1.day).round
-        else
-          self.pain_length_in_days = (number.to_i.send(units) / 1.day)
-        end
-      end
-    elsif REGEXP[:number_only].match(@time_in_pain)
-      self.pain_length_in_days = @time_in_pain.to_i
-    end
-  end
-
   def date_of_birth=(date_of_birth)
     if date_of_birth.is_a?(String)
       @date_string = date_of_birth
@@ -282,8 +203,6 @@ class Patient < ActiveRecord::Base
   end
 
   def normalize_data
-    self.race = race_other if race_other.present?
-
     self.first_name.capitalize!
     self.last_name.capitalize!
     self.state.upcase!
@@ -291,31 +210,6 @@ class Patient < ActiveRecord::Base
 
   def check_in_flow
     self.flows.create(:area_id => ClinicArea::CHECKIN)
-  end
-
-  def time_in_pain_format
-    error_message = "must be in a valid format (1 day, 1w, 5 years)"
-
-    unless @time_in_pain.blank?
-      if match = REGEXP[:time_in_pain].match(@time_in_pain)
-        number, units = match.captures
-        if units =~ REGEXP[:all_time_units]
-          return true
-        end
-      elsif @time_in_pain =~ REGEXP[:number_only]
-        return true
-      end
-
-      errors.add(:time_in_pain, error_message)
-      return false
-    end
-  end
-
-  def calculate_travel_time
-    minutes = travel_time_minutes || 0
-    hours   = travel_time_hours   || 0
-
-    self.travel_time = (minutes + (hours * 60)).to_i
   end
 
   def date_of_birth_entry
