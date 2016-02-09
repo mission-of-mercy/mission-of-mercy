@@ -26,13 +26,13 @@ class AddImpactStudyFields < ActiveRecord::Migration
       t.remove :medicaid_or_chp_plus
       t.remove :self_purchase_insurance
       t.remove :other_insurance
-      t.remove :saga_insurance
-      t.remove :husky_insurance_a
-      t.remove :husky_insurance_b
-      t.remove :husky_insurance_c
-      t.remove :husky_insurance_d
-      t.remove :husky_insurance_unknown
-      t.remove :charter_oak
+      # t.remove :saga_insurance
+      # t.remove :husky_insurance_a
+      # t.remove :husky_insurance_b
+      # t.remove :husky_insurance_c
+      # t.remove :husky_insurance_d
+      # t.remove :husky_insurance_unknown
+      # t.remove :charter_oak
 
       t.text :overall_health
       t.text :overall_dental_health
