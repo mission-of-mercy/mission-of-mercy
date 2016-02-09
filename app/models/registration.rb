@@ -13,7 +13,7 @@ class Registration
 
     if previous_patient
       load_previous_patient_into_current_patient
-    else
+    elsif patient.consent_to_research_study?
       patient.survey ||= Survey.new
     end
   end
@@ -81,7 +81,7 @@ class Registration
 
   def load_previous_patient_into_current_patient
     %w[ first_name last_name date_of_birth sex race phone street zip city
-        state last_dental_visit travel_time].each do |attr|
+        state last_dental_visit travel_time language].each do |attr|
       patient[attr] ||= previous_patient[attr]
     end
   end
@@ -93,10 +93,8 @@ class Registration
   def patient_params
     return {} unless params[:patient]
     params.require(:patient).permit(*%w[previous_chart_number first_name
-      last_name date_of_birth sex race race_other phone street zip city state
-      chief_complaint last_dental_visit pain time_in_pain
-      attended_previous_mom_event travel_time language] +
-      [:previous_mom_clinics_attributes => %w[location clinic_year attended id]]
+      last_name date_of_birth sex consent_to_research_study phone street zip
+      city state language]
     )
   end
 end

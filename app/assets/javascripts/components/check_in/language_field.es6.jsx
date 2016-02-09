@@ -5,7 +5,8 @@ class LanguageField extends React.Component {
     this.state = {showOther: this.isOther(this.props.language)};
   }
   isOther(language) {
-    return (language != 'english' && language != 'spanish')
+    return (language != 'english' && language != 'spanish' && 
+            language != null && language != '')
   }
   onChange(e) {
     let value = e.target.value;

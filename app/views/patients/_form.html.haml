@@ -4,121 +4,76 @@
 
 = hidden_field_tag :date_input
 
-#demographics
+= f.error_messages
+= f.hidden_field :previous_chart_number
 
-  = f.error_messages
-  = f.hidden_field :previous_chart_number
+%div.input-left
 
-  %div.input-left
+  %h4 1: Demographics
 
-    %h4 1: Demographics
+  %div.input
+    %div.row
+      %span.label= f.label :first_name
+      %span.formw= f.text_field :first_name, required: true
+    %div.row
+      %span.label= f.label :last_name
+      %span.formw= f.text_field :last_name, required: true
+    %div.row
+      %span.label= f.label :date_of_birth
+      = image_tag "cog.png", :id => "date-input-toggle",
+      :title => "Toggle date input method"
+      %span#date-input-container.formw
+        %span#date-select
+          = f.date_select :date_of_birth, @patient.dob_select_options,
+            required: true
+        %span#date-text
+          = f.text_field :date_of_birth, :value => @patient.dob,
+            required: true, 'parsley-americandate' => true
+      #date-format.formexample
+        Format: mm/dd/yyyy
+    %div.row
+      %span.label= f.label :sex
+      %span.formw= f.select :sex, *@patient.sex_select_options,
+        required: true
+    = react_component('LanguageField', language: @patient.language)
 
-    %div.input
-      %div.row
-        %span.label= f.label :first_name
-        %span.formw= f.text_field :first_name, required: true
-      %div.row
-        %span.label= f.label :last_name
-        %span.formw= f.text_field :last_name, required: true
-      %div.row
-        %span.label= f.label :date_of_birth
-        = image_tag "cog.png", :id => "date-input-toggle",
-        :title => "Toggle date input method"
-        %span#date-input-container.formw
-          %span#date-select
-            = f.date_select :date_of_birth, @patient.dob_select_options,
-              required: true
-          %span#date-text
-            = f.text_field :date_of_birth, :value => @patient.dob,
-              required: true, 'parsley-americandate' => true
-        #date-format.formexample
-          Format: mm/dd/yyyy
-      %div.row
-        %span.label= f.label :sex
-        %span.formw= f.select :sex, *@patient.sex_select_options,
-          required: true
-      = react_component('LanguageField', language: @patient.language)
-      -# %div.row
-      -#   %span.label= f.label :race
-      -#   %span.formw= f.select :race, *RaceDecorator.options_for_select,
-      -#     required: true
-      -# #race_other_div.row
-      -#   %span.label= f.label :race_other, 'Specify race'
-      -#   %span.formw= f.text_field :race_other
+  %br
 
+
+%div.input-right
+
+  %div.contact_information_header
+    %h4 2: Contact Information
+    %button.same_as_previous_patient_button.btn.btn-mini
+      Same as previous patient
+
+  %div.input
+    %div.row
+      %span.label= f.label :phone
+      %span.formw= f.text_field :phone
+    %div.row
+      %span.label= f.label :street
+      %span.formw= f.text_field :street
+    %div.row
+      %span.label= f.label :zip
+      %span.formw= f.text_field :zip
+      = image_tag "spinner.gif", :id => "zip-spinner", :class => "spinner"
+    %div.row
+      %span.label= f.label :city
+      %span.formw= f.text_field :city, required: true
+    %div.row
+      %span.label= f.label :state
+      %span.formw= f.text_field :state, required: true
+
+  - if @patient.previous_chart_number.present?
+    = f.hidden_field :consent_to_research_study, value: false
+  - else
     %div.contact_information_header
-      %h4 2: Contact Information
-      %button.same_as_previous_patient_button.btn.btn-mini
-        Same as previous patient
+      %h4 3: Research Study
 
-    %div.input
-      %div.row
-        %span.label= f.label :phone
-        %span.formw= f.text_field :phone
-      %div.row
-        %span.label= f.label :street
-        %span.formw= f.text_field :street
-      %div.row
-        %span.label= f.label :zip
-        %span.formw= f.text_field :zip
-        = image_tag "spinner.gif", :id => "zip-spinner", :class => "spinner"
-      %div.row
-        %span.label= f.label :city
-        %span.formw= f.text_field :city, required: true
-      %div.row
-        %span.label= f.label :state
-        %span.formw= f.text_field :state, required: true
-    %br
-
-  / End Demographics & Left Column
-
-  %div.input-right
-
-    %h4 3: Visit Details
-
-    %div.input
-      %div.row
-        %span.label= f.label :chief_complaint, "Reason for today's visit"
-        %span.formw= f.select :chief_complaint,
-          *@patient.chief_complaint_options, required: true
-      %div.row
-        %span.label= f.label :last_dental_visit
-        %span.formw= f.select :last_dental_visit,
-          *@patient.last_dental_visit_options, required: true
-      %div.row
-        %span.label
-          %label Is the patient in pain?
-        %span.formw= yes_no_group f, :pain, required: true
-      #pain_length_div.row
-        %span.label= f.label :time_in_pain, "Time in pain"
-        %span.formw= f.text_field :time_in_pain
-
-    / End Visit Details
-
-    %h4 4: Additional Information
-
-    %div.input
-      %div.row
-        %span.label= f.label :travel_time
-        %span.formw= f.text_field :travel_time
-      - if PreviousClinic.any?
-        %div.row
-          %span.label
-            %label Attended previous clinic?
-          %span.formw
-            = f.radio_button :attended_previous_mom_event, true
-            = f.label :attended_previous_mom_event, "Yes", :value => true
-            = f.radio_button :attended_previous_mom_event, false
-            = f.label :attended_previous_mom_event, "No", :value => false
-
-        #previous_mom_location_div.row
-          %span.label
-            Clinic(s) attended
-            %br
-          = f.fields_for :previous_mom_clinics, @patient.previous_mom_clinics.sort_by(&:clinic_year) do |p|
-            %span.formw
-              = p.hidden_field :location
-              = p.hidden_field :clinic_year
-              = p.check_box :attended
-              = p.label :attended, p.object.description
-            %br
+      .check-in--research-study
+        %p Did patient consent to participate in research study?
+        = f.radio_button :consent_to_research_study, true
+        = f.label :consent_to_research_study, "Yes", value: true
+        = f.radio_button :consent_to_research_study, false
+        = f.label :consent_to_research_study, "No", value: false
