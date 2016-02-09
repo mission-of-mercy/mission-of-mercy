@@ -2,7 +2,7 @@ class AddImpactStudyFields < ActiveRecord::Migration
   def change
     change_table(:patients) do |t|
       t.text :language
-      t.boolean :consent_to_research_study, default: false, nil: false
+      t.boolean :consent_to_research_study
 
       t.remove :travel_time
       t.remove :pain_length_in_days

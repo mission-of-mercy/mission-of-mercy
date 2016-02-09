@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 20160209155236) do
     t.integer  "previous_chart_number"
     t.boolean  "chart_printed",                          default: false, null: false
     t.text     "language"
-    t.boolean  "consent_to_research_study",              default: false
+    t.boolean  "consent_to_research_study"
     t.text     "travel_time"
     t.text     "time_in_pain"
   end
