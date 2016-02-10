@@ -25,19 +25,20 @@
 
   %p 2. Are you having pain anywhere in your mouth?
   .input
-    = f.radio_button :pain, true
+    = f.radio_button :pain, true,
+      'data-disable' => {group: 'pain-fields', disable: false}.to_json
     = f.label :pain, "Yes", value: true
-    = f.radio_button :pain, false
+    = f.radio_button :pain, false,
+      'data-disable' => {group: 'pain-fields', disable: true}.to_json
     = f.label :pain, "No", value: false
 
-  %p
-    3. How long have you had this pain?
-    %code TODO Disable if previous selection was false
-  .input
-    = f.select :time_in_pain, [ "1 month or less",
-      "More than 1 month, but not more than 6 months",
-      "More than 6 months, but not more than 1 year",
-      "More than 1 year"], include_blank: true
+  %fieldset#pain-fields
+    %p 3. How long have you had this pain?
+    .input
+      = f.select :time_in_pain, [ "1 month or less",
+        "More than 1 month, but not more than 6 months",
+        "More than 6 months, but not more than 1 year",
+        "More than 1 year"], include_blank: true
 
   %p
     4. In general, how would you rate your
@@ -128,36 +129,35 @@
     %strong ever
     gone to a hospital emergency room for a dental problem?
   .input
-    = f.radio_button :emergency_room_for_dental, true
+    = f.radio_button :emergency_room_for_dental, true,
+      'data-disable' => {group: 'emergency-fields', disable: false}.to_json
     = f.label :emergency_room_for_dental, "Yes", value: true
-    = f.radio_button :emergency_room_for_dental, false
+    = f.radio_button :emergency_room_for_dental, false,
+      'data-disable' => {group: 'emergency-fields', disable: true}.to_json
     = f.label :emergency_room_for_dental, "No", value: false
 
-  %p
-    13. In the
-    %strong last 6 months,
-    how many times did you go to a hospital emergency room for a dental problem?
+  %fieldset#emergency-fields
+    %p
+      13. In the
+      %strong last 6 months,
+      how many times did you go to a hospital emergency room for a dental problem?
 
-    %code TODO Disable if previous selection was false
+    .input
+      = f.select :frequency_of_emergency_dental_visits_past_6_months,
+        ['None', '1 time', '2 times', '3 times', '4 or more times'],
+        include_blank: true
+    %p
+      14. Thinking about your last visit to an emergency room for a dental
+      problem, before you left the emergency room, did someone tell you that you
+      should go to a dentist’s office or dental clinic for additional care?
 
-  .input
-    = f.select :frequency_of_emergency_dental_visits_past_6_months,
-      ['None', '1 time', '2 times', '3 times', '4 or more times'],
-      include_blank: true
-  %p
-    14. Thinking about your last visit to an emergency room for a dental
-    problem, before you left the emergency room, did someone tell you that you
-    should go to a dentist’s office or dental clinic for additional care?
-
-    %code TODO Disable if previous selection was false
-
-  .input
-    = f.radio_button :told_need_more_dental_care_after_emergency_visit, true
-    = f.label :told_need_more_dental_care_after_emergency_visit, "Yes",
-      value: true
-    = f.radio_button :told_need_more_dental_care_after_emergency_visit, false
-    = f.label :told_need_more_dental_care_after_emergency_visit, "No",
-      value: false
+    .input
+      = f.radio_button :told_need_more_dental_care_after_emergency_visit, true
+      = f.label :told_need_more_dental_care_after_emergency_visit, "Yes",
+        value: true
+      = f.radio_button :told_need_more_dental_care_after_emergency_visit, false
+      = f.label :told_need_more_dental_care_after_emergency_visit, "No",
+        value: false
 
   %p
     15. In the
@@ -401,3 +401,29 @@
   %div.input-bottom.check_out
     = f.submit "Back", class: 'btn'
     = f.submit "Finish", class: 'btn btn-primary'
+
+
+:javascript
+  (function () {
+    var disableFieldset = function(target) {
+      var $this = $(target),
+        data = $this.data('disable'),
+        targetGroup = data.group;
+
+      if(data.disable) {
+        jQuery('#' + targetGroup).attr('disabled', 'disabled');
+      } else {
+        jQuery('#' + targetGroup).attr('disabled', null);
+      }
+    }
+
+    jQuery(':input[data-disable]').on('change', function(e) {
+      disableFieldset(e.target);
+    });
+
+    jQuery(':input[data-disable]:checked').each(function(i, target) {
+      disableFieldset(target);
+    });
+
+  }())
+

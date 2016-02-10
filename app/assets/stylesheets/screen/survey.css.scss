@@ -13,6 +13,16 @@ form.edit_survey, form.new_survey {
       font-weight: normal;
     }
   }
+  fieldset {
+    margin: 0;
+    padding: 0;
+    border: none;
+    &:disabled {
+      color: #eee;
+    }
+  }
+
+
   #survey--sensative-questions {
     display: none;
   }
