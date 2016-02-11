@@ -69,8 +69,11 @@
                 = opt
         %tr
           %td
-            %code
-              TODO Other
+            - heard_about_other = @survey.heard_about_clinic.find {|s| !Survey::HEARD_ABOUT_OPTIONS.include?(s) }
+            = react_component("SurveyOtherField",
+              fieldName: 'survey[heard_about_clinic][]',
+              otherPresent: heard_about_other.present?,
+              other: heard_about_other )
 
 
   %p 7. Did you attend the Mission of Mercy clinic in Tampa in March, 2014?
@@ -213,10 +216,10 @@
             University of Florida (UF) Health Jacksonville emergency room
       %tr
         %td
-          %label
-            = check_box_tag 'TODO'
-            Some other place
-            %code TODO Toggle Textfield
+          = react_component("SurveyOtherField",
+            fieldName: 'survey[six_mo_visited_other]',
+            otherPresent: @survey.six_mo_visited_other.present?,
+            other: @survey.six_mo_visited_other )
 
   %p
     16. Do you have any kind of insurance coverage that
@@ -326,8 +329,11 @@
                 = opt
         %tr
           %td
-            %code
-              TODO Other
+            - race_other = @survey.race.find {|s| !Survey::RACE_OPTIONS.include?(s) }
+            = react_component("SurveyOtherField",
+              fieldName: 'survey[race][]',
+              otherPresent: race_other.present?,
+              other: race_other )
     %p
       22. Which of the following best describes your current job or work
       situation?
