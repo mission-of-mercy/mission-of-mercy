@@ -405,6 +405,19 @@
 
 :javascript
   (function () {
+    var updateSurvey = _.debounce(function() {
+      var $form = jQuery('form.edit_survey');
+      jQuery.ajax($form.attr('action'), {
+        method: 'PUT',
+        data: $form.serialize(),
+        dataType: 'script'
+      });
+    }, 1000);
+
+    jQuery('form.edit_survey').on('change', function(e) {
+      updateSurvey();
+    });
+
     var disableFieldset = function(target) {
       var $this = $(target),
         data = $this.data('disable'),

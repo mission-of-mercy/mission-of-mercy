@@ -20,7 +20,10 @@ class SurveysController < ApplicationController
 
  def update
     if @survey.update_attributes(survey_params)
-      route_request
+      respond_to do |format|
+        format.html { route_request }
+        format.js { render text: 'OK' }
+      end
     else
       render :edit
     end
