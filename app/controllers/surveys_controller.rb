@@ -18,7 +18,7 @@ class SurveysController < ApplicationController
     end
   end
 
- def update
+  def update
     if @survey.update_attributes(survey_params)
       respond_to do |format|
         format.html { route_request }

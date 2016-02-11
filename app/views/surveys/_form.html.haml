@@ -233,7 +233,8 @@
     = f.label :dental_insurance_coverage, "No",
       value: false
 
-  = react_component('SurveyPrompt')
+  = react_component('SurveyResponseTypePrompt',
+    responseType: @survey.response_type)
 
   #survey--sensative-questions
     %legend
