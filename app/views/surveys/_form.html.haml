@@ -58,21 +58,20 @@
     6. How did you hear about the Mission of Mercy clinic?
     %i Select all that apply.
   .input
-    %code
-      TODO: Need to update datamodel so multiple "heard about" options can be
-      selected
-    %ul
-      %li Family member or friend
-      %li Television
-      %li Radio
-      %li Newspaper
-      %li Internet – Facebook, Twitter, Blog, or other website
-      %li Doctor’s office
-      %li Health center/clinic
-      %li Hospital
-      %li Church or other religious organization
-      %li At work
-      %li Other (DESCRIBE)
+    %table
+      %tbody
+        - Survey::HEARD_ABOUT_OPTIONS.each do |opt|
+          %tr
+            %td
+              %label
+                = check_box_tag "survey[heard_about_clinic][]",
+                  opt, @survey.heard_about_clinic.include?(opt)
+                = opt
+        %tr
+          %td
+            %code
+              TODO Other
+
 
   %p 7. Did you attend the Mission of Mercy clinic in Tampa in March, 2014?
   .input
@@ -311,15 +310,23 @@
       = f.label :hispanic_latino_spanish, "No",
         value: false
 
-    %p 21. What is your race?
-    %code TODO: Support multiple choice
-    %ul
-      %li White
-      %li Black or African-American
-      %li Asian
-      %li Native Hawaiian or other Pacific Islander
-      %li American Indian or Alaska Native
-      %li Other
+    %p
+      21. What is your race?
+      %i Select all that apply.
+
+    %table
+      %tbody
+        - Survey::RACE_OPTIONS.each do |opt|
+          %tr
+            %td
+              %label
+                = check_box_tag "survey[race][]",
+                  opt, @survey.race.include?(opt)
+                = opt
+        %tr
+          %td
+            %code
+              TODO Other
     %p
       22. Which of the following best describes your current job or work
       situation?
