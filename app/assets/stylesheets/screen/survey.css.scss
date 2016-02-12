@@ -11,6 +11,10 @@ form.edit_survey, form.new_survey {
     .pull-right {
       color: #aaa;
       font-weight: normal;
+      &.completed {
+        color: #5CB85C;
+        font-weight: bold;
+      }
     }
   }
   fieldset {
@@ -43,4 +47,14 @@ form.edit_survey, form.new_survey {
 
 .survey--other-field {
   margin-left: 20px;
+}
+
+#survey-status {
+  font-size: 16px;
+  margin-top: 5px;
+
+  &.completed {
+    color: #5CB85C;
+    font-weight: bold;
+  }
 }

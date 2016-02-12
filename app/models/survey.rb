@@ -23,9 +23,18 @@ class Survey < ActiveRecord::Base
   serialize :heard_about_clinic, Array
   serialize :race, Array
 
+  before_save :remove_blank_options
+
   def update_patient_information(patient)
     %w[city state zip age sex language ].each do |attr|
       self[attr] = patient.public_send(attr)
     end
+  end
+
+  private
+
+  def remove_blank_options
+    self.heard_about_clinic = heard_about_clinic.reject(&:blank?)
+    self.race               = race.reject(&:blank?)
   end
 end

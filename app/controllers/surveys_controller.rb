@@ -22,7 +22,7 @@ class SurveysController < ApplicationController
     if @survey.update_attributes(survey_params)
       respond_to do |format|
         format.html { route_request }
-        format.js { render text: 'OK' }
+        format.js { @survey_sections = SurveySections.new(@survey) }
       end
     else
       render :edit
@@ -37,6 +37,7 @@ class SurveysController < ApplicationController
 
   def find_survey
     @survey = Survey.find(params[:id])
+    @survey_sections = SurveySections.new(@survey)
   end
 
   def set_tab

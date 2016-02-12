@@ -16,7 +16,11 @@
 = form_for [@patient, @survey], html: { autocomplete: "off" } do |f|
   %legend
     Visit Information
-    .pull-right 7 questions
+    #visit-information-status.pull-right
+      = @survey_sections.visit_information[:questions_answered]
+      out of
+      = @survey_sections.visit_information[:total_questions]
+      answered
 
   %p 1. What is the reason for your visit today?
 
@@ -58,6 +62,7 @@
     6. How did you hear about the Mission of Mercy clinic?
     %i Select all that apply.
   .input
+    = hidden_field_tag "survey[heard_about_clinic][]", nil
     %table
       %tbody
         - Survey::HEARD_ABOUT_OPTIONS.each do |opt|
@@ -85,7 +90,7 @@
 
   %legend
     Your Dental Health and Dental Care
-    .pull-right 9 questions
+    #health-status.pull-right 9 questions
 
   %p
     8. In general, how would you rate the
@@ -239,7 +244,7 @@
   #survey--sensative-questions
     %legend
       About You
-      .pull-right 6 questions
+      #about-you-status.pull-right 6 questions
 
     %p 17. What is the highest grade or level of school that you have completed?
     .input
@@ -319,6 +324,7 @@
       21. What is your race?
       %i Select all that apply.
 
+    = hidden_field_tag "survey[race][]", nil
     %table
       %tbody
         - Survey::RACE_OPTIONS.each do |opt|
@@ -350,7 +356,7 @@
 
     %legend
       Your Household
-      .pull-right 4 questions
+      #household-status.pull-right 4 questions
 
     %p
       23. Including yourself, how many people are living or staying at your home
@@ -414,6 +420,7 @@
   %p
 
   %div.input-bottom.check_out
+    #survey-status.pull-left
     = f.submit "Back", class: 'btn'
     = f.submit "Finish", class: 'btn btn-primary'
 
@@ -455,3 +462,4 @@
 
   }())
 
+  #{render 'update_status.js'}

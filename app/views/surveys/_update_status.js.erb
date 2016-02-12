@@ -1,0 +1,13 @@
+(function() {
+<% {visit_information: '#visit-information-status',
+    health: '#health-status',
+    about_you: '#about-you-status',
+    household: '#household-status',
+    totals: '#survey-status'}.each do |k, id| %>
+  <% data = @survey_sections.send(k) %>
+  var $status = jQuery('<%= id %>');
+  $status.text(
+    "<%= data[:questions_answered] %> out of <%= data[:total_questions] %> answered");
+  $status.toggleClass('completed', <%= data[:completed] %>);
+<% end %>
+}())
