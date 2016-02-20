@@ -52,7 +52,7 @@ class PatientsController < ApplicationController
         end
       end
     else
-      raise ActionController::RoutingError.new('Not Found')
+      raise ActionController::RoutingError.new('Could not find patient with id=#{params[:id]}')
     end
   end
 
