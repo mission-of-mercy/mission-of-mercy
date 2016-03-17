@@ -30,7 +30,7 @@ class PatientChart
       ],
       [
         label("Reason for visit") + patient.chief_complaint,
-        label("Last dental visit") + patient.last_dental_visit,
+        label("Overall Health") + patient.overall_health,
         { content: label("In pain?") + in_pain, colspan: 2 },
         { content: label("In pain for") + pain_length, colspan: 2 }
       ]
@@ -57,8 +57,8 @@ class PatientChart
   end
 
   def pain_length
-    return "N/A" unless patient.pain? && patient.pain_length_in_days
-    h.distance_of_time_in_words patient.pain_length_in_days.days.ago, Date.today
+    return "N/A" unless patient.pain? && patient.time_in_pain
+    patient.time_in_pain
   end
 
   def phone_number
