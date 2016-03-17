@@ -45,6 +45,9 @@ class mom.checkin
     $('#patient_zip').keyup =>
       this.lookupZip()
 
+    $('#patient_state').change =>
+      this.lookupCounties()
+
     $('#patient_city').autocomplete source: "/autocomplete/city.json"
     $('#patient_race_other').autocomplete source: "/autocomplete/race.json"
 
@@ -119,18 +122,37 @@ class mom.checkin
     else
       previousMom.slideUp()
 
-  lookupZip: ->
+  lookupCounties: =>
+    state = $('#patient_state').val()
+
+    $.getJSON "/autocomplete/counties.json", state: state, (counties) =>
+      this.loadCounties(counties)
+
+  loadCounties: (counties, selectedCounty) ->
+    $county = $('#patient_county')
+    $county.empty()
+
+    if counties.length > 0
+      $.each counties, (i,v) ->
+        $county.append($("<option></option>").attr("value", v).text(v))
+
+      if selectedCounty
+        $county.val(selectedCounty)
+
+  lookupZip: =>
     zip = $('#patient_zip').val()
 
     return false unless zip.length >= 5
 
     $('#zip-spinner').show()
-    $.getJSON "/autocomplete/zip.json", zip: zip, (data) ->
+    $.getJSON "/autocomplete/zip.json", zip: zip, (data) =>
       $('#zip-spinner').hide()
 
       if data.found == true
         $('#patient_city').val(data.city)
         $('#patient_state').val(data.state)
+
+      this.loadCounties(data.counties, data.county)
 
   toggleOtherRace: (focus) ->
     focus ||= true

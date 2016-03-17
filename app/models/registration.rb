@@ -16,7 +16,11 @@ class Registration
     elsif patient.consent_to_research_study?
       patient.survey ||= Survey.new
     end
+
+    @states = Patient::Zipcode.states
   end
+
+  attr_reader :states
 
   def create!
     return false if errors?

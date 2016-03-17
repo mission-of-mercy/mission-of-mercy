@@ -41,6 +41,8 @@ MissionOfMercy::Application.routes.draw do
   end
 
   get '/autocomplete/city.json' => 'autocomplete#city', :as => :autocomplete_city
+  get '/autocomplete/counties.json' => 'autocomplete#counties',
+    :as => :autocomplete_counties
   get '/autocomplete/zip.json'  => 'autocomplete#zip',  :as => :autocomplete_zip
   get '/autocomplete/race.json'  => 'autocomplete#race',  :as => :autocomplete_race
   get '/autocomplete/heard_about_clinic.json'  => 'autocomplete#heard_about_clinic',  :as => :autocomplete_heard_about_clinic

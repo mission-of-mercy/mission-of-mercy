@@ -37,11 +37,6 @@
         required: true
     = react_component('LanguageField', language: @patient.language)
 
-  %br
-
-
-%div.input-right
-
   %div.contact_information_header
     %h4 2: Contact Information
     %button.same_as_previous_patient_button.btn.btn-mini
@@ -63,7 +58,16 @@
       %span.formw= f.text_field :city, required: true
     %div.row
       %span.label= f.label :state
-      %span.formw= f.text_field :state, required: true
+      %span.formw= f.select :state, @registration.states, {include_blank: true},
+        required: true
+    %div.row
+      %span.label= f.label :county
+      %span.formw= f.select :county, [], {include_blank: true},
+        required: true
+  %br
+
+
+%div.input-right
 
   - if @patient.previous_chart_number.present?
     = f.hidden_field :consent_to_research_study, value: false

@@ -5,10 +5,12 @@ class AutocompleteController < ApplicationController
 
     if zip
       zip = {
-        :found => true,
-        :zip   => zip.zip,
-        :state => zip.state,
-        :city  => zip.city
+        :found    => true,
+        :zip      => zip.zip,
+        :state    => zip.state,
+        :city     => zip.city,
+        :county   => zip.county,
+        :counties => Patient::Zipcode.counties_for_state(zip.state)
       }
     else
       zip = { :found => false }
@@ -25,6 +27,14 @@ class AutocompleteController < ApplicationController
 
     respond_to do |format|
       format.json { render :json => cities.to_json }
+    end
+  end
+
+  def counties
+    counties = Patient::Zipcode.counties_for_state(params[:state])
+
+    respond_to do |format|
+      format.json { render json: counties.compact.to_json }
     end
   end
 
