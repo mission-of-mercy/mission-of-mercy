@@ -26,9 +26,11 @@ class Survey < ActiveRecord::Base
   before_save :remove_blank_options
 
   def update_patient_information(patient)
-    %w[city state zip age sex language ].each do |attr|
+    %w[city state zip age sex language pain time_in_pain overall_health].each do |attr|
       self[attr] = patient.public_send(attr)
     end
+
+    self.reason_for_visit = patient.chief_complaint
   end
 
   private

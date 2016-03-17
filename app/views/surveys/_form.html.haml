@@ -88,155 +88,159 @@
     = f.radio_button :attended_previous_mom, false
     = f.label :attended_previous_mom, "No", value: false
 
-  %legend
-    Your Dental Health and Dental Care
-    #health-status.pull-right 9 questions
+  - if @survey.consent_to_research_study?
+    %legend
+      Your Dental Health and Dental Care
+      #health-status.pull-right 9 questions
 
-  %p
-    8. In general, how would you rate the
-    %strong overall condition of your teeth and gums?
-  .input
-    = f.select :overall_dental_health, ['Excellent', 'Very good', 'Good',
-      'Fair', 'Poor'], include_blank: true
-
-  %p 9. Do you own a toothbrush?
-  .input
-    = f.radio_button :own_a_toothbrush, true
-    = f.label :own_a_toothbrush, "Yes", value: true
-    = f.radio_button :own_a_toothbrush, false
-    = f.label :own_a_toothbrush, "No", value: false
-
-  %p
-    10. About how long has it been since you
-    %strong last visited
-    a dentist or dental clinic for any reason?
-    %br
-    %i
-      Include all types of dentists, such as, orthodontists, oral surgeons,
-      and all other dental specialists, as well as dental hygienists.
-  .input
-    = f.select :last_dental_visit, ['6 months or less',
-      'More than 6 months, but not more than 1 year ago',
-      'More than 1 year, but not more than 2 years ago',
-      'More than 2 years, but not more than 5 years ago',
-      'More than 5 years ago',
-      'Never have been to a dentist'], include_blank: true
-
-  %p 11. What kind of place do you usually go to when you need dental care?
-  .input
-    = f.select :dental_care_home, [' Dentist’s office',
-      'Clinic or health center',
-      'Hospital emergency room',
-      'Hospital outpatient department',
-      'Urgent care center',
-      'Some other place',
-      'There is no place I go to most often'], include_blank: true
-  %p
-    12. Have you
-    %strong ever
-    gone to a hospital emergency room for a dental problem?
-  .input
-    = f.radio_button :emergency_room_for_dental, true,
-      'data-disable' => {group: 'emergency-fields', disable: false}.to_json
-    = f.label :emergency_room_for_dental, "Yes", value: true
-    = f.radio_button :emergency_room_for_dental, false,
-      'data-disable' => {group: 'emergency-fields', disable: true}.to_json
-    = f.label :emergency_room_for_dental, "No", value: false
-
-  %fieldset#emergency-fields
     %p
-      13. In the
-      %strong last 6 months,
-      how many times did you go to a hospital emergency room for a dental problem?
+      8. In general, how would you rate the
+      %strong overall condition of your teeth and gums?
+    .input
+      = f.select :overall_dental_health, ['Excellent', 'Very good', 'Good',
+        'Fair', 'Poor'], include_blank: true
+
+    %p 9. Do you own a toothbrush?
+    .input
+      = f.radio_button :own_a_toothbrush, true
+      = f.label :own_a_toothbrush, "Yes", value: true
+      = f.radio_button :own_a_toothbrush, false
+      = f.label :own_a_toothbrush, "No", value: false
+
+    %p
+      10. About how long has it been since you
+      %strong last visited
+      a dentist or dental clinic for any reason?
+      %br
+      %i
+        Include all types of dentists, such as, orthodontists, oral surgeons,
+        and all other dental specialists, as well as dental hygienists.
+    .input
+      = f.select :last_dental_visit, ['6 months or less',
+        'More than 6 months, but not more than 1 year ago',
+        'More than 1 year, but not more than 2 years ago',
+        'More than 2 years, but not more than 5 years ago',
+        'More than 5 years ago',
+        'Never have been to a dentist'], include_blank: true
+
+    %p 11. What kind of place do you usually go to when you need dental care?
+    .input
+      = f.select :dental_care_home, [' Dentist’s office',
+        'Clinic or health center',
+        'Hospital emergency room',
+        'Hospital outpatient department',
+        'Urgent care center',
+        'Some other place',
+        'There is no place I go to most often'], include_blank: true
+    %p
+      12. Have you
+      %strong ever
+      gone to a hospital emergency room for a dental problem?
+    .input
+      = f.radio_button :emergency_room_for_dental, true,
+        'data-disable' => {group: 'emergency-fields', disable: false}.to_json
+      = f.label :emergency_room_for_dental, "Yes", value: true
+      = f.radio_button :emergency_room_for_dental, false,
+        'data-disable' => {group: 'emergency-fields', disable: true}.to_json
+      = f.label :emergency_room_for_dental, "No", value: false
+
+    %fieldset#emergency-fields
+      %p
+        13. In the
+        %strong last 6 months,
+        how many times did you go to a hospital emergency room for a dental problem?
+
+      .input
+        = f.select :frequency_of_emergency_dental_visits_past_6_months,
+          ['None', '1 time', '2 times', '3 times', '4 or more times'],
+          include_blank: true
+      %p
+        14. Thinking about your last visit to an emergency room for a dental
+        problem, before you left the emergency room, did someone tell you that you
+        should go to a dentist’s office or dental clinic for additional care?
+
+      .input
+        = f.radio_button :told_need_more_dental_care_after_emergency_visit, true
+        = f.label :told_need_more_dental_care_after_emergency_visit, "Yes",
+          value: true
+        = f.radio_button :told_need_more_dental_care_after_emergency_visit, false
+        = f.label :told_need_more_dental_care_after_emergency_visit, "No",
+          value: false
+
+    %p
+      15. In the
+      %strong past 12 months,
+      have you gone to any of the following places for dental care?
+      %i Select all that apply.
+
+    %table
+      %tbody
+        %tr
+          %td
+            = f.label :six_mo_visited_dental_office do
+              = f.check_box :six_mo_visited_dental_office
+              Dentist’s office
+        %tr
+          %td
+            %label
+              = f.check_box :six_mo_visited_apple_clinic
+              Apple Clinic/Community Health Outreach
+        %tr
+          %td
+            %label
+              = f.check_box :six_mo_visited_clay_county_cares
+              Clay County Cares Dental Clinic/Green Cove Springs
+        %tr
+          %td
+            %label
+              = f.check_box :six_mo_visited_sulzbacher_clinic
+              Sulzbacher Clinic
+        %tr
+          %td
+            %label
+              = f.check_box :six_mo_visited_baptist_emergency
+              Baptist Medical Center emergency room
+        %tr
+          %td
+            %label
+              = f.check_box :six_mo_visited_memorial_hospital_emergency
+              Memorial Hospital emergency room
+        %tr
+          %td
+            %label
+              = f.check_box :six_mo_visited_orange_park_emergency
+              Orange Park Medical Center emergency room
+        %tr
+          %td
+            %label
+              = f.check_box :six_mo_visited_st_vincent_emergency
+              St. Vincent’s Medical Center Riverside emergency room
+        %tr
+          %td
+            %label
+              = f.check_box :six_mo_visited_uf_emergency
+              University of Florida (UF) Health Jacksonville emergency room
+        %tr
+          %td
+            = react_component("SurveyOtherField",
+              fieldName: 'survey[six_mo_visited_other]',
+              otherPresent: @survey.six_mo_visited_other.present?,
+              other: @survey.six_mo_visited_other )
+
+    %p
+      16. Do you have any kind of insurance coverage that
+      %strong pays for any costs for dental care?
 
     .input
-      = f.select :frequency_of_emergency_dental_visits_past_6_months,
-        ['None', '1 time', '2 times', '3 times', '4 or more times'],
-        include_blank: true
-    %p
-      14. Thinking about your last visit to an emergency room for a dental
-      problem, before you left the emergency room, did someone tell you that you
-      should go to a dentist’s office or dental clinic for additional care?
-
-    .input
-      = f.radio_button :told_need_more_dental_care_after_emergency_visit, true
-      = f.label :told_need_more_dental_care_after_emergency_visit, "Yes",
+      = f.radio_button :dental_insurance_coverage, true
+      = f.label :dental_insurance_coverage, "Yes",
         value: true
-      = f.radio_button :told_need_more_dental_care_after_emergency_visit, false
-      = f.label :told_need_more_dental_care_after_emergency_visit, "No",
+      = f.radio_button :dental_insurance_coverage, false
+      = f.label :dental_insurance_coverage, "No",
         value: false
-
-  %p
-    15. In the
-    %strong past 12 months,
-    have you gone to any of the following places for dental care?
-    %i Select all that apply.
-
-  %table
-    %tbody
-      %tr
-        %td
-          = f.label :six_mo_visited_dental_office do
-            = f.check_box :six_mo_visited_dental_office
-            Dentist’s office
-      %tr
-        %td
-          %label
-            = f.check_box :six_mo_visited_apple_clinic
-            Apple Clinic/Community Health Outreach
-      %tr
-        %td
-          %label
-            = f.check_box :six_mo_visited_clay_county_cares
-            Clay County Cares Dental Clinic/Green Cove Springs
-      %tr
-        %td
-          %label
-            = f.check_box :six_mo_visited_sulzbacher_clinic
-            Sulzbacher Clinic
-      %tr
-        %td
-          %label
-            = f.check_box :six_mo_visited_baptist_emergency
-            Baptist Medical Center emergency room
-      %tr
-        %td
-          %label
-            = f.check_box :six_mo_visited_memorial_hospital_emergency
-            Memorial Hospital emergency room
-      %tr
-        %td
-          %label
-            = f.check_box :six_mo_visited_orange_park_emergency
-            Orange Park Medical Center emergency room
-      %tr
-        %td
-          %label
-            = f.check_box :six_mo_visited_st_vincent_emergency
-            St. Vincent’s Medical Center Riverside emergency room
-      %tr
-        %td
-          %label
-            = f.check_box :six_mo_visited_uf_emergency
-            University of Florida (UF) Health Jacksonville emergency room
-      %tr
-        %td
-          = react_component("SurveyOtherField",
-            fieldName: 'survey[six_mo_visited_other]',
-            otherPresent: @survey.six_mo_visited_other.present?,
-            other: @survey.six_mo_visited_other )
-
-  %p
-    16. Do you have any kind of insurance coverage that
-    %strong pays for any costs for dental care?
-
-  .input
-    = f.radio_button :dental_insurance_coverage, true
-    = f.label :dental_insurance_coverage, "Yes",
-      value: true
-    = f.radio_button :dental_insurance_coverage, false
-    = f.label :dental_insurance_coverage, "No",
-      value: false
+  - else
+    %h5
+      %i Patient opted out of the research study. Questions 8-16 skipped
 
   = react_component('SurveyResponseTypePrompt',
     responseType: @survey.response_type)
@@ -439,27 +443,6 @@
     jQuery('form.edit_survey').on('change', function(e) {
       updateSurvey();
     });
-
-    var disableFieldset = function(target) {
-      var $this = $(target),
-        data = $this.data('disable'),
-        targetGroup = data.group;
-
-      if(data.disable) {
-        jQuery('#' + targetGroup).attr('disabled', 'disabled');
-      } else {
-        jQuery('#' + targetGroup).attr('disabled', null);
-      }
-    }
-
-    jQuery(':input[data-disable]').on('change', function(e) {
-      disableFieldset(e.target);
-    });
-
-    jQuery(':input[data-disable]:checked').each(function(i, target) {
-      disableFieldset(target);
-    });
-
   }())
 
   #{render 'update_status.js'}

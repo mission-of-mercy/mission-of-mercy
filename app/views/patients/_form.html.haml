@@ -69,15 +69,44 @@
 
 %div.input-right
 
+  %h4 3: Visit Information
+
+  .input.check-in--visit-information
+    .row
+      %p What is the reason for your visit today?
+      = f.select :chief_complaint,
+        *@patient.chief_complaint_options, required: true
+    .row
+      %p Are you having pain anywhere in your mouth?
+      = f.radio_button :pain, true, required: true,
+        'data-disable' => {group: 'pain-fields', disable: false}.to_json
+      = f.label :pain, "Yes", value: true
+      = f.radio_button :pain, false, required: true,
+        'data-disable' => {group: 'pain-fields', disable: true}.to_json
+      = f.label :pain, "No", value: false
+    .row
+      %fieldset#pain-fields
+        %p How long have you had this pain?
+        .input
+          = f.select :time_in_pain, [ "1 month or less",
+            "More than 1 month, but not more than 6 months",
+            "More than 6 months, but not more than 1 year",
+            "More than 1 year"], include_blank: true
+    .row
+      %p
+        In general, how would you rate your
+        %strong overall health?
+      .input
+        = f.select :overall_health, ['Excellent', 'Very good', 'Good', 'Fair',
+          'Poor'], { include_blank: true }, required: true
+
   - if @patient.previous_chart_number.present?
     = f.hidden_field :consent_to_research_study, value: false
   - else
-    %div.contact_information_header
-      %h4 3: Research Study
+    %h4 4: Research Study
 
-      .check-in--research-study
-        %p Did patient consent to participate in research study?
-        = f.radio_button :consent_to_research_study, true
-        = f.label :consent_to_research_study, "Yes", value: true
-        = f.radio_button :consent_to_research_study, false
-        = f.label :consent_to_research_study, "No", value: false
+    %p Did patient consent to participate in research study?
+    = f.radio_button :consent_to_research_study, true
+    = f.label :consent_to_research_study, "Yes", value: true
+    = f.radio_button :consent_to_research_study, false
+    = f.label :consent_to_research_study, "No", value: false

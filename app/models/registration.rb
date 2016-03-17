@@ -13,7 +13,7 @@ class Registration
 
     if previous_patient
       load_previous_patient_into_current_patient
-    elsif patient.consent_to_research_study?
+    else
       patient.survey ||= Survey.new
     end
 
@@ -98,7 +98,8 @@ class Registration
     return {} unless params[:patient]
     params.require(:patient).permit(*%w[previous_chart_number first_name
       last_name date_of_birth sex consent_to_research_study phone street zip
-      city state language]
+      city state language chief_complaint pain time_in_pain overall_health
+      county]
     )
   end
 end

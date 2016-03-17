@@ -109,7 +109,13 @@ class SurveySections
         completed: false
       }
 
-      [:visit_information, :health, :about_you, :household].each do |section|
+      sections = [:visit_information, :health, :about_you, :household]
+
+      unless survey.consent_to_research_study
+        sections -= [:health]
+      end
+
+      sections.each do |section|
         data = send(section)
         counts[:total_questions]    += data[:total_questions]
         counts[:questions_answered] += data[:questions_answered]
