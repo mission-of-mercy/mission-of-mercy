@@ -62,7 +62,7 @@
         required: true
     %div.row
       %span.label= f.label :county
-      %span.formw= f.select :county, [], {include_blank: true},
+      %span.formw= f.select :county, @registration.counties, {include_blank: true},
         required: true
   %br
 

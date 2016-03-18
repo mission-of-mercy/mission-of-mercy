@@ -18,9 +18,10 @@ class Registration
     end
 
     @states = Patient::Zipcode.states
+    @counties = Patient::Zipcode.counties_for_state(@patient.state)
   end
 
-  attr_reader :states
+  attr_reader :states, :counties
 
   def create!
     return false if errors?
