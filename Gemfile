@@ -52,6 +52,8 @@ end
 group :development do
   gem 'capistrano', '~> 2.15.5'
   gem 'capistrano_colors'
+  gem 'guard'
+  gem 'guard-minitest'
 end
 
 group :test do
@@ -60,7 +62,7 @@ group :test do
   gem 'minitest-metadata'
   gem 'factory_girl_rails'
   gem 'capybara'
-  gem 'capybara-webkit'
+  gem 'poltergeist'
   gem 'capybara-screenshot'
   gem 'launchy'
   gem 'database_cleaner'

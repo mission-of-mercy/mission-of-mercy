@@ -6,6 +6,7 @@ require 'minitest/pride'
 require 'capybara-screenshot/minitest'
 require 'database_cleaner'
 require 'minitest/mock'
+require 'capybara/poltergeist'
 
 require_relative 'support/integration'
 require_relative 'support/helpers'
@@ -13,7 +14,7 @@ require_relative 'support/minitest_capybara'
 require_relative 'support/redis_stub'
 require_relative '../db/seeds/users'
 
-Capybara.javascript_driver = :webkit
+Capybara.javascript_driver = :poltergeist
 
 class Capybara::Rails::TestCase
   include Support::Integration
@@ -25,6 +26,7 @@ class Capybara::Rails::TestCase
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.start
 
+    FactoryGirl.create(:zipcode) unless Patient::Zipcode.any?
     Seeds.create_users(:password => "temp123", :xray_stations => 5)
     FactoryGirl.create(:treatment, :name => 'Cleaning')
     FactoryGirl.create(:race, :category => 'Caucasian/White')

@@ -50,6 +50,8 @@ feature "Changing the current Treatment Area" do
 
   def change_treatment_area
     select @another_treatment_area.name, from: "treatment_area_id"
+
+    assert_content @another_treatment_area.name
   end
 
 end

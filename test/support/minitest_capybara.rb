@@ -28,7 +28,7 @@ module Capybara
       end
 
       after do
-        Capybara.reset_sessions!
+        # Capybara.reset_sessions!
         Capybara.use_default_driver
       end
     end

@@ -119,9 +119,11 @@ module Support
     def select_printer(printer_name = 'printer')
       within("#printer-dropdown") do
         first('a').click
-        click_link printer_name
-        page.wont_have_css '#printer-dropdown.open'
       end
+
+      page.must_have_css '#printer-dropdown.open'
+      click_link printer_name
+      page.wont_have_css '#printer-dropdown.open'
     end
 
     def ss

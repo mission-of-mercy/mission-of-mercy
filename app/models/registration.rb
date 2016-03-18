@@ -86,7 +86,8 @@ class Registration
 
   def load_previous_patient_into_current_patient
     %w[ first_name last_name date_of_birth sex race phone street zip city
-        state last_dental_visit travel_time language].each do |attr|
+        state last_dental_visit travel_time language county overall_health
+    ].each do |attr|
       patient[attr] ||= previous_patient[attr]
     end
   end

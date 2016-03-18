@@ -12,7 +12,7 @@ module Support
 
       browser do
         click_button "Next"
-        click_button "Check In"
+        click_button "Finish"
       end
     end
 
@@ -27,12 +27,13 @@ module Support
         fill_in 'Last name',                 :with => 'Byron'
         fill_in 'Date of birth',             :with => '12/26/1985'
         select  'M',                         :from => 'Sex'
-        select  'Caucasian/White',           :from => 'Race'
-        fill_in 'City',                      :with => 'Norwalk'
-        fill_in 'State',                     :with => 'CT'
-        select  'Cleaning',                  :from => "Reason for today's visit"
-        select  'First Time',                :from => 'Last dental visit'
-        fill_in 'patient_travel_time_hours', :with => '1'
+        fill_in 'City',                      :with => 'Cheshire'
+        select  'CT',                        :from => 'State'
+        select  'New Haven',                 :from => 'County'
+        select  'Cleaning',                  :from => "patient_chief_complaint"
+        select  'Excellent',                 :from => 'patient_overall_health'
+        select  'English',                   :from => 'Language'
+        choose  'patient_consent_to_research_study_true'
         choose  'patient_pain_false'
       end
     end

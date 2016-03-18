@@ -11,6 +11,8 @@ feature "Reprinting a patient's chart" do
 
   test "charts can be reprinted" do
     PrintChart.stub('printers', ['printer']) do
+      visit current_path # Reload page to pull in printers
+
       click_link "Reprint chart"
 
       fill_in "Chart number", with: @patient.id
@@ -28,6 +30,8 @@ feature "Reprinting a patient's chart" do
 
   test "charts which were never printed are displayed by default" do
     PrintChart.stub('printers', ['printer']) do
+      visit current_path # Reload page to pull in printers
+
       chart_not_printed = FactoryGirl.create(:patient, chart_printed: false)
 
       click_link "Reprint chart"

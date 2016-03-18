@@ -64,7 +64,7 @@ class Patient < ActiveRecord::Base
 
   def contact_information
     { :phone => phone, :street => street, :zip => zip,
-      :city => city,   :state => state }
+      :city => city,   :state => state, :county => county}
   end
 
   def dob

@@ -10,6 +10,7 @@ class Admin::PatientsController < ApplicationController
   end
 
   def edit
+    @registration = Registration.new(params: params, patient: @patient)
     @patient = @patient.decorate
     @patient.build_previous_mom_clinics
   end
@@ -20,6 +21,7 @@ class Admin::PatientsController < ApplicationController
 
       redirect_to admin_patients_path
     else
+      @registration = Registration.new(params: params, patient: @patient)
       @patient = @patient.decorate
       render :action => "edit"
     end

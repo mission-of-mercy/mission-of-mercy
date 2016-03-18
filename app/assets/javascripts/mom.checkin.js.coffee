@@ -122,11 +122,11 @@ class mom.checkin
     else
       previousMom.slideUp()
 
-  lookupCounties: =>
+  lookupCounties: (selectedCounty) =>
     state = $('#patient_state').val()
 
     $.getJSON "/autocomplete/counties.json", state: state, (counties) =>
-      this.loadCounties(counties)
+      this.loadCounties(counties, selectedCounty)
 
   loadCounties: (counties, selectedCounty) ->
     $county = $('#patient_county')
@@ -164,7 +164,7 @@ class mom.checkin
       $('#race_other_div').slideUp()
       $('#patient_race_other').val("")
 
-  fillContactInformation: ->
+  fillContactInformation: =>
     contact = @form.data('last-patient-contact')
 
     $("#patient_phone").val(contact.phone)
@@ -172,6 +172,8 @@ class mom.checkin
     $("#patient_zip").val(contact.zip)
     $("#patient_city").val(contact.city)
     $("#patient_state").val(contact.state)
+
+    this.lookupCounties(contact.county)
 
   hidePreviousContactInformationButton: ->
     $(".same_as_previous_patient_button").hide()

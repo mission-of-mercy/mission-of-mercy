@@ -11,6 +11,7 @@ describe Reports::Ada do
   let(:book)       { report_xls; Roor::Excelx.new(tempfile) }
 
   before :each do
+    skip "Skip ADA Tests"
     DatabaseCleaner.start
   end
 

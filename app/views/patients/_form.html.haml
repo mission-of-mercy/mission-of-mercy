@@ -73,7 +73,7 @@
 
   .input.check-in--visit-information
     .row
-      %p What is the reason for your visit today?
+      %p= f.label :chief_complaint, "What is the reason for your visit today?"
       = f.select :chief_complaint,
         *@patient.chief_complaint_options, required: true
     .row

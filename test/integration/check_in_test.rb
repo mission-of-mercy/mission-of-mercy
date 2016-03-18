@@ -73,10 +73,13 @@ feature "Checking in a patient" do
 
   it "same as previous patient populates each field when clicked" do
     phone = "230-111-1111"; street = "12 St."; zip = "90210"
-    city = "Beverley Hills"; state = "CA"
+    city = "Beverley Hills"; state = "CA"; county = "Mezza"
+
+    FactoryGirl.create(:zipcode, state: state,
+                       zip: zip, county: county, city: city)
 
     patient = FactoryGirl.create(:patient, :phone => phone, :street => street,
-      :zip => zip, :city => city, :state => state)
+      :zip => zip, :city => city, :state => state, :county => county)
 
     visit("/patients/new?last_patient_id=" + patient.id.to_s)
 
@@ -95,6 +98,7 @@ feature "Checking in a patient" do
     assert_field_value 'Zip',    zip
     assert_field_value 'City',   city
     assert_field_value 'State',  state
+    assert_field_value 'County', county
   end
 
   it "lists treatments dynamically from the treatment model" do
@@ -108,7 +112,8 @@ feature "Checking in a patient" do
 
     agree_to_waver
 
-    assert has_select?("Reason for today's visit", :with_options => options)
+    assert has_select?("What is the reason for your visit today?",
+                       :with_options => options)
   end
 
   it "can return to the demographic page from the survey page" do
@@ -120,7 +125,9 @@ feature "Checking in a patient" do
 
     current_path.wont_equal patients_path
 
-    patient = Patient.last until patient.present?
+    assert_content "Patient Research Study"
+
+    patient = Patient.last
 
     assert_equal edit_patient_survey_path(patient, patient.survey), current_path
 
@@ -143,11 +150,9 @@ feature "Checking in a patient" do
 
     click_button "Next"
 
-    click_button "Check In"
+    assert_content "Patient Research Study"
 
     assert_equal 1, Survey.count
-
-    assert_current_path new_patient_path
   end
 
   it "queues the patient's chart for printing when printers are present" do
@@ -176,14 +181,6 @@ feature "Checking in a patient" do
     click_button "Next"
 
     page.must_have_content "Printing Chart"
-
-    # The chart has popped up
-    page.driver.browser.window_handles.length.must_equal 2
-
-    # Find the patient from the database
-    patient = Patient.order("created_at DESC").first
-
-    patient.chart_printed.must_equal true
   end
 
   it "asks if the patient has already been through the clinic" do
@@ -203,12 +200,13 @@ feature "Checking in a patient" do
     fill_in 'Last name',                 :with => 'Byron'
     fill_in 'Date of birth',             :with => '12/26/1985'
     select  'M',                         :from => 'Sex'
-    select  'Caucasian/White',           :from => 'Race'
-    fill_in 'City',                      :with => 'Norwalk'
-    fill_in 'State',                     :with => 'CT'
-    select  'Cleaning',                  :from => "Reason for today's visit"
-    select  'First Time',                :from => 'Last dental visit'
-    fill_in 'patient_travel_time_hours', :with => '1'
+    fill_in 'City',                      :with => 'Cheshire'
+    select  'CT',                        :from => 'State'
+    select  'New Haven',                 :from => 'County'
+    select  'Cleaning',                  :from => "patient_chief_complaint"
+    select  'Excellent',                 :from => 'patient_overall_health'
+    select  'English',                   :from => 'Language'
+    choose  'patient_consent_to_research_study_true'
     choose  'patient_pain_false'
   end
 end

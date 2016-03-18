@@ -11,6 +11,10 @@ FactoryGirl.define do
   end
 
   factory :patient do
+    transient do
+      zipcode { Patient::Zipcode.all.sample || FactoryGirl.create(:zipcode) }
+    end
+
     first_name        { Faker::Name.first_name }
     last_name         { Faker::Name.last_name }
     date_of_birth     { Date.today - rand(100).years }
@@ -22,21 +26,31 @@ FactoryGirl.define do
     pain              { [true, false].sample }
     street            { Faker::Address.street_address }
     city              { Faker::Address.city }
-    state             { Faker::Address.state_abbr }
-    zip               { Faker::Address.zip_code }
+    zip               { zipcode.zip }
+    state             { zipcode.state }
+    county            { zipcode.county }
     chart_printed     true
+    language          "English"
+    overall_health    "Excellent"
+
     # Faker::PhoneNumber includes invalid formats like "1-###-###-#### x###"
     phone { Faker::PhoneNumber.phone_number.split(" ").first.gsub(/\A1-/, '') }
 
     survey
   end
 
+  factory :zipcode, class: 'Patient::Zipcode' do
+    zip    '06410'
+    city   'Cheshire'
+    state  'CT'
+    county 'New Haven'
+  end
+
   factory :survey do
-    told_needed_more_dental_treatment     true
-    heard_about_clinic                    "Social Media"
-    has_place_to_be_seen_for_dental_care  false
-    no_insurance                          true
-    race                                  "Caucasian/White"
+    told_needed_more_dental_treatment true
+    heard_about_clinic                { ["Social Media"] }
+    race                              { ["Caucasian/White"] }
+    language                          "English"
   end
 
   factory :patient_flow do |pf|
