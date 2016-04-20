@@ -37,6 +37,7 @@ MissionOfMercy::Application.routes.draw do
     collection do
       get :reprint
       get :previous
+      get :finish_survey
     end
   end
 

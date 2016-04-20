@@ -71,6 +71,12 @@ class PatientsController < ApplicationController
     @patient_search = @patients_table.search(params)
   end
 
+  def finish_survey
+    @current_tab = "finish_survey"
+    @patients_table = PatientsTable.new(:chart_number, :name)
+    @patient_search = @patients_table.search(params)
+  end
+
   private
 
   def save_date_input

@@ -1,0 +1,17 @@
+- title 'Finish Survey'
+
+- @patients_table.controls do |patient|
+  - if patient.survey.present?
+    - sections = SurveySections.new(patient.survey)
+    = link_to sections.totals[:completed] ? "Survey Completed" : "#{sections.totals[:questions_answered]}/#{sections.totals[:total_questions]} answered",
+      edit_patient_survey_path(patient, patient.survey),
+      class: 'primary'
+  - else
+    Survey completed
+
+= render "nav"
+
+= header do
+  %h1 Finish Survey
+
+= render "patients"
