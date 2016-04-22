@@ -32,7 +32,11 @@ class TreatmentArea < ActiveRecord::Base
       t.weighted_average_processing_time_in_seconds
     end.compact
 
-    times.sum / times.length
+    if times.any?
+      times.sum / times.length
+    else
+      0
+    end
   end
 
   def self.check_out
