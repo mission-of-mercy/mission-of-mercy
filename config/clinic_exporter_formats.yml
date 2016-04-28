@@ -46,21 +46,3 @@ patient_flows:
   area_humanized: Clinic Area
   created_at:
     to_time: Visited At
-
-surveys:
-  age: Age (during the clinic)
-  sex: Gender
-  city: City
-  state: State
-  zip: Zip
-  race: Race
-  rating_of_services: Rating of Services
-  pain: In Pain?
-  pain_length_in_days: Pain Length (in days)
-  heard_about_clinic: Heard about clinic
-  told_needed_more_dental_treatment: Told needed more dental treatment
-  has_place_to_be_seen_for_dental_care: Has a place to be seen for dental care
-  tobacco_use: Uses Tobacco
-  no_insurance: No Insurance
-  insurance_from_job: Insurance from Job
-  self_purchase_insurance: Self Purchase Insurance

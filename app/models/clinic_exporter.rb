@@ -1,5 +1,5 @@
 class ClinicExporter
-  SUPPORTED_DATA_TYPES = %w[patients procedures prescriptions pre_meds surveys
+  SUPPORTED_DATA_TYPES = %w[patients procedures prescriptions pre_meds
     patient_flows]
   attr_reader :data_types
 
