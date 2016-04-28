@@ -34,6 +34,14 @@ class Admin::ReportsController < ApplicationController
     end
   end
 
+  def survey_export
+    @survey_data = SurveyExporter.new.data
+
+    respond_to do |format|
+      format.xlsx
+    end
+  end
+
   private
 
   def set_current_tab

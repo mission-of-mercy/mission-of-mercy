@@ -69,6 +69,7 @@ MissionOfMercy::Application.routes.draw do
     get '/reports/treatment_area_distribution' => 'reports#treatment_area_distribution', :as => :treatment_area_distribution_report
     get '/reports/post_clinic' => 'reports#post_clinic', :as => :post_clinic_report
     get '/reports/export' => 'reports#export'
+    get '/reports/survey_export' => 'reports#survey_export'
     get '/maintenance'    => 'maintenance#index', :as => :maintenance
     post '/maintenance/reset' => 'maintenance#reset', :as => :maintenance_reset
     post '/maintenance/clear_support_requests' => 'maintenance#clear_support_requests'

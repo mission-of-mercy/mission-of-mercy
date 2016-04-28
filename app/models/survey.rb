@@ -25,6 +25,10 @@ class Survey < ActiveRecord::Base
 
   before_save :remove_blank_options
 
+  def patient
+    Patient.find_by(survey_id: id)
+  end
+
   def update_patient_information(patient)
     %w[city state zip age sex language pain time_in_pain overall_health
       consent_to_research_study].each do |attr|

@@ -1,0 +1,45 @@
+styles      = xlsx_package.workbook.styles
+time        = styles.add_style format_code: "MM/DD/YY HH:MM AM/PM"
+bold_center = styles.add_style b: true, alignment: { horizontal: :center }
+
+@survey_data.each do |sheet, rows|
+  next if rows.empty?
+
+  header_styles = rows.first.keys.length.times.map { bold_center }
+  row_options   = {types: [], style: []}
+
+  rows.first.values.each_with_object(row_options) do |value, r|
+    case value
+    when Time
+      r[:style] << time
+      r[:types] << :time
+    when Date
+      r[:style] << nil
+      r[:types] << :date
+    when Float || Decimal
+      r[:style] << nil
+      r[:types] << :float
+    else
+      r[:style] << nil
+      r[:types] << nil
+    end
+  end
+
+
+  xlsx_package.workbook.add_worksheet(name: sheet.titleize) do |sheet|
+    sheet.add_row rows.first.keys, style: header_styles
+    rows.each do |row|
+      values = row.values.map do |value|
+        # Old versions of axlsx failed to properly handle local times
+        # https://github.com/randym/axlsx/issues/188
+        #
+        if Time === value
+          value + value.utc_offset
+        else
+          value
+        end
+      end
+      sheet.add_row values, row_options.dup
+    end
+  end
+end
