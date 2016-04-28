@@ -31,7 +31,7 @@ listen "/tmp/unicorn.momma.sock", :backlog => 64
 listen 8080, :tcp_nopush => true
 
 # nuke workers after 30 seconds instead of 60 seconds (the default)
-timeout 30
+timeout 60
 
 # feel free to point this anywhere accessible on the filesystem
 pid "#{app_path}/shared/pids/unicorn.pid"
