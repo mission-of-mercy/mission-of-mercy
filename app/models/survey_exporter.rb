@@ -1,3 +1,5 @@
+require 'csv'
+
 class SurveyExporter
   FORMATS = {
     surveys: {
@@ -71,7 +73,13 @@ class SurveyExporter
       results = {'surveys' => [], 'procedures' => []}
       id = 1
 
-      Survey.where(consent_to_research_study: true).order('random()').all.
+      to_be_included = Patient.
+        where(id: CSV.read('research_ids.csv').flatten.compact.map(&:to_i)).
+        where("language in ('spanish', 'english')").
+        where('date_of_birth <= ?', Date.civil(2016, 4, 22) - 18.years).
+        select(:survey_id)
+
+      Survey.where(id: to_be_included).order('random()').all.
         each do |survey|
         base_hash = {"id" => id}
         formatted_result = base_hash.merge(format(survey, :surveys))
