@@ -65,19 +65,30 @@ class SurveyExporter
     }
   }
 
+  def initialize(options = {})
+    @options        = options
+    @research_study = options.fetch(:research_study, false)
+  end
+
+  attr_reader :research_study
+
   # Public formatted records matching the requested +data_type+
   #
   # Returns a Hash of the data
   def data
     @data ||= begin
       results = {'surveys' => [], 'procedures' => []}
-      id = 1
+      id      = 1
 
-      to_be_included = Patient.
-        where(id: CSV.read('research_ids.csv').flatten.compact.map(&:to_i)).
-        where("language in ('spanish', 'english')").
-        where('date_of_birth <= ?', Date.civil(2016, 4, 22) - 18.years).
-        select(:survey_id)
+      to_be_included = if research_study
+        Patient.
+          where(id: CSV.read('research_ids.csv').flatten.compact.map(&:to_i)).
+          where("language in ('spanish', 'english')").
+          where('date_of_birth <= ?', Date.civil(2016, 4, 22) - 18.years).
+          select(:survey_id)
+      else
+        Patient.where('survey_id is not null').pluck(:survey_id)
+      end
 
       Survey.where(id: to_be_included).order('random()').all.
         each do |survey|

@@ -42,6 +42,14 @@ class Admin::ReportsController < ApplicationController
     end
   end
 
+  def research_study_export
+    @survey_data = SurveyExporter.new(research_study: true).data
+
+    respond_to do |format|
+      format.xlsx { render :survey_export }
+    end
+  end
+
   private
 
   def set_current_tab
