@@ -1,4 +1,3 @@
-require "resque_web"
 
 MissionOfMercy::Application.routes.draw do
   devise_for :users
@@ -28,7 +27,7 @@ MissionOfMercy::Application.routes.draw do
 
   get '/pharmacy' => 'pharmacy#index'
   get '/pharmacy/check_out/:patient_id' => 'pharmacy#check_out', :as => :pharmacy_check_out
-  get '/pharmacy/finalize/:patient_id' => 'pharmacy#check_out_complete', :as => :pharmacy_finalize
+  patch '/pharmacy/finalize/:patient_id' => 'pharmacy#check_out_complete', :as => :pharmacy_finalize
 
   resources :patients, except: [:destroy, :index, :show] do
     resources :surveys

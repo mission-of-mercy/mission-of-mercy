@@ -123,5 +123,9 @@ module Support
         page.wont_have_css '#printer-dropdown.open'
       end
     end
+
+    def ss
+      screenshot_and_open_image
+    end
   end
 end
