@@ -14,9 +14,16 @@ class PatientChart
     if patient.pregnant?
       float do
         move_down 5
-        text("Pregnant", size: 24, align: :left, color: '808080')
+        text("Pregnant", size: 24, align: :center, color: '444444')
       end
     end
+
+    float do
+      move_down 10
+      text(patient.created_at.strftime('%-m/%-d/%Y'),
+        size: 16, align: :left, color: '808080')
+    end
+
     text patient.chart_number.to_s, size: 36, style: :bold, align: :right
   end
 
