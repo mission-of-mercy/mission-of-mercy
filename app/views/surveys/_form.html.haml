@@ -30,10 +30,11 @@
   %p
     Do you have a place to go for dental care after today?
   .input
-    = f.radio_button :has_place_to_be_seen_for_dental_care, true
-    = f.label :has_place_to_be_seen_for_dental_care, "Yes", :value => true
-    = f.radio_button :has_place_to_be_seen_for_dental_care, false
-    = f.label :has_place_to_be_seen_for_dental_care, "No", :value => false
+    = yes_no_group f, :has_place_to_be_seen_for_dental_care
+  %p
+    Do you currently have a place to live?
+  .input
+    = yes_no_group f, :currently_has_a_place_to_live
   %p
     What, if any, insurance do you have to pay for dental care? (Check all that apply)
   .input
@@ -64,15 +65,36 @@
     = f.check_box :charter_oak
     = f.label :charter_oak
 
-
   %p
     Are you a veteran?
 
   .input
-    = f.radio_button :veteran, true
-    = f.label :veteran, "Yes", :value => true
-    = f.radio_button :veteran, false
-    = f.label :veteran, "No", :value => false
+    = yes_no_group f, :veteran
+
+  .veteran-questions{class: ('hidden' unless @survey.veteran)}
+
+    %hr
+
+    %p
+      Are you able to access dental care?
+
+    .input
+      = yes_no_group f, :vet_able_to_access_dental_care
+
+    %p
+      How long does it take you to access dental care?
+
+    .input
+      = f.select :vet_length_to_access_dental_care,
+        ["Same Day", "Several Days", "A Week", "Several Weeks",
+         "A Month", "2 Months", "Longer than 2 Months"],
+         include_blank: true
+
+    %p
+      Can your family access dental care?
+
+    .input
+      = yes_no_group f, :vet_family_able_to_access_dental_care
 
   %p
 

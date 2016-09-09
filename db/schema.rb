@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150314205246) do
+ActiveRecord::Schema.define(version: 20160909190319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,6 +168,17 @@ ActiveRecord::Schema.define(version: 20150314205246) do
     t.datetime "updated_at"
   end
 
+  create_table "prosthetic_appointments", force: true do |t|
+    t.integer  "patient_id"
+    t.datetime "pickup_at"
+    t.text     "case_number"
+    t.text     "notes"
+    t.text     "appliance"
+    t.boolean  "picked_up",   default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "races", force: true do |t|
     t.string   "category"
     t.datetime "created_at"
@@ -213,7 +224,11 @@ ActiveRecord::Schema.define(version: 20150314205246) do
     t.boolean  "husky_insurance_d"
     t.boolean  "husky_insurance_unknown"
     t.boolean  "charter_oak"
-    t.boolean  "veteran",                              default: false, null: false
+    t.boolean  "veteran",                               default: false, null: false
+    t.boolean  "vet_able_to_access_dental_care"
+    t.string   "vet_length_to_access_dental_care"
+    t.boolean  "vet_family_able_to_access_dental_care"
+    t.boolean  "currently_has_a_place_to_live"
   end
 
   create_table "treatment_areas", force: true do |t|

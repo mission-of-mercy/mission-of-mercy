@@ -6,6 +6,12 @@ mom.survey.init = ->
   $('#survey_heard_about_other').autocomplete
     source: "/autocomplete/heard_about_clinic.json"
 
+  $('input[name="survey[veteran]"]').change (e) ->
+    if $('#survey_veteran_true').is(':checked')
+      $('.veteran-questions').slideDown()
+    else
+      $('.veteran-questions').slideUp()
+
 mom.survey.toggleOtherHeardAbout = ->
   heardAbout = $(this).val()
 
