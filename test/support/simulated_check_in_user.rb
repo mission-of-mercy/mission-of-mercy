@@ -33,6 +33,7 @@ module Support
         select  'Cleaning',                  :from => "Reason for today's visit"
         select  'First Time',                :from => 'Last dental visit'
         fill_in 'patient_travel_time_hours', :with => '1'
+        select 'Car - Driver',               :from => 'Travel method'
         choose  'patient_pain_false'
       end
     end

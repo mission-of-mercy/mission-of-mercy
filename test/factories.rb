@@ -19,6 +19,7 @@ FactoryGirl.define do
     chief_complaint   { "Cleaning" }
     last_dental_visit { "First Time" }
     travel_time       { 1 + rand(90) }
+    travel_method     { 'Car - Driver' }
     pain              { [true, false].sample }
     street            { Faker::Address.street_address }
     city              { Faker::Address.city }
