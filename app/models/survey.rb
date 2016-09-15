@@ -3,7 +3,7 @@ class Survey < ActiveRecord::Base
   attr_reader :heard_about_other
 
   def update_patient_information(patient)
-    %w[city state zip age sex race pain pain_length_in_days].each do |attr|
+    %w[city state zip age sex race pain pain_length_in_days travel_method].each do |attr|
       self[attr] = patient.public_send(attr)
     end
   end

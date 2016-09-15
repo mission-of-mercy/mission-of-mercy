@@ -35,4 +35,17 @@ class PatientDecorator < ApplicationDecorator
 
     [visits, {:include_blank => true}]
   end
+
+  def travel_method_options
+    travel_methods = [
+      'Car - Driver',
+      'Car - Passenger',
+      'Bus',
+      'Taxi / Uber',
+      'Walk',
+      'Other'
+    ]
+
+    [travel_methods, {:include_blank => true}]
+  end
 end

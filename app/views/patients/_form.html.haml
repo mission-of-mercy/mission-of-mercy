@@ -118,6 +118,11 @@
 
     %div.input
       %div.row
+        %span.label= f.label :travel_method
+        %span.formw= f.select :travel_method,
+          *@patient.travel_method_options, required: true
+    %div.input
+      %div.row
         %span.label= f.label :travel_time
         %span.formw
           - if @patient.new_record?

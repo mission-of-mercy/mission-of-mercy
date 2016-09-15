@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160909190319) do
+ActiveRecord::Schema.define(version: 20160915171835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 20160909190319) do
     t.date     "due_date"
     t.boolean  "follow_up",                              default: false, null: false
     t.text     "obgyn_name"
+    t.text     "travel_method"
   end
 
   create_table "pre_meds", force: true do |t|
@@ -217,6 +218,7 @@ ActiveRecord::Schema.define(version: 20160909190319) do
     t.string   "vet_length_to_access_dental_care"
     t.boolean  "vet_family_able_to_access_dental_care"
     t.boolean  "currently_has_a_place_to_live"
+    t.text     "travel_method"
   end
 
   create_table "treatment_areas", force: true do |t|
