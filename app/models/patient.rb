@@ -172,7 +172,7 @@ class Patient < ActiveRecord::Base
 
   def export_to_dexis(path)
     f = File.new(path, "w")
-    f.write(["PN=", "#{Date.today.year}-#{Clinic.location.parameterize}-#{id}",
+    f.write(["PN=", "#{Date.today.year}-#{id}",
              "\r\n"].join())
     f.write(["LN=", last_name, "\r\n"].join())
     f.write(["FN=", first_name, "\r\n"].join())
