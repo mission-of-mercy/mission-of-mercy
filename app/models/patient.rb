@@ -171,11 +171,14 @@ class Patient < ActiveRecord::Base
   end
 
   def export_to_dexis(path)
+    patient_number = "#{Date.today.year}-#{id}"
+
+    raise "Dexis patient number too long" if patient_number.length > 13
+
     f = File.new(path, "w")
-    f.write(["PN=", "#{Date.today.year}-#{id}",
-             "\r\n"].join())
-    f.write(["LN=", last_name, "\r\n"].join())
-    f.write(["FN=", first_name, "\r\n"].join())
+    f.write(["PN=", patient_number,      "\r\n"].join())
+    f.write(["LN=", last_name,           "\r\n"].join())
+    f.write(["FN=", first_name,          "\r\n"].join())
     f.write(["BD=", date_of_birth_dexis, "\r\n"].join())
     f.write(["SX=", sex].join())
     f.close
