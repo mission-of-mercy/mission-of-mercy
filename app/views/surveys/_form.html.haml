@@ -81,7 +81,7 @@
               other: heard_about_other )
 
 
-  %p 7. Did you attend the Mission of Mercy clinic in Tampa in March, 2014?
+  %p 7. Did you attend the Mission of Mercy clinic in Jacksonville in April, 2016?
   .input
     = f.radio_button :attended_previous_mom, true
     = f.label :attended_previous_mom, "Yes", value: true
@@ -100,15 +100,45 @@
       = f.select :overall_dental_health, ['Excellent', 'Very good', 'Good',
         'Fair', 'Poor'], include_blank: true
 
-    %p 9. Do you own a toothbrush?
-    .input
-      = f.radio_button :own_a_toothbrush, true
-      = f.label :own_a_toothbrush, "Yes", value: true
-      = f.radio_button :own_a_toothbrush, false
-      = f.label :own_a_toothbrush, "No", value: false
-
     %p
-      10. About how long has it been since you
+      9. What is the
+      %strong MAIN reason
+      you came here for dental care today?
+    .input
+      = f.select :main_reason_for_visit, Survey::VISIT_OPTIONS,
+        include_blank: true
+      - survey_other = @survey.main_reason_for_visit.present? && !Survey::VISIT_OPTIONS.any? {|o| o == @survey.main_reason_for_visit }
+      - if survey_other
+        :javascript
+          $('#survey_main_reason_for_visit').val('Other Reason');
+      = f.text_field :main_reason_for_visit, placeholder: 'Please describe',
+        style: ('display: none' unless survey_other), disabled: !survey_other
+    %p
+      10. What are
+      %strong OTHER reasons
+      you came here for dental care today?
+      %i Select all that apply.
+
+    = hidden_field_tag "survey[other_reasons_for_visit][]", nil
+    %table
+      %tbody
+        - Survey::VISIT_OPTIONS.each do |opt|
+          - next if opt == 'Other Reason'
+          %tr
+            %td
+              %label
+                = check_box_tag "survey[other_reasons_for_visit][]",
+                  opt, @survey.other_reasons_for_visit.include?(opt)
+                = opt
+        %tr
+          %td
+            - survey_other = @survey.other_reasons_for_visit.find {|s| !Survey::VISIT_OPTIONS.include?(s) }
+            = react_component("SurveyOtherField",
+              fieldName: 'survey[other_reasons_for_visit][]',
+              otherPresent: survey_other.present?,
+              other: survey_other )
+    %p
+      11. About how long has it been since you
       %strong last visited
       a dentist or dental clinic for any reason?
       %br
@@ -123,7 +153,7 @@
         'More than 5 years ago',
         'Never have been to a dentist'], include_blank: true
 
-    %p 11. What kind of place do you usually go to when you need dental care?
+    %p 12. What kind of place do you usually go to when you need dental care?
     .input
       = f.select :dental_care_home, [' Dentist’s office',
         'Clinic or health center',
@@ -133,7 +163,7 @@
         'Some other place',
         'There is no place I go to most often'], include_blank: true
     %p
-      12. Have you
+      13. Have you
       %strong ever
       gone to a hospital emergency room for a dental problem?
     .input
@@ -146,7 +176,7 @@
 
     %fieldset#emergency-fields
       %p
-        13. In the
+        14. In the
         %strong last 6 months,
         how many times did you go to a hospital emergency room for a dental problem?
 
@@ -155,7 +185,7 @@
           ['None', '1 time', '2 times', '3 times', '4 or more times'],
           include_blank: true
       %p
-        14. Thinking about your last visit to an emergency room for a dental
+        15. Thinking about your last visit to an emergency room for a dental
         problem, before you left the emergency room, did someone tell you that you
         should go to a dentist’s office or dental clinic for additional care?
 
@@ -168,7 +198,7 @@
           value: false
 
     %p
-      15. In the
+      16. In the
       %strong past 12 months,
       have you gone to any of the following places for dental care?
       %i Select all that apply.
@@ -177,58 +207,63 @@
       %tbody
         %tr
           %td
-            = f.label :six_mo_visited_dental_office do
-              = f.check_box :six_mo_visited_dental_office
+            = f.label :twelve_mo_visited_dentist do
+              = f.check_box :twelve_mo_visited_dentist
               Dentist’s office
         %tr
           %td
             %label
-              = f.check_box :six_mo_visited_apple_clinic
-              Apple Clinic/Community Health Outreach
+              = f.check_box :twelve_mo_visited_good_samaritan
+              Good Samaritan Clinic
         %tr
           %td
             %label
-              = f.check_box :six_mo_visited_clay_county_cares
-              Clay County Cares Dental Clinic/Green Cove Springs
+              = f.check_box :twelve_mo_visited_st_joe
+              St. Joseph’s/Our Lady of Angels Clinic
         %tr
           %td
             %label
-              = f.check_box :six_mo_visited_sulzbacher_clinic
-              Sulzbacher Clinic
+              = f.check_box :twelve_mo_visited_health_and_hope
+              Health and Hope Clinic at Olive Baptist Church
         %tr
           %td
             %label
-              = f.check_box :six_mo_visited_baptist_emergency
-              Baptist Medical Center emergency room
+              = f.check_box :twelve_mo_visited_baptist_emergency
+              Baptist Hospital emergency room
         %tr
           %td
             %label
-              = f.check_box :six_mo_visited_memorial_hospital_emergency
-              Memorial Hospital emergency room
+              = f.check_box :twelve_mo_visited_sacred_emergency
+              Sacred Heart Hospital Pensacola emergency room
         %tr
           %td
             %label
-              = f.check_box :six_mo_visited_orange_park_emergency
-              Orange Park Medical Center emergency room
+              = f.check_box :twelve_mo_visited_w_florida_emergency
+              West Florida Hospital emergency room
         %tr
           %td
             %label
-              = f.check_box :six_mo_visited_st_vincent_emergency
-              St. Vincent’s Medical Center Riverside emergency room
+              = f.check_box :twelve_mo_visited_santa_rosa_emergency
+              Santa Rosa Medical Center emergency room
         %tr
           %td
             %label
-              = f.check_box :six_mo_visited_uf_emergency
-              University of Florida (UF) Health Jacksonville emergency room
+              = f.check_box :twelve_mo_visited_escambia_clinic
+              Escambia Community Clinic
+        %tr
+          %td
+            %label
+              = f.check_box :twelve_mo_visited_pensacola_clinic
+              Pensacola State College Dental Clinic
         %tr
           %td
             = react_component("SurveyOtherField",
-              fieldName: 'survey[six_mo_visited_other]',
-              otherPresent: @survey.six_mo_visited_other.present?,
-              other: @survey.six_mo_visited_other )
+              fieldName: 'survey[twelve_mo_visited_other]',
+              otherPresent: @survey.twelve_mo_visited_other.present?,
+              other: @survey.twelve_mo_visited_other )
 
     %p
-      16. Do you have any kind of insurance coverage that
+      17. Do you have any kind of insurance coverage that
       %strong pays for any costs for dental care?
 
     .input
@@ -238,6 +273,60 @@
       = f.radio_button :dental_insurance_coverage, false
       = f.label :dental_insurance_coverage, "No",
         value: false
+
+    %p
+      18. During the
+      %strong past 5 days,
+      including today, did you use any of the following smoking or smokeless tobacco products?
+      %i Select all that apply.
+    %table
+      %tbody
+        %tr
+          %td
+            = f.label :tobacco_cigarettes do
+              = f.check_box :tobacco_cigarettes
+              Cigarettes
+        %tr
+          %td
+            %label
+              = f.check_box :tobacco_pipes
+              Pipes
+        %tr
+          %td
+            %label
+              = f.check_box :tobacco_cigars
+              Cigars/little cigars/cigarillos
+        %tr
+          %td
+            %label
+              = f.check_box :tobacco_hookahs
+              Water pipes or Hookahs
+        %tr
+          %td
+            %label
+              = f.check_box :tobacco_e_cigarettes
+              E-cigarettes
+        %tr
+          %td
+            %label
+              = f.check_box :tobacco_chewing
+              Chewing tobacco (such as Redman, Levi Garrett, or Beechnut)
+
+        %tr
+          %td
+            %label
+              = f.check_box :tobacco_snuff
+              Snuff (such as Skoal, Skoal Bandits, or Copenhagen)
+        %tr
+          %td
+            %label
+              = f.check_box :tobacco_snus
+              Snus
+        %tr
+          %td
+            %label
+              = f.check_box :tobacco_dissolvales
+              Dissolvables (such as strips or orbs)
   - else
     %h5
       %i Patient opted out of the research study. Questions 8-16 skipped
@@ -250,7 +339,7 @@
       About You
       #about-you-status.pull-right 6 questions
 
-    %p 17. What is the highest grade or level of school that you have completed?
+    %p 19. What is the highest grade or level of school that you have completed?
     .input
       = f.select :highest_level_of_school_completed, ['8th grade or less',
         'Some high school, but did not graduate',
@@ -259,15 +348,10 @@
         '4-year college graduate',
         'More than 4-year college degree'], include_blank: true
     %p
-      18. What kind of health insurance or health care coverage do you have?
+      20. What kind of health insurance or health care coverage do you have?
       %i Select all that apply.
     %table
       %tbody
-        %tr
-          %td
-            %label
-              = f.check_box :health_insurance_none
-              No health insurance or health coverage of any type
         %tr
           %td
             %label
@@ -278,12 +362,6 @@
             %label
               = f.check_box :health_insurance_purchased_from_insurance_co
               Insurance purchased directly from an insurance company
-        %tr
-          %td
-            %label
-              = f.check_box :health_insurance_purchased_from_gov
-              Insurance purchased through Healthcare.gov or Health Insurance
-              Marketplace
         %tr
           %td
             %label
@@ -298,6 +376,12 @@
         %tr
           %td
             %label
+              = f.check_box :health_insurance_purchased_from_gov
+              Insurance purchased through Healthcare.gov or Health Insurance
+              Marketplace
+        %tr
+          %td
+            %label
               = f.check_box :health_insurance_military
               Military (TRICARE/VA/CHAMP-VA)
         %tr
@@ -305,9 +389,15 @@
             %label
               = f.check_box :health_insurance_other
               Another type of health insurance or health coverage
+        %tr
+          %td
+            %label
+              = f.check_box :health_insurance_none
+              No health insurance or health coverage of any type
+              %i (if selected, no other options should be selected)
 
     %p
-      19. Did you ever serve on active duty in the U.S. Armed Forces, Reserves or
+      21. Did you ever serve on active duty in the U.S. Armed Forces, Reserves or
       National Guard?
     .input
       = f.select :military_service, ['Yes, now on active duty',
@@ -315,7 +405,7 @@
         'Yes, only on active duty for training in the Reserves or National Guard',
         'No, never served in the military'], include_blank: true
 
-    %p 20. Are you of Hispanic or Latino or Spanish origin or descent?
+    %p 22. Are you of Hispanic or Latino or Spanish origin or descent?
     .input
       = f.radio_button :hispanic_latino_spanish, true
       = f.label :hispanic_latino_spanish, "Yes",
@@ -325,7 +415,7 @@
         value: false
 
     %p
-      21. What is your race?
+      23. What is your race?
       %i Select all that apply.
 
     = hidden_field_tag "survey[race][]", nil
@@ -346,7 +436,7 @@
               otherPresent: race_other.present?,
               other: race_other )
     %p
-      22. Which of the following best describes your current job or work
+      24. Which of the following best describes your current job or work
       situation?
     .input
       = f.select :current_work_situation, ['Employed for wages or salary',
@@ -363,14 +453,14 @@
       #household-status.pull-right 4 questions
 
     %p
-      23. Including yourself, how many people are living or staying at your home
+      25. Including yourself, how many people are living or staying at your home
       address for more than 2 months?
     .input
       = f.select :household_size, ['1 person (just myself)',
         '2 people', '3 people', '4 people', '5 people', '6 people',
         '7 people', '8 people', '9 or more people'], include_blank: true
     %p
-      24. In the
+      26. In the
       %strong past 12 months,
       did you or any member of your household receive benefits from the Food
       Stamp Program or SNAP (the Supplemental Nutrition Assistance Program)?
@@ -383,7 +473,7 @@
         value: false
 
     %p
-      25. In the
+      27. In the
       %strong past 12 months,
       did you or any member of your household receive benefits from the WIC
       program (the Women, Infants, and Children program)?
@@ -395,7 +485,7 @@
       = f.label :wic_program_benefits, "No",
         value: false
     %p
-      26. What is your
+      28. What is your
       %u best estimate
       of the
       %strong total yearly income of all members in your household from all sources
@@ -442,6 +532,14 @@
 
     jQuery('form.edit_survey').on('change', function(e) {
       updateSurvey();
+    });
+
+    jQuery('select#survey_main_reason_for_visit').change(function() {
+      if(this.value == 'Other Reason'){
+        $('input#survey_main_reason_for_visit').show().attr('disabled', false);
+      } else {
+        $('input#survey_main_reason_for_visit').hide().attr('disabled', true);
+      }
     });
   }())
 

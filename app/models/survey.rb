@@ -20,8 +20,25 @@ class Survey < ActiveRecord::Base
     "American Indian or Alaska Native"
   ]
 
+  VISIT_OPTIONS = [
+    'This is a dental emergency',
+    'Cannot afford to go to a dentist',
+    "Don't have insurance for dental care",
+    "Don't want to spend the money for dental care",
+    'Cannot get an appointment soon enough with a dentist',
+    'Cannot take time off work to go to a dentist',
+    'Dental office is too far away',
+    'Dental office is not open at convenient times',
+    'Too busy to go to dental office',
+    "Don't have transportation to get to dental office",
+    "Don't know where to go for care",
+    'Friend/family told me to come here',
+    'Other Reason'
+  ]
+
   serialize :heard_about_clinic, Array
   serialize :race, Array
+  serialize :other_reasons_for_visit, Array
 
   before_save :remove_blank_options
 
@@ -41,7 +58,8 @@ class Survey < ActiveRecord::Base
   private
 
   def remove_blank_options
-    self.heard_about_clinic = heard_about_clinic.reject(&:blank?)
-    self.race               = race.reject(&:blank?)
+    self.heard_about_clinic      = heard_about_clinic.reject(&:blank?)
+    self.race                    = race.reject(&:blank?)
+    self.other_reasons_for_visit = other_reasons_for_visit.reject(&:blank?)
   end
 end

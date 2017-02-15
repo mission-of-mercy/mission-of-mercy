@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160318131248) do
+ActiveRecord::Schema.define(version: 20170215153736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -203,21 +203,10 @@ ActiveRecord::Schema.define(version: 20160318131248) do
     t.text     "time_in_pain"
     t.text     "overall_health"
     t.text     "overall_dental_health"
-    t.boolean  "own_a_toothbrush"
     t.text     "dental_care_home"
     t.boolean  "emergency_room_for_dental"
     t.text     "frequency_of_emergency_dental_visits_past_6_months"
     t.boolean  "told_need_more_dental_care_after_emergency_visit"
-    t.boolean  "six_mo_visited_dental_office"
-    t.boolean  "six_mo_visited_apple_clinic"
-    t.boolean  "six_mo_visited_clay_county_cares"
-    t.boolean  "six_mo_visited_sulzbacher_clinic"
-    t.boolean  "six_mo_visited_baptist_emergency"
-    t.boolean  "six_mo_visited_memorial_hospital_emergency"
-    t.boolean  "six_mo_visited_orange_park_emergency"
-    t.boolean  "six_mo_visited_st_vincent_emergency"
-    t.boolean  "six_mo_visited_uf_emergency"
-    t.text     "six_mo_visited_other"
     t.boolean  "dental_insurance_coverage"
     t.text     "highest_level_of_school_completed"
     t.boolean  "health_insurance_none"
@@ -240,6 +229,28 @@ ActiveRecord::Schema.define(version: 20160318131248) do
     t.string   "last_dental_visit"
     t.string   "response_type"
     t.boolean  "told_needed_more_dental_treatment"
+    t.text     "main_reason_for_visit"
+    t.boolean  "tobacco_cigarettes"
+    t.boolean  "tobacco_pipes"
+    t.boolean  "tobacco_cigars"
+    t.boolean  "tobacco_hookahs"
+    t.boolean  "tobacco_e_cigarettes"
+    t.boolean  "tobacco_chewing"
+    t.boolean  "tobacco_snuff"
+    t.boolean  "tobacco_snus"
+    t.boolean  "tobacco_dissolvales"
+    t.boolean  "twelve_mo_visited_dentist"
+    t.boolean  "twelve_mo_visited_good_samaritan"
+    t.boolean  "twelve_mo_visited_st_joe"
+    t.boolean  "twelve_mo_visited_health_and_hope"
+    t.boolean  "twelve_mo_visited_baptist_emergency"
+    t.boolean  "twelve_mo_visited_sacred_emergency"
+    t.boolean  "twelve_mo_visited_w_florida_emergency"
+    t.boolean  "twelve_mo_visited_santa_rosa_emergency"
+    t.boolean  "twelve_mo_visited_escambia_clinic"
+    t.boolean  "twelve_mo_visited_pensacola_clinic"
+    t.text     "twelve_mo_visited_other"
+    t.text     "other_reasons_for_visit"
   end
 
   create_table "treatment_areas", force: true do |t|

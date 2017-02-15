@@ -26,19 +26,24 @@ class SurveySections
 
   def health
     @health ||= begin
-      columns = [:overall_dental_health, :own_a_toothbrush, :last_dental_visit,
+      columns = [:overall_dental_health, :main_reason_for_visit,
+                 :other_reasons_for_visit, :last_dental_visit,
                  :dental_care_home, :emergency_room_for_dental,
                  :frequency_of_emergency_dental_visits_past_6_months,
                  :told_need_more_dental_care_after_emergency_visit,
-                 :six_mo_visited, :dental_insurance_coverage]
+                 :twelve_mo_visited, :dental_insurance_coverage, :tobacco]
 
       counts = {
         total_questions: columns.count,
         questions_answered: columns.count do |c|
-          if c == :six_mo_visited
-            six_mo_columns = Survey.column_names.grep(/six_mo_visited/)
+          if c == :twelve_mo_visited
+            six_mo_columns = Survey.column_names.grep(/twelve_mo_visited/)
 
             six_mo_columns.any? {|c| survey[c].present? }
+          elsif c == :tobacco
+            tobacco_columns = Survey.column_names.grep(/\Atobacco_/)
+
+            tobacco_columns.any? {|c| survey[c].present? }
           else
             survey.attribute_present?(c)
           end
