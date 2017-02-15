@@ -12,6 +12,7 @@ patients:
   phone: Phone
   race: Race
   travel_time: Travel Time (in days)
+  travel_method: Travel Method
   chief_complaint: Chief Complaint
   last_dental_visit: Last Dental Visit
   pain: In Pain?
@@ -67,7 +68,6 @@ surveys:
   heard_about_clinic: Heard about clinic
   told_needed_more_dental_treatment: Told needed more dental treatment
   has_place_to_be_seen_for_dental_care: Has a place to be seen for dental care
-  veteran: Is a veteran
   tobacco_use: Uses Tobacco
   no_insurance: No Insurance
   insurance_from_job: Insurance from Job
@@ -78,4 +78,8 @@ surveys:
   husky_insurance_d: Husky D Insurance
   husky_insurance_unknown: Husky Unknown Insurance
   charter_oak: Charter Oak Insurance
+  currently_has_a_place_to_live: Currently has a place to live?
+  veteran: Is a veteran
+  vet_able_to_access_dental_care: Veteran - Able to access dental care?
+  vet_family_able_to_access_dental_care: Veteran - Family is able to access dental care?
 
