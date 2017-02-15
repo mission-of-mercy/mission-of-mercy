@@ -92,11 +92,13 @@ class SurveyExporter
       id      = 1
 
       to_be_included = if research_study
-        Patient.
-          where(id: CSV.read('research_ids.csv').flatten.compact.map(&:to_i)).
-          where("language in ('spanish', 'english')").
-          where('date_of_birth <= ?', Date.civil(2016, 4, 22) - 18.years).
-          select(:survey_id)
+        Patient.where(consent_to_research_study: true).
+          where('survey_id is not null').pluck(:survey_id)
+        # Patient.
+        #   where(id: CSV.read('research_ids.csv').flatten.compact.map(&:to_i)).
+        #   where("language in ('spanish', 'english')").
+        #   where('date_of_birth <= ?', Date.civil(2016, 4, 22) - 18.years).
+        #   select(:survey_id)
       else
         Patient.where('survey_id is not null').pluck(:survey_id)
       end
