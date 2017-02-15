@@ -50,7 +50,7 @@ describe Reports::ClinicSummary do
       TestHelper.create_test_xray(xray_time, patient)
     end
 
-    report = Reports::ClinicSummary.new(report_date, xray_time)
+    report = Reports::ClinicSummary.new(report_date, "8:30 AM")
     report.xrays.to_i.must_equal xray_count
 
     report = Reports::ClinicSummary.new(report_date, "8:00 AM")
