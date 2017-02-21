@@ -122,8 +122,7 @@
     = hidden_field_tag "survey[other_reasons_for_visit][]", nil
     %table
       %tbody
-        - Survey::VISIT_OPTIONS.each do |opt|
-          - next if opt == 'Other Reason'
+        - Survey::OTHER_VISIT_OPTIONS.each do |opt|
           %tr
             %td
               %label
@@ -145,6 +144,10 @@
       %i
         Include all types of dentists, such as, orthodontists, oral surgeons,
         and all other dental specialists, as well as dental hygienists.
+        %br
+        Do
+        %strong not
+        include visits to an emergency room for dental care.
     .input
       = f.select :last_dental_visit, ['6 months or less',
         'More than 6 months, but not more than 1 year ago',
@@ -310,7 +313,7 @@
           %td
             %label
               = f.check_box :tobacco_chewing
-              Chewing tobacco (such as Redman, Levi Garrett, or Beechnut)
+              Chewing tobacco (such as Redman, Levi Garrett, or Beechnut)
 
         %tr
           %td

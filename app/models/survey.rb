@@ -36,6 +36,10 @@ class Survey < ActiveRecord::Base
     'Other Reason'
   ]
 
+  OTHER_VISIT_OPTIONS = [
+    'No other reasons'
+  ] + VISIT_OPTIONS.reject {|r| r == 'Other Reason' }
+
   serialize :heard_about_clinic, Array
   serialize :race, Array
   serialize :other_reasons_for_visit, Array
