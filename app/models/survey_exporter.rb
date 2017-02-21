@@ -145,7 +145,52 @@ class SurveyExporter
     else
       record_value = record.try(key)
       if Array === record_value
-        record_value = record_value.join(', ')
+        case key
+        when :heard_about_clinic
+          return (Survey::HEARD_ABOUT_OPTIONS + ['Other']).map do |option|
+            answer = record_value.include?(option)
+
+            if option == 'Other'
+              if (record_value - Survey::HEARD_ABOUT_OPTIONS).any?
+                answer = (record_value - Survey::HEARD_ABOUT_OPTIONS).first
+              else
+                answer = ''
+              end
+            end
+
+            ["#{value} - #{option}", answer]
+          end
+        when :race
+          return (Survey::RACE_OPTIONS + ['Other']).map do |option|
+            answer = record_value.include?(option)
+
+            if option == 'Other'
+              if (record_value - Survey::RACE_OPTIONS).any?
+                answer = (record_value - Survey::RACE_OPTIONS).first
+              else
+                answer = ''
+              end
+            end
+
+            ["#{value} - #{option}", answer]
+          end
+        when :other_reasons_for_visit
+          return (Survey::OTHER_VISIT_OPTIONS + ['Other']).map do |option|
+            answer = record_value.include?(option)
+
+            if option == 'Other'
+              if (record_value - Survey::OTHER_VISIT_OPTIONS).any?
+                answer = (record_value - Survey::OTHER_VISIT_OPTIONS).first
+              else
+                answer = ''
+              end
+            end
+
+            ["#{value} - #{option}", answer]
+          end
+        else
+          record_value = record_value.join(', ')
+        end
       end
 
       [value, record_value]
