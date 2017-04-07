@@ -59,7 +59,7 @@
           required: true
       #race_other_div.row
         %span.label= f.label :race_other, 'Specify race'
-        %span.formw= f.text_field :race_other
+        %span.formw= f.text_field :race_other, value: @patient.race
 
     %div.contact_information_header
       %h4 2: Contact Information

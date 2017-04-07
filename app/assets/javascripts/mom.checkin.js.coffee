@@ -54,6 +54,10 @@ class mom.checkin
 
     # Toggle Fields
 
+    if $('#patient_race').val() == "" && $("#patient_race_other").val() != ""
+      # There is an "Other" race. Prep the form cap'n
+      $('#patient_race').val("Other")
+
     this.togglePreviousMom(false)
     this.togglePatientPain(false)
     this.toggleOtherRace(false)
