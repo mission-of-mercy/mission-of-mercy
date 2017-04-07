@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915171835) do
+ActiveRecord::Schema.define(version: 20170215153736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,19 +102,23 @@ ActiveRecord::Schema.define(version: 20160915171835) do
     t.string   "state",                       limit: 2
     t.string   "zip",                         limit: 10
     t.string   "race"
-    t.float    "travel_time"
     t.boolean  "attended_previous_mom_event"
     t.string   "previous_mom_event_location"
     t.string   "chief_complaint"
     t.string   "last_dental_visit"
     t.boolean  "pain"
-    t.integer  "pain_length_in_days"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "survey_id"
     t.string   "phone"
     t.integer  "previous_chart_number"
     t.boolean  "chart_printed",                          default: false, null: false
+    t.text     "language"
+    t.boolean  "consent_to_research_study",              default: false
+    t.text     "travel_time"
+    t.text     "time_in_pain"
+    t.string   "county"
+    t.string   "overall_health"
     t.boolean  "pregnant",                               default: false, null: false
     t.boolean  "has_obgyn",                              default: false, null: false
     t.date     "due_date"
@@ -126,8 +130,8 @@ ActiveRecord::Schema.define(version: 20160915171835) do
   create_table "pre_meds", force: true do |t|
     t.string   "description"
     t.float    "cost"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "prescriptions", force: true do |t|
@@ -136,8 +140,8 @@ ActiveRecord::Schema.define(version: 20160915171835) do
     t.integer  "quantity"
     t.string   "dosage"
     t.float    "cost"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "position"
   end
 
@@ -151,8 +155,8 @@ ActiveRecord::Schema.define(version: 20160915171835) do
   create_table "procedure_treatment_area_mappings", force: true do |t|
     t.integer  "procedure_id"
     t.integer  "treatment_area_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "assigned"
   end
 
@@ -165,8 +169,8 @@ ActiveRecord::Schema.define(version: 20160915171835) do
     t.boolean  "auto_add"
     t.float    "cost"
     t.integer  "number_of_surfaces"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "races", force: true do |t|
@@ -192,28 +196,74 @@ ActiveRecord::Schema.define(version: 20160915171835) do
     t.string   "zip"
     t.integer  "age"
     t.string   "sex"
-    t.string   "race"
+    t.text     "race"
     t.integer  "rating_of_services"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "pain"
-    t.integer  "pain_length_in_days"
-    t.string   "heard_about_clinic"
-    t.boolean  "told_needed_more_dental_treatment"
-    t.boolean  "has_place_to_be_seen_for_dental_care"
-    t.boolean  "no_insurance"
-    t.boolean  "insurance_from_job"
-    t.boolean  "medicaid_or_chp_plus"
-    t.boolean  "self_purchase_insurance"
-    t.string   "other_insurance"
+    t.text     "heard_about_clinic"
     t.boolean  "tobacco_use"
-    t.boolean  "husky_insurance_a",                     default: false, null: false
-    t.boolean  "husky_insurance_b",                     default: false, null: false
-    t.boolean  "husky_insurance_c",                     default: false, null: false
-    t.boolean  "husky_insurance_d",                     default: false, null: false
-    t.boolean  "husky_insurance_unknown",               default: false, null: false
-    t.boolean  "charter_oak",                           default: false, null: false
-    t.boolean  "veteran",                               default: false, null: false
+    t.text     "language"
+    t.boolean  "consent_to_research_study",                          default: false
+    t.text     "travel_time"
+    t.text     "time_in_pain"
+    t.text     "overall_health"
+    t.text     "overall_dental_health"
+    t.text     "dental_care_home"
+    t.boolean  "emergency_room_for_dental"
+    t.text     "frequency_of_emergency_dental_visits_past_6_months"
+    t.boolean  "told_need_more_dental_care_after_emergency_visit"
+    t.boolean  "dental_insurance_coverage"
+    t.text     "highest_level_of_school_completed"
+    t.boolean  "health_insurance_none"
+    t.boolean  "health_insurance_from_employer"
+    t.boolean  "health_insurance_purchased_from_insurance_co"
+    t.boolean  "health_insurance_purchased_from_gov"
+    t.boolean  "health_insurance_medicare"
+    t.boolean  "health_insurance_medicaid"
+    t.boolean  "health_insurance_military"
+    t.boolean  "health_insurance_other"
+    t.text     "military_service"
+    t.boolean  "hispanic_latino_spanish"
+    t.text     "current_work_situation"
+    t.text     "household_size"
+    t.boolean  "food_stamps"
+    t.boolean  "wic_program_benefits"
+    t.text     "household_anual_income"
+    t.text     "reason_for_visit"
+    t.boolean  "attended_previous_mom"
+    t.string   "last_dental_visit"
+    t.string   "response_type"
+    t.boolean  "told_needed_more_dental_treatment"
+    t.text     "main_reason_for_visit"
+    t.boolean  "tobacco_cigarettes"
+    t.boolean  "tobacco_pipes"
+    t.boolean  "tobacco_cigars"
+    t.boolean  "tobacco_hookahs"
+    t.boolean  "tobacco_e_cigarettes"
+    t.boolean  "tobacco_chewing"
+    t.boolean  "tobacco_snuff"
+    t.boolean  "tobacco_snus"
+    t.boolean  "tobacco_dissolvales"
+    t.boolean  "twelve_mo_visited_dentist"
+    t.boolean  "twelve_mo_visited_good_samaritan"
+    t.boolean  "twelve_mo_visited_st_joe"
+    t.boolean  "twelve_mo_visited_health_and_hope"
+    t.boolean  "twelve_mo_visited_baptist_emergency"
+    t.boolean  "twelve_mo_visited_sacred_emergency"
+    t.boolean  "twelve_mo_visited_w_florida_emergency"
+    t.boolean  "twelve_mo_visited_santa_rosa_emergency"
+    t.boolean  "twelve_mo_visited_escambia_clinic"
+    t.boolean  "twelve_mo_visited_pensacola_clinic"
+    t.text     "twelve_mo_visited_other"
+    t.text     "other_reasons_for_visit"
+    t.boolean  "husky_insurance_a",                                  default: false, null: false
+    t.boolean  "husky_insurance_b",                                  default: false, null: false
+    t.boolean  "husky_insurance_c",                                  default: false, null: false
+    t.boolean  "husky_insurance_d",                                  default: false, null: false
+    t.boolean  "husky_insurance_unknown",                            default: false, null: false
+    t.boolean  "charter_oak",                                        default: false, null: false
+    t.boolean  "veteran",                                            default: false, null: false
     t.boolean  "vet_able_to_access_dental_care"
     t.string   "vet_length_to_access_dental_care"
     t.boolean  "vet_family_able_to_access_dental_care"
@@ -224,8 +274,8 @@ ActiveRecord::Schema.define(version: 20160915171835) do
   create_table "treatment_areas", force: true do |t|
     t.string   "name"
     t.integer  "capacity"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "amalgam_composite_procedures"
     t.integer  "base_processing_time_in_seconds"
   end
