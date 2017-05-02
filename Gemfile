@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 4.1.9'
-gem 'json',  '~> 1.7.7'
+gem 'json'
 gem 'pg'
 gem 'haml'
 gem 'sass'
