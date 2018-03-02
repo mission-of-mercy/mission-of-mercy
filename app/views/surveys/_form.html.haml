@@ -81,7 +81,7 @@
               other: heard_about_other )
 
 
-  %p 7. Did you attend the Mission of Mercy clinic in Jacksonville in April, 2016?
+  %p 7. Did you attend the Mission of Mercy clinic in Pensacola in March, 2017?
   .input
     = f.radio_button :attended_previous_mom, true
     = f.label :attended_previous_mom, "Yes", value: true
@@ -206,64 +206,23 @@
       have you gone to any of the following places for dental care?
       %i Select all that apply.
 
-    %table
-      %tbody
-        %tr
-          %td
-            = f.label :twelve_mo_visited_dentist do
-              = f.check_box :twelve_mo_visited_dentist
-              Dentist’s office
-        %tr
-          %td
-            %label
-              = f.check_box :twelve_mo_visited_good_samaritan
-              Good Samaritan Clinic
-        %tr
-          %td
-            %label
-              = f.check_box :twelve_mo_visited_st_joe
-              St. Joseph’s/Our Lady of Angels Clinic
-        %tr
-          %td
-            %label
-              = f.check_box :twelve_mo_visited_health_and_hope
-              Health and Hope Clinic at Olive Baptist Church
-        %tr
-          %td
-            %label
-              = f.check_box :twelve_mo_visited_baptist_emergency
-              Baptist Hospital emergency room
-        %tr
-          %td
-            %label
-              = f.check_box :twelve_mo_visited_sacred_emergency
-              Sacred Heart Hospital Pensacola emergency room
-        %tr
-          %td
-            %label
-              = f.check_box :twelve_mo_visited_w_florida_emergency
-              West Florida Hospital emergency room
-        %tr
-          %td
-            %label
-              = f.check_box :twelve_mo_visited_santa_rosa_emergency
-              Santa Rosa Medical Center emergency room
-        %tr
-          %td
-            %label
-              = f.check_box :twelve_mo_visited_escambia_clinic
-              Escambia Community Clinic
-        %tr
-          %td
-            %label
-              = f.check_box :twelve_mo_visited_pensacola_clinic
-              Pensacola State College Dental Clinic
-        %tr
-          %td
-            = react_component("SurveyOtherField",
-              fieldName: 'survey[twelve_mo_visited_other]',
-              otherPresent: @survey.twelve_mo_visited_other.present?,
-              other: @survey.twelve_mo_visited_other )
+    .input
+      = hidden_field_tag "survey[twelve_mo_visited][]", nil
+      %table
+        %tbody
+          - Survey::TWELVE_MO_VISITED.each do |opt|
+            %tr
+              %td
+                %label
+                  = check_box_tag "survey[twelve_mo_visited][]",
+                    opt, @survey.twelve_mo_visited.include?(opt)
+                  = opt
+          %tr
+            %td
+              = react_component("SurveyOtherField",
+                fieldName: 'survey[twelve_mo_visited_other]',
+                otherPresent: @survey.twelve_mo_visited_other.present?,
+                other: @survey.twelve_mo_visited_other )
 
     %p
       17. Do you have any kind of insurance coverage that

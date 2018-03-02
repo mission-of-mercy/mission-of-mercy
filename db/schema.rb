@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170215153736) do
+ActiveRecord::Schema.define(version: 20180302004953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,8 +113,13 @@ ActiveRecord::Schema.define(version: 20170215153736) do
     t.string   "phone"
     t.integer  "previous_chart_number"
     t.boolean  "chart_printed",                          default: false, null: false
+    t.boolean  "pregnant",                               default: false, null: false
+    t.boolean  "has_obgyn",                              default: false, null: false
+    t.date     "due_date"
+    t.boolean  "follow_up",                              default: false, null: false
+    t.text     "obgyn_name"
     t.text     "language"
-    t.boolean  "consent_to_research_study",              default: false
+    t.boolean  "consent_to_research_study"
     t.text     "travel_time"
     t.text     "time_in_pain"
     t.string   "county"
@@ -124,8 +129,8 @@ ActiveRecord::Schema.define(version: 20170215153736) do
   create_table "pre_meds", force: true do |t|
     t.string   "description"
     t.float    "cost"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "prescriptions", force: true do |t|
@@ -134,8 +139,8 @@ ActiveRecord::Schema.define(version: 20170215153736) do
     t.integer  "quantity"
     t.string   "dosage"
     t.float    "cost"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "position"
   end
 
@@ -149,8 +154,8 @@ ActiveRecord::Schema.define(version: 20170215153736) do
   create_table "procedure_treatment_area_mappings", force: true do |t|
     t.integer  "procedure_id"
     t.integer  "treatment_area_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.boolean  "assigned"
   end
 
@@ -163,8 +168,8 @@ ActiveRecord::Schema.define(version: 20170215153736) do
     t.boolean  "auto_add"
     t.float    "cost"
     t.integer  "number_of_surfaces"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "races", force: true do |t|
@@ -197,6 +202,13 @@ ActiveRecord::Schema.define(version: 20170215153736) do
     t.boolean  "pain"
     t.text     "heard_about_clinic"
     t.boolean  "tobacco_use"
+    t.boolean  "husky_insurance_a",                                  default: false, null: false
+    t.boolean  "husky_insurance_b",                                  default: false, null: false
+    t.boolean  "husky_insurance_c",                                  default: false, null: false
+    t.boolean  "husky_insurance_d",                                  default: false, null: false
+    t.boolean  "husky_insurance_unknown",                            default: false, null: false
+    t.boolean  "charter_oak",                                        default: false, null: false
+    t.boolean  "veteran",                                            default: false, null: false
     t.text     "language"
     t.boolean  "consent_to_research_study",                          default: false
     t.text     "travel_time"
@@ -251,13 +263,14 @@ ActiveRecord::Schema.define(version: 20170215153736) do
     t.boolean  "twelve_mo_visited_pensacola_clinic"
     t.text     "twelve_mo_visited_other"
     t.text     "other_reasons_for_visit"
+    t.text     "twelve_mo_visited"
   end
 
   create_table "treatment_areas", force: true do |t|
     t.string   "name"
     t.integer  "capacity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.boolean  "amalgam_composite_procedures"
     t.integer  "base_processing_time_in_seconds"
   end

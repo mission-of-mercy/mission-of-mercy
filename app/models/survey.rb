@@ -32,17 +32,32 @@ class Survey < ActiveRecord::Base
     'Too busy to go to dental office',
     "Don't have transportation to get to dental office",
     "Don't know where to go for care",
-    'Friend/family told me to come here',
-    'Other Reason'
+    'Friend/family told me to come here'
   ]
 
   OTHER_VISIT_OPTIONS = [
     'No other reasons'
   ] + VISIT_OPTIONS.reject {|r| r == 'Other Reason' }
 
+  TWELVE_MO_VISITED = [
+    "Dentist’s office",
+    "Cape Coral Hospital emergency room",
+    "Golisano Children’s Hospital of Southwest Florida",
+    "Gulf Coast Medical Center emergency room",
+    "Health Park Medical Center emergency room",
+    "Lee Memorial Hospital emergency room",
+    "Lehigh Regional Medical Center emergency room",
+    "Project Dentists Care (PDC) of Southwest Florida clinic",
+    "Family Health Centers for Southwest Florida Downtown Ft. Myers dental clinic",
+    "Florida Southwestern State College Dental Clinic",
+    "Some other place",
+    "Jazz hands"
+  ]
+
   serialize :heard_about_clinic, Array
   serialize :race, Array
   serialize :other_reasons_for_visit, Array
+  serialize :twelve_mo_visited, Array
 
   before_save :remove_blank_options
 
