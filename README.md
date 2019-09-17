@@ -1,5 +1,13 @@
 ![Mission of Mercy Logo](https://github.com/mission-of-mercy/mission-of-mercy/raw/master/doc/mom.png)
 
+# Project Status Update - September 2019
+
+Before reading on please see this post about the current status of the project and its future:
+
+https://github.com/mission-of-mercy/mission-of-mercy/issues/58
+
+---
+
 Clinic management software for Mission of Mercy free dental clinics. Created to streamline patient intake, digital x-ray, and check-out processes during the clinic’s operating hours. Since its creation in 2009 it has been used in Mission of Mercy clinics throughout the United States.
 
 For the latest information about the software check out [this project's wiki](https://github.com/mission-of-mercy/mission-of-mercy/wiki).
