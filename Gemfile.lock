@@ -180,7 +180,7 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.2)
       pry (>= 0.9.10)
-    rack (1.5.2)
+    rack (1.5.5)
     rack-pjax (0.7.0)
       nokogiri (~> 1.5)
       rack (~> 1.3)
